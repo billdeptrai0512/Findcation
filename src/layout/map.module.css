@@ -1,0 +1,45 @@
+.mapContainer {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+}
+  
+.map {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+  
+.leaflet-popup {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  }
+  
+  /* When popup is shown */
+  .leaflet-popup .leaflet-zoom-animated {
+    opacity: 2;
+    transform: translateY(0);
+  }
+  
+  /* Optional: style popup content */
+  .leaflet-popup-content-wrapper {
+    background-color: white;
+    border-radius: 12px;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .leaflet-popup-content {
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+  }
+  
+  /* Optional: remove the tip arrow if needed */
+  .leaflet-popup-tip-container {
+    display: none;
+  }
