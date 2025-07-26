@@ -3,7 +3,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from './authcontext';
 import { GoogleLogin } from '@react-oauth/google';
 import { X, Mail, ChevronLeft  } from 'lucide-react';
-import RegisterForm from './register';
 import PasswordLogin from './passwordLogin';
 import axios from 'axios';
 import styles from './Login.module.css';
@@ -55,7 +54,7 @@ export default function Login() {
 
             setUser(response.data.user)
 
-            navigate('/');
+            navigate('/list-staycation');
 
         } catch (err) {
             console.error('Google login failed', err);

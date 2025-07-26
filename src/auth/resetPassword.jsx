@@ -33,7 +33,7 @@ export default function ResetPassword() {
 
             console.log(response.data);
 
-            navigate('/')
+            navigate('/auth/login')
 
         } catch (err) {
             console.error('reset password failed', err);

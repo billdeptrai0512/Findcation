@@ -29,7 +29,7 @@ export default function Footer() {
 
             <footer className={styles.footer}>
     
-                <Button url={'/login'} text={'Trở thành chủ nhà'}/>
+                <Button url={'/auth/login'} text={'Trở thành chủ nhà'}/>
     
             </footer>
         )

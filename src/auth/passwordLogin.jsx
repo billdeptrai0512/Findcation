@@ -25,7 +25,7 @@ export default function PasswordLogin({email, setFoundEmail}) {
 
             alert("login thành công")
 
-            navigate('/')
+            navigate('/list-staycation')
 
         } catch (err) {
             console.error('Login failed', err);

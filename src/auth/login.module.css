@@ -1,187 +1,186 @@
 .container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f3f4f6; /* Tailwind gray-100 equivalent */
-  }
-  
-  .card {
-    min-width: 50vw;
-    background-color: white;
-    border-radius: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: max-content;
-  }
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f4f6; /* Tailwind gray-100 equivalent */
+}
 
-  .header {
-    display: flex;
-    align-items: center;
-    padding: 1em 2em;
-    border-bottom: 1px solid #DDDDDD;
-  }
+.card {
+  min-width: 50vw;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: max-content;
+}
 
-  .header > button {
-    display: flex;
-    border: none;
-    border-radius: 25px;
-    background: white;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
+.header {
+  display: flex;
+  align-items: center;
+  padding: 1em 2em;
+  border-bottom: 1px solid #DDDDDD;
+}
 
-  .header > button:hover {
-    background-color: #F7F7F7;
-  }
+.header > button {
+  display: flex;
+  border: none;
+  border-radius: 25px;
+  background: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
 
-  .panel {
-    padding: 1em 2em;
-  }
-  
-  .title {
-    width: 82%;
-    text-align: center;
-    font-size: 1.25rem;
-    font-weight: bolder;
-  }
-  
-  .inputGroup {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-  }
+.header > button:hover {
+  background-color: #F7F7F7;
+}
 
-  .showPassword {
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    height: 2.75em;
-    width: 4em;
-    align-self: end;
-  }
+.panel {
+  padding: 1em 2em;
+}
 
-  .toggleButton {
-    background: none;
-    border: none;
-    color: #007bff;
-    cursor: pointer;
-    font-size: 0.875rem;
-  }
-  
-  .input {
-    padding: 0.75rem 1rem;
-    border: 1px solid #d1d5db; /* Tailwind gray-300 */
-    border-radius: 0.5rem;
-    font-size: 1rem;
-  }
-  
-  .input:focus {
-    outline: none;
-    border-color: #3b82f6; /* Tailwind blue-500 */
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
-  }
-  
-  .error {
-    color: #dc2626; /* Tailwind red-600 */
-    font-size: 0.875rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  /* no need for one button */
-  .actionLoginRow {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 100%;
-    align-items: center;
-    margin-bottom: 1rem;
-    gap: 1em;
-    font-size: 0.875rem;
-  } 
+.title {
+  width: 82%;
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: bolder;
+}
 
-  .actionLoginRow > div {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
 
-  .actionRegisterRow {
-    display: flex;
-    align-items: center;
-    margin-top: 2em;
-    font-size: 0.875rem;
-    color: #666;
-  }
-  
-  .actionRegisterRow::before,
-  .actionRegisterRow::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background-color: #ddd;
-  }
-  
-  .actionRegisterRow p {
-    margin: 0 1rem;
-    white-space: nowrap;
-  }
-  
-  .link {
-    color: #3b82f6;
-    text-decoration: none;
-  }
-  
-  .link:hover {
-    text-decoration: underline;
-  }
-  
-  .button {
-    background-color: #3b82f6;
-    color: white;
-    padding: 0.75rem 1.25rem;
-    border: none;
-    border-radius: 0.5rem;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    width: 100%;
-  }
-  
-  .button:hover {
-    background-color: #2563eb;
-  }
-  
-  .googleWrapper {
-    margin: 1rem 0 
-  }
+.showPassword {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  height: 2.75em;
+  width: 4em;
+  align-self: end;
+}
 
-  .googleWrapper > div {
-    width: 100%;
-  }
+.toggleButton {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
 
-  .profile {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-  }
+.input {
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db; /* Tailwind gray-300 */
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
 
-  .profile > img {
-    width: 25%;
-    border-radius: 50px;
-  }
+.input:focus {
+  outline: none;
+  border-color: #3b82f6; /* Tailwind blue-500 */
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
 
-  .profile > p {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    gap: 8px
-  }
-  
+.error {
+  color: #dc2626; /* Tailwind red-600 */
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+/* no need for one button */
+.actionLoginRow {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1em;
+  font-size: 0.875rem;
+} 
+
+.actionLoginRow > div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.actionRegisterRow {
+  display: flex;
+  align-items: center;
+  margin-top: 2em;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.actionRegisterRow::before,
+.actionRegisterRow::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: #ddd;
+}
+
+.actionRegisterRow p {
+  margin: 0 1rem;
+  white-space: nowrap;
+}
+
+.link {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: #2563eb;
+}
+
+.googleWrapper {
+  margin: 1rem 0 
+}
+
+.googleWrapper > div {
+  width: 100%;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.profile > img {
+  width: 25%;
+  border-radius: 50px;
+}
+
+.profile > p {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 8px
+}
