@@ -5,7 +5,7 @@ import axios from "axios";
 import SearchBar from './search';
 import AutoComplete from "./autoComplete";
 import AddressMap from "./addressMap";
-const GOONG_API_KEY = "VITQ4kXvApjrvIOTO2QVzEpxWUDahXZmyanx8aNE"; // Replace with your actual key
+ // Replace with your actual key
 
 export default function LocationListing() {
   const [address, setAddress] = useState("");
@@ -21,7 +21,7 @@ export default function LocationListing() {
   
       try {
 
-        const res = await axios.get(`https://rsapi.goong.io/v2/place/autocomplete?input=${address}&api_key=${GOONG_API_KEY}&has_deprecated_administrative_unit=true`);
+        const res = await axios.get(`https://rsapi.goong.io/v2/place/autocomplete?input=${address}&api_key=${import.meta.env.VITE_GOONG_API_KEY}&has_deprecated_administrative_unit=true`);
         const data = res.data;
         const predictions = data.predictions || [];
 

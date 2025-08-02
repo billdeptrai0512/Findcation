@@ -8,7 +8,7 @@ export default function AutoComplete({predictions , setPredictions, setLocation}
   const handleSelectSuggestion = async (place) => {
 
     try {
-        const res = await axios.get(`https://rsapi.goong.io/v2/geocode?address=${place.description}&api_key=${GOONG_API_KEY}`).then(res => res.data);
+        const res = await axios.get(`https://rsapi.goong.io/v2/geocode?address=${place.description}&api_key=${import.meta.env.VITE_GOONG_API_KEY}`).then(res => res.data);
 
         if (res.status !== "OK") {
           throw new Error("Res status !== OK");
