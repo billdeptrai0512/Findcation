@@ -1,11 +1,11 @@
 import { Outlet } from 'react-router-dom';
-import Map from './map/main';
+import Listing from './main';
 
-export default function MainLayout() {
+export default function ListingLayout() {
 
   return (
     <>
-      <Map />
+      <Listing />
       <Outlet /> 
     </>
   );

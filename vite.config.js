@@ -6,13 +6,13 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': {
-        target: 'https://nominatim.openstreetmap.org',
+      '/map': {
+        target: 'http://localhost:3000',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }
     },
-    allowedHosts: [`bought-instructional-consultants-certified.trycloudflare.com`],
+    allowedHosts: [`open-naked-penalties-demands.trycloudflare.com`],
     
   },
 

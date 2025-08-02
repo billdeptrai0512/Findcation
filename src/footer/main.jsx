@@ -15,6 +15,8 @@ export default function Footer() {
         return (
 
             <footer className={styles.footer}>
+
+                <Button url={'/list-staycation'} text={'Trở thành chủ nhà'}/>
     
                 <Button text={'Đăng xuất'} action={logout}/>
     

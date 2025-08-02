@@ -23,6 +23,8 @@ export default function Map() {
     );
   }
 
+  console.log(location)
+
   return (
     <div className={styles.mapContainer}>
       <MapContainer

@@ -10,9 +10,9 @@ import Login from "./auth/login";
 import Forgot from "./auth/forgot";
 import ResetPassword from "./auth/resetPassword";
 import Auth from "./auth/main";
-import Listing from "./listing/main";
-import Map from "./map/main";
+import ListingLayout from "./listing/layout";
 import MainLayout from "./layout";
+import Suggestion from "./listing/suggestion";
 
 const router = createBrowserRouter([
   {
@@ -38,7 +38,18 @@ const router = createBrowserRouter([
   },
   {
     path: "/list-staycation",
-    element: <Listing />,
+    element: <ListingLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <></>, //render nothing for now 
+      },
+      {
+        path: "suggestion",
+        element: <Suggestion />
+      }
+    ]
   },
 ]);
 
