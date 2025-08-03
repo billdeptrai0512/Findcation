@@ -5,6 +5,7 @@ import axios from "axios";
 import SearchBar from './search';
 import AutoComplete from "./autoComplete";
 import AddressMap from "./addressMap";
+import AddressDetailPage from "./addressDetails";
  // Replace with your actual key
 
 export default function LocationListing() {
@@ -45,14 +46,14 @@ export default function LocationListing() {
   //adjust the location on the map to get final gps store to database
 
     return (
-        renderGetDetailsPage({
-            address,
-            setAddress,
-            location,
-            setLocation,
-            predictions,
-            setPredictions
-        })
+      <AddressDetailPage
+        address={address}
+        setAddress={setAddress}
+        location={location}
+        setLocation={setLocation}
+        predictions={predictions}
+        setPredictions={setPredictions}
+      />
     );
 }
 
@@ -99,12 +100,16 @@ const renderGetDetailsPage = ({address , setAddress, location, setLocation, pred
             </div>
             <div>
                 <div>
-                    <h3>Công khai địa chỉ của bạn</h3>
+                    <h4 style={{marginBottom: 0}}>Công khai địa chỉ của bạn</h4>
                     <p>Bọn mình chỉ chia sẻ vị trí của home trên bản đồ, mặc định không công khai địa chỉ</p>
                 </div>
+                <label className="switch">
+                  <input type="checkbox" />
+                  <span className="slider round"></span>
+                </label>
             </div>
         
-            <div>
+            <div style={{ height: "25vh", borderRadius: "8px", marginTop: "16px"}}>
                 <AddressMap location={location} setLocation={setLocation} address={address} setAddress={setAddress} />
             </div>
             
