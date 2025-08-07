@@ -6,11 +6,11 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth`, {withCredentials: true})
-      .then((res) => (res.data.user))
-      .catch(() => setUser(null))
-  }, []);
+  // useEffect(() => {
+  //   axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth`, {withCredentials: true})
+  //     .then((res) => (res.data.user))
+  //     .catch(() => setUser(null))
+  // }, []);
 
   const login = async (email, password) => {
     const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login`, { email, password }, { withCredentials: true });

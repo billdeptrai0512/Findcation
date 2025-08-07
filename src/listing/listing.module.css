@@ -55,7 +55,10 @@ p {
 .pageContent {
     display: flex;
     flex-direction: column;
-    padding: 24px
+    margin: 0px auto;
+    padding: 24px;
+    width: 100%;
+    max-width: 630px;
 }
 
 .contentSection {

@@ -18,7 +18,7 @@ export default function Listing() { // PageContent
 
             {/* { renderStartPage() } */}
             <LocationListing />
-            {/* { renderLocationOfHouse() } */}
+            {/* { renderTypeOfHouse() } */}
             <Footer />
         </div>   
     )

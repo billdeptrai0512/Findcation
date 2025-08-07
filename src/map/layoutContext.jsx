@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 const LocationContext = createContext();
 
 const LocationProvider = ({ children }) => {
-  const [location, setLocation] = useState(null); // { lat, lng }
+  const [GPS, setGPS] = useState(null); // { lat, lng }
   const [hasPermission, setHasPermission] = useState(false);
 
   // On initial mount, try to get permission state
@@ -15,7 +15,7 @@ const LocationProvider = ({ children }) => {
         setHasPermission(true);
         navigator.geolocation.getCurrentPosition(
           (pos) => {
-            setLocation({
+            setGPS({
               lat: pos.coords.latitude,
               lng: pos.coords.longitude,
             });
@@ -31,26 +31,26 @@ const LocationProvider = ({ children }) => {
       result.onchange = () => {
         if (result.state === "denied") {
           setHasPermission(false);
-          setLocation(null);
+          setGPS(null);
         }
       };
     });
   }, []);
 
   const saveLocation = (coords) => {
-    setLocation(coords);
+    setGPS(coords);
     setHasPermission(true);
   };
 
   const clearLocation = () => {
     setHasPermission(false);
-    setLocation(null);
+    setGPS(null);
   };
 
   return (
     <LocationContext.Provider
       value={{
-        location,
+        GPS,
         hasPermission,
         saveLocation,
         clearLocation,

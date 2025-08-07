@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { useLayout } from "./layoutContext";
 
-export default function LoadingScreen({ onLocationAllowed }) {
+export default function LoadingScreen() {
+  const { saveLocation } = useLayout();
   const [error, setError] = useState(null);
   const [permissionState, setPermissionState] = useState("prompt"); // prompt | granted | denied
 
@@ -16,10 +18,11 @@ export default function LoadingScreen({ onLocationAllowed }) {
   }, [permissionState]);
 
   const handleRequestLocation = () => {
+    console.log('hello')
     setError(null);
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        onLocationAllowed({
+        saveLocation({
           lat: pos.coords.latitude,
           lng: pos.coords.longitude,
         });

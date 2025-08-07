@@ -12,23 +12,15 @@ import Footer from "../footer/main";
 export default function Map() {
 
   const { user } = useAuth();
-  const { location, hasPermission, saveLocation } = useLayout();
+  const { GPS, hasPermission } = useLayout();
 
   // ❌ Don't render the map until GPS is confirmed
-  if (!hasPermission || !location) {
-    return (
-      <LoadingScreen
-        onLocationAllowed={saveLocation}
-      />
-    );
-  }
-
-  console.log(location)
+  if (!hasPermission || !GPS) return <LoadingScreen />
 
   return (
     <div className={styles.mapContainer}>
       <MapContainer
-        center={location}
+        center={GPS}
         zoom={20}
         scrollWheelZoom={true}
         zoomControl={false}
@@ -38,12 +30,12 @@ export default function Map() {
         <TileLayer url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png" />
         <TileLayer url="https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png" />
 
-        <Marker position={location} icon={customIcon} 
+        <Marker position={GPS} icon={customIcon} 
             eventHandlers={{add: (e) => e.target.openPopup()}}>
             <Popup autoOpen={true} >{user ? user.name : "Bạn"} đang ở đây!</Popup>
         </Marker>
 
-        <SetViewOnPosition position={location} />
+        <SetViewOnPosition position={GPS} />
       </MapContainer>
 
       <Footer />
