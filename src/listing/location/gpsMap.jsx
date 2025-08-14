@@ -4,7 +4,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
 import styles from './location.module.css'; // Ensure .map and .markerOverlay are styled here
-
+import Home from "../../assets/home.png";
 
 export default function GPSMap({ location, setLocation }) {
 
@@ -43,7 +43,7 @@ export default function GPSMap({ location, setLocation }) {
         </MapContainer>
 
         <div className={styles.markerOverlay}>
-          <img src={iconUrl} alt="Pin" />
+          <img src={Home} alt="Pin" />
         </div>
       
     </div>
@@ -71,17 +71,6 @@ function TrackCenterOnDrag({ setLocation }) {
 
   return null;
 }
-
-const color = "#ff5e5e";
-
-const svgWithIcon = `
-<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 384 512">
-  <path fill="${color}" d="M192 0C86 0 0 86 0 192c0 99.4 131.1 286.6 168 352 36.9-65.4 168-252.6 168-352C336 86 250 0 192 0z"/>
-  <path fill="white" d="M192 144l-96 72h32v72h48v-48h32v48h48v-72h32z"/>
-</svg>
-`;
-
-const iconUrl = `data:image/svg+xml;base64,${btoa(svgWithIcon)}`;
 
 
 

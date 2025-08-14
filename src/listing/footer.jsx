@@ -1,26 +1,8 @@
-import { useState } from "react";
 import styles from "./listing.module.css"
 
-export default function FooterProgress() {
+export default function FooterProgress({start, getStart, goNext, goBack, percentage}) {
 
-  const totalSteps = 5;
-  const [start, setStart] = useState(false)
-  const [step, setStep] = useState(0);
-
-  const percentage = Math.round((step / totalSteps) * 100);
-
-  const handleNext = () => {
-    if (step < totalSteps) setStep(step + 1);
-  };
-
-  const handleBack = () => {
-    if (step === 0) setStart(false)
-    if (step > 0) setStep(step - 1);
-  };
-
-  const handleStart = () => {
-    setStart(true);
-  };
+  console.log(percentage)
 
   return (
     <div className={styles.footer}>
@@ -46,17 +28,24 @@ export default function FooterProgress() {
             style={{ justifyContent: start === true ? "space-between" : "center" }}>
 
             {start === false ? (
-                <button onClick={handleStart} className={styles.startButton}>
+                <button className={styles.startButton} onClick={getStart} >
                     Bắt đầu
                 </button>
             ) : (
                 <>
-                    <button onClick={handleBack} className={styles.button}>
+                    <button onClick={goBack} className={styles.button}>
                         Quay lại
                     </button>
-                    <button onClick={handleNext} className={styles.button}>
+                    {
+                      percentage !== 100 ? 
+                      <button onClick={goNext} className={styles.button}>
                         Tiếp theo
-                    </button>
+                      </button> :
+                      <button onClick={goNext} className={styles.button}>
+                        Đăng
+                      </button>
+                    }
+
                 </>
             )}
             

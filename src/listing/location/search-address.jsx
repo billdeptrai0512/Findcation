@@ -1,8 +1,9 @@
 import SearchBar from './search-bar';
 import AddressMap from "./addressMap";
 import styles from "./location.module.css";
+import People from "../../assets/people.png";
 
-export default function SearchAddress({location, setLocation}) {
+export default function SearchAddress({location}) {
 
     return (
         <div className={styles.pageContent}>
@@ -11,9 +12,9 @@ export default function SearchAddress({location, setLocation}) {
     
             <div className={styles.search_address}>
     
-                <AddressMap location={location} />
+                <AddressMap location={location} icon={People}/>
         
-                <SearchBar setLocation={setLocation}/>
+                <SearchBar /> 
 
             </div>
     

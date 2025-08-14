@@ -8,6 +8,7 @@ import { useLayout } from "./layoutContext";
 import styles from "./map.module.css"
 import LoadingScreen from "./loading";
 import Footer from "../footer/main";
+import People from "../assets/people.png";
 
 export default function Map() {
 
@@ -43,22 +44,11 @@ export default function Map() {
   );
 }
 
-const color = "#ff5e5e"; // any HEX or named color
-
-// Inject color into the SVG using CSS `currentColor`
-const svgWithColor = `
-  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="48" viewBox="0 0 384 512" fill="${color}">
-    <path d="M168 0C75.1 0 0 75.1 0 168c0 87.3 131.1 265.6 168 344 36.9-78.4 168-256.7 168-344C336 75.1 260.9 0 168 0zm0 240c-39.8 0-72-32.2-72-72s32.2-72 72-72 72 32.2 72 72-32.2 72-72 72z"/>
-  </svg>
-`;
-
-const iconUrl = `data:image/svg+xml;base64,${btoa(svgWithColor)}`;
-
-const customIcon = L.icon({
-  iconUrl,
-  iconSize: [24, 48],
-  iconAnchor: [11, 48],
-  popupAnchor: [0, -48],
+const customIcon = new L.Icon({
+  iconUrl: People,
+  iconSize: [40, 60], // adjust size
+  iconAnchor: [20, 50], // point of the icon that corresponds to marker's location
+  popupAnchor: [0, -60], // position of popup relative to icon
 });
 
 const SetViewOnPosition = ({ position }) => {

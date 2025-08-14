@@ -1,0 +1,39 @@
+import { useMediaQuery } from "react-responsive";
+import { useListing } from "../listingContext";
+import styles from "../listing.module.css";
+
+
+//we need responsive
+//check button to confirm url
+//url when confirm should be act like a link url
+//image should be able to slide
+
+export default function DemoProfile() {
+
+    const { listing } = useListing()
+
+    const formatPrice = (price) => {
+        if (!price) return "";
+        return parseInt(price, 10).toLocaleString("vi-VN") + "đ";
+    };
+
+    const isMobile = useMediaQuery({ query: '(max-width: 768px)'})
+
+    return (
+        <div className={isMobile ? styles.mobile_demo_container : styles.demo_container}>
+            <div>
+                <img src={listing.images[0].url} alt="cover_photo"  style={{width: "100%", borderRadius:"8px"}} />
+            </div>
+
+            <div style={{display: "flex", justifyContent: "space-between", marginTop: "16px"}}>
+                <div style={{display: "flex", flexDirection: "column", gap: "4px"}}>
+                    <span>{listing.name}</span>
+                    <span>{formatPrice(listing.prices.min)} -&gt; {formatPrice(listing.prices.max)}</span>
+                </div>
+                <p>Mới ⭐</p>
+            </div>
+        </div>
+    );
+}
+
+

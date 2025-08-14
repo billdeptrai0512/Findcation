@@ -29,10 +29,10 @@
     z-index: 500;
   }
   
-  .markerOverlay img {
+.markerOverlay img {
     width: 36px;
     height: 48px;
-  }
+}
 
 .details_map {
     height: 25vh;

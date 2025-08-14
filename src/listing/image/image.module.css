@@ -1,0 +1,132 @@
+.pageContent {
+    display: flex;
+    flex-direction: column;
+    margin: 0px auto;
+    padding: 24px;
+    max-width: 630px;
+}
+
+.upload_area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+    border: 1px dashed #B0B0B0;
+    border-radius: 8px;
+    height: 33vh;
+    background-color: #F7F7F7
+}
+
+.upload_area > label {
+    padding: 10px 17px;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #FFFFFF;
+    font-weight: 500;
+    color: #222222
+}
+
+.mobile_images_area {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 24px;
+    border-radius: 8px;
+    gap: 8px;
+    height: 78vh;
+    overflow-y: scroll;
+}
+
+.mobile_images_area > div {
+    position: relative; 
+}
+
+.mobile_images_area .empty {
+    width: 100%;
+    aspect-ratio: 16 / 16
+}
+
+.mobile_images_area .empty > label > div,
+.images_area .empty > label > div {
+    width: 100%; 
+    height: 100%;
+    background-color: #F7F7F7;
+    color: rgb(106, 106, 106);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.mobile_images_area .photo {
+    width: 100%;
+    border-radius: 8px
+}
+
+.images_area {
+    display: flex; 
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 24px;
+    border-radius: 8px;
+    gap: 8px;
+}
+
+.images_area > div {
+    position: relative;
+    display: flex;
+    gap: 8px
+}
+
+.images_area .group {
+    width: 100%;
+    aspect-ratio: 16 / 8
+}
+
+.images_area .group .empty {
+    width: 100%;
+    height: 100%; 
+    background-color: #F7F7F7;
+    color: rgb(106, 106, 106);
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.images_area .photo {
+    height: 100%;
+    width: 100%;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+.last_photo {
+    flex-direction: column;
+    color: rgb(106, 106, 106);
+    gap: 8px;
+}
+
+.cover_photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 16px;
+    padding: 8px;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 0 0 1px transparent,0 0 0 4px transparent, 0 2px 4px rgba(0,0,0,0.18)
+}
+
+.ellipsis {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    right: 0;
+    margin: 16px;
+    padding: 8px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px transparent,0 0 0 4px transparent, 0 2px 4px rgba(0,0,0,0.18)
+}

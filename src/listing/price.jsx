@@ -1,0 +1,68 @@
+import { useState } from "react";
+import { MoveDown } from "lucide-react";
+import { useListing } from "./listingContext";
+import styles from "./listing.module.css";
+
+export default function RangePrice() {
+
+    const { listing, uploadMinPrice, uploadMaxPrice} = useListing()
+
+    const [editing, setEditing] = useState(null);
+
+    const handleMinChange = (e) => {
+
+        const price = e.target.value.replace(/\D/g, "")
+
+        uploadMinPrice(price)
+
+    }
+
+    const handleMaxChange = (e) => {
+
+        const price = e.target.value.replace(/\D/g, "")
+
+        uploadMaxPrice(price)
+
+    }
+
+    const formatPrice = (price) => {
+        if (!price) return "";
+        return parseInt(price, 10).toLocaleString("vi-VN") + "đ";
+    };
+
+    return (
+        <div className={styles.pageContent}>
+            <h1 style={{ marginBottom: "4px" }}>Bây giờ, hãy đặt khoảng giá cho thuê.</h1>
+            <div className={styles.intrustion} style={{ paddingBottom: "8px", color: "#6A6A6A" }}>
+                Từ gói thấp nhất đến gói thuê cả ngày.
+            </div>
+
+            <div className={styles.price_setup}>
+                <div>
+                    <input type="text"
+                        className={styles.price_input}
+                        value={editing === "min" ? listing.prices.min : formatPrice(listing.prices.min)}
+                        onFocus={() => setEditing("min")}
+                        onBlur={() => setEditing(null)}
+                        onChange={handleMinChange}
+                    />
+                </div>
+
+                <div>
+                    <MoveDown size={50} />
+                </div>
+
+                <div>
+                    <input
+                        type="text"
+                        className={styles.price_input}
+                        value={editing === "max" ? listing.prices.max : formatPrice(listing.prices.max)}
+                        onFocus={() => setEditing("max")}
+                        onBlur={() => setEditing(null)}
+                        onChange={handleMaxChange}
+                    />
+                </div>
+            </div>
+        </div>
+    );
+}

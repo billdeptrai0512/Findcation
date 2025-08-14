@@ -1,7 +1,10 @@
 import axios from "axios";
+import { useListing } from "../listingContext";
 import styles from './location.module.css'; 
 
-export default function AutoComplete({ setLocation, predictions, setPredictions }) {
+export default function AutoComplete({ predictions, setPredictions }) {
+
+    const {uploadLocation} = useListing()
 
   // User clicks suggestion
     const handleSelectSuggestion = async (place) => {
@@ -23,17 +26,16 @@ export default function AutoComplete({ setLocation, predictions, setPredictions 
                 city: address_components[2].long_name || "",
             }
 
-            setLocation(prev => ({
-                ...prev,
-                address: formatted_address,
-                gps: geometry.location,
-                details,
-            }))
+            uploadLocation(formatted_address, geometry, details)
+
+        } catch (error) {
+
+            console.error("Get geocode lat-lng from Goong failed:", error);
+
+        } finally {
 
             setPredictions([]);
-    
-        } catch (error) {
-            console.error("Get geocode lat-lng from Goong failed:", error);
+
         }
 
     };

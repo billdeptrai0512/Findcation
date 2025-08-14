@@ -38,6 +38,8 @@ const LocationProvider = ({ children }) => {
   }, []);
 
   const saveLocation = (coords) => {
+    console.log('hello')
+    console.log(coords)
     setGPS(coords);
     setHasPermission(true);
   };

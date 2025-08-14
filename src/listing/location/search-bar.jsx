@@ -5,7 +5,7 @@ import axios from "axios";
 import styles from './location.module.css'; 
 import AutoComplete from "./autoComplete";
 
-export default function SearchBar({ setLocation }) {
+export default function SearchBar() {
 
   const [address, setAddress] = useState("");
   const [predictions, setPredictions] = useState([]);
@@ -42,7 +42,7 @@ export default function SearchBar({ setLocation }) {
           onChange={(e) => setAddress(e.target.value)}
         />
       </div>
-      <AutoComplete predictions={predictions} setPredictions={setPredictions} setLocation={setLocation} />
+      <AutoComplete predictions={predictions} setPredictions={setPredictions} />
     </div>
   );
 }

@@ -17,6 +17,24 @@ p {
     margin: 0;
 }
 
+
+input[type="checkbox"] {
+    margin: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid #222;
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+    border-width: 7px;
+}
+
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -57,7 +75,6 @@ p {
     flex-direction: column;
     margin: 0px auto;
     padding: 24px;
-    width: 100%;
     max-width: 630px;
 }
 
@@ -110,8 +127,14 @@ p {
     /* border = unclicked */
     border: 1px solid rgb(221, 221, 221); 
     /* box-shadow = clicked */
-    box-shadow: rgb(34, 34, 34) 0px 0px 0px 2px;
+    
+    cursor: pointer;
     border-radius: 12px
+}
+
+.house_type_option .selected {
+    background-color: #000000;
+    box-shadow: rgb(34, 34, 34) 0px 0px 0px 2px;
 }
 
 .house_type_option > div > h4 {
@@ -129,6 +152,75 @@ p {
     color: #000000;
     flex-shrink: 0
 }
+
+.house_featues {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 8px 0;
+    color: #6A6A6A;
+    gap: 16px
+}
+
+.price_setup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 48px;
+    border-radius: 8px;
+    gap: 24px
+}
+
+.price_input {
+    border: none;
+    font-weight: 500;
+    font-size: clamp(2.5rem, 5em, 10vw);
+    width: 100%;
+    text-align: center;
+    line-height: 120px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12)
+}
+
+.price_input:focus {
+    outline: none;
+}
+
+.contact_container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 48px;
+    gap: 48px
+}
+
+.mobile_contact_container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 48px;
+    gap: 48px
+}
+
+.demo_container {
+    background-color:#FFFFFF;
+    padding: 16px;
+    width: 50%;
+    border-radius: 8px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12)
+}
+
+.mobile_demo_container {
+    background-color:#FFFFFF;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    margin: 0px auto;
+}
+
+.contact_information_container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em
+}
+
+
 
 
 

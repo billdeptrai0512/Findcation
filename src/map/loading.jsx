@@ -4,7 +4,7 @@ import { useLayout } from "./layoutContext";
 export default function LoadingScreen() {
   const { saveLocation } = useLayout();
   const [error, setError] = useState(null);
-  const [permissionState, setPermissionState] = useState("prompt"); // prompt | granted | denied
+  const [, setPermissionState] = useState("prompt"); // prompt | granted | denied
 
   useEffect(() => {
     if (navigator.permissions) {
@@ -15,19 +15,21 @@ export default function LoadingScreen() {
           result.onchange = () => setPermissionState(result.state); // auto-update if user changes
         });
     }
-  }, [permissionState]);
+  }, []);
 
   const handleRequestLocation = () => {
-    console.log('hello')
     setError(null);
+    console.log('work here')
     navigator.geolocation.getCurrentPosition(
       (pos) => {
+        console.log("SUCCESS:", pos);
         saveLocation({
           lat: pos.coords.latitude,
           lng: pos.coords.longitude,
         });
       },
       (err) => {
+        console.error("ERROR:", err);
         if (err.code === 1) {
           setError({
             message:
