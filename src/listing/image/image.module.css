@@ -5,7 +5,14 @@
     overflow-y: scroll;
     padding: 0px 24px;
     flex: 1;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
+
+.pageContent::-webkit-scrollbar {
+    display: none;
+}
+
 
 .upload_area {
     display: flex;

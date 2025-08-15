@@ -6,7 +6,14 @@
     flex: 1;
     overflow-y: scroll;
     margin-bottom: 1em;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
+
+.pageContent::-webkit-scrollbar {
+    display: none;
+}
+
 
 .pageContent > h1 {
     padding-left: 1rem;

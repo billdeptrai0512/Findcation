@@ -1,4 +1,5 @@
 import { useListing } from "../listingContext";
+import { useMediaQuery } from "react-responsive";
 import styles from "./location.module.css";
 import AddressMap from "./addressMap";
 import Home from "../../assets/home.png";
@@ -7,6 +8,7 @@ import PublicToggle from "./publicToggle";
 export default function ConfirmAddress() {
 
     const { listing , editLocationDetails } = useListing()
+    const isMobile = useMediaQuery({ query: '(max-width: 768px)'})
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -14,9 +16,9 @@ export default function ConfirmAddress() {
     }
 
     return (
-        <div className={styles.pageContent}>
+        <div className={styles.pageContent} style={{padding:"4px", minWidth: isMobile ? "unset" : "630px"}}>
 
-            <h1 style={{ marginBottom: "4px", paddingBottom: "24px", fontSize: "1.68rem" }}>Xác nhận địa chỉ của bạn</h1>
+            <h1 style={{ marginBottom: "4px", paddingBottom: "24px", fontSize: "1.68rem", paddingLeft:"unset" }}>Xác nhận địa chỉ của bạn</h1>
                 
             <div>
                 

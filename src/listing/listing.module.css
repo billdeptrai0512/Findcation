@@ -120,7 +120,14 @@ input[type="checkbox"]:checked {
     max-width: 630px;
     flex: 1;
     overflow-y: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
+
+.pageContent::-webkit-scrollbar {
+    display: none;
+}
+
 
 .start_content_section {
     display: flex;
@@ -212,6 +219,17 @@ input[type="checkbox"]:checked {
     flex-shrink: 0
 }
 
+.house_features_area {
+    overflow-y: scroll;
+    padding-right: 4px;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.house_features_area::-webkit-scrollbar {
+    display: none;
+}
+
 .house_featues {
     display: flex;
     flex-direction: row;
@@ -219,7 +237,7 @@ input[type="checkbox"]:checked {
     margin-top: 24px;
     padding-left: 4px;
     color: #6A6A6A;
-    gap: 12px
+    gap: 12px;
 }
 
 .house_feature_option {
