@@ -22,15 +22,15 @@ export default function DemoProfile() {
     return (
         <div className={isMobile ? styles.mobile_demo_container : styles.demo_container}>
             <div>
-                <img src={listing.images[0].url} alt="cover_photo"  style={{width: "100%", borderRadius:"8px"}} />
+                <img src={listing.images[0]?.url} alt="cover_photo"  style={{width: "100%", borderRadius:"8px"}} />
             </div>
 
-            <div style={{display: "flex", justifyContent: "space-between", marginTop: "16px"}}>
-                <div style={{display: "flex", flexDirection: "column", gap: "4px"}}>
-                    <span>{listing.name}</span>
-                    <span>{formatPrice(listing.prices.min)} -&gt; {formatPrice(listing.prices.max)}</span>
+            <div style={{display: "flex", justifyContent: "space-between", marginTop: "8px"}}>
+                <div style={{display: "flex", flexDirection: "column", gap: "8px"}}>
+                    <div style={{fontSize: "1.1075rem", overflow: "hidden"}}>{listing.name}</div>
+                    <span style={{fontSize: "0.9075rem", fontWeight: "600"}}>{formatPrice(listing.prices.min)} -&gt; {formatPrice(listing.prices.max)}</span>
                 </div>
-                <p>Mới ⭐</p>
+                <p style={{fontSize: "0.9075rem"}}>Mới ★</p>
             </div>
         </div>
     );

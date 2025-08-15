@@ -16,7 +16,7 @@ export default function ConfirmAddress() {
     return (
         <div className={styles.pageContent}>
 
-            <h1 style={{ marginBottom: "4px", paddingBottom: "24px" }}>Xác nhận địa chỉ của bạn</h1>
+            <h1 style={{ marginBottom: "4px", paddingBottom: "24px", fontSize: "1.68rem" }}>Xác nhận địa chỉ của bạn</h1>
                 
             <div>
                 

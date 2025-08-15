@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { useListing } from '../listingContext';
-import { useLayout } from '../../map/layoutContext';
+import { useUserLocation } from '../../map/userLocationContext';
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
@@ -10,7 +10,7 @@ import styles from './location.module.css';
 
 export default function AddressMap({ icon }) {
 
-  const {GPS} = useLayout()
+  const {GPS} = useUserLocation()
   const {listing} = useListing()
   const [text, setText] = useState("");
 
@@ -46,7 +46,7 @@ export default function AddressMap({ icon }) {
   const gps = listing.location.address === "" ? GPS : listing.location.gps
 
   return (
-    <div className={styles.map_wrap} style={{ position: "relative" }}>
+    <div className={styles.map_wrap}>
         <MapContainer center={gps} zoom={20} className={styles.map}
           dragging={false} zoomControl={false}
           doubleClickZoom={false} touchZoom={false}

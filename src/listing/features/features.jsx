@@ -36,14 +36,15 @@ export default function Features() {
 
     return (
         <div className={styles.pageContent}>
-            <h1 style={{ marginBottom: "4px" }}>Cho khách biết chỗ ở của bạn có những gì</h1>
+            <h1 style={{ marginBottom: "4px", fontSize: "1.68rem"}}>Chổ ở của bạn có những tiện nghi nào?</h1>
             <div className={styles.intrustion} style={{ paddingBottom: "8px", color: "#6A6A6A" }}>
-                Bạn có thể bổ sung thêm sau khi đăng mục cho thuê
+                Bạn có thể bổ sung thêm sau khi đăng mục cho thuê.
             </div>
-
-            <Section title="Còn những tiện nghi yêu thích của khách sau đây thì sao?" options={defaultOptions} />
-            <Section title="Bạn có tiện nghi nào nổi bật không ?" options={premiumOptions} />
-            <Section title="Thế còn những tiện nghi đảm bảo an toàn?" options={safetyOptions} />
+            <div style={{overflowY: "scroll", paddingRight: "4px"}}>
+                <Section title="Những tiện nghi được yêu thích nhất ?" options={defaultOptions} />
+                <Section title="Thế còn tiện nghi đặc biệt thì sao ?" options={premiumOptions} />
+                <Section title="Không thể thiếu những tiện nghi đảm bảo an toàn ?" options={safetyOptions} />
+            </div>
         </div>
     );
 }
@@ -51,7 +52,7 @@ export default function Features() {
 function Section({ title, options }) {
     return (
         <div>
-            <h3 style={{ fontSize: "1.25rem" }}>{title}</h3>
+            <h2 style={{ fontSize: "0.975rem" }}>{title}</h2>
             <div className={styles.house_featues}>
                 <List options={options} />
             </div>

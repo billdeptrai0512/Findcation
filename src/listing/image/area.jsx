@@ -43,7 +43,7 @@ export default function Area() {
 
     if (isMobile) return (
         <div className={styles.pageContent}>
-            <h1 style={{marginBottom: "4px"}}>Bạn cần ít nhất 3 bức ảnh.</h1>
+            <h1 style={{marginBottom: "4px", fontSize: "1.68rem"}}>Bạn cần ít nhất 3 bức ảnh.</h1>
             <div className={styles.intrustion} style={{paddingBottom: "8px", color: "#6A6A6A"}}>
                 Chọn ảnh đẹp nhất làm ảnh bìa nhé.
             </div>

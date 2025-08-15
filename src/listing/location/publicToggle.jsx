@@ -17,8 +17,8 @@ export default function PublicToggle() {
 
         <div className={styles.public_options}>
             <div >
-                <h4 style={{marginBottom: 0}}>Công khai địa chỉ của home</h4>
-                <p>Mặc định, bọn mình chỉ hiển thị vị trí của home trên bản đồ.</p>
+                <h2 style={{marginBottom: 0, fontSize: "1.175rem"}}>Công khai địa chỉ</h2>
+                <p style={{ fontSize: "0.875rem", color: "#6A6A6A"}}>Mặc định chỉ hiển thị vị trí của home trên bản đồ.</p>
             </div>
             <label className={styles.toggle}>
                 <input type="checkbox" checked={checked} onChange={() => editLocationPublic()}/>

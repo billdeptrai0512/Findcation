@@ -9,16 +9,13 @@ export default function List({ options }) {
             {options.map((opt) => {
                 const isSelected = listing?.features?.includes(opt.name);
                 return (
-                    <div
-                        key={opt.name}
-                        className={`${styles.house_type_option} ${isSelected ? styles.selected : ""}`}
+                    <div key={opt.name} className={`${styles.house_type_option} ${isSelected ? styles.selected : ""}`}
                         style={{ boxShadow: isSelected ? "rgb(34, 34, 34) 0px 0px 0px 2px" : "none" }}
                         onClick={() => uploadFeatures(opt.name)}
                     >
-                        <div>
-                            <h4>{opt.name}</h4>
-                        </div>
                         {opt.icon}
+                        <div>{opt.name}</div>
+                        
                     </div>
                 );
             })}

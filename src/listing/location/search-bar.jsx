@@ -1,6 +1,7 @@
 
 import { MapPin } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useMediaQuery } from "react-responsive";
 import axios from "axios";
 import styles from './location.module.css'; 
 import AutoComplete from "./autoComplete";
@@ -9,6 +10,7 @@ export default function SearchBar() {
 
   const [address, setAddress] = useState("");
   const [predictions, setPredictions] = useState([]);
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)'})
 
   useEffect(() => {
 
@@ -31,12 +33,12 @@ export default function SearchBar() {
       }, 400);
     
       return () => clearTimeout(delayDebounce);
-    }, [address]);
+  }, [address]);
 
   return (
     <div className={styles.searchBar}>
       <div className={styles.search_input}>
-        <MapPin size={30} color="#222222" style={{ marginRight: "8px", marginLeft: "24px" }} />
+        <MapPin size={isMobile ? 20 : 30} color="#222222" style={{ marginRight: "8px", marginLeft: "24px" }} />
         <input type="text" placeholder="Nhập địa chỉ của bạn"
           value={address}
           onChange={(e) => setAddress(e.target.value)}

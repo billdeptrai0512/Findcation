@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
-import { useLayout } from "./layoutContext";
+import { useUserLocation } from "./userLocationContext";
+import { useStaycation } from "./staycationContext";
+
 
 export default function LoadingScreen() {
-  const { saveLocation } = useLayout();
+  const { saveLocation } = useUserLocation();
+  const { fetchStaycations } = useStaycation()
   const [error, setError] = useState(null);
   const [, setPermissionState] = useState("prompt"); // prompt | granted | denied
 
@@ -19,14 +22,15 @@ export default function LoadingScreen() {
 
   const handleRequestLocation = () => {
     setError(null);
-    console.log('work here')
+
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         console.log("SUCCESS:", pos);
-        saveLocation({
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude,
-        });
+        saveLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude});
+        //success
+        console.log('start fetch all staycation on map')
+
+        fetchStaycations()
       },
       (err) => {
         console.error("ERROR:", err);
@@ -43,28 +47,12 @@ export default function LoadingScreen() {
     );
   };
 
+
+
   return (
     <div style={{ padding: "2em", fontSize: "1.2em", textAlign: "center" }}>
       <h1>Findcation</h1>
       <p>Bản đồ tất cả self-checking staycation ở Việt Nam</p>
-
-      {/* {permissionState === "denied" ? (
-        <div style={{ color: "red", marginTop: "1em" }}>
-          <p>
-            ⚠️ Bạn đã từ chối quyền truy cập vị trí. Ứng dụng cần định vị để hoạt
-            động.
-          </p>
-          <p>
-            👉 Vui lòng mở lại quyền định vị trong cài đặt trình duyệt để tiếp tục.
-          </p>
-          <p>
-            Ví dụ: Nhấn vào biểu tượng 🔒 trên thanh địa chỉ → Quyền → Cho phép vị
-            trí.
-          </p>
-        </div>
-      ) : (
-        
-      )} */}
 
       {error && (
         <div style={{ padding: "1em", fontSize: "0.75em", color: "red" }}>

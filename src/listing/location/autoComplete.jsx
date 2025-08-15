@@ -1,10 +1,13 @@
 import axios from "axios";
+import { useMediaQuery } from "react-responsive";
+import { MapPin } from "lucide-react";
 import { useListing } from "../listingContext";
 import styles from './location.module.css'; 
 
 export default function AutoComplete({ predictions, setPredictions }) {
 
     const {uploadLocation} = useListing()
+    const isMobile = useMediaQuery({ query: '(max-width: 768px)'})
 
   // User clicks suggestion
     const handleSelectSuggestion = async (place) => {
@@ -45,9 +48,13 @@ export default function AutoComplete({ predictions, setPredictions }) {
     return (
         <ul className={styles.autocomplete}>
             {predictions.map((place, idx) => (
-                <li key={idx} onClick={() => handleSelectSuggestion(place)}>
-                    {place.description}
-                </li>
+                <div style={{display: "flex", flex: "1"}}>
+                    <MapPin size={isMobile ? 20 : 30} color="#222222" style={{ marginRight: "8px", marginLeft: "24px", flexShrink: "0" }} />
+                    <li key={idx} onClick={() => handleSelectSuggestion(place)}>
+                        {place.description}
+                    </li>
+                </div>
+  
             ))}
         </ul>
     )

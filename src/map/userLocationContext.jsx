@@ -1,8 +1,8 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
-const LocationContext = createContext();
+const UserLocationContext = createContext();
 
-const LocationProvider = ({ children }) => {
+const UserLocationProvider = ({ children }) => {
   const [GPS, setGPS] = useState(null); // { lat, lng }
   const [hasPermission, setHasPermission] = useState(false);
 
@@ -38,8 +38,6 @@ const LocationProvider = ({ children }) => {
   }, []);
 
   const saveLocation = (coords) => {
-    console.log('hello')
-    console.log(coords)
     setGPS(coords);
     setHasPermission(true);
   };
@@ -50,7 +48,7 @@ const LocationProvider = ({ children }) => {
   };
 
   return (
-    <LocationContext.Provider
+    <UserLocationContext.Provider
       value={{
         GPS,
         hasPermission,
@@ -59,11 +57,11 @@ const LocationProvider = ({ children }) => {
       }}
     >
       {children}
-    </LocationContext.Provider>
+    </UserLocationContext.Provider>
   );
 };
 
-const useLayout = () => useContext(LocationContext);
+const useUserLocation = () => useContext(UserLocationContext);
 
 // eslint-disable-next-line react-refresh/only-export-components
-export { LocationProvider, useLayout };
+export { UserLocationProvider, useUserLocation };

@@ -1,4 +1,6 @@
 .listingContainer {
+    display: flex;
+    flex-direction: column;
     position: relative;
     height: 100vh;
     width: 100vw;
@@ -16,7 +18,6 @@ h2 {
 p {
     margin: 0;
 }
-
 
 input[type="checkbox"] {
     margin: 0;
@@ -42,27 +43,68 @@ input[type="checkbox"]:checked {
 }
 
 .footer {
-    position: fixed;
-    bottom: 0;
+    /* position: fixed;
+    bottom: 0; */
     width: 100vw;
 }
 
 .button {
     border: 1px solid #DDDDDD;
     background-color: white;
-    border-radius: 16px;
-    padding: 1em 1.5em;
+    border-radius: 24px;
+    padding: 12px 16px;
+    font-size: 0.875rem;
     cursor: pointer;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+}
+
+.back_button {
+    border: none;
+    background-color: white;
+    padding: 12px 16px;
+    cursor: pointer;
+    font-size: 0.975rem;
+    font-weight: 500;
+    margin-left: -10px;
+    text-decoration: underline;
+    font-family: 'Inter', sans-serif;
+}
+
+.next_button {
+    border: none;
+    background-color: #222222;
+    color: white;
+    padding: 16px 24px;
+    cursor: pointer;
+    font-size: 0.975rem;
+    font-weight: 500;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
 }
 
 .startButton {
     border: 1px solid #DDDDDD;
     background-color: white;
-    border-radius: 16px;
+    border-radius: 8px;
     padding: 1em 1.5em;
     cursor: pointer;
+    font-size: 0.95em;
+    font-weight: bold;
 /* condition below */
+    
     width: 100%;
+}
+
+.upload_button {
+    border: 1px solid #DDDDDD;
+    background-color: white;
+    border-radius: 8px;
+    padding: 12px 30px;
+    font-size: 0.975rem;
+    cursor: pointer;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
 }
 
 .footerButtons {
@@ -74,13 +116,17 @@ input[type="checkbox"]:checked {
     display: flex;
     flex-direction: column;
     margin: 0px auto;
-    padding: 24px;
+    padding: 0px 24px;
     max-width: 630px;
+    flex: 1;
+    overflow-y: scroll;
 }
 
-.contentSection {
+.start_content_section {
     display: flex;
-    gap: 16px
+    gap: 16px;
+    padding: 24px 0;
+
 }
 
 .intrustion {
@@ -88,6 +134,21 @@ input[type="checkbox"]:checked {
     flex-direction: column;
 }
 
+.start_content_section .number,
+.intrustion > h2 {
+    font-size: 1.125em;
+    line-height: 1.5em;
+    font-weight: 500;
+    margin: 0;
+}
+
+.intrustion > h3 {
+    font-size: 0.875em;
+    font-weight: 400;
+    color: #6A6A6A;
+    line-height: 1.5em;
+    margin: 0;
+}
 
 .textarea {
     width: 90%;
@@ -121,15 +182,12 @@ input[type="checkbox"]:checked {
 .house_type_option {
     display: flex;
     align-items: center;
-    justify-content:space-between;
-    gap: 12px;
+    justify-content: space-between;
     padding: 24px 18px; 
-    /* border = unclicked */
+    gap: 8px;
     border: 1px solid rgb(221, 221, 221); 
-    /* box-shadow = clicked */
-    
     cursor: pointer;
-    border-radius: 12px
+    border-radius: 12px;
 }
 
 .house_type_option .selected {
@@ -137,14 +195,15 @@ input[type="checkbox"]:checked {
     box-shadow: rgb(34, 34, 34) 0px 0px 0px 2px;
 }
 
-.house_type_option > div > h4 {
+.house_type_option > div > h2 {
     margin: 0;
     padding-bottom: 4px;
     color: #000000;
+    font-size: 1.125rem;
     font-weight: 500
 }
 
-.house_type_option > div > p {
+.house_type_option > div > div {
     font-size: 0.9em
 }
 
@@ -155,10 +214,23 @@ input[type="checkbox"]:checked {
 
 .house_featues {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
-    padding: 8px 0;
+    margin-top: 24px;
+    padding-left: 4px;
     color: #6A6A6A;
-    gap: 16px
+    gap: 12px
+}
+
+.house_feature_option {
+    display: flex;
+    align-items: center;
+    padding: 24px 18px; 
+    gap: 8px;
+    border: 1px solid rgb(221, 221, 221); 
+    cursor: pointer;
+    border-radius: 12px;
+    flex: 0 1 calc(50% - 50px);
 }
 
 .price_setup {
@@ -194,30 +266,65 @@ input[type="checkbox"]:checked {
 .mobile_contact_container {
     display: flex;
     flex-direction: column;
-    margin-top: 48px;
-    gap: 48px
+    margin-top: 24px;
+    gap: 24px;
 }
 
 .demo_container {
     background-color:#FFFFFF;
     padding: 16px;
     width: 50%;
-    border-radius: 8px;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.04);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12)
 }
 
 .mobile_demo_container {
     background-color:#FFFFFF;
     padding: 16px;
-    border-radius: 8px;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.04);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
     margin: 0px auto;
+    width: 80%;
 }
 
 .contact_information_container {
     display: flex;
     flex-direction: column;
-    gap: 1.5em
+    gap: 1.5em;
+    padding-bottom: 24px;
+}
+
+@media screen and (min-width: 768px) {
+    
+    .pageContent {
+        justify-content: center;
+        max-width: 680px;
+        margin-bottom: 1rem;
+    }
+
+    .header {
+        padding: 1em 4em;
+    }
+
+    .footerButtons {
+        margin: 1em 4em;
+    }
+
+    .startButton {
+        width: unset;
+    }
+
+    .start_content_section .number,
+    .intrustion > h2 {
+        font-size: 1.375em;
+    }
+
+    .intrustion > h3 {
+        font-size: 1.125em;
+    }
+
 }
 
 

@@ -1,7 +1,7 @@
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 
 import { AuthProvider } from "./auth/authcontext";
-import { LocationProvider } from "./map/layoutContext";
+import { UserLocationProvider } from "./map/userLocationContext";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import Register from "./auth/register";
@@ -18,11 +18,11 @@ import ImageUpload from "./listing/image/main";
 import Features from "./listing/features/features";
 import LocationListing from "./listing/location/main";
 import RangePrice from "./listing/price";
-import Contact from "./listing/final/contact";
 import StartPage from "./listing/start";
 import Listing from "./listing/main";
 import { ListingProvider } from "./listing/listingContext";
 import Final from "./listing/final/main";
+import { StaycationProvider } from "./map/staycationContext";
 
 const router = createBrowserRouter([
   {
@@ -95,11 +95,13 @@ export default function App() {
     return (
       <GoogleOAuthProvider clientId={import.meta.env.VITE_OAUTH_CLIENT_ID}>
         <AuthProvider>
-          <LocationProvider>
-            <ListingProvider>
-              <RouterProvider router={router} />
-            </ListingProvider>   
-          </LocationProvider>
+          <UserLocationProvider>
+            <StaycationProvider>
+              <ListingProvider>
+                <RouterProvider router={router} />
+              </ListingProvider>   
+            </StaycationProvider>
+          </UserLocationProvider>
         </AuthProvider>
       </GoogleOAuthProvider>
   );

@@ -15,9 +15,9 @@ export default function Final() {
 
     return (
         <div className={styles.pageContent}>
-            <h1 style={{marginBottom: "4px"}}>Thật tuyệt! Đã đến lúc đăng cho thuê.</h1>
+            <h1 style={{marginBottom: "4px", fontSize: "1.68rem"}}>Thật tuyệt! Đã đến lúc đăng cho thuê.</h1>
             <div className={styles.intrustion} style={{paddingBottom: "8px", color: "#6A6A6A"}}>
-                Dưới đây là những thông tin mà bọn mình sẽ hiển thị cho khách. Hãy đảm bảo bạn đã kiểm tra kỹ thông tin trước khi đăng.
+                Dưới đây là thông tin mà bọn mình sẽ hiển thị trên bản đồ. Hãy đảm bảo bạn đã thêm thông tin liên lạc trước khi đăng nhé.
             </div>
 
 

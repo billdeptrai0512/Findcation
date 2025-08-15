@@ -3,26 +3,26 @@ import styles from "./listing.module.css"
 export default function StartPage() {
     return (
         <div className={styles.pageContent}>
-            <h1>Bắt đầu trên Findcation rất dễ dàng</h1>
-            <section className={styles.contentSection}>
-                <h2>1</h2>
-                <div className={styles.intrustion} style={{paddingBottom: "32px", borderBottom: "1px solid #ccc"}}>
+            <h1>Bắt đầu trên Findcation rất đơn giản</h1>
+            <section className={styles.start_content_section} style={{borderBottom: "1px solid #ccc"}}>
+                <div className={styles.number}>1</div>
+                <div className={styles.intrustion} >
                     <h2>Thông tin cơ bản </h2>
-                    <p>Đặt tên và chọn loại chổ ở mà bạn cho thuê.</p>
+                    <h3>Đặt tên và chọn loại chổ ở mà bạn cho thuê.</h3>
                 </div>
             </section>
-            <section className={styles.contentSection}>
-                <h2>2</h2>
-                <div className={styles.intrustion} style={{paddingBottom: "32px", borderBottom: "1px solid #ccc"}}>
-                    <h2>Hình ảnh và tiện nghi</h2>
-                    <p>Thêm từ 3 - 5 ảnh và đánh dấu những tiện ích sở hữu.</p>
+            <section className={styles.start_content_section} style={{borderBottom: "1px solid #ccc"}}>
+                <div className={styles.number}>2</div>
+                <div className={styles.intrustion} >
+                    <h2>Hình ảnh và tiện ích</h2>
+                    <h3>Thêm 3 - 5 ảnh và đánh dấu những tiện nghi sở hữu.</h3>
                 </div>
             </section>
-            <section className={styles.contentSection}>
-                <h2>3</h2>
+            <section className={styles.start_content_section}>
+                <div className={styles.number}>3</div>
                 <div className={styles.intrustion}>
                     <h2>Xuất hiện trên bản đồ</h2>
-                    <p>Cài đặt địa chỉ, vị trí, giá thuê và thông tin liên lạc của bạn.</p>
+                    <h3>Cài đặt địa chỉ, giá thuê và thông tin liên lạc của bạn.</h3>
                 </div>
             </section>
         </div>

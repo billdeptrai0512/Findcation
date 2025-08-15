@@ -8,7 +8,7 @@ export default function SearchAddress({location}) {
     return (
         <div className={styles.pageContent}>
 
-            <h1 style={{ marginBottom: "4px", paddingBottom: "24px" }}>Chổ ở của bạn nằm ở đâu?</h1>
+            <h1 style={{ marginBottom: "4px", fontSize: "1.68rem" }}>Chổ ở của bạn nằm ở đâu?</h1>
     
             <div className={styles.search_address}>
     
