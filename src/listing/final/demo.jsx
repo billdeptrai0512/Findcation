@@ -1,12 +1,7 @@
 import { useMediaQuery } from "react-responsive";
 import { useListing } from "../listingContext";
+import { MoveRight } from "lucide-react";
 import styles from "../listing.module.css";
-
-
-//we need responsive
-//check button to confirm url
-//url when confirm should be act like a link url
-//image should be able to slide
 
 export default function DemoProfile() {
 
@@ -26,9 +21,9 @@ export default function DemoProfile() {
             </div>
 
             <div style={{display: "flex", justifyContent: "space-between", marginTop: "8px"}}>
-                <div style={{display: "flex", flexDirection: "column", gap: "8px"}}>
+                <div style={{display: "flex", flexDirection: "column", gap: "4px"}}>
                     <div style={{fontSize: "1.1075rem", overflow: "hidden"}}>{listing.name}</div>
-                    <span style={{fontSize: "0.9075rem", fontWeight: "600"}}>{formatPrice(listing.prices.min)} -&gt; {formatPrice(listing.prices.max)}</span>
+                    <span style={{fontSize: "0.9075rem", fontWeight: "600"}}>{formatPrice(listing.prices.min)} {<MoveRight size={10}/>} {formatPrice(listing.prices.max)}</span>
                 </div>
                 <p style={{fontSize: "0.9075rem"}}>Mới ★</p>
             </div>

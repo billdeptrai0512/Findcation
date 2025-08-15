@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { useListing } from '../listingContext';
-import { useUserLocation } from '../../map/userLocationContext';
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
@@ -9,14 +8,12 @@ import L from "leaflet";
 import styles from './location.module.css';
 
 export default function AddressMap({ icon }) {
-
-  const {GPS} = useUserLocation()
-  const {listing} = useListing()
+  const { listing } = useListing()
   const [text, setText] = useState("");
 
   useEffect(() => {
 
-    if (listing.location.address === "" || listing.location.public === false) return setText("Bạn đang ở đây!");
+    if (listing.location.address === "" || listing.location.public === false) return setText("Home ở đây!");
     
     return setText(listing.location.address);
     
@@ -24,26 +21,35 @@ export default function AddressMap({ icon }) {
 
   const customIcon = new L.Icon({
     iconUrl: icon,
-    iconSize: [40, 60], // adjust size
-    iconAnchor: [20, 50], // point of the icon that corresponds to marker's location
-    popupAnchor: [0, -60], // position of popup relative to icon
+    iconSize: [35, 50],
+    iconAnchor: [20, 50],
+    popupAnchor: [-4, -55],
   });
 
+  const defaultPosition = {
+    lat : 16.076096988000074,
+    lng : 106.58883965100006
+  }
+
   const SetViewOnPosition = ({ position }) => {
+
     const map = useMap();
+
+    const zoom = listing.location.address === "" ? 6 : 17
+
     useEffect(() => {
       const timer = setTimeout(() => {
-        map.setView(position, 20);
+        map.setView(position, zoom);
       }, 150);
       return () => clearTimeout(timer);
-    }, [position, map]);
+    }, [position, map, zoom]);
   
     return null;
   };
 
 
   //if we not have the location.address. what default address we use ? other with user.gps ? what if user gps not have ?
-  const gps = listing.location.address === "" ? GPS : listing.location.gps
+  const gps = listing.location.address === "" ? defaultPosition : listing.location.gps
 
   return (
     <div className={styles.map_wrap}>
@@ -53,10 +59,12 @@ export default function AddressMap({ icon }) {
           keyboard={false} scrollWheelZoom={false}  attributionControl={false}>
           <TileLayer url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png" />
           <TileLayer url="https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png" />
-  
-          <Marker position={gps} icon={customIcon} eventHandlers={{add: (e) => e.target.openPopup()}}>
+
+          {listing.location.address !== "" && 
+            <Marker position={gps} icon={customIcon} >
               <Popup autoOpen={true} > {text} </Popup>
-          </Marker>
+            </Marker>
+          }
   
           <SetViewOnPosition position={gps} />
 

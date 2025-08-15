@@ -1,25 +1,29 @@
 import styles from "./listing.module.css"
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useListing } from "./listingContext";
+import { useStaycation } from "../map/staycationContext";
 import { useAuth } from "../auth/authcontext";
 
 export default function FooterProgress({start, getStart, goNext, goBack, percentage}) {
 
-  console.log(percentage)
 
-  const {uploadListingOnDatabase} = useListing()
+  const {uploadListingOnDatabase, resetListing} = useListing()
+  const {fetchStaycations} = useStaycation()
   const {user} = useAuth()
 
   const navigate = useNavigate()
-
-
   const handleUploadListing = () => {
 
     if (!user) return console.log('no user')
 
     uploadListingOnDatabase(user.id)
 
+    fetchStaycations()
+
+    resetListing()
+
     navigate("/")
+    
   }
 
   return (
@@ -56,7 +60,7 @@ export default function FooterProgress({start, getStart, goNext, goBack, percent
                     </button>
                     {
                       percentage !== 100 ? 
-                      <button onClick={goNext} className={styles.next_button}>
+                      <button onClick={goNext} className={styles.next_button} style={{backgroundColor: "#DDDDDD"}}>
                         Tiếp theo
                       </button> :
                       <button onClick={handleUploadListing} className={styles.upload_button}>

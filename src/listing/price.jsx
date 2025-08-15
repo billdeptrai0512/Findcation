@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { MoveDown } from "lucide-react";
+import { MoveDown, MoveRight } from "lucide-react";
 import { useListing } from "./listingContext";
+import { useMediaQuery } from "react-responsive";
 import styles from "./listing.module.css";
 
 export default function RangePrice() {
 
     const { listing, uploadMinPrice, uploadMaxPrice} = useListing()
+    const isMobile = useMediaQuery({ query: '(max-width: 768px)'})
 
     const [editing, setEditing] = useState(null);
 
@@ -49,7 +51,7 @@ export default function RangePrice() {
                 </div>
 
                 <div>
-                    <MoveDown size={50} />
+                    {isMobile ? <MoveDown size={50} /> : <MoveRight size={50} />}
                 </div>
 
                 <div>

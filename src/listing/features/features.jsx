@@ -36,14 +36,12 @@ export default function Features() {
 
     return (
         <div className={styles.pageContent} style={{justifyContent: "unset"}}>
-            <h1 style={{ marginBottom: "4px", fontSize: "1.68rem"}}>Chổ ở của bạn có những tiện nghi nào?</h1>
-            <div className={styles.intrustion} style={{ paddingBottom: "8px", color: "#6A6A6A" }}>
-                Bạn có thể bổ sung thêm sau khi đăng mục cho thuê.
-            </div>
+            <h1 style={{ marginBottom: "4px", fontSize: "1.68rem"}}>Staycation của bạn có gì đặc biệt ?</h1>
+
             <div clasname={styles.house_features_area}>
-                <Section title="Những tiện nghi được yêu thích nhất ?" options={defaultOptions} />
-                <Section title="Thế còn tiện nghi đặc biệt thì sao ?" options={premiumOptions} />
-                <Section title="Không thể thiếu những tiện nghi đảm bảo an toàn ?" options={safetyOptions} />
+                <Section title="tiện nghi cơ bản:" options={defaultOptions} />
+                <Section title="đặc biệt hơn thì sao" options={premiumOptions} />
+                <Section title="có đảm bảo an toàn không ?" options={safetyOptions} />
             </div>
         </div>
     );

@@ -17,11 +17,12 @@ const StaycationProvider = ({ children }) => {
 
         setStaycations(response.data)
         
-      } catch (err) {
-  
-          console.error('Fetch staycations failed', err);
-  
-      } 
+    } catch (err) {
+
+        console.error('Fetch staycations failed', err);
+
+    } 
+    
   };
 
   return (

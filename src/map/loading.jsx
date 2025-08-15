@@ -50,9 +50,9 @@ export default function LoadingScreen() {
 
 
   return (
-    <div style={{ padding: "2em", fontSize: "1.2em", textAlign: "center" }}>
+    <div style={{ padding: "2em", fontSize: "1.1075em" }}>
       <h1>Findcation</h1>
-      <p>Bản đồ tất cả self-checking staycation ở Việt Nam</p>
+      <span>Bản đồ tất cả self-checking staycation ở Việt Nam</span>
 
       {error && (
         <div style={{ padding: "1em", fontSize: "0.75em", color: "red" }}>
@@ -60,7 +60,10 @@ export default function LoadingScreen() {
         </div>
       )}
 
-      <button onClick={handleRequestLocation}>Bắt đầu</button>
+      <div>
+        <button onClick={handleRequestLocation}>Bắt đầu</button>
+      </div>
+      
 
     </div>
   );

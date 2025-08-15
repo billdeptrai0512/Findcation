@@ -22,7 +22,7 @@ export default function StartPage() {
                 <div className={styles.number}>3</div>
                 <div className={styles.intrustion}>
                     <h2>Xuất hiện trên bản đồ</h2>
-                    <h3>Cài đặt địa chỉ, giá thuê và thông tin liên lạc của bạn.</h3>
+                    <h3>Công khai vị trí, giá thuê và thông tin liên lạc.</h3>
                 </div>
             </section>
         </div>

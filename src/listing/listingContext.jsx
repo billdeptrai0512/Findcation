@@ -23,9 +23,9 @@ const ListingProvider = ({ children }) => {
             },
         },
         contacts: {
-            zalo: "https://www.instagram.com/_tnlm_",
-            facebook: "https://www.instagram.com/_tnlm_",
-            instagram: "https://www.instagram.com/_tnlm_",
+            zalo: null,
+            facebook: null,
+            instagram: null,
         },
         prices: {min: "240000", max: "680000"},
         features: [],
@@ -54,29 +54,36 @@ const ListingProvider = ({ children }) => {
     }
 
     const uploadImages = (files) => {
+
         if (!files || files.length === 0) return;
     
         if (files.length > 1) {
-        const newImages = Array.from(files).map((file) => ({
-            file,
-            url: URL.createObjectURL(file),
-        }));
+
+            const newImages = Array.from(files).map((file) => ({
+                file,
+                url: URL.createObjectURL(file),
+            }));
     
-        setListing((prev) => ({
-            ...prev,
-            images: [...prev.images, ...newImages],
-        }));
+            setListing((prev) => ({
+                ...prev,
+                images: [...prev.images, ...newImages],
+            }));
+            
         } else {
-        const file = files[0];
-        const data = {
-            file,
-            url: URL.createObjectURL(file),
-        };
-    
-        setListing((prev) => ({
-            ...prev,
-            images: [...prev.images, data],
-        }));
+
+            const file = files[0];
+
+            const data = {
+                file,
+                url: URL.createObjectURL(file),
+            };
+
+
+            setListing((prev) => ({
+                ...prev,
+                images: [...prev.images, data],
+            }));
+
         }
     };
 
@@ -118,20 +125,21 @@ const ListingProvider = ({ children }) => {
     };
 
     const uploadLocation = (formatted_address, geometry, details) => {
+
         setListing((prev) => ({
-        ...prev,
-        location: {
-            ...prev.location,
-            address: formatted_address,
-            gps: {
-            lat: geometry.location.lat,
-            lng: geometry.location.lng
-            },
-            details: {
-            ...prev.location.details,
-            ...details
+            ...prev,
+            location: {
+                ...prev.location,
+                address: formatted_address,
+                gps: {
+                    lat: geometry.location.lat,
+                    lng: geometry.location.lng
+                },
+                details: {
+                    ...prev.location.details,
+                    ...details
+                }
             }
-        }
         }));
 
     };
@@ -191,19 +199,58 @@ const ListingProvider = ({ children }) => {
     }
 
     const uploadListingOnDatabase = async (hostId) => {
-
-        console.table(listing)
-
         try {
-
-            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/listing/create-new`, {listing, hostId});
-
+          const formData = new FormData();
+      
+          // Append raw listing object (without file objects)
+          const { images, ...listingWithoutFiles } = listing;
+          formData.append("listing", JSON.stringify(listingWithoutFiles));
+          formData.append("hostId", hostId);
+      
+          // Append files separately
+          images.forEach(img => {
+            if (img.file) formData.append("images", img.file);
+          });
+      
+          await axios.post(
+            `${import.meta.env.VITE_BACKEND_URL}/listing/create-new`,
+            formData,
+            { headers: { "Content-Type": "multipart/form-data" } }
+          );
+      
+          console.log("Listing created successfully");
         } catch (err) {
+          console.error("Upload failed", err);
+        }
+    };
 
-            console.error('Login failed', err);
+    const resetListing = () => {
 
-        } 
-
+        setListing({
+            name : "",
+            type : "",
+            location: {
+                public: false,
+                address: "",
+                gps: {lat: "", lng: ""},
+                
+                details: {
+                    apartment: "",
+                    building: "",
+                    street: "",
+                    ward: "",
+                    city: ""
+                },
+            },
+            contacts: {
+                zalo: null,
+                facebook: null,
+                instagram: null,
+            },
+            prices: {min: "240000", max: "680000"},
+            features: [],
+            images: []
+        })
 
     }
 
@@ -224,7 +271,8 @@ const ListingProvider = ({ children }) => {
             uploadMinPrice,
             uploadMaxPrice,
             uploadContact,
-            uploadListingOnDatabase
+            uploadListingOnDatabase,
+            resetListing
         }}
         >
         {children}
