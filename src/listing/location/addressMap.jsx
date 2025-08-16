@@ -21,9 +21,9 @@ export default function AddressMap({ icon }) {
 
   const customIcon = new L.Icon({
     iconUrl: icon,
-    iconSize: [35, 50],
+    iconSize: [41, 50],
     iconAnchor: [20, 50],
-    popupAnchor: [-4, -55],
+    popupAnchor: [0, -50],
   });
 
   const defaultPosition = {

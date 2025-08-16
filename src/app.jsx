@@ -3,6 +3,7 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./auth/authcontext";
 import { UserLocationProvider } from "./map/userLocationContext";
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { Analytics } from '@vercel/analytics/react';
 
 import Register from "./auth/register";
 import ErrorPage from "./error-page";
@@ -20,8 +21,8 @@ import LocationListing from "./listing/location/main";
 import RangePrice from "./listing/price";
 import StartPage from "./listing/start";
 import Listing from "./listing/main";
-import { ListingProvider } from "./listing/listingContext";
 import Final from "./listing/final/main";
+import { ListingProvider } from "./listing/listingContext";
 import { StaycationProvider } from "./map/staycationContext";
 
 const router = createBrowserRouter([
@@ -99,6 +100,7 @@ export default function App() {
             <StaycationProvider>
               <ListingProvider>
                 <RouterProvider router={router} />
+                <Analytics />
               </ListingProvider>   
             </StaycationProvider>
           </UserLocationProvider>

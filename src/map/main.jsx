@@ -37,13 +37,13 @@ export default function Map() {
         <TileLayer url="https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png" />
 
         {/* Current user location */}
-        <Marker position={GPS}  >
+        <Marker position={GPS} icon={peopleIcon} >
           <Popup >{user ? user.name : "Bạn"} đang ở đây!</Popup>
         </Marker>
 
         {/* Staycation markers */}
         {staycations.map((stay) => (
-          <Marker key={stay.id} icon={customIcon}
+          <Marker key={stay.id} icon={homeIcon}
             position={[stay.location.gps.lat, stay.location.gps.lng]}>
             <Popup minWidth={isMobile ? 50.2 : 240.2} closeButton={false} className={styles.content}>
               <Staycation staycation={stay}/>
@@ -59,8 +59,15 @@ export default function Map() {
   );
 }
 
-const customIcon = new L.Icon({
+const homeIcon = new L.Icon({
   iconUrl: Home,
+  iconSize: [41, 50],
+  iconAnchor: [20, 50],
+  popupAnchor: [0, -50],
+});
+
+const peopleIcon = new L.Icon({
+  iconUrl: People,
   iconSize: [41, 50],
   iconAnchor: [20, 50],
   popupAnchor: [0, -50],
