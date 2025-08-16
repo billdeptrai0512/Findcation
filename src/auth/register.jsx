@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from './authcontext';
 import { ChevronLeft } from 'lucide-react'
-import styles from './Login.module.css';
+import styles from './login.module.css';
 import axios from 'axios';
 
 export default function RegisterForm() {

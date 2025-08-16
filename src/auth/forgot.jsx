@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ChevronLeft  } from 'lucide-react';
 import axios from 'axios';
-import styles from './Login.module.css';
+import styles from './login.module.css';
 
 export default function Forgot() {
 

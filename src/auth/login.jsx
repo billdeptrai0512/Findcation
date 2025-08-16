@@ -5,7 +5,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import { X, Mail, ChevronLeft  } from 'lucide-react';
 import PasswordLogin from './passwordLogin';
 import axios from 'axios';
-import styles from './Login.module.css';
+import styles from './login.module.css';
 
 export default function Login() {
     const { setUser } = useAuth();
