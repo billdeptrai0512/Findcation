@@ -117,7 +117,6 @@ export default function RegisterForm() {
                                     onClick={() => setShowPassword(!showPassword)}>
                                         {showPassword ? "Ẩn" : "Hiển thị"}
                                 </button>
-
                             </div>
                         </div>
 

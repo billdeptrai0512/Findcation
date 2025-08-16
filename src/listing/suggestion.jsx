@@ -2,12 +2,14 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { X } from "lucide-react"
 import { useAuth } from "../auth/authcontext"
+import { useOutletContext } from "react-router-dom"
 import axios from "axios"
 import styles from "../auth/login.module.css"
 
 export default function Suggestion() {
 
     const navigate = useNavigate()
+    const { currentStep } = useOutletContext()
     const { user } = useAuth()
     const [message, setMessage] = useState('')
     const [error, setError] = useState('')
@@ -22,10 +24,12 @@ export default function Suggestion() {
             await axios.post(`${import.meta.env.VITE_BACKEND_URL}/suggestion`, {
                 message,
                 user,
-                stage: "test"
+                stage: currentStep
             });
 
-            alert('cảm ơn bạn đã góp ý')
+            alert('Cảm ơn đã góp ý 🤝')
+
+            navigate(`/list-staycation/${currentStep}`)
 
         } catch (err) {
             console.error('Login failed', err);
@@ -37,7 +41,7 @@ export default function Suggestion() {
         <div className={styles.container}>
             <div className={styles.card}>
                 <div className={styles.header}>
-                    <button onClick={() => navigate('/list-staycation')}>
+                    <button onClick={() => navigate(`/list-staycation/${currentStep}`)}>
                         <X size={20} style={{padding: "4px"}}/>
                     </button>
                     <div className={styles.title}>
@@ -50,7 +54,7 @@ export default function Suggestion() {
                             <textarea
                                 id="message"
                                 name="message"
-                                placeholder="Viết ra suy nghĩ của bạn"
+                                placeholder="Bạn nghĩ điều gì chưa tốt và nên được cải thiện ?"
                                 rows={4}
                                 value={message}
                                 style={{ resize: "none" }}

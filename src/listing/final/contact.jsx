@@ -4,15 +4,14 @@ import { useListing } from "../listingContext";
 import { useOutletContext } from "react-router-dom";
 import { Facebook, Instagram, Pencil, Check } from "lucide-react";
 import styles from "../listing.module.css";
-
+import Zalo from "../../assets/zalo.png"; // Assuming Zalo is an SVG component
 // Constants
-const ICON_SIZE = 30;
 const MOBILE_BREAKPOINT = 768;
 
 const CONTACTS_CONFIG = [
-  { field: "facebook", icon: <Facebook size={ICON_SIZE} />, placeholder: "Facebook URL" },
-  { field: "instagram", icon: <Instagram size={ICON_SIZE} />, placeholder: "Instagram URL" },
-  { field: "zalo", icon: <Instagram size={ICON_SIZE} />, placeholder: "Zalo URL" }
+  { field: "facebook", icon: <Facebook size={35} fill="#222222" stroke="none" />, placeholder: "Facebook URL" },
+  { field: "instagram", icon: <Instagram size={35} stroke="#ffffff" fill="#222222" strokeWidth={2} />, placeholder: "Instagram URL" },
+  { field: "zalo", icon: <img src={Zalo} alt="" style={{width:"37px"}} />, placeholder: "Zalo URL" }
 ];
 
 // Helper: Extract readable username from URL
@@ -30,7 +29,7 @@ function getUsernameFromUrl(url) {
 function ContactField({ contact, value, isEditing, onChange, onToggleEdit }) {
   return (
     <div style={stylesRow}>
-      <div style={stylesIcon}>{contact.icon}</div>
+      <div style={stylesIcon}> {contact.icon} </div>
       <div style={stylesColumn}>
         {isEditing || value === null ? (
           <div style={stylesEditRow}>

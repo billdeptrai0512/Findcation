@@ -61,9 +61,9 @@ export default function Map() {
 
 const customIcon = new L.Icon({
   iconUrl: Home,
-  iconSize: [35, 50],
+  iconSize: [41, 50],
   iconAnchor: [20, 50],
-  popupAnchor: [-2, -55],
+  popupAnchor: [0, -50],
 });
 
 const SetViewOnPosition = ({ position }) => {

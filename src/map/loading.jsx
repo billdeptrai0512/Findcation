@@ -51,7 +51,7 @@ export default function LoadingScreen() {
 
   return (
     <div style={{ padding: "2em", fontSize: "1.1075em" }}>
-      <h1>Findcation</h1>
+      <h1 style={{marginBottom: "8px"}}>Findcation</h1>
       <span>Bản đồ tất cả self-checking staycation ở Việt Nam</span>
 
       {error && (
@@ -60,9 +60,24 @@ export default function LoadingScreen() {
         </div>
       )}
 
-      <div>
-        <button onClick={handleRequestLocation}>Bắt đầu</button>
-      </div>
+    <div style={{ marginTop: "16px" }}>
+      <button
+        onClick={handleRequestLocation}
+        style={{
+          padding: "16px 32px",
+          borderRadius: "8px",
+          background: "linear-gradient(to right, #E61E4D 0%, #E31C5F 50%, #D70466 100%)",
+          color: "white",
+          border: "none",
+          cursor: "pointer",
+          fontSize: "0.975rem",
+          fontWeight: "500",
+          fontFamily: "'Inter', sans-serif"
+        }}
+      >
+        Bắt đầu
+      </button>
+    </div>
       
 
     </div>
