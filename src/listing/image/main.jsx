@@ -1,4 +1,6 @@
 import { useListing } from "../listingContext";
+import { useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
 import styles from "./image.module.css"
 import Camera from "../../assets/camera.png"
 import Area from "./area";
@@ -6,6 +8,16 @@ import Area from "./area";
 export default function ImageUpload() {
 
     const {listing, uploadImages} = useListing()
+
+    const { setStepValidity, currentStep } = useOutletContext();
+
+    useEffect(() => {
+        setStepValidity((prev) => ({
+          ...prev,
+          [currentStep]: listing.images.length > 0
+        }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [listing.images]);
 
     if (listing.images.length === 0) return (
 

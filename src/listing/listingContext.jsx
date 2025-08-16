@@ -27,7 +27,7 @@ const ListingProvider = ({ children }) => {
             facebook: null,
             instagram: null,
         },
-        prices: {min: "240000", max: "680000"},
+        prices: {min: null, max: null},
         features: [],
         images: []
 

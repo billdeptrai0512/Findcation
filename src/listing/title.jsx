@@ -1,9 +1,20 @@
+import { useEffect } from "react";
 import { useListing } from "./listingContext";
+import { useOutletContext } from "react-router-dom";
 import styles from "./listing.module.css"
 
 export default function Title() {
 
+    const { setStepValidity, currentStep } = useOutletContext();
     const {listing, uploadName} = useListing()
+
+    useEffect(() => {
+        setStepValidity((prev) => ({
+          ...prev,
+          [currentStep]: listing.name.trim().length > 0
+        }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [listing.name]);
 
     return (
         <div className={styles.pageContent}>

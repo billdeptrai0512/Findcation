@@ -55,45 +55,40 @@ export default function ResetPassword() {
                 <div className={styles.panel}>
                     <form onSubmit={handleChangePassword}>
                         <div className={styles.inputGroup}>
-                            <input
-                                id="password"
-                                name="password"
-                                type={showPassword ? "text" : "password"}
-                                placeholder="Mật khẩu"
-                                autoComplete='new-password'
-                                value={password}
-                                onChange={(e) => setPassWord(e.target.value)}
-                                className={styles.input}
-                            />
-                            <div className={styles.showPassword} style={{zIndex: "2"}}>
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    className={styles.toggleButton}
-                                >
-                                    {showPassword ? "Ẩn" : "Hiển thị"}
+
+                            <div style={{position: "relative", display: "flex", alignItems: "center"}}>
+                                <input
+                                    id="password"
+                                    name="password"
+                                    placeholder="Mật khẩu"
+                                    type={showPassword ? "text" : "password"}
+                                    autoComplete='new-password'
+                                    value={password}
+                                    onChange={(e) => setPassWord(e.target.value)}
+                                    className={styles.input}
+                                />
+                                <button type="button" className={styles.toggleButton}
+                                    onClick={() => setShowPassword(!showPassword)}>
+                                        {showPassword ? "Ẩn" : "Hiển thị"}
                                 </button>
                             </div>
 
                             {/*  */}
 
-                            <input
-                                id="confirm-password"
-                                name="confirm-password"
-                                type={showConfirm ? "text" : "password"}
-                                placeholder="Nhập lại mật khẩu của bạn"
-                                value={confirmPassword}
-                                autoComplete='new-password'
-                                onChange={(e) => setConfirmPassWord(e.target.value)}
-                                className={styles.input}
-                            />
-                            <div className={styles.showPassword} style={{height: "9.85em"}}>
-                                <button
-                                    type="button"
-                                    onClick={() => setShowConfirm(!showConfirm)}
-                                    className={styles.toggleButton}
-                                >
-                                    {showConfirm ? "Ẩn" : "Hiển thị"}
+                            <div style={{position: "relative", display: "flex", alignItems: "center"}}>
+                                <input
+                                    id="confirm-password"
+                                    name="confirm-password"
+                                    placeholder="Nhập lại mật khẩu của bạn"
+                                    type={showConfirm ? "text" : "password"}
+                                    autoComplete='new-password'
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassWord(e.target.value)}
+                                    className={styles.input}
+                                />
+                                <button type="button" className={styles.toggleButton}
+                                    onClick={() => setShowConfirm(!showConfirm)}>
+                                        {showConfirm ? "Ẩn" : "Hiển thị"}
                                 </button>
                             </div>
                         </div>

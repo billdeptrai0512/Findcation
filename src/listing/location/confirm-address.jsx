@@ -16,7 +16,7 @@ export default function ConfirmAddress() {
     }
 
     return (
-        <div className={styles.pageContent} style={{padding:"4px", minWidth: isMobile ? "unset" : "630px"}}>
+        <div className={styles.pageContent} style={{padding:"0px 4px", minWidth: isMobile ? "unset" : "630px", marginBottom: "unset"}}>
 
             <h1 style={{ marginBottom: "4px", paddingBottom: "24px", fontSize: "1.68rem", paddingLeft:"unset" }}>Xác nhận địa chỉ của bạn</h1>
                 

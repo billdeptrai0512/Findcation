@@ -56,7 +56,7 @@ export default function RegisterForm() {
         <div className={styles.container}>
             <div className={styles.card}>
                 <div className={styles.header}>
-                    <button onClick={() => navigate('/login')}>
+                    <button onClick={() => navigate('/auth/login')}>
                         <ChevronLeft size={20} style={{padding: "4px"}}/>
                     </button>
                     <div className={styles.title}>
@@ -102,24 +102,22 @@ export default function RegisterForm() {
 
                         <div className={styles.inputGroup}>
                             <label>Mật khẩu</label>
-                            <input
-                                id="password"
-                                name="password"
-                                placeholder="Mật khẩu"
-                                type={showPassword ? "text" : "password"}
-                                autoComplete='new-password'
-                                value={formData.password}
-                                onChange={handleChange}
-                                className={styles.input}
-                            />
-                            <div className={styles.showPassword} style={{height: "6.4em"}}>
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    className={styles.toggleButton}
-                                >
-                                    {showPassword ? "Ẩn" : "Hiển thị"}
+                            <div style={{position: "relative", display: "flex", alignItems: "center"}}>
+                                <input
+                                    id="password"
+                                    name="password"
+                                    placeholder="Mật khẩu"
+                                    type={showPassword ? "text" : "password"}
+                                    autoComplete='new-password'
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    className={styles.input}
+                                />
+                                <button type="button" className={styles.toggleButton}
+                                    onClick={() => setShowPassword(!showPassword)}>
+                                        {showPassword ? "Ẩn" : "Hiển thị"}
                                 </button>
+
                             </div>
                         </div>
 

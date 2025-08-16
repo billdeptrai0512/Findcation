@@ -1,10 +1,25 @@
 import { Wifi, Monitor, Video, Sofa, Snowflake, Microwave, Refrigerator, Gamepad2, WashingMachine, Heater, LampDesk, Waves, Car, Vault, Cctv, FireExtinguisher, Icon } from "lucide-react";
 import { bathBubble, chairsTableParasol, socketUsa } from '@lucide/lab';
 import { IconSportBillard } from '@tabler/icons-react';
+import { useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
+import { useListing } from "../listingContext";
 import styles from "../listing.module.css";
 import List from "./list";
 
 export default function Features() {
+
+    const { setStepValidity, currentStep } = useOutletContext();
+    const { listing } = useListing();
+
+    useEffect(() => {
+        setStepValidity((prev) => ({
+          ...prev,
+          [currentStep]: listing.features.length > 0
+        }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [listing.features]);
+
     const defaultOptions = [
         { name: 'Wifi', icon: <Wifi size={32} className={styles.house_type_icon} /> },
         { name: 'TV', icon: <Monitor size={32} className={styles.house_type_icon} /> },

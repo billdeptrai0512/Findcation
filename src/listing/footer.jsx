@@ -4,10 +4,9 @@ import { useListing } from "./listingContext";
 import { useStaycation } from "../map/staycationContext";
 import { useAuth } from "../auth/authcontext";
 
-export default function FooterProgress({start, getStart, goNext, goBack, percentage}) {
+export default function FooterProgress({start, getStart, goNext, goBack, percentage, page, steps, stepValidity}) {
 
-
-  const {uploadListingOnDatabase, resetListing} = useListing()
+  const {uploadListingOnDatabase, resetListing} = useListing()  
   const {fetchStaycations} = useStaycation()
   const {user} = useAuth()
 
@@ -23,7 +22,7 @@ export default function FooterProgress({start, getStart, goNext, goBack, percent
     resetListing()
 
     navigate("/")
-    
+
   }
 
   return (
@@ -46,32 +45,33 @@ export default function FooterProgress({start, getStart, goNext, goBack, percent
         </div>
       </div>
 
-        <div className={styles.footerButtons}
-            style={{ justifyContent: start === true ? "space-between" : "end" }}>
+      <div className={styles.footerButtons}
+          style={{ justifyContent: start === true ? "space-between" : "end" }}>
 
-            {start === false ? (
-                <button className={styles.startButton} onClick={getStart} >
-                    Bắt đầu
-                </button>
-            ) : (
-                <>
-                    <button onClick={goBack} className={styles.back_button}>
-                        Quay lại
+          {start === false ? (
+              <button className={styles.startButton} onClick={getStart} >
+                  Bắt đầu
+              </button>
+          ) : (
+              <>
+                  <button onClick={goBack} className={styles.back_button}>
+                      Quay lại
+                  </button>
+                  {
+                    percentage !== 100 ? 
+                    <button onClick={goNext} className={styles.next_button} disabled={!stepValidity[steps[page]]}
+                          style={{ backgroundColor: stepValidity[steps[page]] ? "#000" : "#DDDDDD", cursor: stepValidity[steps[page]] ? "pointer" : "not-allowed"}}>
+                          Tiếp theo
+                    </button> :
+                    <button onClick={handleUploadListing} className={styles.upload_button} disabled={!stepValidity[steps[page]]}>
+                      Đăng
                     </button>
-                    {
-                      percentage !== 100 ? 
-                      <button onClick={goNext} className={styles.next_button} style={{backgroundColor: "#DDDDDD"}}>
-                        Tiếp theo
-                      </button> :
-                      <button onClick={handleUploadListing} className={styles.upload_button}>
-                        Đăng
-                      </button>
-                    }
+                  }
 
-                </>
-            )}
-            
-        </div>
+              </>
+          )}
+          
+      </div>
     </div>
   );
 }

@@ -1,10 +1,21 @@
 import { House, DoorOpen } from "lucide-react"
+import { useOutletContext } from "react-router-dom"
+import { useEffect } from "react"
 import { useListing } from "./listingContext"
 import styles from "./listing.module.css"
 
 export default function TypeOfHouse() {
 
     const {listing, uploadType} = useListing()
+    const { setStepValidity, currentStep } = useOutletContext();
+
+    useEffect(() => {
+        setStepValidity((prev) => ({
+          ...prev,
+          [currentStep]: listing.type !== ""
+        }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [listing.type]);
 
     return (
         <div className={styles.pageContent}>

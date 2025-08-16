@@ -61,7 +61,7 @@ export default function Login() {
         }
     };
 
-    if (foundEmail === false) return navigate("/register", {state: {email: email}}) 
+    if (foundEmail === false) return navigate("auth/register", {state: {email: email}}) 
 
     if (foundEmail === true) return <PasswordLogin email={email} setFoundEmail={setFoundEmail}/>
 
@@ -116,7 +116,7 @@ export default function Login() {
                     </div>
                 </div>
                 <div className={styles.panel}>
-                    <h2 >Chào mừng bạn đến với Findcation</h2>
+                    <h1>Chào mừng bạn đến với Findcation</h1>
                     <form onSubmit={handleSubmitEmail}>
                         <div className={styles.inputGroup}>
                             <input

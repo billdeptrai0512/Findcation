@@ -22,7 +22,7 @@ const StaycationProvider = ({ children }) => {
         console.error('Fetch staycations failed', err);
 
     } 
-    
+
   };
 
   return (
@@ -30,7 +30,6 @@ const StaycationProvider = ({ children }) => {
       value={{
         staycations,
         fetchStaycations,
-
       }}
     >
       {children}

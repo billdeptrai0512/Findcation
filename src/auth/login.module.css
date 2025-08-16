@@ -1,25 +1,20 @@
 .container {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  bottom: 0;
+  min-width: 100vw
 }
 
 .card {
-  min-width: 50vw;
   background-color: white;
-  border-radius: 1rem;
+  border-top-left-radius: 36px;
+  border-top-right-radius: 36px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  width: max-content;
 }
 
 .header {
   display: flex;
   align-items: center;
-  padding: 1em 2em;
+  padding: 8px 16px;
   border-bottom: 1px solid #DDDDDD;
 }
 
@@ -40,10 +35,14 @@
   padding: 1em 2em;
 }
 
+.panel > h1 {
+  font-size: 1.275rem;
+}
+
 .title {
   width: 82%;
   text-align: center;
-  font-size: 1.25rem;
+  font-size: 1.075rem;
   font-weight: bolder;
 }
 
@@ -64,6 +63,8 @@
 }
 
 .toggleButton {
+  position: absolute;
+  right: 0;
   background: none;
   border: none;
   color: #007bff;
@@ -76,6 +77,7 @@
   border: 1px solid #d1d5db; /* Tailwind gray-300 */
   border-radius: 0.5rem;
   font-size: 1rem;
+  flex: 1;
 }
 
 .input:focus {
@@ -182,4 +184,44 @@
   align-items: center;
   justify-content: center;
   gap: 8px
+}
+
+@media screen and (min-width: 768px) {
+    
+  .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card {
+    min-width: 50vw;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: max-content;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    padding: 1em 2em;
+    border-bottom: 1px solid #DDDDDD;
+  }
+
+  .title {
+    width: 82%;
+    text-align: center;
+    font-size: 1.075rem;
+    font-weight: bolder;
+  }
+
+  .panel > h1 {
+    font-size: 1.575rem;
+  }
+
 }

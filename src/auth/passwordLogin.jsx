@@ -47,23 +47,21 @@ export default function PasswordLogin({email, setFoundEmail}) {
                 <div className={styles.panel}>
                     <form onSubmit={handleSubmitPassword}>
                         <div className={styles.inputGroup}>
-                            <input
-                                id="password"
-                                name="password"
-                                type={showPassword ? "text" : "password"}
-                                placeholder="Mật khẩu"
-                                autoComplete='current-password'
-                                value={password}
-                                onChange={(e) => setPassWord(e.target.value)}
-                                className={styles.input}
-                            />
-                            <div className={styles.showPassword}>
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    className={styles.toggleButton}
-                                >
-                                    {showPassword ? "Ẩn" : "Hiển thị"}
+
+                            <div style={{position: "relative", display: "flex", alignItems: "center"}}>
+                                <input
+                                    id="password"
+                                    name="password"
+                                    placeholder="Mật khẩu"
+                                    type={showPassword ? "text" : "password"}
+                                    autoComplete='current-password'
+                                    value={password}
+                                    onChange={(e) => setPassWord(e.target.value)}
+                                    className={styles.input}
+                                />
+                                <button type="button" className={styles.toggleButton}
+                                    onClick={() => setShowPassword(!showPassword)}>
+                                        {showPassword ? "Ẩn" : "Hiển thị"}
                                 </button>
                             </div>
 

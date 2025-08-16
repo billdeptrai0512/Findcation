@@ -19,6 +19,13 @@ export default function Listing() { // PageContent
 
     const [start, setStart] = useState(false)
     const [page, setPage] = useState(0);
+
+    const [stepValidity, setStepValidity] = useState(
+        steps.reduce((acc, step) => {
+          acc[step] = false; // mặc định là chưa hợp lệ
+          return acc;
+        }, {})
+    );
   
     const percentage = Math.round((page / totalSteps) * 100);
 
@@ -37,7 +44,7 @@ export default function Listing() { // PageContent
         }
     };
     
-      const goBack = () => {
+    const goBack = () => {
         if (page === 0) {
             setStart(false)
             navigate(`/list-staycation`);    
@@ -52,11 +59,13 @@ export default function Listing() { // PageContent
   
     return (
         <div className={styles.listingContainer}>
-            <Header page={page}/>
+
+            <Header page={page} />
             
-            <Outlet />
+            <Outlet context={{ setStepValidity, currentStep: steps[page] }} />
             
-            <Footer start={start} getStart={getStart} goNext={goNext} goBack={goBack} percentage={percentage}/>
+            <Footer start={start} getStart={getStart} goNext={goNext} goBack={goBack} percentage={percentage} page={page} steps={steps} stepValidity={stepValidity} />
+
         </div>   
     )
 }

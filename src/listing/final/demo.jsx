@@ -7,6 +7,7 @@ export default function DemoProfile() {
 
     const { listing } = useListing()
 
+
     const formatPrice = (price) => {
         if (!price) return "";
         return parseInt(price, 10).toLocaleString("vi-VN") + "đ";
