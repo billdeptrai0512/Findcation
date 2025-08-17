@@ -24,6 +24,7 @@ import Listing from "./listing/main";
 import Final from "./listing/final/main";
 import { ListingProvider } from "./listing/listingContext";
 import { StaycationProvider } from "./map/staycationContext";
+import LandingPage from "./map/main";
 
 const router = createBrowserRouter([
   {
@@ -31,10 +32,7 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     errorElement: <ErrorPage />,
     children: [
-      {
-        index: true,
-        element: <></>, //render nothing for now 
-      },
+      { index: true, element: <LandingPage /> },
       {
         path: "/auth",
         element: <Auth />,
@@ -45,51 +43,24 @@ const router = createBrowserRouter([
           { path: "reset-password", element: <ResetPassword /> },
         ]
       },
-    ],
+    ], //seperate auth routes
   },
   {
     path: "/list-staycation",
     element: <Listing />,
     errorElement: <ErrorPage />,
     children: [
-      {
-        path: "",
-        element: <StartPage />
-      },
-      {
-        path: "title",
-        element: <Title />
-      },
-      {
-        path: "type-of-house",
-        element: <TypeOfHouse />
-      },
-      {
-        path: "images",
-        element: <ImageUpload />
-      },
-      {
-        path: "features",
-        element: <Features />
-      },
-      {
-        path: "location",
-        element: <LocationListing />
-      },
-      {
-        path: "price",
-        element: <RangePrice />
-      },
-      {
-        path: "contact",
-        element: <Final />
-      },
-      {
-        path: "suggestion",
-        element: <Suggestion />
-      }
+      { path: "", element: <StartPage /> },
+      { path: "title", element: <Title /> },
+      { path: "type-of-house", element: <TypeOfHouse /> },
+      { path: "images", element: <ImageUpload /> },
+      { path: "features", element: <Features /> },
+      { path: "location", element: <LocationListing /> },
+      { path: "price", element: <RangePrice /> },
+      { path: "contact",  element: <Final /> },
     ]
   },
+  
 ]);
 
 export default function App() {

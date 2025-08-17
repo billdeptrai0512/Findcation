@@ -1,3 +1,59 @@
+.header {
+  display: flex;
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding: 2rem;
+  justify-content: space-between;
+  text-align: start;
+  z-index: 1000;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+
+.title {
+  font-size: 0.875em
+}
+
+.title > h1 {
+  margin: 0;
+  padding-bottom: 4px;
+}
+
+.main_container {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map_box {
+  overflow: hidden;
+}
+
+.cta_div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.cta_button {
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: linear-gradient(to right, #E61E4D 0%, #E31C5F 50%, #D70466 100%);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif
+}
+
 .mapContainer {
   position: relative;
   height: 100vh;
@@ -11,6 +67,14 @@
   top: 0;
   left: 0;
   z-index: 0;
+}
+
+.vn-label {
+  background-color: black;
+}
+
+.leaflet-tooltip {
+  background-color: black;
 }
 
 p {
@@ -36,10 +100,35 @@ p {
   margin: 8px;
 }
 
+.login {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem
+}
+
+
+
+
 @media screen and (min-width: 768px) {
+
+  .header {
+    padding: 5rem;
+  }
+
+  .cta_div {
+    padding: 5rem;
+  }
+
+  .main_container {
+    min-width: 680px;
+    margin: 0 auto;
+  }
 
   .listing_name {
     font-size: 1.1075rem,
+  }
+
+  .title {
+    font-size: 1.175em
   }
 
   .listing_prices {
@@ -48,6 +137,18 @@ p {
 
   .listing_status {
     font-size: 0.9075rem;
+  }
+
+  .cta_button {
+    padding: 1em 2em;
+    border-radius: 8px;
+    background: linear-gradient(to right, #E61E4D 0%, #E31C5F 50%, #D70466 100%);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 0.975rem;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif
   }
 
 }

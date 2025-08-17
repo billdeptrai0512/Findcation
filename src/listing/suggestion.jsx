@@ -1,15 +1,11 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
 import { X } from "lucide-react"
 import { useAuth } from "../auth/authcontext"
-import { useOutletContext } from "react-router-dom"
 import axios from "axios"
 import styles from "../auth/login.module.css"
 
-export default function Suggestion() {
+export default function Suggestion({currentStep, setOpenSuggestions}) {
 
-    const navigate = useNavigate()
-    const { currentStep } = useOutletContext()
     const { user } = useAuth()
     const [message, setMessage] = useState('')
     const [error, setError] = useState('')
@@ -29,10 +25,10 @@ export default function Suggestion() {
 
             alert('Cảm ơn đã góp ý 🤝')
 
-            navigate(`/list-staycation/${currentStep}`)
+            setOpenSuggestions(false)
 
         } catch (err) {
-            console.error('Login failed', err);
+            console.error('Send suggestion failed', err);
 
         } 
     };
@@ -41,7 +37,7 @@ export default function Suggestion() {
         <div className={styles.container}>
             <div className={styles.card}>
                 <div className={styles.header}>
-                    <button onClick={() => navigate(`/list-staycation/${currentStep}`)}>
+                    <button onClick={() => setOpenSuggestions(false)}>
                         <X size={20} style={{padding: "4px"}}/>
                     </button>
                     <div className={styles.title}>

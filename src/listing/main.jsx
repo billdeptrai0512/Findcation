@@ -5,6 +5,7 @@ import { UsersThree } from "@phosphor-icons/react";
 import styles from "./listing.module.css"
 import Header from "./header"
 import Footer from "./footer"
+import Suggestion from "./suggestion";
 
 
 
@@ -19,6 +20,7 @@ export default function Listing() { // PageContent
 
     const [start, setStart] = useState(false)
     const [page, setPage] = useState(0);
+    const [openSuggestions, setOpenSuggestions] = useState(false);
 
     const [stepValidity, setStepValidity] = useState(
         steps.reduce((acc, step) => {
@@ -60,9 +62,11 @@ export default function Listing() { // PageContent
     return (
         <div className={styles.listingContainer}>
 
-            <Header page={page} />
+            <Header page={page} setOpenSuggestions={setOpenSuggestions}/>
             
             <Outlet context={{ setStepValidity, currentStep: steps[page] }} />
+
+            {openSuggestions && <Suggestion currentStep={steps[page]} setOpenSuggestions={setOpenSuggestions}/>}
             
             <Footer start={start} getStart={getStart} goNext={goNext} goBack={goBack} percentage={percentage} page={page} steps={steps} stepValidity={stepValidity} />
 

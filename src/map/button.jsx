@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import styles from "./footer.module.css"
+import styles from "./map.module.css"
 
 
 export default function Button({url, text, action}) {

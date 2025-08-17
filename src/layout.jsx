@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import Map from './map/main';
+import Map from './map/map';
 
 export default function MainLayout() {
 
@@ -7,7 +7,7 @@ export default function MainLayout() {
     <>
       <Map />
       <Outlet /> 
-    </>
+    </>    
   );
 
 }

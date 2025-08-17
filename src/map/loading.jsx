@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useUserLocation } from "./userLocationContext";
 import { useStaycation } from "./staycationContext";
+import styles from "./loading.module.css";
+import Map from "./main";
 
 
 export default function LoadingScreen() {
@@ -20,38 +22,36 @@ export default function LoadingScreen() {
     }
   }, []);
 
-  const handleRequestLocation = () => {
-    setError(null);
+  // const handleRequestLocation = () => {
+  //   setError(null);
 
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        console.log("SUCCESS:", pos);
-        saveLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude});
-        //success
-        console.log('start fetch all staycation on map')
+  //   navigator.geolocation.getCurrentPosition(
+  //     (pos) => {
+  //       console.log("SUCCESS:", pos);
+  //       saveLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude});
+  //       //success
+  //       console.log('start fetch all staycation on map')
 
-        fetchStaycations()
-      },
-      (err) => {
-        console.error("ERROR:", err);
-        if (err.code === 1) {
-          setError({
-            message:
-              "Chúng tôi cần quyền truy cập vị trí để cho bạn trải nghiệm tốt nhất ",
-          });
-        } else {
-          setError(err);
-        }
-      },
-      { enableHighAccuracy: true }
-    );
-  };
-
-
+  //       fetchStaycations()
+  //     },
+  //     (err) => {
+  //       console.error("ERROR:", err);
+  //       if (err.code === 1) {
+  //         setError({
+  //           message:
+  //             "Chúng tôi cần quyền truy cập vị trí để cho bạn trải nghiệm tốt nhất ",
+  //         });
+  //       } else {
+  //         setError(err);
+  //       }
+  //     },
+  //     { enableHighAccuracy: true }
+  //   );
+  // };
 
   return (
-    <div style={{ padding: "2em", fontSize: "1.1075em" }}>
-      <h1 style={{marginBottom: "8px"}}>Findcation</h1>
+    <div className={styles.title} >
+      <h1>Findcation</h1>
       <span>Bản đồ tất cả self-checking staycation ở Việt Nam</span>
 
       {error && (
@@ -59,27 +59,7 @@ export default function LoadingScreen() {
           {error.message}
         </div>
       )}
-
-    <div style={{ marginTop: "16px" }}>
-      <button
-        onClick={handleRequestLocation}
-        style={{
-          padding: "16px 32px",
-          borderRadius: "8px",
-          background: "linear-gradient(to right, #E61E4D 0%, #E31C5F 50%, #D70466 100%)",
-          color: "white",
-          border: "none",
-          cursor: "pointer",
-          fontSize: "0.975rem",
-          fontWeight: "500",
-          fontFamily: "'Inter', sans-serif"
-        }}
-      >
-        Bắt đầu
-      </button>
     </div>
-      
-
-    </div>
+    
   );
 }
