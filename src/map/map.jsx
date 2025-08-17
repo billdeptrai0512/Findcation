@@ -20,71 +20,45 @@ export default function Map() {
 
   const GPS = { lat : 16, lng : 109 }
 
-  const VIETNAM_PROVINCES_URL ="https://data.opendevelopmentmekong.net/dataset/999c96d8-fae0-4b82-9a2b-e481f6f50e12/resource/234169fb-ae73-4f23-bbd4-ff20a4fca401/download/diaphantinh.geojson"
-
-    function VietnamBoundaries() {
-        const [geoData, setGeoData] = useState(null);
-    
-        useEffect(() => {
-            fetch(VIETNAM_PROVINCES_URL)
-                .then((res) => res.json())
-                .then((data) => setGeoData(data))
-                .catch((err) => console.error("Failed to load GeoJSON:", err));
-            }, []);
-    
-        if (!geoData) return null;
-
-        const filteredGeoData = {
-            ...geoData,
-            features: geoData.features.filter(
-                (feature) =>
-                    feature.properties.ten_tinh === "Khánh Hòa" ||
-                    feature.properties.ten_tinh === "Đà Nẵng"
-            ),
-        };
-
-
-        return (
-                <GeoJSON
-                data={filteredGeoData} 
-                style={{ color: "black", weight: 0.5, fillOpacity: 0.01, cursor: "unset" }}
-                onEachFeature={(feature, layer) => {
-                    const name =
-                        feature.properties.ten_tinh || // <- Vietnam province name
-                        feature.properties.NAME_ENG ||
-                        feature.properties.Name ||
-                        feature.properties.name ||
-                        feature.properties.NAME;
-            
-                    if (name) {
-                        
-                        const truongsa = "quần đảo Trường Sa";
-                        if (name === "Khánh Hòa") {
-                            layer.bindTooltip(truongsa, {
-                                permanent: true,
-                                direction: "center",
-                                className: "vn-label",
-                                style: { fontSize: "10em", color: "black" },
-                            });
-                        }
-
-                        const hoangsa = "quần đảo Hoàng Sa";
-                        if (name === "Đà Nẵng") {
-                            layer.bindTooltip(hoangsa, {
-                                permanent: true,
-                                direction: "center",
-                                className: "vn-label",
-
-                            });
-                        }
-                    }
-                }}
-            />    
-        );
-    }
+  function VietnamBoundaries() {
+    const [geoData, setGeoData] = useState(null);
+  
+    useEffect(() => {
+      fetch(`${import.meta.env.VITE_BACKEND_URL}/geo/vn_islands.geojson`)   // endpoint backend bạn vừa tạo
+        .then((res) => res.json())
+        .then((data) => setGeoData(data))
+        .catch((err) => console.error("Failed to load GeoJSON:", err));
+    }, []);
+  
+    if (!geoData) return null;
+  
+    return (
+      <GeoJSON
+        data={geoData}
+        style={{ color: "black", weight: 0.5, fillOpacity: 0.01, cursor: "unset" }}
+        onEachFeature={(feature, layer) => {
+          if (feature.properties.ten_tinh === "Khánh Hòa") {
+            layer.bindTooltip("quần đảo Trường Sa", {
+              permanent: true,
+              direction: "center",
+              className: "vn-label",
+            });
+          }
+          if (feature.properties.ten_tinh === "Đà Nẵng") {
+            layer.bindTooltip("quần đảo Hoàng Sa", {
+              permanent: true,
+              direction: "center",
+              className: "vn-label",
+            });
+          }
+        }}
+      />
+    );
+  }
 
   useEffect(() => {
     fetchStaycations();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // if (!hasPermission || !GPS || !staycations) return <LoadingScreen />;
