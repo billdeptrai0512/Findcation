@@ -16,7 +16,7 @@ export default function Final() {
     return (
         <>
             <div className={styles.pageContent}>
-                <h1 style={{marginBottom: "4px", fontSize: "1.68rem"}}>Chúc mừng! Mọi thứ đã được chuẩn bị xong.</h1>
+                <h1 style={{marginBottom: "4px", fontSize: "1.68rem"}}>Chúc mừng! Bạn đã sẵn sàng.</h1>
 
                 <div className={styles.intrustion} style={{paddingBottom: "8px", color: "#6A6A6A", fontSize: "0.875rem"}}>
                     Bên dưới là góc nhìn của user với staycation của bạn. Bấm vào hình để xem phiên bản đầy đủ.
