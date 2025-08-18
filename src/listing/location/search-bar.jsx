@@ -39,7 +39,7 @@ export default function SearchBar() {
     <div className={styles.searchBar}>
       <div className={styles.search_input}>
         <MapPin size={isMobile ? 20 : 30} color="#222222" style={{ marginRight: "8px", marginLeft: "24px" }} />
-        <input type="text" placeholder="Nhập địa chỉ của bạn"
+        <input type="text" placeholder="nhập địa chỉ "
           value={address}
           onChange={(e) => setAddress(e.target.value)}
         />

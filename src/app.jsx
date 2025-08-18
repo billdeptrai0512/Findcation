@@ -18,13 +18,14 @@ import TypeOfHouse from "./listing/house_type";
 import ImageUpload from "./listing/image/main";
 import Features from "./listing/features/features";
 import LocationListing from "./listing/location/main";
-import RangePrice from "./listing/price";
+import RangePrice from "./listing/contacts-prices/price";
 import StartPage from "./listing/start";
 import Listing from "./listing/main";
 import Final from "./listing/final/main";
 import { ListingProvider } from "./listing/listingContext";
 import { StaycationProvider } from "./map/staycationContext";
 import LandingPage from "./map/main";
+import ContactsPrices from "./listing/contacts-prices/main";
 
 const router = createBrowserRouter([
   {
@@ -56,7 +57,7 @@ const router = createBrowserRouter([
       { path: "images", element: <ImageUpload /> },
       { path: "features", element: <Features /> },
       { path: "location", element: <LocationListing /> },
-      { path: "price", element: <RangePrice /> },
+      { path: "price", element: <ContactsPrices /> },
       { path: "contact",  element: <Final /> },
     ]
   },

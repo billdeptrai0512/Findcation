@@ -1,34 +1,48 @@
+import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import styles from "../listing.module.css";
-import DemoProfile from "./demo";
-import Contact from "./contact";
-
-
-//we need responsive
-//check button to confirm url
-//url when confirm should be act like a link url
-//image should be able to slide
+import Map from "./map";
+import MobileReview from "./mobilePreview";
+import DesktopReview from "./desktopPreview";
 
 export default function Final() {
 
+    const [renderPreview, setRenderPreview] = useState(false);
+
     const isMobile = useMediaQuery({ query: '(max-width: 768px)'})
 
+    console.log(isMobile)
+
     return (
-        <div className={styles.pageContent}>
-            <h1 style={{marginBottom: "4px", fontSize: "1.68rem"}}>Thật tuyệt! Đã đến lúc đăng cho thuê.</h1>
-            <div className={styles.intrustion} style={{paddingBottom: "8px", color: "#6A6A6A"}}>
-                Dưới đây là hình ảnh mà bọn mình sẽ hiển thị trên bản đồ. Hãy đảm bảo bạn đã thêm thông tin liên lạc trước khi đăng nhé.
+        <>
+            <div className={styles.pageContent}>
+                <h1 style={{marginBottom: "4px", fontSize: "1.68rem"}}>Chúc mừng! Mọi thứ đã được chuẩn bị xong.</h1>
+
+                <div className={styles.intrustion} style={{paddingBottom: "8px", color: "#6A6A6A", fontSize: "0.875rem"}}>
+                    Bên dưới là góc nhìn của user với staycation của bạn. Bấm vào hình để xem phiên bản đầy đủ.
+                </div>
+
+                <Map setRenderPreview={setRenderPreview}/>
+                
+            </div>
+
+            <div className={styles.preview_overlay} style={{display: renderPreview ? "flex" : "none"}}>
+                
+
+                {renderPreview && (
+                    isMobile ? (
+                        <MobileReview renderPreview={renderPreview} setRenderPreview={setRenderPreview} />
+                    ) : (
+                        <DesktopReview renderPreview={renderPreview} setRenderPreview={setRenderPreview} />
+                    )
+                )}
+
+
             </div>
 
 
-            <div className={isMobile ? styles.mobile_contact_container : styles.contact_container}>
+        </>
 
-                <DemoProfile />
-
-                <Contact />
-
-            </div>
-        </div>
     );
 }
 

@@ -112,11 +112,11 @@ export default function Login() {
                         <X size={20} style={{padding: "4px"}}/>
                     </button>
                     <div className={styles.title}>
-                        Đăng nhập hoặc đăng ký
+                        Đăng nhập
                     </div>
                 </div>
                 <div className={styles.panel}>
-                    <h1>Chào mừng bạn đến với Findcation</h1>
+                    <h1>Chào mừng bạn tham gia Findcation</h1>
                     <form onSubmit={handleSubmitEmail}>
                         <div className={styles.inputGroup}>
                             <input

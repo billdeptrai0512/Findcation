@@ -59,7 +59,8 @@ export default function FooterProgress({start, getStart, goNext, goBack, percent
                   </button>
                   {
                     percentage !== 100 ? 
-                    <button onClick={goNext} className={styles.next_button} disabled={!stepValidity[steps[page]]}
+                    <button onClick={goNext} 
+                          className={styles.next_button} disabled={!stepValidity[steps[page]]}
                           style={{ backgroundColor: stepValidity[steps[page]] ? "#000" : "#DDDDDD", cursor: stepValidity[steps[page]] ? "pointer" : "not-allowed"}}>
                           Tiếp theo
                     </button> :

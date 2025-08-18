@@ -83,7 +83,8 @@ input[type="checkbox"]:checked {
 
 .startButton {
     border: 1px solid #DDDDDD;
-    background-color: white;
+    color: white;
+    background: linear-gradient(to right, #E61E4D 0%, #E31C5F 50%, #D70466 100%);
     border-radius: 8px;
     padding: 1em 1.5em;
     cursor: pointer;
@@ -96,7 +97,8 @@ input[type="checkbox"]:checked {
 
 .upload_button {
     border: 1px solid #DDDDDD;
-    background-color: white;
+    color: white;
+    background: linear-gradient(to right, #E61E4D 0%, #E31C5F 50%, #D70466 100%);
     border-radius: 8px;
     padding: 12px 30px;
     font-size: 0.975rem;
@@ -320,6 +322,69 @@ input[type="checkbox"]:checked {
     padding-bottom: 24px;
 }
 
+.preview_overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3); /* semi-transparent dark overlay */
+    backdrop-filter: blur(2px); /* blurry effect behind overlay */
+    z-index: 1000;
+}
+
+.preview_container {
+    position: absolute;
+    bottom: 0;
+    min-width: 100vw;
+    z-index: 2;
+}
+
+.preview_card {
+    background-color:#FFFFFF;
+    border-radius: 24px;
+    border: 1px solid rgba(0,0,0,0.04);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    margin: 0px auto;
+    min-width: 30%;
+}   
+  
+.preview_header {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 24px;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.preview_header > h1 {
+    font-size: 1.075em;
+}
+
+.preview_header > button {
+    position: absolute;
+    display: flex;
+    border: none;
+    background: white;
+    cursor: pointer;
+    left: 0;
+    border-radius: 25px;
+    margin-left: 2em;
+    transition: background-color 0.2s ease;
+}
+
+.preview_header > button:hover {
+    background-color: #F7F7F7;
+}
+
+.preview_details {
+    scrollbar-width: none;    /* Firefox */
+    -ms-overflow-style: none;
+}
+
+.preview_details::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
 @media screen and (min-width: 768px) {
     
     .pageContent {
@@ -349,8 +414,19 @@ input[type="checkbox"]:checked {
         font-size: 1.125em;
     }
 
-    .price_setup {
-        flex-direction: row;
+    .preview_container {
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .preview_card {
+        max-width: 800px
+    }
+
+    .preview_header > h1 {
+        font-size: 1.25em;
     }
 
 }

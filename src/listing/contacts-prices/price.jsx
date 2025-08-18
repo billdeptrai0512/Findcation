@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { MoveDown, MoveRight } from "lucide-react";
-import { useListing } from "./listingContext";
+import { useListing } from "../listingContext";
 import { useOutletContext } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
-import styles from "./listing.module.css";
+import styles from "../listing.module.css";
 
 export default function RangePrice() {
 
@@ -37,21 +36,14 @@ export default function RangePrice() {
         return parseInt(price, 10).toLocaleString("vi-VN") + "đ";
     };
 
-    const isMobile = useMediaQuery({ query: '(max-width: 768px)'})
-
     return (
-        <div className={styles.pageContent}>
-            <h1 style={{ marginBottom: "4px", fontSize: "1.68rem" }}>Bây giờ, hãy đặt khoảng giá cho thuê.</h1>
-            <div className={styles.intrustion} style={{ paddingBottom: "8px", color: "#6A6A6A" }}>
-                Từ gói thấp nhất đến gói thuê cả ngày.
-            </div>
-
+        <div>
             <div className={styles.price_setup}>
                 <div>
                     <input type="text"
                         className={styles.price_input}
                         value={editing === "min" ? listing.prices.min : formatPrice(listing.prices.min)}
-                        placeholder="240.000đ"
+                        placeholder="gói thuê thấp nhất"
                         onFocus={() => setEditing("min")}
                         onBlur={() => setEditing(null)}
                         onChange={handleMinChange}
@@ -59,7 +51,7 @@ export default function RangePrice() {
                 </div>
 
                 <div>
-                    {isMobile ? <MoveDown size={50} /> : <MoveRight size={50} />}
+                    <MoveDown size={50} /> 
                 </div>
 
                 <div>
@@ -67,13 +59,14 @@ export default function RangePrice() {
                         type="text"
                         className={styles.price_input}
                         value={editing === "max" ? listing.prices.max : formatPrice(listing.prices.max)}
-                        placeholder="680.000đ"
+                        placeholder="thuê cả ngày cao nhất"
                         onFocus={() => setEditing("max")}
                         onBlur={() => setEditing(null)}
                         onChange={handleMaxChange}
                     />
                 </div>
             </div>
+
         </div>
     );
 }

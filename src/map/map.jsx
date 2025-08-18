@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useStaycation } from "./staycationContext";
 import { useMediaQuery } from "react-responsive";
 import styles from "./map.module.css";
+import axios from "axios";
 
 import Staycation from "./staycation";
 
@@ -24,10 +25,28 @@ export default function Map() {
     const [geoData, setGeoData] = useState(null);
   
     useEffect(() => {
-      fetch(`${import.meta.env.VITE_BACKEND_URL}/geo/vn_islands.geojson`)   // endpoint backend bạn vừa tạo
-        .then((res) => res.json())
-        .then((data) => setGeoData(data))
-        .catch((err) => console.error("Failed to load GeoJSON:", err));
+
+        const fetchGeoJSOn = async () => {
+
+            try {
+              
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/assets/geo/vn_islands.geojson`, {
+                    headers: {
+                        "ngrok-skip-browser-warning": "true",
+                    },
+                }).then((res) => res.data);
+        
+                setGeoData(response.features)
+                
+            } catch (err) {
+        
+                console.error('Fetch staycations failed', err);
+        
+            } 
+        
+          };
+
+        fetchGeoJSOn();
     }, []);
   
     if (!geoData) return null;

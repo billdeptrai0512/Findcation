@@ -1,41 +1,30 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import { useListing } from '../listingContext';
+import { useListing } from '../../listing/listingContext';
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import Home from "../../assets/home.png"
+import Staycation from './demo';
 
 
-import styles from './location.module.css';
+import styles from '../location/location.module.css';
 
-export default function AddressMap( ) {
+export default function Map({setRenderPreview}) {
   const { listing } = useListing()
-  const [text, setText] = useState("");
   const markerRef = useRef();
-
-  useEffect(() => {
-
-    if (listing.location.address === "" || listing.location.public === false) return setText(`${listing.name} đang ở đây!`);
-    
-    return setText(listing.location.address);
-    
-  }, [listing]);
-
 
   const SetViewOnPosition = ({ position }) => {
   
     const map = useMap();
-    
-    const zoom = listing.location.address === "" ? 6 : 17
 
     useEffect(() => {
 
       const timer = setTimeout(() => {
-        map.setView(position, zoom);
+        map.setView(position, 15);
       }, 150);
 
       return () => clearTimeout(timer);
-    }, [position, map, zoom]);
+    }, [position, map]);
   
     return null;
   };
@@ -52,12 +41,15 @@ export default function AddressMap( ) {
           <TileLayer url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png" />
           <TileLayer url="https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png" />
 
-          {listing.location.address !== "" && 
-            <Marker position={gps} icon={customIcon} ref={markerRef} eventHandlers={{add: (e) => e.target.openPopup()}}>
-              <Popup closeButton={false} closeOnClick={false} autoClose={false}> {text} </Popup>
-            </Marker>
-          }
-  
+          <Marker position={gps} icon={customIcon} ref={markerRef} eventHandlers={{add: (e) => e.target.openPopup()}} >
+            <Popup closeButton={false} closeOnClick={false} autoClose={false} > 
+              <Staycation setRenderPreview={setRenderPreview}/>  
+            </Popup>
+            
+          </Marker>
+
+          
+          
           <SetViewOnPosition position={gps} />
 
         </MapContainer>

@@ -64,7 +64,7 @@ export default function Listing() { // PageContent
 
             <Header page={page} setOpenSuggestions={setOpenSuggestions}/>
             
-            <Outlet context={{ setStepValidity, currentStep: steps[page] }} />
+            <Outlet context={{ setStepValidity, currentStep: steps[page], goNext, setOpenSuggestions }} />
 
             {openSuggestions && <Suggestion currentStep={steps[page]} setOpenSuggestions={setOpenSuggestions}/>}
             

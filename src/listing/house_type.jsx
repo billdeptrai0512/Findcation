@@ -7,7 +7,7 @@ import styles from "./listing.module.css"
 export default function TypeOfHouse() {
 
     const {listing, uploadType} = useListing()
-    const { setStepValidity, currentStep } = useOutletContext();
+    const { setStepValidity, currentStep, setOpenSuggestions } = useOutletContext();
 
     useEffect(() => {
         setStepValidity((prev) => ({
@@ -36,6 +36,11 @@ export default function TypeOfHouse() {
                         <div>Khách sẽ có phòng riêng trong một ngôi nhà và được sử dụng những khu vực chung</div>
                     </div>
                     <DoorOpen size={32} className={styles.house_type_icon} />
+                </div>
+                <div style={{display: "flex", justifyContent: 'flex-end'}}>
+                    <button onClick={() => setOpenSuggestions(true)} className={styles.button} >
+                        Bạn có câu hỏi ?
+                    </button>
                 </div>
             </div>
         </div>

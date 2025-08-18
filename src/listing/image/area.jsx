@@ -43,9 +43,9 @@ export default function Area() {
 
     if (isMobile) return (
         <div className={styles.pageContent}>
-            <h1 style={{marginBottom: "4px", fontSize: "1.68rem"}}>Bạn cần ít nhất 3 bức ảnh.</h1>
+            <h1 style={{marginBottom: "4px", fontSize: "1.68rem"}}>Bạn có thể đăng tối đa 5 bức ảnh. </h1>
             <div className={styles.intrustion} style={{paddingBottom: "8px", color: "#6A6A6A"}}>
-                Chọn ảnh đẹp nhất làm ảnh bìa nhé.
+                Chọn ảnh đẹp nhất làm ảnh bìa nhé. Về sau, bạn có thể đăng thêm hoặc thay đổi ảnh.
             </div>
             <div className={styles.mobile_images_area}>
                     
@@ -60,9 +60,9 @@ export default function Area() {
     return (
         // when screen width get smaller - it will have 1 column only
         <div className={styles.pageContent}>
-            <h1 style={{marginBottom: "4px"}}>Bạn cần ít nhất 3 bức ảnh.</h1>
+            <h1 style={{marginBottom: "4px"}}>Bạn có thể đăng tối đa 5 bức ảnh.</h1>
             <div className={styles.intrustion} style={{paddingBottom: "8px", color: "#6A6A6A"}}>
-                Chọn ảnh đẹp nhất làm ảnh bìa nhé.
+                Chọn ảnh đẹp nhất làm ảnh bìa nhé. Về sau, bạn có thể đăng thêm hoặc thay đổi ảnh.
             </div>
             <div className={styles.images_area}>
 

@@ -16,7 +16,7 @@ export default function LandingPage() {
         <div className={styles.footer}>
           <div className={styles.cta_div}>
               <button className={styles.cta_button} onClick={() => navigate(!user ? "/auth/login" : "/list-staycation")}>
-                  Bạn đang kinh doanh staycation ?
+                  <h2 style={{margin: 0}}>Bạn là chủ kinh doanh staycation ?</h2>
               </button>
           </div>
         </div>
