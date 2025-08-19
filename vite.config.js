@@ -12,7 +12,7 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, '')
       }
     },
-    allowedHosts: [`open-naked-penalties-demands.trycloudflare.com`],
+    allowedHosts: [`kenya-respond-hanging-ellen.trycloudflare.com`],
     
   },
 
