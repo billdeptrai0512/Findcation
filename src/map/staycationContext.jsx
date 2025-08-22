@@ -5,7 +5,7 @@ const StaycationContext = createContext();
 
 const StaycationProvider = ({ children }) => {
 
-  const [staycations, setStaycations] = useState(null); // { lat, lng }
+  const [staycations, setStaycations] = useState([]); // { lat, lng }
 
   const fetchStaycations = async () => {
 

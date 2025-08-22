@@ -5,8 +5,8 @@ export default function MainLayout() {
 
   return (
     <>
+      <Outlet />
       <Map />
-      <Outlet /> 
     </>    
   );
 

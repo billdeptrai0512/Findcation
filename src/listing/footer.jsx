@@ -11,17 +11,25 @@ export default function FooterProgress({start, getStart, goNext, goBack, percent
   const {user} = useAuth()
 
   const navigate = useNavigate()
-  const handleUploadListing = () => {
+  const handleUploadListing = async () => {
 
     if (!user) return console.log('no user')
 
-    uploadListingOnDatabase(user.id)
+    try {
 
-    fetchStaycations()
+      await uploadListingOnDatabase(user.id)
 
-    resetListing()
+      await fetchStaycations()
 
-    navigate("/")
+      resetListing()
+
+      navigate("/")
+
+    } catch (err) {
+
+      console.error("Error uploading listing:", err)
+      
+    }
 
   }
 

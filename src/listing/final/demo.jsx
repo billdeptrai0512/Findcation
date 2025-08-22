@@ -6,8 +6,6 @@ export default function Staycation({setRenderPreview}) {
 
     const {listing} = useListing();
 
-    console.log(listing.images[0]);
-
     const formatPrice = (price) => {
         if (!price) return "";
         return parseInt(price, 10).toLocaleString("vi-VN") + "đ";

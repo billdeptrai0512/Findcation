@@ -6,10 +6,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/map': {
-        target: 'http://localhost:3000',
+      '/auth': {
+        target: "https://api.findcation.vn",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
+        rewrite: (path) => path.replace(/^\/auth/, '')
       }
     },
     allowedHosts: [`kenya-respond-hanging-ellen.trycloudflare.com`],

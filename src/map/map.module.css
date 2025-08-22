@@ -7,12 +7,14 @@
   justify-content: space-between;
   text-align: start;
   z-index: 1000;
+  border: none;
 }
 
 .footer {
   position: fixed;
   bottom: 0;
   right: 0;
+  z-index: 2;
 }
 
 .title {
@@ -57,7 +59,8 @@
 
 .cta_button > h2 {
   margin: 0;
-  font-size: 1.275rem;
+  font-size: 0.825rem;
+  font-family: 'Inter', sans-serif;
 }
 
 .mapContainer {
@@ -88,7 +91,9 @@ p {
 }
   
 .listing_name {
+  margin-top: 0;
   font-size: 0.9075rem;
+  font-family: 'Inter', sans-serif;
   overflow: hidden
 }
 
@@ -103,7 +108,7 @@ p {
 }
 
 .content > div:nth-child(1) > div{
-  margin: 8px;
+  margin: 13px 6px 13px 6px;
 }
 
 .login {
@@ -111,8 +116,79 @@ p {
   font-size: 1rem
 }
 
+.preview_overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.3); /* semi-transparent dark overlay */
+  backdrop-filter: blur(2px); /* blurry effect behind overlay */
+  z-index: 1000;
+}
 
+.preview_container {
+  position: absolute;
+  bottom: 0;
+  min-width: 100vw;
+  z-index: 2;
+}
 
+.preview_card {
+  background-color:#FFFFFF;
+  border-radius: 24px;
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  margin: 0px auto;
+  min-width: 30%;
+}   
+
+.preview_header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 24px;
+  border-bottom: 1px solid #DDDDDD;
+}
+
+.preview_header > h1 {
+  font-size: 1.075em;
+}
+
+.preview_header > button {
+  position: absolute;
+  display: flex;
+  border: none;
+  background: white;
+  cursor: pointer;
+  left: 0;
+  border-radius: 25px;
+  margin-left: 2em;
+  transition: background-color 0.2s ease;
+}
+
+.preview_header > button:hover {
+  background-color: #F7F7F7;
+}
+
+.preview_image {
+  display: flex;
+  align-items:center;
+  margin: 12px auto;
+  max-width: 300px
+}
+
+.preview_details > h1 {
+  font-size: 1.375em;
+}
+
+.preview_details {
+  scrollbar-width: none;    /* Firefox */
+  -ms-overflow-style: none;
+}
+
+.preview_details::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
 
 @media screen and (min-width: 768px) {
 
@@ -129,20 +205,19 @@ p {
     margin: 0 auto;
   }
 
-  .listing_name {
-    font-size: 1.1075rem,
+  .staycation_name {
+    margin-top: 0;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
   }
 
   .title {
-    font-size: 1.175em
+    font-size: 1.2em
   }
 
-  .listing_prices {
-    font-size: 0.9075rem;
-  }
-
-  .listing_status {
-    font-size: 0.9075rem;
+  .staycation_prices {
+    font-size: 0.8075rem;
   }
 
   .cta_button {
@@ -155,6 +230,30 @@ p {
     font-size: 0.975rem;
     font-weight: 500;
     font-family: 'Inter', sans-serif
+  }
+
+  .cta_button > h2 {
+    margin: 0;
+    font-size: 1.275rem;
+  }
+
+  .preview_container {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+  .preview_card {
+      max-width: 800px
+  }
+
+  .preview_image {
+    max-width: 400px
+  }
+
+  .preview_header > h1 {
+      font-size: 1.25em;
   }
 
 }

@@ -43,10 +43,20 @@ export default function RangePrice() {
                     <input type="text"
                         className={styles.price_input}
                         value={editing === "min" ? listing.prices.min : formatPrice(listing.prices.min)}
-                        placeholder="gói thuê thấp nhất"
                         onFocus={() => setEditing("min")}
                         onBlur={() => setEditing(null)}
                         onChange={handleMinChange}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              e.preventDefault();
+                              console.log('yea')
+                              e.currentTarget
+                                .closest(".price_setup") // parent container
+                                .querySelector(".input:nth-of-type(2)") // the next input
+                                ?.focus();
+                            }
+                        }}
+                        autoFocus={listing.prices.min !== null ? false : true} // Autofocus if min price is null and not editing max
                     />
                 </div>
 
@@ -59,7 +69,6 @@ export default function RangePrice() {
                         type="text"
                         className={styles.price_input}
                         value={editing === "max" ? listing.prices.max : formatPrice(listing.prices.max)}
-                        placeholder="thuê cả ngày cao nhất"
                         onFocus={() => setEditing("max")}
                         onBlur={() => setEditing(null)}
                         onChange={handleMaxChange}

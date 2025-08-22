@@ -11,11 +11,10 @@ export default function Final() {
 
     const isMobile = useMediaQuery({ query: '(max-width: 768px)'})
 
-    console.log(isMobile)
-
     return (
         <>
             <div className={styles.pageContent}>
+
                 <h1 style={{marginBottom: "4px", fontSize: "1.68rem"}}>Chúc mừng! Bạn đã sẵn sàng.</h1>
 
                 <div className={styles.intrustion} style={{paddingBottom: "8px", color: "#6A6A6A", fontSize: "0.875rem"}}>

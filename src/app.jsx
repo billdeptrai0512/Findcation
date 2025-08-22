@@ -4,6 +4,8 @@ import { AuthProvider } from "./auth/authcontext";
 import { UserLocationProvider } from "./map/userLocationContext";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Analytics } from '@vercel/analytics/react';
+import { ListingProvider } from "./listing/listingContext";
+import { StaycationProvider } from "./map/staycationContext";
 
 import Register from "./auth/register";
 import ErrorPage from "./error-page";
@@ -12,20 +14,18 @@ import Forgot from "./auth/forgot";
 import ResetPassword from "./auth/resetPassword";
 import Auth from "./auth/main";
 import MainLayout from "./layout";
-import Suggestion from "./listing/suggestion";
 import Title from "./listing/title";
 import TypeOfHouse from "./listing/house_type";
 import ImageUpload from "./listing/image/main";
 import Features from "./listing/features/features";
 import LocationListing from "./listing/location/main";
-import RangePrice from "./listing/contacts-prices/price";
 import StartPage from "./listing/start";
 import Listing from "./listing/main";
 import Final from "./listing/final/main";
-import { ListingProvider } from "./listing/listingContext";
-import { StaycationProvider } from "./map/staycationContext";
 import LandingPage from "./map/main";
-import ContactsPrices from "./listing/contacts-prices/main";
+import Contacts from "./listing/contacts/main";
+import Prices from "./listing/prices/main";
+import PreviewStaycation from "./map/preview/main";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +34,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <LandingPage /> },
+      { path: "staycation/:id", element: <PreviewStaycation /> }, 
       {
         path: "/auth",
         element: <Auth />,
@@ -57,8 +58,9 @@ const router = createBrowserRouter([
       { path: "images", element: <ImageUpload /> },
       { path: "features", element: <Features /> },
       { path: "location", element: <LocationListing /> },
-      { path: "price", element: <ContactsPrices /> },
-      { path: "contact",  element: <Final /> },
+      { path: "price", element: <Prices /> },
+      { path: "contacts", element: <Contacts /> },
+      { path: "final",  element: <Final /> },
     ]
   },
   

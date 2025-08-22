@@ -27,7 +27,7 @@ const ListingProvider = ({ children }) => {
             facebook: null,
             instagram: null,
         },
-        prices: {min: null, max: null},
+        prices: {min: "", max: ""},
         features: [],
         images: []
 
@@ -212,13 +212,15 @@ const ListingProvider = ({ children }) => {
             if (img.file) formData.append("images", img.file);
           });
       
-          await axios.post(
+          const res = await axios.post(
             `${import.meta.env.VITE_BACKEND_URL}/listing/create-new`,
             formData,
             { headers: { "Content-Type": "multipart/form-data" } }
           );
       
           console.log("Listing created successfully");
+
+          return res.data;
         } catch (err) {
           console.error("Upload failed", err);
         }

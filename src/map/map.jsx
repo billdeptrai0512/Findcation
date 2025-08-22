@@ -6,11 +6,7 @@ import { useStaycation } from "./staycationContext";
 import { useMediaQuery } from "react-responsive";
 import styles from "./map.module.css";
 import axios from "axios";
-
 import Staycation from "./staycation";
-
-
-import People from "../assets/people.png";
 import Home from "../assets/home.png"
 
 export default function Map() {
@@ -103,11 +99,10 @@ export default function Map() {
 
               <VietnamBoundaries />
 
-              {/* Staycation markers */}
               {staycations && staycations.map((stay) => (
                 <Marker key={stay.id} icon={homeIcon}
                   position={[stay.location.gps.lat, stay.location.gps.lng]}>
-                  <Popup minWidth={isMobile ? 50.2 : 240.2} closeButton={false} className={styles.content}>
+                  <Popup closeButton={false} className={styles.content}>
                     <Staycation staycation={stay}/>
                   </Popup>
                 </Marker>
@@ -116,7 +111,6 @@ export default function Map() {
               <SetViewOnPosition position={GPS} zoom={isMobile ? 5 : 6}/>
             </MapContainer>
 
-              {/* vl this one is the button lolololo */}
           </div>
         </div>
   );

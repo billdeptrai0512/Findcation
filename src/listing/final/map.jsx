@@ -5,8 +5,6 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import Home from "../../assets/home.png"
 import Staycation from './demo';
-
-
 import styles from '../location/location.module.css';
 
 export default function Map({setRenderPreview}) {
@@ -47,8 +45,6 @@ export default function Map({setRenderPreview}) {
             </Popup>
             
           </Marker>
-
-          
           
           <SetViewOnPosition position={gps} />
 
