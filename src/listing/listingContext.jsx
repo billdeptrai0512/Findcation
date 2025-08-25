@@ -23,9 +23,9 @@ const ListingProvider = ({ children }) => {
             },
         },
         contacts: {
-            zalo: null,
-            facebook: null,
-            instagram: null,
+            zalo: {url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString()},
+            facebook: {url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString()},
+            instagram: {url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString()},
         },
         prices: {min: "", max: ""},
         features: [],
@@ -189,23 +189,33 @@ const ListingProvider = ({ children }) => {
     }
 
     const uploadContact = (name, value) => {
+
+        if (value === "") value = null;
+
         setListing((prev) => ({
             ...prev,
             contacts: {
                 ...prev.contacts,
-                [name]: value
-            }
-        }))
-    }
+                [name]: {
+                    ...prev.contacts[name],
+                    url: value,   
+                },
+            },
+        }));
 
-    const uploadListingOnDatabase = async (hostId) => {
+        
+    };
+
+    const uploadListingOnDatabase = async (user) => {
+        console.log('it run')
         try {
           const formData = new FormData();
       
           // Append raw listing object (without file objects)
           const { images, ...listingWithoutFiles } = listing;
           formData.append("listing", JSON.stringify(listingWithoutFiles));
-          formData.append("hostId", hostId);
+          formData.append("hostId", user.id);
+          formData.append("email", user.email);
       
           // Append files separately
           images.forEach(img => {
@@ -245,11 +255,11 @@ const ListingProvider = ({ children }) => {
                 },
             },
             contacts: {
-                zalo: null,
-                facebook: null,
-                instagram: null,
+                zalo: {url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString()},
+                facebook: {url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString()},
+                instagram: {url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString()},
             },
-            prices: {min: "240000", max: "680000"},
+            prices: {min: "", max: ""},
             features: [],
             images: []
         })

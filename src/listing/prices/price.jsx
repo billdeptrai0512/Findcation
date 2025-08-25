@@ -46,6 +46,7 @@ export default function RangePrice() {
                         onFocus={() => setEditing("min")}
                         onBlur={() => setEditing(null)}
                         onChange={handleMinChange}
+                        placeholder="240,000đ"
                         onKeyDown={(e) => {
                             if (e.key === "Enter") {
                               e.preventDefault();
@@ -71,9 +72,12 @@ export default function RangePrice() {
                         value={editing === "max" ? listing.prices.max : formatPrice(listing.prices.max)}
                         onFocus={() => setEditing("max")}
                         onBlur={() => setEditing(null)}
+                        placeholder="680,000đ"
                         onChange={handleMaxChange}
                     />
                 </div>
+
+                
             </div>
 
         </div>

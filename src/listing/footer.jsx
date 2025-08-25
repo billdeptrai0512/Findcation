@@ -2,7 +2,7 @@ import styles from "./listing.module.css"
 import { useNavigate } from "react-router-dom";
 import { useListing } from "./listingContext";
 import { useStaycation } from "../map/staycationContext";
-import { useAuth } from "../auth/authcontext";
+import { useAuth } from "../auth/authContext";
 
 export default function FooterProgress({start, getStart, goNext, goBack, percentage, page, steps, stepValidity}) {
 
@@ -11,13 +11,14 @@ export default function FooterProgress({start, getStart, goNext, goBack, percent
   const {user} = useAuth()
 
   const navigate = useNavigate()
+
   const handleUploadListing = async () => {
 
     if (!user) return console.log('no user')
 
     try {
 
-      await uploadListingOnDatabase(user.id)
+      await uploadListingOnDatabase(user)
 
       await fetchStaycations()
 
@@ -28,7 +29,7 @@ export default function FooterProgress({start, getStart, goNext, goBack, percent
     } catch (err) {
 
       console.error("Error uploading listing:", err)
-      
+
     }
 
   }
@@ -73,7 +74,7 @@ export default function FooterProgress({start, getStart, goNext, goBack, percent
                           Tiếp theo
                     </button> :
                     <button onClick={handleUploadListing} className={styles.upload_button} disabled={!stepValidity[steps[page]]}>
-                      Đăng
+                      Hoàn tất
                     </button>
                   }
 

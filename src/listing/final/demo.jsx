@@ -21,7 +21,7 @@ export default function Staycation({setRenderPreview}) {
 
             <div className={styles.information} style={{display: "flex", justifyContent: "space-between", marginTop: "8px", gap:"8px"}}>
                 <div className={styles.listing_details} style={{display: "flex", flexDirection: "column", gap: "4px"}}>
-                    <div className={styles.listing_name} >{listing.name}</div>
+                    <h2 style={{margin: "0" , marginBottom:"4px", fontSize: "18px"}} >{listing.name}</h2>
                     <span className={styles.listing_prices} >{formatPrice(listing.prices.min)} {<MoveRight size={10}/>} {formatPrice(listing.prices.max)}</span>
                 </div>
             </div>

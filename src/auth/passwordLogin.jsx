@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from './authcontext';
+import { useAuth } from './authContext';
 import { ChevronLeft  } from 'lucide-react';
 import styles from './login.module.css';
 

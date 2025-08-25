@@ -383,7 +383,7 @@ input[type="checkbox"]:checked {
 
 .preview_details::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera */
-  }
+}
 
 @media screen and (min-width: 768px) {
     

@@ -8,6 +8,7 @@
   text-align: start;
   z-index: 1000;
   border: none;
+  pointer-events: none;
 }
 
 .footer {
@@ -20,7 +21,11 @@
 .title {
   font-size: 0.875em;
   background-color: #FAFBF8;
-  box-shadow: 0 0 0 1px transparent,0 0 0 4px transparent, 0 2px 4px rgba(0,0,0,0.18)
+  box-shadow: 0 0 0 1px transparent,0 0 0 4px transparent, 0 2px 4px rgba(0,0,0,0.18);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px) saturate(180%);
+  padding: 8px;
+  border-radius: 8px;
 }
 
 .title > h1 {
@@ -184,6 +189,7 @@ p {
 .preview_details {
   scrollbar-width: none;    /* Firefox */
   -ms-overflow-style: none;
+  max-width: 300px;
 }
 
 .preview_details::-webkit-scrollbar {
@@ -249,7 +255,10 @@ p {
   }
 
   .preview_image {
-    max-width: 400px
+    max-width: 400px;
+    flex-direction: column;
+    align-items: unset;
+    margin: 12px;
   }
 
   .preview_header > h1 {

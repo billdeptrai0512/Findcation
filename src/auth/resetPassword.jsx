@@ -26,7 +26,7 @@ export default function ResetPassword() {
         }
 
         try {
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/reset-password`, {
+            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login/reset-password`, {
                 token: token,
                 password
             });
@@ -39,7 +39,6 @@ export default function ResetPassword() {
             console.error('reset password failed', err);
         }
     };
-
 
     return (
         <div className={styles.container}>

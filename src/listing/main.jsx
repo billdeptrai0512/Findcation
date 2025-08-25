@@ -1,15 +1,11 @@
 import { useState } from "react"
 import { Outlet, useNavigate } from "react-router-dom";
-import { UsersThree } from "@phosphor-icons/react";
 
 import styles from "./listing.module.css"
 import Header from "./header"
 import Footer from "./footer"
 import Suggestion from "./suggestion";
 
-
-
-// start - title - type of house - images  - features - location - price - contact
 
 export default function Listing() { // PageContent
 
@@ -24,8 +20,8 @@ export default function Listing() { // PageContent
 
     const [stepValidity, setStepValidity] = useState(
         steps.reduce((acc, step) => {
-          acc[step] = false; // mặc định là chưa hợp lệ
-          return acc;
+            acc[step] = step === "final" ? true : false; // mặc định là chưa hợp lệ
+            return acc;
         }, {})
     );
   

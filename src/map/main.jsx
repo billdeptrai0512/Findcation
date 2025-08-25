@@ -1,6 +1,6 @@
 import styles from "./map.module.css";
 import Header from "./header";
-import { useAuth } from "../auth/authcontext";
+import { useAuth } from "../auth/authContext";
 import { useNavigate } from "react-router-dom";
 
 

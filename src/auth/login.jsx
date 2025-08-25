@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from './authcontext';
+import { useAuth } from './authContext';
 import { GoogleLogin } from '@react-oauth/google';
 import { X, Mail, ChevronLeft  } from 'lucide-react';
 import PasswordLogin from './passwordLogin';
@@ -48,7 +48,7 @@ export default function Login() {
 
     const handleGoogleLogin = async (credentialResponse) => {
         try {
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/register/auth/google`, {
+            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/google`, {
                 credential: credentialResponse.credential,
             }, { withCredentials: true });
 
@@ -61,7 +61,7 @@ export default function Login() {
         }
     };
 
-    if (foundEmail === false) return navigate("/auth/register", {state: {email: email}}) 
+    if (foundEmail === false) return navigate("/login/register", {state: {email: email}}) 
 
     if (foundEmail === true) return <PasswordLogin email={email} setFoundEmail={setFoundEmail}/>
 

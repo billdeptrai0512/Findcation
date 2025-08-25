@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { X } from "lucide-react"
-import { useAuth } from "../auth/authcontext"
+import { useAuth } from "../auth/authContext"
 import axios from "axios"
 import styles from "../auth/login.module.css"
 

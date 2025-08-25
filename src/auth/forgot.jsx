@@ -19,7 +19,7 @@ export default function Forgot() {
 
         try {
 
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/forgot-password`, {email});
+            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login/forgot-password`, {email});
 
             if (response.data?.message === "Reset code sent to email") {
 
@@ -40,7 +40,7 @@ export default function Forgot() {
         if (code === '') return setError('Bạn chưa nhập mã xác nhận.');
 
         try {
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/verify-pin`, {email, code});
+            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login/verify-pin`, {email, code});
 
             const { token } = response.data;
             if (token) return navigate(`/reset-password`, {state: { token, email }});
