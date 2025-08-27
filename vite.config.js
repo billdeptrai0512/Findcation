@@ -7,12 +7,12 @@ export default defineConfig({
   server: {
     proxy: {
       '/auth': {
-        target: "https://api.findcation.vn",
+        target: "http://localhost:3333",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/auth/, '')
       }
     },
-    allowedHosts: [`kenya-respond-hanging-ellen.trycloudflare.com`],
+    allowedHosts: [`engineers-chapel-disclaimer-pension.trycloudflare.com`],
     
   },
 

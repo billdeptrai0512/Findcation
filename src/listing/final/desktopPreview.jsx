@@ -12,7 +12,7 @@ export default function DesktopReview({ setRenderPreview }) {
 
     const { listing } = useListing()
 
-    const houseType = listing.type === "house" ? "Toàn bộ ngôi nhà" : "Phòng trong căn nhà"
+    const houseType = listing.type === "house" ? "Thuê toàn bộ căn nhà" : "Thuê phòng trong căn nhà"
 
     return (
         <div className={styles.preview_container}>
@@ -24,7 +24,7 @@ export default function DesktopReview({ setRenderPreview }) {
                         <X  size={30}/>
                     </button>
 
-                    <h1>Bản xem trước đầy đủ</h1> 
+                    <h1>{listing.name}</h1> 
 
                 </div>
 
@@ -40,17 +40,15 @@ export default function DesktopReview({ setRenderPreview }) {
 
                     </div>
 
-                    <div className={styles.preview_details} style={{display: "flex", justifyContent: "space-between", flexDirection: "column", margin: "2em", overflowY: "scroll"}}>
-                        
-                        <h1 style={{marginTop: "0"}}>{listing.name}</h1>
+                    <div className={styles.preview_details} style={{display: "flex", flexDirection: "column", margin: "2em", overflowY: "scroll"}}>          
                         
                         {/* type of hose */}
-                        <div style={{display: "flex", flexDirection: "column", gap: "4px", borderTop: '1px solid rgba(0,0,0,0.04)', borderBottom: '1px solid rgba(0,0,0,0.04)', padding: '16px 0'}}> 
+                        <div style={{display: "flex", flexDirection: "column", gap: "4px", borderBottom: '1px solid rgba(0,0,0,0.04)', paddingBottom: '16px'}}> 
                             <h2 style={{fontSize: "1.1075rem", overflow: "hidden", marginTop: "0"}}>{houseType}</h2>
                         </div>
 
-                        <div style={{display: "flex", flexDirection: "column", gap: "4px", borderTop: '1px solid rgba(0,0,0,0.04)', padding: '16px 0'}}>
-                            <h2 style={{fontSize: "1.1075rem", marginTop: "0", marginBottom:"16px"}}>{listing.location.address}</h2>
+                        <div style={{display: "flex", flexDirection: "column", gap: "4px", padding: '16px 0'}}>
+                            <h2 style={{fontSize: "1.1075rem", marginTop: "0",}}>{listing.location.address}</h2>
                         </div>
                         
                         {/* features */}

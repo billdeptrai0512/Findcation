@@ -45,7 +45,7 @@ export default function Area() {
         <div className={styles.pageContent}>
             <h1 style={{marginBottom: "4px", fontSize: "1.68rem"}}>Bạn có thể đăng tối đa 5 bức ảnh. </h1>
             <div className={styles.intrustion} style={{paddingBottom: "8px", color: "#6A6A6A"}}>
-                Chọn ảnh đẹp nhất làm ảnh bìa nhé. Về sau, bạn có thể đăng thêm hoặc thay đổi ảnh.
+                Chọn ảnh đẹp nhất làm ảnh bìa. Về sau, bạn có thể đăng thêm hoặc thay đổi ảnh.
             </div>
             <div className={styles.mobile_images_area}>
                     
@@ -62,7 +62,7 @@ export default function Area() {
         <div className={styles.pageContent}>
             <h1 style={{marginBottom: "4px"}}>Bạn có thể đăng tối đa 5 bức ảnh.</h1>
             <div className={styles.intrustion} style={{paddingBottom: "8px", color: "#6A6A6A"}}>
-                Chọn ảnh đẹp nhất làm ảnh bìa nhé. Về sau, bạn có thể đăng thêm hoặc thay đổi ảnh.
+                Chọn ảnh đẹp nhất làm ảnh bìa. Về sau, bạn có thể đăng thêm hoặc thay đổi ảnh.
             </div>
             <div className={styles.images_area}>
 

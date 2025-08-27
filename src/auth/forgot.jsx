@@ -43,7 +43,7 @@ export default function Forgot() {
             const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login/verify-pin`, {email, code});
 
             const { token } = response.data;
-            if (token) return navigate(`/reset-password`, {state: { token, email }});
+            if (token) return navigate(`/auth/reset-password`, {state: { token, email }});
             
         } catch (err) {
             console.error('Login failed', err);

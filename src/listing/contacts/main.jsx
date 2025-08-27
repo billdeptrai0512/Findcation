@@ -22,13 +22,11 @@ export default function Contacts() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [listing.contacts]);
 
-    console.log(listing.contacts)
-
     return (
         <div className={styles.pageContent}>
             <h1 style={{ marginBottom: "4px", fontSize: "1.68rem" }}>Bây giờ, hãy liên kết thông tin liên lạc.</h1>
             <div className={styles.intrustion} style={{ paddingBottom: "8px", color: "#6A6A6A" }}>
-                Bạn có thể nhập username. Bấm vào icon để kiểm tra liên kết.
+                Bấm vào icon để kiểm tra liên kết.
             </div>
 
             <div style={{ display: "flex", alignItems: "center", gap: "48px", marginTop: "16px" }}>

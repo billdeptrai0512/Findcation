@@ -16,8 +16,19 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/login`, { email, password }, { withCredentials: true });
-    setUser(res.data.user);
+    
+
+    try {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/login`, { email, password },
+        { withCredentials: true }
+      );
+      setUser(res.data.user);
+      return res.data.user;
+    } catch (err) {
+      console.error(err)
+      throw err;
+    }
+    
   };
 
   const logout = async () => {

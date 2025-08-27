@@ -2,20 +2,23 @@ import { MapContainer, TileLayer, Marker, Popup, useMap, GeoJSON  } from "react-
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useEffect, useState } from "react";
+import { useUserLocation } from "./userLocationContext";
 import { useStaycation } from "./staycationContext";
 import { useMediaQuery } from "react-responsive";
 import styles from "./map.module.css";
 import axios from "axios";
 import Staycation from "./staycation";
 import Home from "../assets/home.png"
+import People from "../assets/people.png"
 
 export default function Map() {
 
-  const { staycations, fetchStaycations } = useStaycation();
-
   const isMobile = useMediaQuery({ query: '(max-width: 768px)'})
 
-  const GPS = { lat : 16, lng : 109 }
+  const { staycations, fetchStaycations } = useStaycation();
+  const { location } = useUserLocation()
+  const [GPS, setGPS] = useState({ lat : 16, lng : 109 })
+  const [zoom, setZoom] = useState(isMobile ? 5 : 6)
 
   function VietnamBoundaries() {
     const [geoData, setGeoData] = useState(null);
@@ -76,6 +79,13 @@ export default function Map() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (!location) return 
+    setGPS(location);
+    setZoom(isMobile ? 12 : 13)
+  }, [isMobile, location]);
+
+
   // if (!hasPermission || !GPS || !staycations) return <LoadingScreen />;
 
   return (
@@ -93,9 +103,6 @@ export default function Map() {
               <TileLayer url="https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png" />
 
               {/* Current user location */}
-              {/* <Marker position={GPS} icon={peopleIcon} >
-                <Popup >{user ? user.name : "Bạn"} đang ở đây!</Popup>
-              </Marker> */}
 
               <VietnamBoundaries />
 
@@ -108,7 +115,13 @@ export default function Map() {
                 </Marker>
               ))}
 
-              <SetViewOnPosition position={GPS} zoom={isMobile ? 5 : 6}/>
+              {location && (
+                <Marker position={[GPS.lat, GPS.lng]} icon={peopleIcon}>
+                  <Popup>Bạn đang ở đây!</Popup>
+                </Marker>
+              )}
+
+              <SetViewOnPosition position={GPS} zoom={zoom}/>
             </MapContainer>
 
           </div>
@@ -123,12 +136,12 @@ const homeIcon = new L.Icon({
   popupAnchor: [0, -50],
 });
 
-// const peopleIcon = new L.Icon({
-//   iconUrl: People,
-//   iconSize: [41, 50],
-//   iconAnchor: [20, 50],
-//   popupAnchor: [0, -50],
-// });
+const peopleIcon = new L.Icon({
+  iconUrl: People,
+  iconSize: [41, 50],
+  iconAnchor: [20, 50],
+  popupAnchor: [0, -50],
+});
 
 const SetViewOnPosition = ({ position, zoom }) => {
   const map = useMap();

@@ -26,6 +26,7 @@ import LandingPage from "./map/main";
 import Contacts from "./listing/contacts/main";
 import Prices from "./listing/prices/main";
 import PreviewStaycation from "./map/preview/main";
+import AdminDashBoard from "./admin/main";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,11 @@ const router = createBrowserRouter([
       { path: "contacts", element: <Contacts /> },
       { path: "final",  element: <Final /> },
     ]
+  },
+  {
+    path: "/admin",
+    element: <AdminDashBoard />,
+    errorElement: <ErrorPage />,
   },
   
 ]);

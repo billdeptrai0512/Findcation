@@ -7,7 +7,7 @@ import List from "./list";
 
 export default function Features() {
 
-    const { setStepValidity, currentStep, setOpenSuggestions } = useOutletContext();
+    const { setStepValidity, currentStep } = useOutletContext();
     const { listing } = useListing();
 
     useEffect(() => {
@@ -26,11 +26,6 @@ export default function Features() {
                 <Section title="tiện nghi cơ bản:" options={defaultOptions} />
                 <Section title="đặc biệt hơn thì sao" options={premiumOptions} />
                 <Section title="có đảm bảo an toàn không ?" options={safetyOptions} />
-            </div>
-            <div style={{display: "flex", justifyContent: 'start', marginTop: "16px"}}>
-                <button onClick={() => setOpenSuggestions(true)} className={styles.button} >
-                    Bạn muốn bổ sung ?
-                </button>
             </div>
         </div>
     );

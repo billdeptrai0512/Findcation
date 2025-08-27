@@ -21,15 +21,20 @@ export default function PasswordLogin({email, setFoundEmail}) {
         
         try {
 
-            login(email, password);
-
-            alert("login thành công")
+            await login(email, password);
 
             navigate('/list-staycation')
 
         } catch (err) {
-            console.error('Login failed', err);
-            setError("Sai mật khẩu")
+
+            if (err.response?.status === 401) {
+                setError("Sai mật khẩu");
+            } else if (err.response) {
+                setError("Có lỗi xảy ra, vui lòng thử lại.");
+            } else {
+                setError("Không thể kết nối đến server.");
+            }
+
         } 
     };
 
@@ -46,6 +51,8 @@ export default function PasswordLogin({email, setFoundEmail}) {
                 </div>
                 <div className={styles.panel}>
                     <form onSubmit={handleSubmitPassword}>
+                        {error && <p className={styles.error}>{error}</p>}
+
                         <div className={styles.inputGroup}>
 
                             <div style={{position: "relative", display: "flex", alignItems: "center"}}>
@@ -66,7 +73,8 @@ export default function PasswordLogin({email, setFoundEmail}) {
                             </div>
 
                         </div>
-                        {error && <p className={styles.error}>{error}</p>}
+
+                        
                         
                         <div className={styles.actionLoginRow}>
                             <button type="submit" className={styles.button}>Đăng nhập</button>
@@ -74,7 +82,7 @@ export default function PasswordLogin({email, setFoundEmail}) {
                     </form>
 
                     <div className={styles.googleWrapper}>
-                        <Link to="/forgot-password" className={styles.link}>Bạn đã quên mật khẩu?</Link>
+                        <Link to="/auth/forgot-password" className={styles.link}>Bạn đã quên mật khẩu?</Link>
                     </div>
                 </div>
 

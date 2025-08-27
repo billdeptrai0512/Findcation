@@ -27,7 +27,7 @@ const ListingProvider = ({ children }) => {
             facebook: {url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString()},
             instagram: {url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString()},
         },
-        prices: {min: "", max: ""},
+        prices: {min: null, max: null},
         features: [],
         images: []
 
@@ -259,7 +259,7 @@ const ListingProvider = ({ children }) => {
                 facebook: {url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString()},
                 instagram: {url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString()},
             },
-            prices: {min: "", max: ""},
+            prices: {min: null, max: null},
             features: [],
             images: []
         })
