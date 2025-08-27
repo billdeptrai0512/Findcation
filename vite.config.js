@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/auth': {
-        target: "http://localhost:3333",
+        target: "https://api.findcation.vn",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/auth/, '')
       }
