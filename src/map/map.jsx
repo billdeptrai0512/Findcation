@@ -1,11 +1,11 @@
 import { MapContainer, TileLayer, Marker, Popup, useMap, GeoJSON  } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import L from "leaflet";
 import { useEffect, useState } from "react";
 import { useUserLocation } from "./userLocationContext";
 import { useStaycation } from "./staycationContext";
 import { useMediaQuery } from "react-responsive";
+import "leaflet/dist/leaflet.css";
 import styles from "./map.module.css";
+import L from "leaflet";
 import axios from "axios";
 import Staycation from "./staycation";
 import Home from "../assets/home.png"

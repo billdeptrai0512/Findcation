@@ -109,12 +109,15 @@
   z-index: 0;
 }
 
-.vn-label {
-  background-color: black;
+.map > div > div:nth-child(4) {
+  z-index: 651;
 }
 
-.leaflet-tooltip {
-  background-color: black;
+.map > div > div:nth-child(5) > div{
+  border: none;
+  box-shadow: 0 0 0 1px transparent, 0 0 0 4px transparent, 0 2px 4px rgba(0, 0, 0, 0.18);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px) saturate(180%);
 }
 
 p {
@@ -226,7 +229,7 @@ p {
 @media screen and (min-width: 801px) {
 
   .header {
-    padding: 5rem;
+    padding: 2rem;
   }
 
   .footer {
@@ -234,7 +237,7 @@ p {
   }
 
   .cta_div {
-    padding: 5rem;
+    padding: 2rem;
     display: flex;
     justify-content: space-between;
   }
