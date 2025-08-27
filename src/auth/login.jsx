@@ -61,7 +61,7 @@ export default function Login() {
         }
     };
 
-    if (foundEmail === false) return navigate("/login/register", {state: {email: email}}) 
+    if (foundEmail === false) return navigate("/auth/register", {state: {email: email}}) 
 
     if (foundEmail === true) return <PasswordLogin email={email} setFoundEmail={setFoundEmail}/>
 

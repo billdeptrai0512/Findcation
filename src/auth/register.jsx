@@ -32,15 +32,16 @@ export default function RegisterForm() {
         if (formData.password === '') return setError('Bạn chưa nhập mật khẩu.')
 
         try {
-            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/register`, formData);
+            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/register`, formData);
 
-            login(formData.email, formData.password)
-
-            alert('login successful')
+            await login(formData.email, formData.password)
 
             navigate('/list-staycation')
+
         } catch (err) {
+
             console.error('Register failed', err);
+            
         }
     };
 
