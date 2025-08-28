@@ -231,7 +231,7 @@ p {
 @media screen and (min-width: 714px) {
 
   .header {
-    padding: 2rem;
+    padding: 1rem;
   }
 
   .footer {
@@ -239,7 +239,7 @@ p {
   }
 
   .cta_div {
-    padding: 2rem;
+    padding: 1rem;
     display: flex;
     justify-content: space-between;
   }

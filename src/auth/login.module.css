@@ -2,14 +2,14 @@
   position: absolute;
   bottom: 0;
   min-width: 100vw;
+  min-height: 100dvh;
   z-index: 2;
 }
 
 .card {
   background-color: white;
-  border-top-left-radius: 36px;
-  border-top-right-radius: 36px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  height: 100dvh;
 }
 
 .header {
@@ -190,7 +190,7 @@
   gap: 8px
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 714px) {
     
   .container {
     position: absolute;
@@ -200,6 +200,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    min-height: unset;
   }
 
   .card {
@@ -208,6 +209,7 @@
     border-radius: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     width: max-content;
+    height: unset;
   }
 
   .header {

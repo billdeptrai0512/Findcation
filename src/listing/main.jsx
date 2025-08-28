@@ -12,6 +12,7 @@ export default function Listing() { // PageContent
     const navigate = useNavigate();
 
     const steps = ["title", "type-of-house", "images", "features", "location", "price", "contacts", "final"];
+
     const totalSteps = steps.length - 1;
 
     const [start, setStart] = useState(false)
@@ -58,11 +59,11 @@ export default function Listing() { // PageContent
     return (
         <div className={styles.listingContainer}>
 
-            <Header page={page} setOpenSuggestions={setOpenSuggestions}/>
+            <Header page={page} setOpenSuggestions={setOpenSuggestions} />
             
-            <Outlet context={{ setStepValidity, currentStep: steps[page], goNext, setOpenSuggestions }} />
+            <Outlet context={{ setStepValidity, currentStep: steps[page], goNext }} />
 
-            {openSuggestions && <Suggestion currentStep={steps[page]} setOpenSuggestions={setOpenSuggestions}/>}
+            {openSuggestions && <Suggestion currentStep={steps[page]} setOpenSuggestions={setOpenSuggestions} />}
             
             <Footer start={start} getStart={getStart} goNext={goNext} goBack={goBack} percentage={percentage} page={page} steps={steps} stepValidity={stepValidity} />
 

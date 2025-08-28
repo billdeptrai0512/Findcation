@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom"
 import styles from "./listing.module.css"
 
 
-export default function Header() {
+export default function Header({setOpenSuggestions}) {
 
     const navigate = useNavigate()
 
@@ -13,8 +13,13 @@ export default function Header() {
                 Thoát 
             </button>
 
-            {/* when navigate to suggestion it should include the stage where user are in */}
+            <div style={{display: "flex", justifyContent: 'flex-end'}} >
+                <button className={styles.button} onClick={() => setOpenSuggestions(true)} >
+                    Góp ý
+                </button>
+            </div>
 
         </div>   
     )
 }
+
