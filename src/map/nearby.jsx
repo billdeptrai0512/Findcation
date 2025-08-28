@@ -44,10 +44,8 @@ export default function NearByButton() {
   };
 
   return (
-    <div>
-      <button className={styles.nearby_button} onClick={handleRequestLocation}>
-        <h2 style={{ margin: 0 }}>Staycation gần bạn</h2>
-      </button>
-    </div>
+    <button className={styles.nearby_button} onClick={handleRequestLocation}>
+      <h2 style={{ margin: 0 }}>Staycation gần bạn</h2>
+    </button>
   );
 }

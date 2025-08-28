@@ -10,7 +10,7 @@ export default function LandingPage() {
 
   const { user, } = useAuth();
   const navigate = useNavigate();
-  const isMobile = useMediaQuery({ query: '(max-width: 468px)'})
+  const isMobile = useMediaQuery({ query: '(max-width: 714px)'})
   
   return (
     <div className={styles.main_container} >

@@ -3,7 +3,7 @@
   position: fixed;
   left: 0;
   top: 0;
-  padding: 2rem;
+  width: 100vw;
   justify-content: space-between;
   text-align: start;
   z-index: 1000;
@@ -16,6 +16,7 @@
   bottom: 0;
   left: 0;
   z-index: 2;
+  width: 100vw;
 }
 
 .left_footer {
@@ -38,8 +39,9 @@
   box-shadow: 0 0 0 1px transparent,0 0 0 4px transparent, 0 2px 4px rgba(0,0,0,0.18);
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px) saturate(180%);
-  padding: 8px;
+  padding: 1rem;
   border-radius: 8px;
+  width: 100%;
 }
 
 .title > h1 {
@@ -62,25 +64,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
+  width: 100%;
+  align-items: stretch;
 }
 
 .cta_button {
   padding: 12px 16px;
-  border-radius: 8px;
   background: linear-gradient(to right, #E61E4D 0%, #E31C5F 50%, #D70466 100%);
   color: white;
   border: none;
   cursor: pointer;
   font-weight: 500;
-  font-family: 'Inter', sans-serif
+  font-family: 'Inter', sans-serif;
+  flex: 1;
 }
 
 .nearby_button {
   background: linear-gradient(to right, #588AC8 0%, #588AC8 50%, #4C7CC0 100%);
   color: white;
   padding: 12px 16px;
-  border-radius: 8px;
   cursor: pointer;
   font-weight: 500;
   border: none;
@@ -226,7 +228,7 @@ p {
   display: none; /* Chrome, Safari, Opera */
 }
 
-@media screen and (min-width: 801px) {
+@media screen and (min-width: 714px) {
 
   .header {
     padding: 2rem;
@@ -255,7 +257,8 @@ p {
   }
 
   .title {
-    font-size: 1.2em
+    font-size: 1.2em;
+    width: unset;
   }
 
   .staycation_prices {
@@ -271,12 +274,14 @@ p {
     cursor: pointer;
     font-size: 0.975rem;
     font-weight: 500;
-    font-family: 'Inter', sans-serif
+    font-family: 'Inter', sans-serif;
+    flex: unset;
   }
 
   .nearby_button {
     padding: 1em 2em;
     font-size: 0.975rem;
+    border-radius: 8px;
   }
 
   .cta_button > h2,
