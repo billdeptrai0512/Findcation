@@ -22,9 +22,9 @@ export default function Prices() {
 
     return (
         <div className={styles.pageContent}>
-            <h1 style={{ marginBottom: "4px", fontSize: "1.68rem" }}>Nhập bảng giá cho thuê staycation</h1>
+            <h1 style={{ marginBottom: "4px", fontSize: "1.68rem" }}>Nhập khoảng giá cho thuê</h1>
             <div className={styles.intrustion} style={{ paddingBottom: "8px", color: "#6A6A6A" }}>
-                Từ gói thấp nhất đến giá thuê cả ngày
+                Từ combo thuê thấp nhất đến giá thuê cả ngày
             </div>
 
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
