@@ -4,12 +4,13 @@ import { featureIconMap  } from "../../assets/featureIcons";
 import { useNavigate } from "react-router-dom";
 import styles from "../map.module.css";
 import Contacts from "./contacts";
+import Images from "./images";
 
 export default function MobilePreview({ staycation }) {
 
     const navigate = useNavigate()
 
-    const houseType = staycation.type === "house" ? "Thuê toàn bộ căn nhà" : "Thuê phòng trong căn nhà"
+    const houseType = staycation.type === "house" ? "Cho thuê toàn bộ căn nhà" : "Cho thuê phòng trong căn nhà"
 
     return (
         <div className={styles.preview_container}>
@@ -28,11 +29,9 @@ export default function MobilePreview({ staycation }) {
 
                 {/* preview_information_desktop */}
 
-                <div className={styles.preview_details} style={{display: "flex", flexDirection:"column" , maxHeight:"60vh", overflowY: "scroll", padding: "0 1em", margin: "0 auto"}}>
-                        
-                    <div className={styles.preview_image} >
-                        <img src={`${import.meta.env.VITE_BACKEND_URL}${staycation.images[0]}`} alt="cover_photo"  style={{width: "100%", borderRadius:"8px"}} />
-                    </div>
+                <div className={styles.preview_details} style={{display: "flex", flexDirection:"column" , maxHeight:"60vh", overflowY: "scroll", margin: "0 auto"}}>
+                    
+                    <Images listing={staycation} />
 
                     <div style={{display: "flex", justifyContent: "space-between", flexDirection: "column"}}>
                         
@@ -41,8 +40,9 @@ export default function MobilePreview({ staycation }) {
                             <h2 style={{fontSize: "1.1075rem", overflow: "hidden", marginTop: "0"}}>{houseType}</h2>
                         </div>
 
-                        <div style={{display: "flex", flexDirection: "column", gap: "4px", borderTop: '1px solid rgba(0,0,0,0.04)', padding: '16px 0'}}>
-                            <h2 style={{fontSize: "1.1075rem", marginTop: "0"}}>{staycation.location.address}</h2>
+                        <div style={{display: "flex", flexDirection: "column", gap: "4px", padding: '16px 0'}}>
+                            <h2 style={{fontSize: "1.1075rem", marginTop: "0",}}>Địa chỉ: </h2>
+                            <span style={{fontSize: "0.975rem", padding:"12px 0"}}>{staycation.location.address}</span>
                         </div>
                         
                         {/* features */}

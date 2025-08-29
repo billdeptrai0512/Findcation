@@ -40,10 +40,9 @@ export default function Map({setRenderPreview}) {
           <TileLayer url="https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png" />
 
           <Marker position={gps} icon={customIcon} ref={markerRef} eventHandlers={{add: (e) => e.target.openPopup()}} >
-            <Popup closeButton={false} closeOnClick={false} autoClose={false} > 
+            <Popup closeButton={false} closeOnClick={false} autoClose={false} className={styles.content} > 
               <Staycation setRenderPreview={setRenderPreview}/>  
             </Popup>
-            
           </Marker>
           
           <SetViewOnPosition position={gps} />

@@ -1,18 +1,15 @@
-import { Link } from "react-router-dom";
 import { useListing } from "../listingContext";
-import { X } from "lucide-react";
 import { featureIconMap  } from "../../assets/featureIcons";
-import FacebookIcon from "../../assets/facebook.png";
-import InstagramIcon from "../../assets/instagram.png";
-import Zalo from "../../assets/zalo.png";
+import { X } from "lucide-react";
 import styles from "../listing.module.css";
 import Contacts from "./contacts";
+import Images from "./images";
 
 export default function DesktopReview({ setRenderPreview }) {
 
     const { listing } = useListing()
 
-    const houseType = listing.type === "house" ? "Thuê toàn bộ căn nhà" : "Thuê phòng trong căn nhà"
+    const houseType = listing.type === "house" ? "Cho thuê toàn bộ căn nhà" : "Cho thuê phòng trong căn nhà"
 
     return (
         <div className={styles.preview_container}>
@@ -30,15 +27,9 @@ export default function DesktopReview({ setRenderPreview }) {
 
                 {/* preview_information_desktop */}
 
-                <div style={{display: "flex", maxHeight:"60vh", overflowY: "hidden", justifyContent: "space-around"}}>
+                <div style={{display: "flex", maxHeight:"60vh", overflowY: "hidden", justifyContent: "space-around", margin: "0 0 0 3rem"}}>
                         
-                    <div style={{display: "flex", margin: "12px", maxWidth:"400px", flexDirection: "column", justifyContent: "space-around"}}>
-
-                        <img src={listing.images[0]?.url} alt="cover_photo"  style={{width: "100%", borderRadius:"8px"}} />
-
-                        <Contacts staycation={listing} />
-
-                    </div>
+                    <Images listing={listing} />
 
                     <div className={styles.preview_details} style={{display: "flex", flexDirection: "column", margin: "2em", overflowY: "scroll"}}>          
                         
@@ -48,12 +39,13 @@ export default function DesktopReview({ setRenderPreview }) {
                         </div>
 
                         <div style={{display: "flex", flexDirection: "column", gap: "4px", padding: '16px 0'}}>
-                            <h2 style={{fontSize: "1.1075rem", marginTop: "0",}}>{listing.location.address}</h2>
+                            <h2 style={{fontSize: "1.1075rem", marginTop: "0",}}>Địa chỉ: </h2>
+                            <span style={{fontSize: "0.975rem", padding:"12px 0"}}>{listing.location.address}</span>
                         </div>
                         
                         {/* features */}
                         <div style={{display: "flex", flexDirection: "column", borderTop: '1px solid rgba(0,0,0,0.04)', padding: '16px 0 0'}}>
-                            <h2 style={{fontSize: "1.1075rem", marginTop: "0", marginBottom:"16px"}}>Tiện nghi</h2>
+                            <h2 style={{fontSize: "1.1075rem", marginTop: "0"}}>Tiện nghi:</h2>
                             {listing.features.map((feature, index) => (
                                 <div key={index} 
                                     style={{fontSize: "0.975rem", padding:"12px 0", borderBottom: '1px solid rgba(0,0,0,0.04)', display: "flex", justifyContent: "space-between", alignItems: "center"}}> 
@@ -63,7 +55,7 @@ export default function DesktopReview({ setRenderPreview }) {
                                 ))}
                         </div>
 
-                        {/* vị trí */}
+                        <Contacts staycation={listing} />
                         
                     
                     </div>

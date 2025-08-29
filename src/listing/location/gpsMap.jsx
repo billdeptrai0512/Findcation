@@ -1,7 +1,6 @@
 import { useState, useRef  } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents, ZoomControl } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
 
 import styles from './location.module.css'; // Ensure .map and .markerOverlay are styled here
 import Home from "../../assets/home.png";
@@ -31,10 +30,6 @@ export default function GPSMap({ location, setLocation }) {
         >
           <TileLayer url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png" />
           <TileLayer url="https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png" />
-  
-          {/* <Marker position={location.gps} icon={customIcon} 
-              eventHandlers={{add: (e) => e.target.openPopup()}}>
-          </Marker> */}
 
           <ZoomControl position="bottomleft" />
   

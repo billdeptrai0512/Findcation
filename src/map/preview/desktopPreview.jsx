@@ -4,12 +4,13 @@ import { ChevronLeft } from "lucide-react";
 import { featureIconMap  } from "../../assets/featureIcons";
 import styles from "../map.module.css";
 import Contacts from "./contacts";
+import Images from "./images";
 
 export default function DesktopPreview({ staycation }) {
 
     const navigate = useNavigate()
 
-    const houseType = staycation.type === "house" ? "Thuê toàn bộ căn nhà" : "Thuê phòng trong căn nhà"
+    const houseType = staycation.type === "house" ? "Cho thuê toàn bộ căn nhà" : "Cho thuê phòng trong căn nhà"
 
     return (
         <div className={styles.preview_container}>
@@ -26,12 +27,9 @@ export default function DesktopPreview({ staycation }) {
 
                 </div>
 
-                <div style={{display: "flex", maxHeight:"60vh", overflowY: "hidden", justifyContent: "space-around", padding: "8px 40px"}}>
-                        
-                    <div className={styles.preview_image} >
-                        <img src={`${import.meta.env.VITE_BACKEND_URL}${staycation.images[0]}`} alt="cover_photo"  style={{width: "100%", borderRadius:"8px"}} />
-                        <Contacts staycation={staycation} />
-                    </div>
+                <div style={{display: "flex", maxHeight:"60vh", overflowY: "hidden", justifyContent: "space-around", margin: "0 0 0 3rem"}}>
+
+                    <Images listing={staycation} />
 
                     <div className={styles.preview_details} style={{display: "flex", flexDirection: "column", margin: "2em", overflowY: "scroll"}}>
                         
@@ -40,8 +38,9 @@ export default function DesktopPreview({ staycation }) {
                             <h2 style={{fontSize: "1.1075rem", overflow: "hidden", marginTop: "0"}}>{houseType}</h2>
                         </div>
 
-                        <div style={{display: "flex", flexDirection: "column", gap: "4px", borderTop: '1px solid rgba(0,0,0,0.04)', padding: '16px 0'}}>
-                            <h2 style={{fontSize: "1.1075rem", marginTop: "0"}}>{staycation.location.address}</h2>
+                        <div style={{display: "flex", flexDirection: "column", gap: "4px", padding: '16px 0'}}>
+                            <h2 style={{fontSize: "1.1075rem", marginTop: "0",}}>Địa chỉ: </h2>
+                            <span style={{fontSize: "0.975rem", padding:"12px 0"}}>{staycation.location.address}</span>
                         </div>
                         
                         {/* features */}
@@ -55,6 +54,8 @@ export default function DesktopPreview({ staycation }) {
                                 </div>
                                 ))}
                         </div>
+
+                        <Contacts staycation={staycation} />
                     </div>
                 </div>
             </div>

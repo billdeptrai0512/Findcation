@@ -1,18 +1,15 @@
-import { Link } from "react-router-dom";
 import { useListing } from "../listingContext";
-import { Facebook, Instagram, X } from "lucide-react";
+import { X } from "lucide-react";
 import { featureIconMap  } from "../../assets/featureIcons";
-import FacebookIcon from "../../assets/facebook.png";
-import InstagramIcon from "../../assets/instagram.png";
-import Zalo from "../../assets/zalo.png";
 import styles from "../listing.module.css";
 import Contacts from "./contacts";
+import Images from "./images";
 
 export default function MobilePreview({ setRenderPreview }) {
 
     const { listing } = useListing()
 
-    const houseType = listing.type === "house" ? "Thuê toàn bộ căn nhà" : "Thuê phòng trong căn nhà"
+    const houseType = listing.type === "house" ? "Cho thuê toàn bộ căn nhà" : "Cho thuê phòng trong căn nhà"
 
     return (
         <div className={styles.preview_container}>
@@ -30,11 +27,9 @@ export default function MobilePreview({ setRenderPreview }) {
 
                 {/* preview_information_desktop */}
 
-                <div className={styles.preview_details} style={{display: "flex", flexDirection:"column" , maxHeight:"60vh", overflowY: "scroll", padding: "0 1em", margin: "0 auto"}}>
-                        
-                    <div style={{display: "flex", alignItems:"center", margin: "8px auto", maxWidth:"300px"}}>
-                        <img src={listing.images[0]?.url} alt="cover_photo"  style={{width: "100%", borderRadius:"8px"}} />
-                    </div>
+                <div className={styles.preview_details} style={{display: "flex", flexDirection:"column" , maxHeight:"60vh", overflowY: "scroll", margin: "0 auto"}}>
+
+                    <Images listing={listing} />
 
                     <div className={styles.preview_details} style={{display: "flex", justifyContent: "space-between", flexDirection: "column",  maxWidth: "300px", margin: "0 auto"}}>
                         

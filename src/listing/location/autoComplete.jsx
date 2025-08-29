@@ -48,7 +48,7 @@ export default function AutoComplete({ predictions, setPredictions }) {
     return (
         <ul className={styles.autocomplete}>
             {predictions.map((place, idx) => (
-                <div key={idx} style={{display: "flex", flex: "1"}}>
+                <div key={idx} style={{display: "flex", flex: "1", alignItems: "center"}}>
                     <MapPin size={isMobile ? 20 : 30} color="#222222" style={{ marginRight: "8px", marginLeft: "24px", flexShrink: "0" }} />
                     <li onClick={() => handleSelectSuggestion(place)}>
                         {place.description}
