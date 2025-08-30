@@ -26,7 +26,7 @@ export default function Instagram({filter}) {
     
         <div style={ui.column}>
           
-          <input type="text" name="instagram" id="instgram" placeholder="instagram.com/findcationnn" 
+          <input type="text" name="instagram" id="instgram" placeholder="findcationnn" 
             style={ui.input} onChange={handleChange} value={listing.contacts.instagram?.url && listing.contacts.instagram.url}/>
 
         </div>
@@ -37,7 +37,6 @@ export default function Instagram({filter}) {
 const ui = {
     row: {
       display: "flex",
-      gap: "8px",
       alignItems: "center",
       boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
       padding: "16px 12px",
@@ -50,7 +49,7 @@ const ui = {
     input: {
       border: "none",
       lineHeight: "2rem",
-      paddingLeft: "8px",
+      textAlign: "center",
       fontSize: "14px",
     },
     link: { display: "block", textDecoration: "none", overflow: "hidden" },

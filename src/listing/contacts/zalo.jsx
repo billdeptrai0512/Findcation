@@ -26,7 +26,7 @@ export default function Zalo({filter}) {
     
         <div style={ui.column}>
           
-            <input type="text" name="zalo" id="zalo" placeholder="zalo.me/0902822xxx" 
+            <input type="text" name="zalo" id="zalo" placeholder="0902822xxx" 
                 style={ui.input} onChange={handleChange} value={listing.contacts.zalo?.url && listing.contacts.zalo.url}/>
 
         </div>
@@ -37,7 +37,6 @@ export default function Zalo({filter}) {
 const ui = {
     row: {
       display: "flex",
-      gap: "8px",
       alignItems: "center",
       boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
       padding: "16px 12px",
@@ -50,9 +49,9 @@ const ui = {
     input: {
         border: "none",
         lineHeight: "2rem",
-        paddingLeft: "8px",
+        textAlign: "center",
         fontSize: "14px",
-      },
+    },
     link: { display: "block", textDecoration: "none", overflow: "hidden" },
     checkIcon: { position: "absolute", right: 0, paddingRight: "8px", cursor: "pointer" },
     pencilIcon: { paddingRight: "8px", cursor: "pointer" },

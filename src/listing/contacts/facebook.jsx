@@ -17,15 +17,14 @@ export default function Facebook({filter}) {
     }
 
     return (
-
-        <div style={ui.row}>
-            <div style={{ cursor: listing.contacts.facebook?.url ? "pointer" : "default", ...ui.icon }} onClick={handleClick}>
-                <img src={FacebookIcon} alt="Zalo" style={{ width: "35px" }} />
-            </div>
-    
+      <div style={ui.row}>
+          <div style={{ cursor: listing.contacts.facebook?.url ? "pointer" : "default", ...ui.icon }} onClick={handleClick}>
+              <img src={FacebookIcon} alt="Zalo" style={{ width: "35px" }} />
+          </div>
+  
         <div style={ui.column}>
 
-            <input type="text" name="facebook" id="facebook" placeholder="facebook.com/findcation" 
+            <input type="text" name="facebook" id="facebook" placeholder="findcation" 
               style={ui.input} onChange={handleChange} value={listing.contacts.facebook?.url && listing.contacts.facebook.url}/>
 
         </div>
@@ -50,7 +49,7 @@ const ui = {
     input: {
       border: "none",
       lineHeight: "2rem",
-      paddingLeft: "8px",
+      textAlign: "center",
       fontSize: "14px",
     },
     link: { display: "block", textDecoration: "none", overflow: "hidden" },
