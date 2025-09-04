@@ -9,7 +9,7 @@ import { StaycationProvider } from "./map/staycationContext";
 
 import Register from "./auth/register";
 import ErrorPage from "./error-page";
-import Login from "./auth/login";
+import SubmitEmail from "./auth/submitEmail";
 import Forgot from "./auth/forgot";
 import ResetPassword from "./auth/resetPassword";
 import Auth from "./auth/main";
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
         path: "/auth",
         element: <Auth />,
         children: [
-          { path: "login",element: <Login /> },
+          { path: "login",element: <SubmitEmail /> },
           { path: "register", element: <Register /> },
           { path: "forgot-password", element: <Forgot /> },
           { path: "reset-password", element: <ResetPassword /> },

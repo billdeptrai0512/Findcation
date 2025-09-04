@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from './authContext';
-import { ChevronLeft } from 'lucide-react'
+import { ChevronLeft, Eye, EyeClosed } from 'lucide-react'
 import styles from './login.module.css';
 import axios from 'axios';
 
@@ -12,13 +12,15 @@ export default function RegisterForm() {
 
     const { login } = useAuth()
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
+        // firstName: '',
+        // lastName: '',
         email: state.email,
         password: '',
+        confirm_password: '',
         isAdmin: false, // ✅ thêm isAdmin
     });
     const [showPassword, setShowPassword] = useState(false)
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const [error, setError] = useState('');
 
     const navigate = useNavigate();
@@ -27,10 +29,12 @@ export default function RegisterForm() {
         e.preventDefault();
 
         console.log(formData);
-        if (formData.firstName === '') return setError('Bạn chưa điền tên của bạn.')
-        if (formData.lastName === '') return setError('Bạn chưa điền họ của bạn.')
+        // if (formData.firstName === '') return setError('Bạn chưa điền tên của bạn.')
+        // if (formData.lastName === '') return setError('Bạn chưa điền họ của bạn.')
         if (formData.password === '') return setError('Bạn chưa nhập mật khẩu.')
-
+        if (formData.confirm_password === '') return setError('Bạn chưa nhập lại mật khẩu.')
+        if (formData.password !== formData.confirm_password) return setError('Mật khẩu không giống nhau')
+            
         try {
             await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/register`, formData);
 
@@ -66,7 +70,7 @@ export default function RegisterForm() {
                 </div>
                 <div className={styles.panel}>
                     <form onSubmit={handleSubmit}>
-                        <div className={styles.inputGroup}>
+                        {/* <div className={styles.inputGroup}>
                             <label>Tên pháp nhân</label>
                             <input
                                 id="firstName"
@@ -86,10 +90,10 @@ export default function RegisterForm() {
                                 onChange={handleChange}
                                 className={styles.input}
                             />
-                        </div>
+                        </div> */}
 
                         <div className={styles.inputGroup}>
-                            <label>Thông tin liên hệ</label>
+                            <label>Email</label>
                             <input
                                 id="email"
                                 name="email"
@@ -116,7 +120,27 @@ export default function RegisterForm() {
                                 />
                                 <button type="button" className={styles.toggleButton}
                                     onClick={() => setShowPassword(!showPassword)}>
-                                        {showPassword ? "Ẩn" : "Hiển thị"}
+                                        {showPassword ? <Eye /> : <EyeClosed />}
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className={styles.inputGroup}>
+                            <label>Nhập lại mật khẩu</label>
+                            <div style={{position: "relative", display: "flex", alignItems: "center"}}>
+                                <input
+                                    id="confirm-password"
+                                    name="confirm_password"
+                                    placeholder="Nhập lại mật khẩu"
+                                    type={showConfirmPassword ? "text" : "password"}
+                                    autoComplete='new-password'
+                                    value={formData.confirm_password}
+                                    onChange={handleChange}
+                                    className={styles.input}
+                                />
+                                <button type="button" className={styles.toggleButton}
+                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                                        {showConfirmPassword ? <Eye /> : <EyeClosed />}
                                 </button>
                             </div>
                         </div>
@@ -127,6 +151,7 @@ export default function RegisterForm() {
                             <button type="submit" className={styles.button}>Đồng ý và tiếp tục</button>
                         </div>
                     </form>
+
                 </div>
 
             </div>

@@ -1,12 +1,15 @@
 import styles from "./map.module.css";
 import Header from "./header";
+import NearByButton from "./nearby";
+
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-import NearByButton from "./nearby";
+import { useAuth } from "../auth/authContext";
 
 
 export default function LandingPage() {
 
+  const { user } = useAuth()
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ query: '(max-width: 714px)'})
   
@@ -18,11 +21,12 @@ export default function LandingPage() {
             <div className={styles.footer}>
               <div className={styles.cta_div}>
                   <NearByButton />
-                  <button className={styles.cta_button} onClick={() => navigate("/list-staycation")}>
+                  <button className={styles.cta_button} onClick={() => navigate("/auth/login")}>
                       <h2 style={{margin: 0}}>Bạn đang kinh doanh staycation ?</h2>
                   </button>
               </div>
             </div>
+
           ) : (
 
             <>
@@ -33,7 +37,7 @@ export default function LandingPage() {
               </div>
               <div className={styles.right_footer}>
                 <div className={styles.cta_div}>
-                    <button className={styles.cta_button} onClick={() => navigate("/list-staycation")}>
+                    <button className={styles.cta_button} onClick={() => navigate("/auth/login")}>
                         <h2 style={{margin: 0}}>Bạn đang kinh doanh staycation ?</h2>
                     </button>
                 </div>

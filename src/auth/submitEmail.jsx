@@ -1,18 +1,17 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, } from 'react-router-dom';
 import { useAuth } from './authContext';
 import { GoogleLogin } from '@react-oauth/google';
-import { X, Mail, ChevronLeft  } from 'lucide-react';
-import PasswordLogin from './passwordLogin';
+import { X, } from 'lucide-react';
+import SubmitPassword from './submitPassword';
 import axios from 'axios';
 import styles from './login.module.css';
 
-export default function Login() {
+export default function SubmitEmail() {
     const { setUser } = useAuth();
-    const [member, setMember] = useState()
     const [email, setEmail] = useState('');
     const [foundEmail, setFoundEmail] = useState(null)
-    const [googleLogin, setGoogleLogin] = useState(null)
+    const [hasPassword, setHasPassword] = useState(null)
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -24,19 +23,24 @@ export default function Login() {
         try {
             const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login/email`, {email});
 
-            const { user, googleLogin, hasRegister } = response.data;
+            const { hasPassword, hasRegister } = response.data;
 
             // if we not found email -> we return hasRegister = false -> we pop up Register Form with the email
             if (hasRegister === false) return setFoundEmail(false)
 
-            // if we found email -> we check if googleLogin = true ? -> if true then it already register via google -> redirect to google login with that email display
-            if (hasRegister === true && googleLogin === true) {
-                setGoogleLogin(true)
-                return setMember(user)
+
+            if (hasRegister === true && hasPassword === false) {
+                setHasPassword(false)
+                setFoundEmail(true)
+                return
             }
 
             // if we found email -> we check if googleLogin = false ? -> we redirect to submit password form
-            if (hasRegister === true && googleLogin === false) return setFoundEmail(true)
+            if (hasRegister === true && hasPassword === true) {
+                setHasPassword(true)
+                setFoundEmail(true)
+                return
+            }
 
             // login(token);
 
@@ -61,48 +65,9 @@ export default function Login() {
         }
     };
 
-    if (foundEmail === false) return navigate("/auth/register", {state: {email: email}}) 
+    if (foundEmail === false || hasPassword === false) return navigate("/auth/register", {state: {email: email}}) 
 
-    if (foundEmail === true) return <PasswordLogin email={email} setFoundEmail={setFoundEmail}/>
-
-    if (googleLogin) {
-
-        const imgixDomain = 'https://findcation.imgix.net';
-
-        return (
-            <div className={styles.container}>
-                <div className={styles.card}>
-                    <div className={styles.header}>
-                        <button onClick={() => {
-                            setGoogleLogin(false)
-                            setMember(null)
-                            return setEmail('')
-                        }}>
-                            <ChevronLeft  size={20}/>
-                        </button>
-                        <div className={styles.title}>
-                            Chào mừng bạn quay lại, {member.name}
-                        </div>
-                    </div>
-                    <div className={styles.panel}>
-
-                        <div className={styles.profile}>
-                            <img src={`${imgixDomain}${member.avatar}`} alt="avatar" />
-                            <p> <Mail size={16}/> {maskEmail(member.email)} </p>
-                        </div>
-
-                        <div className={styles.googleWrapper}>
-                            <GoogleLogin
-                                onSuccess={handleGoogleLogin}
-                                onError={() => console.log('Google Login Failed')}
-                            />
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        )
-    }
+    if (foundEmail === true && hasPassword === true) return <SubmitPassword email={email} setFoundEmail={setFoundEmail}/>
 
     return (
         <div className={styles.container}>
@@ -112,7 +77,7 @@ export default function Login() {
                         <X size={20} style={{padding: "4px"}}/>
                     </button>
                     <div className={styles.title}>
-                        Đăng nhập
+                        Đăng nhập hoặc Đăng Ký
                     </div>
                 </div>
                 <div className={styles.panel}>
@@ -137,13 +102,13 @@ export default function Login() {
                             <button type="submit" className={styles.button}>Tiếp tục</button>
                         </div>
                         
-                        <div className={styles.actionRegisterRow}>
-                            <div className={styles.line}></div>
-                            <p>hoặc</p>
-                            <div className={styles.line}></div>
-                        </div>
-
                     </form>
+
+                    <div className={styles.actionRegisterRow}>
+                        <div className={styles.line}></div>
+                        <p>hoặc</p>
+                        <div className={styles.line}></div>
+                    </div>
 
                     <div className={styles.googleWrapper}>
                         <GoogleLogin
@@ -155,18 +120,4 @@ export default function Login() {
             </div>
         </div>
     );
-}
-
-function maskEmail(email) {
-    const [local, domain] = email.split("@");
-
-    if (local.length <= 6) {
-        // If local part is short, show only first character and last one
-        return `${local[0]}${"•".repeat(local.length - 2)}${local.slice(-1)}@${domain}`;
-    }
-
-    const start = local.slice(0, 2);
-    const end = local.slice(-4);
-    const masked = "•".repeat(local.length - start.length - end.length);
-    return `${start}${masked}${end}@${domain}`;
 }

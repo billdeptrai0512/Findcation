@@ -135,54 +135,51 @@ export default function AdminDashBoard() {
                         <span>paid staycation</span>
                     </div>
                 </div>
-                    
-                <div style={{ paddingTop: "5em" }}>
-                    <table
-                        style={{
-                        borderCollapse: "collapse",
-                        width: "100%",
-                        boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-                        borderRadius: "8px",
-                        overflow: "hidden",
-                        }}
-                    >
-                        <thead style={{ background: "#f5f5f5" }}>
-                        <tr>
-                            <th style={{ padding: "12px", border: "1px solid #ddd", textAlign: "left" }}>Created At</th>
-                            <th style={{ padding: "12px", border: "1px solid #ddd", textAlign: "left" }}>User</th>
-                            <th style={{ padding: "12px", border: "1px solid #ddd", textAlign: "left" }}>Stage</th>
-                            <th style={{ padding: "12px", border: "1px solid #ddd", textAlign: "left" }}>Message</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {totalSuggestion.length > 0 &&
-                            totalSuggestion.map((s, i) => (
-                            <tr
-                                key={s.id}
-                                style={{
-                                background: i % 2 === 0 ? "#ffffff" : "#fafafa", // zebra effect
-                                cursor: "pointer",
-                                }}
-                                onMouseEnter={(e) => (e.currentTarget.style.background = "#f0f0f0")}
-                                onMouseLeave={(e) =>
-                                (e.currentTarget.style.background = i % 2 === 0 ? "#ffffff" : "#fafafa")
-                                }
-                            >
-                                <td style={{ padding: "12px", border: "1px solid #ddd" }}>
-                                    {new Date(s.createdAt).toISOString().split("T")[0]}
-                                </td>
-                                <td style={{ padding: "12px", border: "1px solid #ddd" }}>
-                                    <span style={{ fontWeight: "500" }}>{s.user?.name}</span>
-                                <br />
-                                    <span style={{ fontSize: "12px", color: "#555" }}>{s.user?.email}</span>
-                                </td>
-                                <td style={{ padding: "12px", border: "1px solid #ddd" }}>{s.stage}</td>
-                                <td style={{ padding: "12px", border: "1px solid #ddd" }}>{s.message}</td>
+                
+                { totalSuggestion && (
+                    <div style={{ paddingTop: "5em" }}>
+                        <table
+                            style={{
+                            borderCollapse: "collapse",
+                            width: "100%",
+                            boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+                            borderRadius: "8px",
+                            overflow: "hidden",
+                            }}
+                        >
+                            <thead style={{ background: "#f5f5f5" }}>
+                            <tr>
+                                <th style={{ padding: "12px", border: "1px solid #ddd", textAlign: "left" }}>Created At</th>
+                                <th style={{ padding: "12px", border: "1px solid #ddd", textAlign: "left" }}>User</th>
+                                <th style={{ padding: "12px", border: "1px solid #ddd", textAlign: "left" }}>Stage</th>
+                                <th style={{ padding: "12px", border: "1px solid #ddd", textAlign: "left" }}>Message</th>
                             </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                            {totalSuggestion.map((s, i) => (
+                                <tr
+                                    key={s.id}
+                                    style={{ background: i % 2 === 0 ? "#ffffff" : "#fafafa", cursor: "pointer",}}
+                                    onMouseEnter={(e) => (e.currentTarget.style.background = "#f0f0f0")}
+                                    onMouseLeave={(e) => (e.currentTarget.style.background = i % 2 === 0 ? "#ffffff" : "#fafafa") }
+                                >
+                                    <td style={{ padding: "12px", border: "1px solid #ddd" }}>
+                                        {new Date(s.createdAt).toISOString().split("T")[0]}
+                                    </td>
+                                    <td style={{ padding: "12px", border: "1px solid #ddd" }}>
+                                        <span style={{ fontWeight: "500" }}>{s.user?.name}</span>
+                                    <br />
+                                        <span style={{ fontSize: "12px", color: "#555" }}>{s.user?.email}</span>
+                                    </td>
+                                    <td style={{ padding: "12px", border: "1px solid #ddd" }}>{s.stage}</td>
+                                    <td style={{ padding: "12px", border: "1px solid #ddd" }}>{s.message}</td>
+                                </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+
                 
             </div>
   

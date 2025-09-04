@@ -19,10 +19,9 @@ export default function Contacts() {
 
         setStepValidity((prev) => ({
             ...prev,
-            [currentStep]:  listing.contacts.facebook?.url &&
-                            listing.contacts.instagram?.url &&
-                            listing.contacts.zalo?.url &&
-                            user
+            [currentStep]:  listing.contacts.facebook?.url ||
+                            listing.contacts.instagram?.url ||
+                            listing.contacts.zalo?.url
         }));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,9 +43,9 @@ export default function Contacts() {
                 </div>
             </div>
 
-            <div className={styles.contact_information_container} style={{ width: "100%" }}>
+            {/* <div className={styles.contact_information_container} style={{ width: "100%" }}>
                 <Google />
-            </div>
+            </div> */}
         </div>
     );
 }

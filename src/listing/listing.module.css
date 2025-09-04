@@ -315,13 +315,6 @@ input[type="checkbox"]:checked {
     padding-bottom: 24px;
 }
 
-.contact_information_container {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5em;
-    padding-bottom: 24px;
-}
-
 .preview_overlay {
     position: fixed;
     width: 100%;

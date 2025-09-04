@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from './authContext';
-import { ChevronLeft  } from 'lucide-react';
+import { ChevronLeft, Eye, EyeClosed  } from 'lucide-react';
 import styles from './login.module.css';
 
-export default function PasswordLogin({email, setFoundEmail}) {
+
+export default function SubmitPassword({email, setEmail, setFoundEmail,}) {
 
     const { login } = useAuth()
 
@@ -28,7 +29,14 @@ export default function PasswordLogin({email, setFoundEmail}) {
         } catch (err) {
 
             if (err.response?.status === 401) {
-                setError("Sai mật khẩu");
+                setError(
+                  <>
+                    Sai mật khẩu rồi.{" "}
+                    <Link to="/auth/forgot-password" className={styles.link}>
+                      Bạn đã quên mật khẩu?
+                    </Link>
+                  </>
+                );
             } else if (err.response) {
                 setError("Có lỗi xảy ra, vui lòng thử lại.");
             } else {
@@ -38,6 +46,9 @@ export default function PasswordLogin({email, setFoundEmail}) {
         } 
     };
 
+    // here we need to check if the user have the password or not ?
+    // if he doesn't have meanning last time he use gmail so we kinda have them to register password if he want
+
     return (
         <div className={styles.container}>
             <div className={styles.card}>
@@ -46,7 +57,7 @@ export default function PasswordLogin({email, setFoundEmail}) {
                         <ChevronLeft size={20} style={{padding: "4px"}}/>
                     </button>
                     <div className={styles.title} >
-                        Đăng nhập
+                        {"Đăng nhập"}
                     </div>
                 </div>
                 <div className={styles.panel}>
@@ -54,7 +65,20 @@ export default function PasswordLogin({email, setFoundEmail}) {
                         {error && <p className={styles.error}>{error}</p>}
 
                         <div className={styles.inputGroup}>
+                            <label>Email</label>
+                            <input
+                                id="email"
+                                name="email"
+                                placeholder="Email"
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className={styles.input}
+                            />
+                        </div>
 
+                        <div className={styles.inputGroup}>
+                            <label>Mật khẩu</label>
                             <div style={{position: "relative", display: "flex", alignItems: "center"}}>
                                 <input
                                     id="password"
@@ -68,22 +92,18 @@ export default function PasswordLogin({email, setFoundEmail}) {
                                 />
                                 <button type="button" className={styles.toggleButton}
                                     onClick={() => setShowPassword(!showPassword)}>
-                                        {showPassword ? "Ẩn" : "Hiển thị"}
+                                        {showPassword ? <Eye /> : <EyeClosed />}
                                 </button>
                             </div>
 
                         </div>
-
-                        
-                        
+                              
                         <div className={styles.actionLoginRow}>
-                            <button type="submit" className={styles.button}>Đăng nhập</button>
+                            <button type="submit" className={styles.button}>{"Đăng nhập"}</button>
                         </div>
+                        
                     </form>
 
-                    <div className={styles.googleWrapper}>
-                        <Link to="/auth/forgot-password" className={styles.link}>Bạn đã quên mật khẩu?</Link>
-                    </div>
                 </div>
 
 

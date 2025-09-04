@@ -31,7 +31,7 @@ export default function ImageUpload() {
                     <img src={Camera} alt="" style={{height:"168px"}} />
                 </div>
                 <label>
-                    <input type="file" name="image" multiple style={{ display: "none" }} onChange={(e) => uploadImages(e.target.files)}/>
+                    <input type="file" name="image" accept="image/*"  multiple style={{ display: "none" }} onChange={(e) => uploadImages(e.target.files)}/>
                     Thêm ảnh
                 </label>
             </div>

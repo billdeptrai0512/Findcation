@@ -18,7 +18,7 @@ export default function Photo({image, cover, index }) {
     if (!image) return (
         <div className={styles.empty}>
             <label style={{ display: "block", width: "100%", height: "100%", cursor: "pointer" }}>
-                <input type="file" name="image" multiple style={{ display: "none" }} onChange={(e) => uploadImages(e.target.files)} />
+                <input type="file" name="image" accept="image/*"  multiple style={{ display: "none" }} onChange={(e) => uploadImages(e.target.files)} />
                 <div >
                     <Image size={35} />
                 </div>

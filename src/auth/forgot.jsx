@@ -56,7 +56,7 @@ export default function Forgot() {
             <div className={styles.container}>
                 <div className={styles.card}>
                     <div className={styles.header}>
-                        <button onClick={() => navigate('/login')}>
+                        <button onClick={() => navigate('/auth/login')}>
                             <ChevronLeft size={20} style={{padding: "4px"}}/>
                         </button>
                         <div className={styles.title}>

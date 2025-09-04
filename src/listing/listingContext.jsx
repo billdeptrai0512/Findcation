@@ -1,4 +1,5 @@
 import axios from "axios";
+import heic2any from "heic2any";
 import { createContext, useContext, useState } from "react";
 
 const ListingContext = createContext();
@@ -53,37 +54,39 @@ const ListingProvider = ({ children }) => {
         }));
     }
 
-    const uploadImages = (files) => {
-
+    const uploadImages = async (files) => {
         if (!files || files.length === 0) return;
-    
+      
+        const convertFile = async (file) => {
+            console.log(file)
+          const isHeic =
+            file.type === "image/heic" ||
+            file.name.toLowerCase().endsWith(".heic") ||
+            file.name.toLowerCase().endsWith(".heif");
+            console.log(isHeic)
+          if (isHeic) {
+            try {
+              const blob = await heic2any({ blob: file, toType: "image/jpeg" });
+              return { file, url: URL.createObjectURL(blob) };
+            } catch (err) {
+              console.warn("HEIC conversion failed, fallback to raw", err);
+            }
+          }
+          return { file, url: URL.createObjectURL(file) };
+        };
+      
         if (files.length > 1) {
-
-            const newImages = Array.from(files).map((file) => ({
-                file,
-                url: URL.createObjectURL(file),
-            }));
-    
-            setListing((prev) => ({
-                ...prev,
-                images: [...prev.images, ...newImages],
-            }));
-            
+          const newImages = await Promise.all(Array.from(files).map(convertFile));
+          setListing((prev) => ({
+            ...prev,
+            images: [...prev.images, ...newImages],
+          }));
         } else {
-
-            const file = files[0];
-
-            const data = {
-                file,
-                url: URL.createObjectURL(file),
-            };
-
-
-            setListing((prev) => ({
-                ...prev,
-                images: [...prev.images, data],
-            }));
-
+          const data = await convertFile(files[0]);
+          setListing((prev) => ({
+            ...prev,
+            images: [...prev.images, data],
+          }));
         }
     };
 
