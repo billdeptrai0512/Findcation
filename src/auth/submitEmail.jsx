@@ -25,6 +25,9 @@ export default function SubmitEmail() {
 
             const { hasPassword, hasRegister } = response.data;
 
+            console.log("hasPassword" + hasPassword)
+            console.log("hasRegister" + hasRegister)
+
             // if we not found email -> we return hasRegister = false -> we pop up Register Form with the email
             if (hasRegister === false) return setFoundEmail(false)
 

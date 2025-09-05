@@ -16,8 +16,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    
-
+  
     try {
       const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/login`, { email, password },
         { withCredentials: true }
