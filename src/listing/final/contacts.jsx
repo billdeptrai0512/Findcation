@@ -12,21 +12,21 @@ export default function Contacts({staycation}) {
             , boxShadow:`0 0 0 1px transparent, 0 0 0 4px transparent, 0 2px 4px rgba(0, 0, 0, 0.18)`}}>
                 <span>
 
-                    <Link to={`https://www.facebook.com/${staycation.contacts.facebook}`} target="_blank" rel="noopener noreferrer">
+                    <Link to={`https://www.facebook.com/${staycation.contacts.facebook.url}`} target="_blank" rel="noopener noreferrer">
                         <img src={FacebookIcon} alt="" style={{width:"37px"}} />
                     </Link>
 
                 </span>
                 <span>
 
-                    <Link to={`https://www.instagram.com/${staycation.contacts.instagram}`} target="_blank" rel="noopener noreferrer">
+                    <Link to={`https://www.instagram.com/${staycation.contacts.instagram.url}`} target="_blank" rel="noopener noreferrer">
                         <img src={InstagramIcon} alt="" style={{width:"37px"}} />
                     </Link>
 
                 </span>
                 <span>
 
-                    <Link to={`https://zalo.me/${staycation.contacts.zalo}`} target="_blank" rel="noopener noreferrer">
+                    <Link to={`https://zalo.me/${staycation.contacts.zalo.url}`} target="_blank" rel="noopener noreferrer">
                         <img src={Zalo} alt="" style={{width:"37px"}} />
                     </Link>
 
