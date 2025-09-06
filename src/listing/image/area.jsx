@@ -11,15 +11,23 @@ export default function Area() {
 
     const isMobile = useMediaQuery({ query: '(max-width: 768px)'})
 
+    const getEmptySlotIndex = (length) => {
+      if (length < 3) return 2
+      if (length < 5) return 4
+      if (length < 7) return 6
+      return null
+    }
+
     const renderPhoto = (index) => {
 
         const img = listing.images[index]
+        const emptySlotIndex = getEmptySlotIndex(listing.images.length)
 
         // Cover photo
         if (index === 0) return <Photo image={img} cover={true} index={index} /> 
         
         // Empty slots
-        if (index === listing.images.length  && img === undefined) return renderEmptyLastImage(uploadImages) // empty with lasst
+        if (index === emptySlotIndex && img === undefined) return renderEmptyLastImage(uploadImages) // empty with lasst
 
         return <Photo image={img} cover={false} index={index} />
     }
@@ -49,17 +57,13 @@ export default function Area() {
             </div>
             <div className={styles.mobile_images_area}>
                     
-                {[...Array(listing.images.length + 1)].map((_, i) => (
+                {[...Array(6)].map((_, i) => (
                   <React.Fragment key={i}>{renderPhoto(i)}</React.Fragment>
                 ))}
 
             </div>
         </div>
     )
-
-    const count = listing.images.length;
-    const pairCount = Math.floor(Math.max(0, count - 1) / 2); // full pairs after cover
-    const hasLeftover = (count - 1) % 2 === 1;
     
     return (
       <div className={styles.pageContent}>
@@ -71,33 +75,26 @@ export default function Area() {
         <div className={styles.images_area}>
           {renderPhoto(0)} {/* cover */}
     
-          {/* groups: (1,2), (3,4), (5,6)... */}
-          {Array.from({ length: pairCount }).map((_, i) => {
-            const left = 1 + i * 2;
-            const right = left + 1;
-            return (
-              <div className={styles.group} key={i}>
-                {renderPhoto(left)}
-                {renderPhoto(right)}
+
+          <div className={styles.group} >
+            {renderPhoto(1)}
+            {renderPhoto(2)}
+          </div>
+
+          {listing.images.length >= 3 && (
+              <div className={styles.group} >
+                {renderPhoto(3)}
+                {renderPhoto(4)}
               </div>
-            );
-          })}
-    
-          {/* leftover single image (odd count) shows immediately */}
-          {hasLeftover && (
-            <div className={styles.group}>
-              {renderPhoto(count - 1)}        {/* last actual image */}
-              {renderPhoto(count + 1)}        {/* plain empty placeholder (NOT add) */}
+          )}
+
+          {listing.images.length >= 5 && (
+            <div className={styles.group} >
+              {renderPhoto(5)}
+              {renderPhoto(6)}
             </div>
           )}
-    
-          {/* always keep 2 slots at the bottom: blank + add */}
-          <div className={styles.group}>
-            {renderPhoto(count + 1)}
-            {renderPhoto(count)}      {/* blank placeholder */}
-                {/* + Thêm ảnh */}   
-                       
-          </div>
+
         </div>
       </div>
     );
