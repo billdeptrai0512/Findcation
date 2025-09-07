@@ -1,9 +1,13 @@
 import FacebookIcon from "../../assets/facebook.png";
 import { useListing } from "../listingContext";
+import { useMediaQuery } from "react-responsive";
 
 
 export default function Facebook({filter}) {    
     const { listing, uploadContact } = useListing();
+
+    const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+    const facebookUrl = isMobile ? `fb://page/` : `https://www.facebook.com/`
 
     const handleChange = (e) => {
       const { name, value } = e.target;
@@ -12,7 +16,7 @@ export default function Facebook({filter}) {
 
     const handleClick = () => {
       if (listing.contacts.facebook.url) {
-        window.open(`https://www.facebook.com/${listing.contacts.facebook.url}`, "_blank")
+        window.open(`${facebookUrl}${listing.contacts.facebook.url}`, "_blank")
       }
     }
 

@@ -1,10 +1,13 @@
 import InstagramIcon from "../../assets/instagram.png";
 import { useListing } from "../listingContext";
-
+import { useMediaQuery } from "react-responsive";
 
 
 export default function Instagram({filter}) {    
     const { listing, uploadContact } = useListing();
+
+    const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+    const instagramUrl = isMobile ? `instagram://user?username=` : `https://www.instagram.com/`
 
     const handleChange = (e) => {
       const { name, value } = e.target;
@@ -13,7 +16,7 @@ export default function Instagram({filter}) {
 
     const handleClick = () => {
       if (listing.contacts.instagram.url) {
-        window.open(`https://www.instagram.com/${listing.contacts.instagram.url}`, "_blank")
+        window.open(`${instagramUrl}${listing.contacts.instagram.url}`, "_blank")
       }
     }
 
