@@ -12,7 +12,7 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/auth/, '')
       }
     },
-    allowedHosts: [`engineers-chapel-disclaimer-pension.trycloudflare.com`],
+    allowedHosts: [`fees-proc-arkansas-keno.trycloudflare.com`],
     
   },
 

@@ -1,9 +1,15 @@
 import { Link } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 import FacebookIcon from "../../assets/facebook.png";
 import InstagramIcon from "../../assets/instagram.png";
 import Zalo from "../../assets/zalo.png";
 
 export default function Contacts({staycation}) {
+
+
+    const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+    const facebookUrl = isMobile ? `fb://page/` : `https://www.facebook.com/`
+    const instagramUrl = isMobile ? `instagram://user?username=` : `https://www.instagram.com/`
 
     return (
         <div style={{display: "flex", flexDirection: "column", padding: '16px 0'}}>
@@ -12,14 +18,14 @@ export default function Contacts({staycation}) {
             , boxShadow:`0 0 0 1px transparent, 0 0 0 4px transparent, 0 2px 4px rgba(0, 0, 0, 0.18)`}}>
                 <span>
 
-                    <Link to={`https://www.facebook.com/${staycation.contacts.facebook.url}`} target="_blank" rel="noopener noreferrer">
+                    <Link to={`${facebookUrl}${staycation.contacts.facebook.url}`} target="_blank" rel="noopener noreferrer">
                         <img src={FacebookIcon} alt="" style={{width:"37px"}} />
                     </Link>
 
                 </span>
                 <span>
 
-                    <Link to={`https://www.instagram.com/${staycation.contacts.instagram.url}`} target="_blank" rel="noopener noreferrer">
+                    <Link to={`${instagramUrl}${staycation.contacts.instagram.url}`} target="_blank" rel="noopener noreferrer">
                         <img src={InstagramIcon} alt="" style={{width:"37px"}} />
                     </Link>
 

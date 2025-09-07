@@ -28,7 +28,6 @@ export default function RegisterForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log(formData);
         // if (formData.firstName === '') return setError('Bạn chưa điền tên của bạn.')
         // if (formData.lastName === '') return setError('Bạn chưa điền họ của bạn.')
         if (formData.password === '') return setError('Bạn chưa nhập mật khẩu.')

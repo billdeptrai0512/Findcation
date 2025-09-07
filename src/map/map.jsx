@@ -82,7 +82,7 @@ export default function Map() {
   useEffect(() => {
     if (!location) return 
     setGPS(location);
-    setZoom(isMobile ? 12 : 13)
+    setZoom(15) //zoom in when have user's location
   }, [isMobile, location]);
 
 

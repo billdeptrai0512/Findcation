@@ -64,12 +64,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  /* width: 100%; */
+  gap: 1em;
+  padding: 1em;
   align-items: stretch;
 }
 
 .cta_button {
-  padding: 12px 16px;
+  padding: 12px;
+  border-radius: 12px;
   background: linear-gradient(to right, #E61E4D 0%, #E31C5F 50%, #D70466 100%);
   color: white;
   border: none;
@@ -82,7 +85,8 @@
 .nearby_button {
   background: linear-gradient(to right, #588AC8 0%, #588AC8 50%, #4C7CC0 100%);
   color: white;
-  padding: 12px 16px;
+  padding: 12px;
+  border-radius: 12px;
   cursor: pointer;
   font-weight: 500;
   border: none;
