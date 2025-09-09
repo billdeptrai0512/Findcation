@@ -29,7 +29,7 @@ export default function MobilePreview({ staycation }) {
 
                 {/* preview_information_desktop */}
 
-                <div className={styles.preview_details} style={{display: "flex", flexDirection:"column" , maxHeight:"60vh", overflowY: "scroll", margin: "0 auto"}}>
+                <div className={styles.preview_details} style={{display: "flex", flexDirection:"column" , margin: "0 auto"}}>
                     
                     <Images listing={staycation} />
 

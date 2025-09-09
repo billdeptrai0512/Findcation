@@ -169,6 +169,7 @@ p {
   position: absolute;
   bottom: 0;
   min-width: 100vw;
+  min-height: 100dvh;
   z-index: 2;
 }
 
@@ -179,7 +180,18 @@ p {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
   margin: 0px auto;
   min-width: 30%;
+  height: 100dvh;
+  overflow-y: scroll;
 }   
+
+.preview_card {
+  scrollbar-width: none;    /* Firefox */
+  -ms-overflow-style: none;
+}
+
+.preview_card::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
 
 .preview_header {
   position: relative;
@@ -299,10 +311,12 @@ p {
     top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
+    min-height: unset
 }
 
   .preview_card {
-      max-width: 800px
+      max-width: 800px;
+      height: unset;
   }
 
   .preview_image {

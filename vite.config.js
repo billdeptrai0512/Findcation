@@ -7,7 +7,6 @@ export default defineConfig({
   plugins: [react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'robots.txt', 'apple-touch-icon.png'],
       manifest: {
         name: 'Findcation',
         short_name: 'Findcation',
@@ -25,7 +24,10 @@ export default defineConfig({
           sizes: '192x192',
           type: 'image/png'
         }, 
-      ]}
+      ]},
+      devOptions: {
+        enabled: true, // allows PWA to work in dev mode
+      }
     })
   ],
 

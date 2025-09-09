@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Block admin dashboard
+Disallow: /admin
+
+# Block authentication routes
+Disallow: /auth
+
+# Block staycation listing creation wizard
+Disallow: /list-staycation
+
+# Sitemap (add later when ready)
+# Sitemap: https://www.findcation.vn/sitemap.xml

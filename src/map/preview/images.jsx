@@ -13,7 +13,7 @@ export default function Images({ listing }) {
   console.log(listing.images)
 
   return (
-    <div style={{ margin: "1rem auto", maxWidth: isMobile ? "300px" : "400px", width: "100%",
+    <div style={{ margin: "1rem auto", maxWidth: isMobile ? "300px" : "400px", maxHeight: isMobile ? "300px" : "400px", width: "100%",
         display: "flex", flexDirection: "column", justifyContent: "space-around"}}>
       {/* Image Slider */}
       <Swiper

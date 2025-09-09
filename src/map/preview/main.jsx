@@ -30,17 +30,15 @@ export default function PreviewStaycation() {
 
     if (!staycation) return null;
 
+    if (isMobile) return (
+        <MobilePreview staycation={staycation} />
+    )
+
     return (
         <div className={styles.preview_overlay} style={{display: "flex"}}>
             
-            {isMobile ? 
-                (
-                    <MobilePreview staycation={staycation} />
-                ) : (
-                    <DesktopPreview staycation={staycation} />
-                )
-            }
-
+            <DesktopPreview staycation={staycation} />      
+          
         </div>
     )
 }
