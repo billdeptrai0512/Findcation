@@ -33,7 +33,7 @@ export default function Images({ listing }) {
                 alt={`image-${index}`}
                 style={{
                 width: "100%",
-                height: "auto",
+                maxHeight: "300px",
                 justifyContent: "center",
                 objectFit: "contain",
                 borderRadius: "8px",

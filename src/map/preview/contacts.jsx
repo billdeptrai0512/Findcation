@@ -18,13 +18,18 @@ export default function Contacts({staycation}) {
 
     const facebookUrl = isMobile ? `fb://page/` : `https://www.facebook.com/`
     const instagramUrl = isMobile ? `instagram://user?username=` : `https://www.instagram.com/`
+    const border = isMobile 
+  ? { boxShadow: "0 0 0 1px transparent, 0 0 0 4px transparent, 0 2px 4px rgba(0, 0, 0, 0.18)" } 
+  : { border: "2px solid rgba(0, 0, 0, 0.04)" }
 
     return (
-        <div style={{display: "flex", flexDirection: "column", padding: '16px 0'}}>
+        <div style={{display: "flex", flexDirection: "column", paddingTop: '16px', marginBottom: '16px', textAlign: "center", gap: "8px", borderRadius: "8px"
+            , ...border
+        }}>
 
+            <h2 style={{fontSize: "1.1075rem", marginTop: "0",}}>Đặt phòng </h2>
 
-            <div style={{display: "flex", justifyContent:"space-evenly" ,padding: '8px 0', borderRadius: "8px"
-            , boxShadow:`0 0 0 1px transparent, 0 0 0 4px transparent, 0 2px 4px rgba(0, 0, 0, 0.18)`}}>
+            <div style={{display: "flex", justifyContent:"space-evenly" ,padding: '8px 0', borderRadius: "8px"}}>
 
                 <span>
                     {staycation.contacts.facebook.verified === true  && 

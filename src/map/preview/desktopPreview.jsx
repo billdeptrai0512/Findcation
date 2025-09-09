@@ -47,8 +47,20 @@ export default function DesktopPreview({ staycation }) {
                         <div style={{display: "flex", flexDirection: "column", borderTop: '1px solid rgba(0,0,0,0.04)', padding: '16px 0 0'}}>
                             <h2 style={{fontSize: "1.1075rem", marginTop: "0", marginBottom:"16px"}}>Tiện nghi</h2>
                             {staycation.features.map((feature, index) => (
-                                <div key={index} 
-                                    style={{fontSize: "0.975rem", padding:"12px 0", borderBottom: '1px solid rgba(0,0,0,0.04)', display: "flex", justifyContent: "space-between", alignItems: "center"}}> 
+                                <div
+                                    key={index}
+                                    style={{
+                                    fontSize: "0.975rem",
+                                    padding: "12px 0",
+                                    borderBottom:
+                                        index === staycation.features.length - 1
+                                        ? "none"
+                                        : "1px solid rgba(0,0,0,0.04)",
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    }}
+                                >
                                     <span>{feature}</span>
                                     <span>{featureIconMap[feature] || "❓"}</span>
                                 </div>
