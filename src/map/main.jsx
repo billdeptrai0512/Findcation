@@ -38,11 +38,13 @@ export default function LandingPage() {
               <div className={styles.right_footer}>
                 <div className={styles.cta_div}>
                     <button className={styles.cta_button} onClick={() => navigate("/auth/login")}>
-                        <h2 style={{margin: 0}}>Staycation của tôi</h2>
+                        <h2 style={{margin: 0}}>Staycation của tôi </h2>
                     </button>
                 </div>
               </div>
             </>
+
+            // if user -> we re direct them to CRUD staycation overall --> emails | staycations | contact information | 
 
           )
         }

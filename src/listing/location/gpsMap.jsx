@@ -1,67 +1,72 @@
-import { useState, useRef  } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents, ZoomControl } from "react-leaflet";
+import { useListing } from '../listingContext';
 import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+import Home from "../../assets/home.png"
 
-import styles from './location.module.css'; // Ensure .map and .markerOverlay are styled here
-import Home from "../../assets/home.png";
 
-export default function GPSMap({ location, setLocation }) {
+import styles from './location.module.css';
 
-  const [initialPositionSet, setInitialPositionSet] = useState(false);
+export default function ConfirmMap( ) {
+  const { listing, editLocationGPS } = useListing()
+  const [text, setText] = useState("");
+  const markerRef = useRef();
+
+  useEffect(() => {
+
+    if (listing.location.address === "" || listing.location.public === false) return setText(`${listing.name} đang ở đây!`);
+    
+    return setText(listing.location.address);
+    
+  }, [listing]);
+
+  //if we not have the location.address. what default address we use ? other with user.gps ? what if user gps not have ?
+  const gps = listing.location.address === "" ? defaultPosition : listing.location.gps
 
   return (
-    <div className={styles.map_wrap} style={{ position: "relative" }}>
-        <MapContainer
-          center={location.gps}
-          zoom={20}
-          zoomControl={false}
-          scrollWheelZoom={false}
-          doubleClickZoom={false}
-          touchZoom={false}
-          attributionControl={false}
-          className={styles.map}
-          whenCreated={(map) => {
-            // Only center the map once at initial load
-            if (!initialPositionSet) {
-              map.setView(location.gps, 17);
-              setInitialPositionSet(true);
-            }
-          }}
-        >
+    <div className={styles.map_wrap}>
+        <MapContainer center={gps} zoom={20} className={styles.map}
+          dragging={true} zoomControl={false}
+          doubleClickZoom={false} touchZoom={true}
+          keyboard={false}  attributionControl={false}>
           <TileLayer url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png" />
           <TileLayer url="https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png" />
 
-          <ZoomControl position="bottomleft" />
-  
-          <TrackCenterOnDrag setLocation={setLocation} />
-          
-        </MapContainer>
+          {listing.location.address !== "" && 
+            <Marker position={gps} icon={customIcon} ref={markerRef} eventHandlers={{add: (e) => e.target.openPopup()}}>
+              <Popup closeButton={false} closeOnClick={false} autoClose={false}> {text} </Popup>
+            </Marker>
+          }
 
-        <div className={styles.markerOverlay}>
-          <img src={Home} alt="Pin" />
-        </div>
+          <ZoomControl position="bottomleft" />
+          
+          <TrackCenterOnDrag editLocationGPS={editLocationGPS} />
+  
+        </MapContainer>
       
     </div>
   );
 }
 
-function TrackCenterOnDrag({ setLocation }) {
-  const timeoutRef = useRef(null);
+const customIcon = new L.Icon({
+  iconUrl: Home,
+  iconSize: [41, 50],
+  iconAnchor: [20, 50],
+  popupAnchor: [0, -50],
+});
 
-  useMapEvents({
-    move: (e) => {
-      const map = e.target;
+const defaultPosition = {
+  lat : 16.076096988000074,
+  lng : 106.58883965100006
+}
+
+function TrackCenterOnDrag({ editLocationGPS }) {
+  const map = useMapEvents({
+    dragend: () => {
       const center = map.getCenter();
-
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-
-      timeoutRef.current = setTimeout(() => {
-        setLocation((prev) => ({
-          ...prev,
-          gps: { lat: center.lat, lng: center.lng },
-        }));
-      }, 86); // Adjust delay if needed
-    },
+      editLocationGPS(center);
+    }
   });
 
   return null;

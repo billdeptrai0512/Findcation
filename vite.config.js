@@ -25,9 +25,6 @@ export default defineConfig({
           type: 'image/png'
         }, 
       ]},
-      devOptions: {
-        enabled: true, // allows PWA to work in dev mode
-      }
     })
   ],
 

@@ -54,6 +54,10 @@ const ListingProvider = ({ children }) => {
         }));
     }
 
+    // const changeNumberOfRoom = (e) => {
+
+    // }
+
     const uploadImages = async (files) => {
         if (!files || files.length === 0) return;
       
@@ -170,6 +174,15 @@ const ListingProvider = ({ children }) => {
         }
         }));
     };
+    
+    const editLocationGPS = (center) => {
+        setListing((prev) => ({
+        ...prev,
+            location: {
+                ...prev.location,
+                gps: { lat: center.lat, lng: center.lng },            }
+        }));
+    };
 
     const uploadMinPrice = (price) => {
         setListing((prev) => ({
@@ -283,6 +296,7 @@ const ListingProvider = ({ children }) => {
             uploadLocation,
             editLocationDetails,
             editLocationPublic,
+            editLocationGPS,
             uploadMinPrice,
             uploadMaxPrice,
             uploadContact,
