@@ -3,6 +3,8 @@ import { useNavigate, } from 'react-router-dom';
 import { useAuth } from './authContext';
 import { GoogleLogin } from '@react-oauth/google';
 import { X, } from 'lucide-react';
+// eslint-disable-next-line no-unused-vars
+import {AnimatePresence, motion} from "framer-motion"
 import SubmitPassword from './submitPassword';
 import axios from 'axios';
 import styles from './login.module.css';
@@ -73,54 +75,60 @@ export default function SubmitEmail() {
     if (foundEmail === true && hasPassword === true) return <SubmitPassword email={email} setFoundEmail={setFoundEmail}/>
 
     return (
-        <div className={styles.container}>
-            <div className={styles.card}>
-                <div className={styles.header}>
-                    <button onClick={() => navigate('/')}>
-                        <X size={20} style={{padding: "4px"}}/>
-                    </button>
-                    <div className={styles.title}>
-                        Đăng nhập hoặc Đăng Ký
-                    </div>
-                </div>
-                <div className={styles.panel}>
-                    <h1>Chào mừng bạn tham gia Findcation</h1>
-                    <form onSubmit={handleSubmitEmail}>
-                        <div className={styles.inputGroup}>
-                            <input
-                                id="email"
-                                name="username"
-                                type="email"
-                                placeholder="Email"
-                                autoComplete="username"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className={styles.input}
-                            />
+  
+        <div onClick={() => navigate("/")}
+        className={styles.preview_overlay} style={{display: "flex"}}>
+            <motion.div className={styles.container}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}>
+                    <div className={styles.card}>
+                        <div className={styles.header}>
+                            <button onClick={() => navigate('/')}>
+                                <X size={20} style={{padding: "4px"}}/>
+                            </button>
+                            <div className={styles.title}>
+                                Đăng nhập hoặc Đăng Ký
+                            </div>
                         </div>
+                        <div className={styles.panel}>
+                            <h1>Chào mừng bạn tham gia Findcation</h1>
+                            <form onSubmit={handleSubmitEmail}>
+                                <div className={styles.inputGroup}>
+                                    <input
+                                        id="email"
+                                        name="username"
+                                        type="email"
+                                        placeholder="Email"
+                                        autoComplete="username"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        className={styles.input}
+                                    />
+                                </div>
 
-                        {error && <p className={styles.error}>{error}</p>}
-                        
-                        <div className={styles.actionLoginRow}>
-                            <button type="submit" className={styles.button}>Tiếp tục</button>
+                                {error && <p className={styles.error}>{error}</p>}
+                                
+                                <div className={styles.actionLoginRow}>
+                                    <button type="submit" className={styles.button}>Tiếp tục</button>
+                                </div>
+                                
+                            </form>
+
+                            <div className={styles.actionRegisterRow}>
+                                <div className={styles.line}></div>
+                                <p>hoặc</p>
+                                <div className={styles.line}></div>
+                            </div>
+
+                            <div className={styles.googleWrapper}>
+                                <GoogleLogin
+                                    onSuccess={handleGoogleLogin}
+                                    onError={() => console.log('Google Login Failed')}
+                                />
+                            </div>
                         </div>
-                        
-                    </form>
-
-                    <div className={styles.actionRegisterRow}>
-                        <div className={styles.line}></div>
-                        <p>hoặc</p>
-                        <div className={styles.line}></div>
                     </div>
-
-                    <div className={styles.googleWrapper}>
-                        <GoogleLogin
-                            onSuccess={handleGoogleLogin}
-                            onError={() => console.log('Google Login Failed')}
-                        />
-                    </div>
-                </div>
-            </div>
+            </motion.div>
         </div>
     );
 }

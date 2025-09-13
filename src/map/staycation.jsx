@@ -12,8 +12,8 @@ export default function Staycation({staycation}) {
     };
 
     return (
-        <div className={styles.listing} >
-            <div style={{cursor: "pointer"}} onClick={() => {navigate(`/staycation/${staycation.id}`)}}>
+        <div className={styles.listing} style={{cursor: "pointer"}} onClick={() => {navigate(`/staycation/${staycation.id}`)}}>
+            <div>
                 <img src={`${import.meta.env.VITE_BACKEND_URL}${staycation.images[0]}`} alt="cover_photo"  style={{width: "auto", height:"auto", maxWidth:"135px", maxHeight:"135px", borderRadius:"8px", objectFit: 'contain', objectPosition: "center"}} />
             </div>
             <div className={styles.information} style={{display: "flex", justifyContent: "space-between", margin: "0 auto", gap:"8px"}}>

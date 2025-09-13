@@ -1,7 +1,7 @@
 import styles from "./map.module.css";
 import Header from "./header";
 import NearByButton from "./nearby";
-
+import { motion } from "motion/react"
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { useAuth } from "../auth/authContext";
@@ -21,9 +21,12 @@ export default function LandingPage() {
             <div className={styles.footer}>
               <div className={styles.cta_div}>
                   <NearByButton />
-                  <button className={styles.cta_button} onClick={() => navigate("/auth/login")}>
+                  <motion.button className={styles.cta_button} onClick={() => navigate("/auth/login")}
+                      whileHover={{scale: "1.05"}}        
+                      whileTap={{scale: "0.95"}} 
+                    >
                       <h2 style={{margin: 0}}>Staycation của tôi</h2>
-                  </button>
+                  </motion.button>
               </div>
             </div>
 
@@ -37,9 +40,12 @@ export default function LandingPage() {
               </div>
               <div className={styles.right_footer}>
                 <div className={styles.cta_div}>
-                    <button className={styles.cta_button} onClick={() => navigate("/auth/login")}>
+                    <motion.button className={styles.cta_button} onClick={() => navigate("/auth/login")}
+                        whileHover={{scale: "1.05"}}        
+                        whileTap={{scale: "0.95"}} 
+                      >
                         <h2 style={{margin: 0}}>Staycation của tôi </h2>
-                    </button>
+                    </motion.button>
                 </div>
               </div>
             </>

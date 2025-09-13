@@ -79,8 +79,8 @@ export default function App() {
           <UserLocationProvider>
             <StaycationProvider>
               <ListingProvider>
-                <RouterProvider router={router} />
-                <Analytics />
+                  <RouterProvider router={router} />
+                  <Analytics />
               </ListingProvider>   
             </StaycationProvider>
           </UserLocationProvider>

@@ -1,13 +1,17 @@
-import styles from "../map.module.css"
 import { useMediaQuery } from "react-responsive"
 import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import MobilePreview from "./mobilePreview";
 import DesktopPreview from "./desktopPreview";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import styles from "../map.module.css"
+
 
 export default function PreviewStaycation() {
 
+    const navigate = useNavigate()
     const { id } = useParams();
     const [ staycation , setStaycations ] = useState();
 
@@ -31,14 +35,35 @@ export default function PreviewStaycation() {
     if (!staycation) return null;
 
     if (isMobile) return (
-        <MobilePreview staycation={staycation} />
+        <div onClick={() => navigate("/")}
+        className={styles.preview_overlay} style={{display: "flex"}}>
+            <motion.div
+                key={id} // important! so exit triggers when ID changes
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.25 }}
+            >
+                <MobilePreview staycation={staycation} />
+            </motion.div>
+
+        </div>
+
+        
     )
 
     return (
-        <div className={styles.preview_overlay} style={{display: "flex"}}>
-            
-            <DesktopPreview staycation={staycation} />      
-          
+        <div onClick={() => navigate("/")}
+        className={styles.preview_overlay} style={{display: "flex"}}>
+            <motion.div
+                key={id} // important! so exit triggers when ID changes
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.25 }}
+            >
+                <DesktopPreview staycation={staycation} />
+            </motion.div>
         </div>
     )
 }

@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useUserLocation } from "./userLocationContext";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "motion/react"
 import styles from "./map.module.css";
 
 export default function NearByButton() {
@@ -44,8 +46,11 @@ export default function NearByButton() {
   };
 
   return (
-    <button className={styles.nearby_button} onClick={handleRequestLocation}>
+    <motion.button className={styles.nearby_button} onClick={handleRequestLocation}
+      whileHover={{scale: "1.05"}}        
+      whileTap={{scale: "0.95"}} 
+    >
       <h2 style={{ margin: 0 }}>Staycation gần tôi</h2>
-    </button>
+    </motion.button>
   );
 }
