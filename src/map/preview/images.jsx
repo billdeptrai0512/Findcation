@@ -13,8 +13,7 @@ export default function Images({ listing }) {
   console.log(listing.images)
 
   return (
-    <div style={{ margin: "1rem auto", maxWidth: isMobile ? "300px" : "400px", maxHeight: isMobile ? "300px" : "400px", width: "100%",
-        display: "flex", flexDirection: "column", justifyContent: "space-around"}}>
+    <div style={{ margin: "1rem auto", maxWidth: isMobile ? "300px" : "400px", maxHeight: isMobile ? "300px" : "400px", width: "100%"}}>
       {/* Image Slider */}
       <Swiper
         onSwiper={(swiper) => (swiperRef.current = swiper)}
@@ -56,7 +55,7 @@ export default function Images({ listing }) {
         }}
       >
         {/* Prev Button */}
-        {!isMobile && (
+        {/* {!isMobile && (
             <button
                 onClick={() => swiperRef.current?.slidePrev()}
                 disabled={current === 0}
@@ -70,11 +69,11 @@ export default function Images({ listing }) {
                 >
                 <CircleChevronLeft size={35} strokeWidth={1.6}/>
             </button>
-        )}
+        )} */}
 
 
         {/* Dots */}
-        <div style={{ display: "flex", gap: "6px" }}>
+        {/* <div style={{ display: "flex", gap: "6px" }}>
           {listing.images.map((_, index) => (
             <span
               key={index}
@@ -87,10 +86,10 @@ export default function Images({ listing }) {
               }}
             />
           ))}
-        </div>
+        </div> */}
 
         {/* Next Button */}
-        {!isMobile && (
+        {/* {!isMobile && (
             <button
                 onClick={() => swiperRef.current?.slideNext()}
                 disabled={current === listing.images.length - 1}
@@ -104,8 +103,11 @@ export default function Images({ listing }) {
                 >
                 <CircleChevronRight size={35} strokeWidth={1.6}/>
             </button>
-        )}
+        )} */}
       </div>
+
+
+      
     </div>
   );
 }

@@ -178,7 +178,7 @@ p {
   border: 1px solid rgba(0,0,0,0.04);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
   margin: 0px auto;
-  min-width: 30%;
+  min-width: 25%;
   height: 100dvh;
   overflow-y: scroll;
 }   
@@ -229,6 +229,13 @@ p {
   max-width: 300px
 }
 
+.preview_details {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: 400px;
+}
+
 .preview_details > h1 {
   font-size: 1.375em;
 }
@@ -236,7 +243,7 @@ p {
 .preview_details {
   scrollbar-width: none;    /* Firefox */
   -ms-overflow-style: none;
-  max-width: 300px;
+
 }
 
 .preview_details::-webkit-scrollbar {
@@ -306,17 +313,16 @@ p {
   }
 
   .preview_container {
-    position: absolute;
+    /* position: absolute;
     top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
-    min-height: unset
-}
+    min-height: unset */
+  }
 
   .preview_card {
-      max-width: 800px;
-      height: unset;
-      border-radius: 24px;
+      max-width: max-content;
+      border-radius: 16px;
   }
 
   .preview_image {

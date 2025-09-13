@@ -27,11 +27,11 @@ export default function DesktopPreview({ staycation }) {
 
                 </div>
 
-                <div style={{display: "flex", maxHeight:"60vh", overflowY: "hidden", justifyContent: "space-around", margin: "0 0 0 3rem"}}>
+                <div style={{maxHeight:"60vh",}}>
 
                     <Images listing={staycation} />
 
-                    <div className={styles.preview_details} style={{display: "flex", flexDirection: "column", margin: "2em", overflowY: "scroll"}}>
+                    <div className={styles.preview_details}>
                         
                         {/* type of hose */}
                         <div style={{display: "flex", flexDirection: "column", gap: "4px", borderBottom: '1px solid rgba(0,0,0,0.04)', padding: '16px 0'}}> 
