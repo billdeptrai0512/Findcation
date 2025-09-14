@@ -78,6 +78,22 @@ export default function Map() {
                 icon={homeIcon}
                 position={[stay.location.gps.lat, stay.location.gps.lng]}
                 ref={(ref) => (markerRefs.current[stay.id] = ref)}
+                eventHandlers={{
+                  click: (e) => {
+                    const marker = e.target;
+                    const map = marker._map;
+                    if (!map) return;
+
+                    // open popup manually
+                    marker.openPopup();
+
+                    // then pan/fly to the marker
+                    map.flyTo(marker.getLatLng(), map.getZoom(), {
+                      animate: true,
+                      duration: 0.75,
+                    });
+                  },
+                }}
               >
                 <Popup closeButton={false} className={styles.content}>
                   <Staycation staycation={stay} />
