@@ -233,7 +233,7 @@ p {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  max-width: 400px;
+  max-width: 300px;
 }
 
 .preview_details > h1 {
@@ -310,14 +310,6 @@ p {
   .nearby_button > h2 {
     margin: 0;
     font-size: 1.275rem;
-  }
-
-  .preview_container {
-    /* position: absolute;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    min-height: unset */
   }
 
   .preview_card {

@@ -18,18 +18,21 @@ export default function Contacts({staycation}) {
 
     const facebookUrl = isMobile ? `fb://page/` : `https://www.facebook.com/`
     const instagramUrl = isMobile ? `instagram://user?username=` : `https://www.instagram.com/`
-    const border = isMobile 
-  ? { boxShadow: "0 0 0 1px transparent, 0 0 0 4px transparent, 0 2px 4px rgba(0, 0, 0, 0.18)" } 
-  : { border: "2px solid rgba(0, 0, 0, 0.04)" }
 
     return (
-        <div style={{display: "flex", flexDirection: "column", paddingTop: '16px', marginBottom: '16px', textAlign: "center", gap: "8px", borderRadius: "8px"
-            , ...border
-        }}>
+        <div style={{display: "flex", justifyContent:"space-between", alignItems: "center", marginBottom: '16px',gap: "8px"}}>
 
-            <h2 style={{fontSize: "1.1075rem", marginTop: "0",}}>Đặt phòng </h2>
+            <h2 style={{fontSize: "1.1075rem", marginTop: "0"}}> Liên lạc </h2>
 
-            <div style={{display: "flex", justifyContent:"space-evenly" ,padding: '8px 0', borderRadius: "8px"}}>
+            <div style={{display: "flex",  padding: '8px 0', borderRadius: "8px", gap: "2em"}}>
+
+                <span>
+                    {staycation.contacts.zalo.verified === true && 
+                        <Link to={`https://zalo.me/${staycation.contacts.zalo.url}`} target="_blank" rel="noopener noreferrer">
+                            <img src={Zalo} alt="" style={{width:"37px"}} />
+                        </Link>
+                    }
+                </span>
 
                 <span>
                     {staycation.contacts.facebook.verified === true  && 
@@ -45,13 +48,7 @@ export default function Contacts({staycation}) {
                         </Link>
                     }
                 </span>
-                <span>
-                    {staycation.contacts.zalo.verified === true && 
-                        <Link to={`https://zalo.me/${staycation.contacts.zalo.url}`} target="_blank" rel="noopener noreferrer">
-                            <img src={Zalo} alt="" style={{width:"37px"}} />
-                        </Link>
-                    }
-                </span>
+
                 
             </div>
 
