@@ -13,7 +13,7 @@ export default function Images({ listing }) {
   console.log(listing.images)
 
   return (
-    <div style={{ margin: "1rem auto", maxWidth: isMobile ? "300px" : "400px", maxHeight: isMobile ? "300px" : "400px", width: "100%"}}>
+    <div style={{ margin: "1rem auto", maxWidth: isMobile ? "300px" : "400px", maxHeight: isMobile ? "200px" : "260px", width: "100%"}}>
       {/* Image Slider */}
       <Swiper
         onSwiper={(swiper) => (swiperRef.current = swiper)}
@@ -26,7 +26,7 @@ export default function Images({ listing }) {
         }}
         >
         {listing.images.map((image, index) => (
-            <SwiperSlide key={index} style={{display: "flex", minHeight: isMobile ? "300px" : "unset"}}>
+            <SwiperSlide key={index} style={{display: "flex", minHeight: "200px"}}>
             <img
                 src={`${import.meta.env.VITE_BACKEND_URL}${image}`}
                 alt={`image-${index}`}

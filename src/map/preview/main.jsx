@@ -53,8 +53,11 @@ export default function PreviewStaycation() {
     )
 
     return (
-        <div onClick={() => navigate("/")}
-        className={styles.preview_overlay} style={{display: "flex"}}>
+        <div onClick={() => {
+            console.log('hello')
+            navigate("/")
+        }}
+            className={styles.preview_overlay} style={{display: "flex"}}>
             <motion.div
                 key={id} // important! so exit triggers when ID changes
                 initial={{ opacity: 0 }}

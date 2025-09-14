@@ -1,5 +1,5 @@
 
-import { ChevronLeft } from "lucide-react";
+import { X } from "lucide-react";
 import { featureIconMap  } from "../../assets/featureIcons";
 import { useNavigate } from "react-router-dom";
 import styles from "../map.module.css";
@@ -20,7 +20,7 @@ export default function MobilePreview({ staycation }) {
                 <div className={styles.preview_header}>
 
                     <button onClick={() => navigate("/")}>
-                        <ChevronLeft  size={20}/>
+                        <X size={20}/>
                     </button>
 
                     <h1>{staycation.name}</h1> 
@@ -29,11 +29,11 @@ export default function MobilePreview({ staycation }) {
 
                 {/* preview_information_desktop */}
 
-                <div className={styles.preview_details} style={{display: "flex", flexDirection:"column" , margin: "0 auto"}}>
+                <div  style={{display: "flex", flexDirection:"column" , margin: "0 auto"}}>
                     
                     <Images listing={staycation} />
 
-                    <div style={{display: "flex", justifyContent: "space-between", flexDirection: "column"}}>
+                    <div className={styles.preview_details} style={{ justifyContent: "space-between"}}>
                         
                         {/* type of hose */}
                         <div style={{display: "flex", flexDirection: "column", gap: "4px", borderBottom: '1px solid rgba(0,0,0,0.04)', padding: '16px 0'}}> 
