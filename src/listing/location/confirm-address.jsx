@@ -19,7 +19,7 @@ export default function ConfirmAddress() {
     return (
         <div className={styles.pageContent} style={{padding:"0px 4px", minWidth: isMobile ? "unset" : "630px", height: "100%"}}>
 
-            <h1 style={{ marginBottom: "4px", paddingBottom: "24px", fontSize: "1.68rem", paddingLeft:"unset" }}>Xác nhận địa chỉ của bạn</h1>
+            <h1 style={{ marginBottom: "4px", paddingBottom: "16px", fontSize: "1.68rem", paddingLeft:"unset" }}>Xác nhận địa chỉ của bạn</h1>
                 
             <div style={{minHeight: "420px"}}>
                 
@@ -31,6 +31,7 @@ export default function ConfirmAddress() {
                 </div>
                 
                 <div className={styles.details_map}>
+                    <h2 style={{ margin: "0", marginBottom: "4px", paddingBottom: "12px", paddingLeft:"unset", fontWeight: "600", }}>Ghim đúng vị trí chưa?</h2>
                     <ConfirmMap icon={Home}/>
                 </div>
     

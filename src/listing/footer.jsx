@@ -7,7 +7,7 @@ import { useAuth } from "../auth/authContext";
 export default function FooterProgress({start, getStart, goNext, goBack, percentage, page, steps, stepValidity}) {
 
   const {uploadListingOnDatabase, resetListing} = useListing()  
-  const {fetchStaycations} = useStaycation()
+  const { fetchStaycations, setNewStaycation } = useStaycation()
   const {user} = useAuth()
 
   const navigate = useNavigate()
@@ -18,11 +18,13 @@ export default function FooterProgress({start, getStart, goNext, goBack, percent
 
     try {
 
-      await uploadListingOnDatabase(user)
+      const created = await uploadListingOnDatabase(user)
 
-      await fetchStaycations()
+      setNewStaycation(created)
 
       resetListing()
+
+      await fetchStaycations() // why ?
 
       navigate("/")
 

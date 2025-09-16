@@ -27,7 +27,7 @@ export default function ConfirmMap( ) {
   return (
     <div className={styles.map_wrap}>
         <MapContainer center={gps} zoom={20} className={styles.map}
-          dragging={true} zoomControl={false}
+          dragging={true} zoomControl={true}
           doubleClickZoom={false} touchZoom={true}
           keyboard={false}  attributionControl={false}>
           <TileLayer url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png" />
@@ -38,8 +38,6 @@ export default function ConfirmMap( ) {
               <Popup closeButton={false} closeOnClick={false} autoClose={false}> {text} </Popup>
             </Marker>
           }
-
-          <ZoomControl position="bottomleft" />
           
           <TrackCenterOnDrag editLocationGPS={editLocationGPS} />
   

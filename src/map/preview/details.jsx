@@ -42,7 +42,8 @@ export default function Details({ staycation }) {
             <div style={{display: "flex", fjustifyContent:"space-between", alignItems: "center", gap: "4px", padding: '16px 0', flex: "1", width: "100%" }}>
                 <h2 style={{fontSize: "1.1075rem", marginTop: "0"}}>Địa chỉ </h2>
                 <div style={{fontSize: "0.975rem", padding:"12px 0", flex: "1", textAlign: "end", display: "flex", flexDirection: "column"}}>
-                    <span >{staycation.location.details.street}, {staycation.location.details.ward}</span>
+                    <span >{staycation.location.details.street}</span>
+                    <span >{staycation.location.details.ward}</span>
                     <span >{staycation.location.details.city}</span>
                 </div>
             </div>

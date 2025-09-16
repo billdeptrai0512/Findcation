@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { useUserLocation } from "./userLocationContext";
+import { useStaycation } from "./staycationContext";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react"
 import styles from "./map.module.css";
 
 export default function NearByButton() {
   const { saveLocation } = useUserLocation();
+    const { setNewStaycation } = useStaycation();
+
   const [permissionState, setPermissionState] = useState("prompt"); // prompt | granted | denied
 
   useEffect(() => {
@@ -28,6 +31,8 @@ export default function NearByButton() {
     if (!navigator.geolocation) {
       return alert("Trình duyệt của bạn không hỗ trợ định vị.")
     }
+
+    setNewStaycation(null);
   
     navigator.geolocation.getCurrentPosition(
       (pos) => {
@@ -47,8 +52,8 @@ export default function NearByButton() {
 
   return (
     <motion.button className={styles.nearby_button} onClick={handleRequestLocation}
-      whileHover={{scale: "1.05"}}        
-      whileTap={{scale: "0.95"}} 
+      whileHover={{scale: 1.05}}        
+      whileTap={{scale: 0.95}} 
     >
       <h2 style={{ margin: 0 }}>Staycation gần tôi</h2>
     </motion.button>

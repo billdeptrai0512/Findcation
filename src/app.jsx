@@ -61,7 +61,7 @@ const router = createBrowserRouter([
       { path: "location", element: <LocationListing /> },
       { path: "price", element: <Prices /> },
       { path: "contacts", element: <Contacts /> },
-      { path: "final",  element: <Final /> },
+      { path: "/list-staycation/final",  element: <Final /> },
     ]
   },
   {

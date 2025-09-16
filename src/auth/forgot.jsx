@@ -54,7 +54,7 @@ export default function Forgot() {
     const renderFormInputEmail = () =>{
         return (
             <div className={styles.container}>
-                <div className={styles.card}>
+                <div className={styles.card} onClick={(e) => e.stopPropagation()}>
                     <div className={styles.header}>
                         <button onClick={() => navigate('/auth/login')}>
                             <ChevronLeft size={20} style={{padding: "4px"}}/>
@@ -93,7 +93,7 @@ export default function Forgot() {
     const renderFormInputCode = () =>{
         return (
             <div className={styles.container}>
-                <div className={styles.card}>
+                <div className={styles.card} onClick={(e) => e.stopPropagation()}>
                     <div className={styles.header}>
                         <button onClick={() => {
                             setOnWaiting(false)
@@ -133,7 +133,7 @@ export default function Forgot() {
     }
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} >
             {onWaiting ? renderFormInputCode() : renderFormInputEmail()}
         </div>
     );

@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, Marker, Popup, useMap, GeoJSON  } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, GeoJSON } from "react-leaflet";
 import { useEffect, useState, useRef } from "react";
 import { useUserLocation } from "./userLocationContext";
 import { useStaycation } from "./staycationContext";
@@ -11,48 +11,99 @@ import Home from "../assets/home.png"
 import People from "../assets/people.png"
 
 export default function Map() {
-  const { staycations, fetchStaycations } = useStaycation();
   const { location } = useUserLocation();
+  const { staycations, fetchStaycations, newStaycation, setNewStaycation } = useStaycation();
   const [GPS, setGPS] = useState({ lat: 16, lng: 109 });
   const [zoom, setZoom] = useState(6);
-  const [autoOpened, setAutoOpened] = useState(false); // 👈 flag
-  // keep refs to all staycation markers
+
   const markerRefs = useRef({});
 
+  // fetch staycations once
   useEffect(() => {
     fetchStaycations();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (!location) return;
-    setGPS(location);
-    setZoom(15);
-  }, [location]);
+    if (!staycations?.length) return;
 
-  // 👉 auto open nearest staycation popup
-  useEffect(() => {
-    if (autoOpened || !location || !staycations?.length) return;
-
-    const userLatLng = L.latLng(location.lat, location.lng);
-
-    let nearestStay = null;
-    let nearestDist = Infinity;
-
-    staycations.forEach((stay) => {
-      const stayLatLng = L.latLng(stay.location.gps.lat, stay.location.gps.lng);
-      const dist = userLatLng.distanceTo(stayLatLng);
-      if (dist < nearestDist) {
-        nearestDist = dist;
-        nearestStay = stay;
+    const mapFocus = (marker, zoomLevel, fly = true) => {
+      const map = marker._map;
+      if (!map) return;
+      marker.openPopup();
+      if (fly) {
+        map.flyTo(marker.getLatLng(), zoomLevel ?? map.getZoom(), {
+          animate: true,
+          duration: 0.75,
+        });
       }
-    });
+    };
 
-    if (nearestStay && markerRefs.current[nearestStay.id]) {
-      markerRefs.current[nearestStay.id].openPopup();
-      setAutoOpened(true); // 👈 prevent future auto-opens
+    // Effect 1: handle new staycation priority
+    if (newStaycation) {
+      const marker = markerRefs.current[newStaycation.id];
+      if (marker) {
+        mapFocus(marker, 15, true);
+      }
     }
-  }, [location, staycations, autoOpened]);
+
+  }, [newStaycation, setNewStaycation, staycations]);  // ✅ only depends on newStaycation + staycations
+
+
+  useEffect(() => {
+    if (!staycations?.length) return;
+    if (newStaycation) return; // 🚫 don't run GPS if newStaycation is active
+
+    const mapFocus = (marker, zoomLevel, fly = true) => {
+      const map = marker._map;
+      if (!map) return;
+      marker.openPopup();
+      if (fly) {
+        map.flyTo(marker.getLatLng(), zoomLevel ?? map.getZoom(), {
+          animate: true,
+          duration: 0.75,
+        });
+      }
+    };
+
+    // Effect 2: GPS → nearest staycation
+    if (location) {
+      const userLatLng = L.latLng(location.lat, location.lng);
+
+      let nearestStay = null;
+      let nearestDist = Infinity;
+
+      staycations.forEach((stay) => {
+        const stayLatLng = L.latLng(stay.location.gps.lat, stay.location.gps.lng);
+        const dist = userLatLng.distanceTo(stayLatLng);
+        if (dist < nearestDist) {
+          nearestDist = dist;
+          nearestStay = stay;
+        }
+      });
+
+      if (nearestStay && markerRefs.current[nearestStay.id]) {
+        mapFocus(markerRefs.current[nearestStay.id], 15, true);
+      }
+      return;
+    }
+
+    // Effect 3: fallback → last staycation
+    if (!location) {
+      const lastStay = staycations[staycations.length - 1];
+      if (lastStay && markerRefs.current[lastStay.id]) {
+        markerRefs.current[lastStay.id].openPopup(); // only popup, no fly
+      }
+    }
+  }, [location, staycations, newStaycation]);  // ✅ depends on location & staycations, but skips if newStaycation
+
+
+  useEffect(() => {
+    if (location) {
+      setGPS(location);
+      setZoom(15);
+    }
+  }, [location]);
 
   return (
     <div className={styles.map_box}>
@@ -83,11 +134,7 @@ export default function Map() {
                     const marker = e.target;
                     const map = marker._map;
                     if (!map) return;
-
-                    // open popup manually
                     marker.openPopup();
-
-                    // then pan/fly to the marker
                     map.flyTo(marker.getLatLng(), map.getZoom(), {
                       animate: true,
                       duration: 0.75,
@@ -106,8 +153,6 @@ export default function Map() {
               <Popup>Bạn đang ở đây!</Popup>
             </Marker>
           )}
-
-          <SetViewOnPosition position={GPS} zoom={zoom} />
         </MapContainer>
       </div>
     </div>
@@ -128,48 +173,24 @@ const peopleIcon = new L.Icon({
   popupAnchor: [0, -50],
 });
 
-const SetViewOnPosition = ({ position, zoom }) => {
-  const map = useMap();
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      map.setView(position, zoom, {
-        animate: true,
-        duration: 0.75,
-        easeLinearity: 0.25
-      });
-    }, 150);
-    return () => clearTimeout(timer);
-  }, [position, map, zoom]);
-
-  return null;
-};
-
 function VietnamBoundaries() {
   const [geoData, setGeoData] = useState(null);
 
   useEffect(() => {
+    const fetchGeoJSOn = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/assets/geo/vn_islands.geojson`,
+          { headers: { "ngrok-skip-browser-warning": "true" } }
+        ).then((res) => res.data);
 
-      const fetchGeoJSOn = async () => {
+        setGeoData(response.features);
+      } catch (err) {
+        console.error("Fetch staycations failed", err);
+      }
+    };
 
-          try {
-            
-              const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/assets/geo/vn_islands.geojson`, {
-                  headers: {
-                      "ngrok-skip-browser-warning": "true",
-                  },
-              }).then((res) => res.data);
-      
-              setGeoData(response.features)
-              
-          } catch (err) {
-      
-              console.error('Fetch staycations failed', err);
-      
-          } 
-      
-        };
-
-      fetchGeoJSOn();
+    fetchGeoJSOn();
   }, []);
 
   if (!geoData) return null;

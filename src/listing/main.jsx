@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Outlet, useNavigate } from "react-router-dom";
-
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 import styles from "./listing.module.css"
 import Header from "./header"
 import Footer from "./footer"
@@ -11,7 +12,7 @@ export default function Listing() { // PageContent
 
     const navigate = useNavigate();
 
-    const steps = ["title", "type-of-house", "images", "features", "location", "price", "contacts", "final"];
+    const steps = ["title", "type-of-house", "images", "features", "location", "price", "contacts"];
 
     const totalSteps = steps.length - 1;
 
@@ -57,7 +58,12 @@ export default function Listing() { // PageContent
     };
   
     return (
-        <div className={styles.listingContainer}>
+        <motion.div className={styles.listingContainer}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4 }}
+        >
 
             <Header page={page} setOpenSuggestions={setOpenSuggestions} />
             
@@ -67,7 +73,7 @@ export default function Listing() { // PageContent
             
             <Footer start={start} getStart={getStart} goNext={goNext} goBack={goBack} percentage={percentage} page={page} steps={steps} stepValidity={stepValidity} />
 
-        </div>   
+        </motion.div>   
     )
 }
 // air bnb ask for title after asking for image

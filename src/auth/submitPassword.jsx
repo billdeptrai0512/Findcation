@@ -51,7 +51,7 @@ export default function SubmitPassword({email, setEmail, setFoundEmail,}) {
 
     return (
         <div className={styles.container}>
-            <div className={styles.card}>
+            <div className={styles.card} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.header}>
                     <button onClick={() => setFoundEmail(null)}>
                         <ChevronLeft size={20} style={{padding: "4px"}}/>

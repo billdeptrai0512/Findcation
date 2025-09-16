@@ -6,6 +6,7 @@ const StaycationContext = createContext();
 const StaycationProvider = ({ children }) => {
 
   const [staycations, setStaycations] = useState([]); // { lat, lng }
+  const [newStaycation, setNewStaycation] = useState(null)
 
   const fetchStaycations = async () => {
 
@@ -29,6 +30,8 @@ const StaycationProvider = ({ children }) => {
     <StaycationContext.Provider
       value={{
         staycations,
+        newStaycation,
+        setNewStaycation,
         fetchStaycations,
       }}
     >

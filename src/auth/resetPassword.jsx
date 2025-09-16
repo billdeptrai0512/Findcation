@@ -42,7 +42,7 @@ export default function ResetPassword() {
 
     return (
         <div className={styles.container}>
-            <div className={styles.card}>
+            <div className={styles.card} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.header}>
                     <button onClick={() => navigate('/login')}>
                         <X size={20} style={{padding: "4px"}}/>

@@ -58,7 +58,7 @@ export default function RegisterForm() {
 
     return (
         <div className={styles.container}>
-            <div className={styles.card}>
+            <div className={styles.card} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.header}>
                     <button onClick={() => navigate('/auth/login')}>
                         <ChevronLeft size={20} style={{padding: "4px"}}/>

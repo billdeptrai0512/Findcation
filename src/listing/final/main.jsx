@@ -15,17 +15,13 @@ export default function Final() {
         <>
             <div className={styles.pageContent}>
 
-                <h1 style={{marginBottom: "4px", fontSize: "1.68rem"}}>Chúc mừng! Bạn đã sẵn sàng.</h1>
+                <h1 style={{marginBottom: "4px", fontSize: "1.68rem"}}>Mọi thứ đã sẵn sàng!</h1>
 
-                <div className={styles.intrustion} style={{paddingBottom: "8px", color: "#6A6A6A", fontSize: "0.875rem"}}>
-                    Bên dưới là góc nhìn của user với staycation của bạn. Bấm vào hình để xem phiên bản đầy đủ.
-                </div>
-
-                <Map setRenderPreview={setRenderPreview}/>
+                {/* <Map setRenderPreview={setRenderPreview}/> */}
                 
             </div>
 
-            <div className={styles.preview_overlay} style={{display: renderPreview ? "flex" : "none"}}>
+            {/* <div className={styles.preview_overlay} style={{display: renderPreview ? "flex" : "none"}}>
                 
 
                 {renderPreview && (
@@ -37,7 +33,7 @@ export default function Final() {
                 )}
 
 
-            </div>
+            </div> */}
 
 
         </>

@@ -3,7 +3,6 @@ import { useOutletContext } from "react-router-dom";
 import { useEffect } from "react";
 import ConfirmAddress from "./confirm-address";
 import SearchAddress from "./search-address";
-import ConfirmGPS from "./confirm-gps";
 
 export default function LocationListing() {
 
