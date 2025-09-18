@@ -28,7 +28,7 @@ const ListingProvider = ({ children }) => {
             facebook: {url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString()},
             instagram: {url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString()},
         },
-        prices: {min: null, max: null},
+        prices: {min: '', max: ''},
         features: [],
         images: []
 
@@ -223,7 +223,7 @@ const ListingProvider = ({ children }) => {
     };
 
     const uploadListingOnDatabase = async (user) => {
-        console.log('it run')
+        console.log('upload new staycation to database')
         try {
           const formData = new FormData();
       
@@ -275,7 +275,7 @@ const ListingProvider = ({ children }) => {
                 facebook: {url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString()},
                 instagram: {url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString()},
             },
-            prices: {min: null, max: null},
+            prices: {min: '', max: ''},
             features: [],
             images: []
         })

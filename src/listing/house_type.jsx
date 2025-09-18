@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion"
 import { House, DoorOpen } from "lucide-react"
 import { useOutletContext } from "react-router-dom"
 import { useEffect, useState } from "react"
@@ -28,7 +30,12 @@ export default function TypeOfHouse() {
     }
 
     return (
-        <div className={styles.pageContent}>
+        <motion.div className={styles.pageContent}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+        >
             <h1 style={{marginBottom: "4px", fontSize: "1.68rem"}}>Khách sẽ được sử dụng loại chổ ở nào?</h1>
             <div className={styles.house_type_box}>
                 <div className={styles.house_type_option} onClick={() => uploadType("house")} 
@@ -63,6 +70,6 @@ export default function TypeOfHouse() {
                     </div>
                 )}
             </div>
-        </div>
+        </motion.div>
     )
 }

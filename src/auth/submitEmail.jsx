@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import {motion} from "framer-motion"
 import { useState } from 'react';
 import { useNavigate, } from 'react-router-dom';
 import { useAuth } from './authContext';
@@ -6,9 +8,6 @@ import { X, } from 'lucide-react';
 import SubmitPassword from './submitPassword';
 import axios from 'axios';
 import styles from './login.module.css';
-
-// eslint-disable-next-line no-unused-vars
-import {motion} from "framer-motion"
 
 export default function SubmitEmail() {
     const { setUser } = useAuth();
@@ -19,12 +18,10 @@ export default function SubmitEmail() {
 
     const navigate = useNavigate();
 
-
-
     const handleSubmitEmail = async (e) => {
         e.preventDefault();
 
-        if (email === "") return setError("Bắt buộc phải điền email.")
+        if (email === "") return setError("* Thông tin này là bắt buộc")
         
         try {
             const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login/email`, {email});
@@ -87,12 +84,15 @@ export default function SubmitEmail() {
                             <X size={20} style={{padding: "4px"}}/>
                         </button>
                         <div className={styles.title}>
-                            Đăng nhập hoặc Đăng Ký
+                            Đăng nhập
                         </div>
                     </div>
                     <div className={styles.panel}>
                         <h1>Chào mừng bạn tham gia Findcation</h1>
                         <form onSubmit={handleSubmitEmail}>
+
+                            {error && <p className={styles.error}>{error}</p>}
+
                             <div className={styles.inputGroup}>
                                 <input
                                     id="email"
@@ -105,11 +105,12 @@ export default function SubmitEmail() {
                                     className={styles.input}
                                 />
                             </div>
-
-                            {error && <p className={styles.error}>{error}</p>}
                             
                             <div className={styles.actionLoginRow}>
-                                <button type="submit" className={styles.button}>Tiếp tục</button>
+                                <motion.button type="submit" className={styles.button}        
+                                    whileTap={{scale: 0.95}} >
+                                        Tiếp tục
+                                </motion.button>
                             </div>
                             
                         </form>

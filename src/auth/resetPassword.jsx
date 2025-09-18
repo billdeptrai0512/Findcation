@@ -1,6 +1,8 @@
+// eslint-disable-next-line no-unused-vars
+import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { X, Mail, ChevronLeft  } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { X } from 'lucide-react';
 import styles from './login.module.css';
 import axios from 'axios';
 
@@ -95,7 +97,10 @@ export default function ResetPassword() {
                         {error && <p className={styles.error}>{error}</p>}
                         
                         <div className={styles.actionLoginRow}>
-                            <button type="submit" className={styles.button}>Cập nhật</button>
+                            <motion.button type="submit" className={styles.button}
+                                whileTap={{scale: 0.95}}>
+                                    Cập nhật
+                            </motion.button>
                         </div>
                         
                     </form>

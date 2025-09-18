@@ -1,7 +1,7 @@
+// eslint-disable-next-line no-unused-vars
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react"
 import { Outlet, useNavigate } from "react-router-dom";
-// eslint-disable-next-line no-unused-vars
-import { motion } from "framer-motion";
 import styles from "./listing.module.css"
 import Header from "./header"
 import Footer from "./footer"
@@ -56,30 +56,29 @@ export default function Listing() { // PageContent
           navigate(`/list-staycation/${steps[newPage]}`);
         }
     };
+    
   
     return (
-        <motion.div className={styles.listingContainer}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4 }}
-        >
+            
+        <div className={styles.listingContainer}>
 
             <Header page={page} setOpenSuggestions={setOpenSuggestions} />
-            
-            <Outlet context={{ setStepValidity, currentStep: steps[page], goNext }} />
+
+            <AnimatePresence mode="wait">
+                <Outlet key={page} context={{ setStepValidity, currentStep: steps[page], goNext }} />
+            </AnimatePresence>
 
             {openSuggestions && <Suggestion currentStep={steps[page]} setOpenSuggestions={setOpenSuggestions} />}
             
             <Footer start={start} getStart={getStart} goNext={goNext} goBack={goBack} percentage={percentage} page={page} steps={steps} stepValidity={stepValidity} />
 
-        </motion.div>   
+        </div>   
+
     )
 }
+
 // air bnb ask for title after asking for image
 // title + type of house / address + location 
-
- 
 
 //not sure - would get complicate and require to confirm number of room ?
 //what happens if the owner have the full house for rent each room seperately

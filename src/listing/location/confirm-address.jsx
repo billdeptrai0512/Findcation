@@ -1,9 +1,9 @@
 import { useListing } from "../listingContext";
 import { useMediaQuery } from "react-responsive";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 import styles from "./location.module.css";
-import AddressMap from "./addressMap";
 import Home from "../../assets/home.png";
-import PublicToggle from "./publicToggle";
 import ConfirmMap from "./gpsMap";
 
 export default function ConfirmAddress() {
@@ -17,7 +17,12 @@ export default function ConfirmAddress() {
     }
 
     return (
-        <div className={styles.pageContent} style={{padding:"0px 4px", minWidth: isMobile ? "unset" : "630px", height: "100%"}}>
+        <motion.div className={styles.pageContent} style={{padding:"0px 4px", minWidth: isMobile ? "unset" : "630px", height: "100%"}}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+        >
 
             <h1 style={{ marginBottom: "4px", paddingBottom: "16px", fontSize: "1.68rem", paddingLeft:"unset" }}>Xác nhận địa chỉ của bạn</h1>
                 
@@ -37,6 +42,6 @@ export default function ConfirmAddress() {
     
             </div>
 
-        </div>
+        </motion.div>
     )
 }

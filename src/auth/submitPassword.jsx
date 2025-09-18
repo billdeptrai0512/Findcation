@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from './authContext';
@@ -18,7 +20,7 @@ export default function SubmitPassword({email, setEmail, setFoundEmail,}) {
     const handleSubmitPassword = async (e) => {
         e.preventDefault();
 
-        if (password === "") return setError("Bắt buộc phải điền mật khẩu.")
+        if (password === "") return setError("Thông tin này là bắt buộc.")
         
         try {
 
@@ -62,7 +64,6 @@ export default function SubmitPassword({email, setEmail, setFoundEmail,}) {
                 </div>
                 <div className={styles.panel}>
                     <form onSubmit={handleSubmitPassword}>
-                        {error && <p className={styles.error}>{error}</p>}
 
                         <div className={styles.inputGroup}>
                             <label>Email</label>
@@ -96,10 +97,15 @@ export default function SubmitPassword({email, setEmail, setFoundEmail,}) {
                                 </button>
                             </div>
 
+                            {error && <p className={styles.error}>{error}</p>}
+
                         </div>
                               
                         <div className={styles.actionLoginRow}>
-                            <button type="submit" className={styles.button}>{"Đăng nhập"}</button>
+                            <motion.button type="submit" className={styles.button}
+                                whileTap={{scale: 0.95}}>
+                                    Đăng nhập
+                            </motion.button>
                         </div>
                         
                     </form>

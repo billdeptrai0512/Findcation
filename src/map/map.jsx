@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, Marker, Popup, GeoJSON } from "react-leaflet";
+import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import { useEffect, useState, useRef } from "react";
 import { useUserLocation } from "./userLocationContext";
 import { useStaycation } from "./staycationContext";
@@ -6,9 +6,10 @@ import "leaflet/dist/leaflet.css";
 import styles from "./map.module.css";
 import L from "leaflet";
 import axios from "axios";
-import Staycation from "./staycation";
 import Home from "../assets/home.png"
 import People from "../assets/people.png"
+import PeopleMarker from "./peopleMarker";
+import HouseMarker from "./houseMarker";
 
 export default function Map() {
   const { location } = useUserLocation();
@@ -108,70 +109,35 @@ export default function Map() {
   return (
     <div className={styles.map_box}>
       <div className={styles.mapContainer}>
-        <MapContainer
-          center={GPS}
-          zoom={zoom}
-          className={styles.map}
-          preferCanvas={true}
-          scrollWheelZoom={true}
-          zoomControl={false}
-          attributionControl={false}
-        >
+        <MapContainer center={GPS} zoom={zoom} className={styles.map}
+          preferCanvas={true} scrollWheelZoom={true} zoomControl={false} attributionControl={false} >
+
           <TileLayer url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png" />
           <TileLayer url="https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png" />
 
           <VietnamBoundaries />
 
-          {staycations &&
-            staycations.map((stay) => (
-              <Marker
-                key={stay.id}
-                icon={homeIcon}
-                position={[stay.location.gps.lat, stay.location.gps.lng]}
-                ref={(ref) => (markerRefs.current[stay.id] = ref)}
-                eventHandlers={{
-                  click: (e) => {
-                    const marker = e.target;
-                    const map = marker._map;
-                    if (!map) return;
-                    marker.openPopup();
-                    map.flyTo(marker.getLatLng(), map.getZoom(), {
-                      animate: true,
-                      duration: 0.75,
-                    });
-                  },
+          {staycations &&  staycations.map((stay) => (
+              <HouseMarker key={stay.id} markerRefs={markerRefs}
+                stay={stay} iconUrl={Home} styles={styles}
+                onClick={(marker, map) => {
+                  marker.openPopup();
+                  map.flyTo(marker.getLatLng(), map.getZoom(), {
+                    animate: true,
+                    duration: 0.75,
+                  });
                 }}
-              >
-                <Popup closeButton={false} className={styles.content}>
-                  <Staycation staycation={stay} />
-                </Popup>
-              </Marker>
+                ref={(ref) => (markerRefs.current[stay.id] = ref)}
+              />
             ))}
 
-          {location && (
-            <Marker position={[GPS.lat, GPS.lng]} icon={peopleIcon}>
-              <Popup>Bạn đang ở đây!</Popup>
-            </Marker>
-          )}
+          {location && <PeopleMarker position={[GPS.lat, GPS.lng]} iconUrl={People} /> }
+          
         </MapContainer>
       </div>
     </div>
   );
 }
-
-const homeIcon = new L.Icon({
-  iconUrl: Home,
-  iconSize: [41, 50],
-  iconAnchor: [20, 50],
-  popupAnchor: [0, -50],
-});
-
-const peopleIcon = new L.Icon({
-  iconUrl: People,
-  iconSize: [41, 50],
-  iconAnchor: [20, 50],
-  popupAnchor: [0, -50],
-});
 
 function VietnamBoundaries() {
   const [geoData, setGeoData] = useState(null);

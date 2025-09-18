@@ -1,6 +1,8 @@
 import { useMediaQuery } from "react-responsive";
 import { Plus } from "lucide-react"
 import { useListing } from "../listingContext";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 import React from "react"
 import Photo from "./photo"
 import styles from "./image.module.css"
@@ -50,7 +52,12 @@ export default function Area() {
     }
 
     if (isMobile) return (
-        <div className={styles.pageContent}>
+        <motion.div className={styles.pageContent}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+        >
             <h1 style={{marginBottom: "4px", fontSize: "1.68rem"}}>Bạn có thể đăng tối đa 5 bức ảnh. </h1>
             <div className={styles.intrustion} style={{paddingBottom: "8px", color: "#6A6A6A"}}>
                 Chọn ảnh đẹp nhất làm ảnh bìa. Về sau, bạn có thể đăng thêm hoặc thay đổi ảnh.
@@ -62,11 +69,16 @@ export default function Area() {
                 ))}
 
             </div>
-        </div>
+        </motion.div>
     )
     
     return (
-      <div className={styles.pageContent}>
+      <motion.div className={styles.pageContent}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+      >
         <h1 style={{marginBottom: "4px"}}>Bạn có thể đăng tối đa 5 bức ảnh.</h1>
         <div className={styles.intrustion} style={{paddingBottom: "8px", color: "#6A6A6A"}}>
           Chọn ảnh đẹp nhất làm ảnh bìa. Về sau, bạn có thể đăng thêm hoặc thay đổi ảnh.
@@ -96,7 +108,7 @@ export default function Area() {
           )}
 
         </div>
-      </div>
+      </motion.div>
     );
 }
 

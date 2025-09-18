@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from './authContext';
@@ -147,7 +149,10 @@ export default function RegisterForm() {
                         {error && <p className={styles.error}>{error}</p>}
         
                         <div className={styles.actionLoginRow}>
-                            <button type="submit" className={styles.button}>Đồng ý và tiếp tục</button>
+                            <motion.button type="submit" className={styles.button}
+                                whileTap={{scale: 0.95}}>
+                                    Đăng ký
+                            </motion.button>
                         </div>
                     </form>
 

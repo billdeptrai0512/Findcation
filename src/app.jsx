@@ -1,4 +1,4 @@
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { AuthProvider } from "./auth/authContext";
 import { UserLocationProvider } from "./map/userLocationContext";
@@ -21,7 +21,6 @@ import Features from "./listing/features/features";
 import LocationListing from "./listing/location/main";
 import StartPage from "./listing/start";
 import Listing from "./listing/main";
-import Final from "./listing/final/main";
 import LandingPage from "./map/main";
 import Contacts from "./listing/contacts/main";
 import Prices from "./listing/prices/main";
@@ -46,7 +45,7 @@ const router = createBrowserRouter([
           { path: "reset-password", element: <ResetPassword /> },
         ]
       },
-    ], //seperate auth routes
+    ], 
   },
   {
     path: "/list-staycation",
@@ -61,7 +60,6 @@ const router = createBrowserRouter([
       { path: "location", element: <LocationListing /> },
       { path: "price", element: <Prices /> },
       { path: "contacts", element: <Contacts /> },
-      { path: "/list-staycation/final",  element: <Final /> },
     ]
   },
   {

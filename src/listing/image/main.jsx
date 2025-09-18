@@ -1,6 +1,8 @@
 import { useListing } from "../listingContext";
 import { useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 import styles from "./image.module.css"
 import Camera from "../../assets/camera.png"
 import Area from "./area";
@@ -21,7 +23,12 @@ export default function ImageUpload() {
 
     if (listing.images.length === 0) return (
 
-        <div className={styles.pageContent}>
+        <motion.div className={styles.pageContent}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+        >
             <h1 style={{marginBottom: "4px", fontSize: "1.68rem"}}>Bổ sung ảnh staycation của bạn</h1>
             <div className={styles.intrustion} style={{paddingBottom: "8px", color: "#6A6A6A"}}>
                 Bạn cần ít nhất 1 tấm ảnh để bắt đầu.
@@ -35,7 +42,7 @@ export default function ImageUpload() {
                     Thêm ảnh
                 </label>
             </div>
-        </div>
+        </motion.div>
     )
 
     return <Area />

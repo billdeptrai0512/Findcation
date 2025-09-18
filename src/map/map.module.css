@@ -147,8 +147,14 @@ p {
   line-height: 1.8;
 }
 
-.content > div:nth-child(1) > div{
-  margin: 13px 6px 13px 6px;
+.content > div:nth-child(1) {
+  padding: 0px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+}
+
+.content > div:nth-child(1) > div {
+  width: 186px;
+  margin: 0px;
 }
 
 .login {
@@ -250,6 +256,29 @@ p {
   display: none; /* Chrome, Safari, Opera */
 }
 
+.custom-div-icon {
+  background: transparent !important;
+  border: none !important;
+}
+
+.staycation_name {
+  margin-top: 0;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: 'Inter', sans-serif;
+}
+
+.staycation_prices {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+}
+
+
 @media screen and (min-width: 714px) {
 
   .header {
@@ -273,7 +302,7 @@ p {
 
   .staycation_name {
     margin-top: 0;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: bold;
     font-family: 'Inter', sans-serif;
   }
@@ -284,7 +313,13 @@ p {
   }
 
   .staycation_prices {
-    font-size: 0.8075rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
   }
 
   .cta_button {

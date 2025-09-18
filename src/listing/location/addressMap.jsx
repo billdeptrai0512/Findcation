@@ -4,8 +4,6 @@ import { useListing } from '../listingContext';
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import Home from "../../assets/home.png"
-
-
 import styles from './location.module.css';
 
 export default function AddressMap( ) {

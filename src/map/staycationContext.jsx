@@ -5,7 +5,7 @@ const StaycationContext = createContext();
 
 const StaycationProvider = ({ children }) => {
 
-  const [staycations, setStaycations] = useState([]); // { lat, lng }
+  const [staycations, setStaycations] = useState([]);
   const [newStaycation, setNewStaycation] = useState(null)
 
   const fetchStaycations = async () => {
@@ -14,13 +14,11 @@ const StaycationProvider = ({ children }) => {
       
         const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/listing/all-listing`);
 
-        console.log(response.data.length)
-
         setStaycations(response.data)
         
     } catch (err) {
 
-        console.error('Fetch staycations failed', err);
+      console.error('Fetch staycations failed', err);
 
     } 
 

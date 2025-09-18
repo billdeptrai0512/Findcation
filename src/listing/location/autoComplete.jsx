@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useMediaQuery } from "react-responsive";
 import { MapPin } from "lucide-react";
 import { useListing } from "../listingContext";
+import axios from "axios";
 import styles from './location.module.css'; 
 
 export default function AutoComplete({ predictions, setPredictions }) {

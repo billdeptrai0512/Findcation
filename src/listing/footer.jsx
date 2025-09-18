@@ -1,8 +1,10 @@
-import styles from "./listing.module.css"
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useListing } from "./listingContext";
 import { useStaycation } from "../map/staycationContext";
 import { useAuth } from "../auth/authContext";
+import styles from "./listing.module.css"
 
 export default function FooterProgress({start, getStart, goNext, goBack, percentage, page, steps, stepValidity}) {
 
@@ -24,7 +26,7 @@ export default function FooterProgress({start, getStart, goNext, goBack, percent
 
       resetListing()
 
-      await fetchStaycations() // why ?
+      await fetchStaycations() 
 
       navigate("/")
 
@@ -60,24 +62,30 @@ export default function FooterProgress({start, getStart, goNext, goBack, percent
           style={{ justifyContent: start === true ? "space-between" : "end" }}>
 
           {start === false ? (
-              <button className={styles.startButton} onClick={getStart} >
-                  Bắt đầu
-              </button>
+              <motion.button className={styles.startButton} onClick={getStart} 
+                  whileHover={{scale: 1.05}}        
+                  whileTap={{scale: 0.95}} >
+                    Bắt đầu
+              </motion.button>
           ) : (
               <>
-                  <button onClick={goBack} className={styles.back_button}>
+                  <motion.button onClick={goBack} className={styles.back_button}      
+                      whileTap={{scale: 0.95}} >
                       Quay lại
-                  </button>
+                  </motion.button>
                   {
                     percentage !== 100 ? 
-                    <button onClick={goNext} 
-                          className={styles.next_button} disabled={!stepValidity[steps[page]]}
-                          style={{ backgroundColor: stepValidity[steps[page]] ? "#000" : "#DDDDDD", cursor: stepValidity[steps[page]] ? "pointer" : "not-allowed"}}>
-                          Tiếp theo
-                    </button> :
-                    <button onClick={handleUploadListing} className={styles.upload_button} disabled={!stepValidity[steps[page]]}>
-                      Hoàn tất
-                    </button>
+                    <motion.button onClick={goNext} className={styles.next_button} disabled={!stepValidity[steps[page]]}
+                          style={{ backgroundColor: stepValidity[steps[page]] ? "#000" : "#DDDDDD", cursor: stepValidity[steps[page]] ? "pointer" : "not-allowed"}}
+                          whileHover={{scale: 1.05}}        
+                          whileTap={{scale: 0.95}}>
+                            Tiếp theo
+                    </motion.button> :
+                    <motion.button onClick={handleUploadListing} className={styles.upload_button} disabled={!stepValidity[steps[page]]}
+                        whileHover={{scale: 1.05}}        
+                        whileTap={{scale: 0.95}}>
+                          Hoàn tất
+                    </motion.button>
                   }
 
               </>

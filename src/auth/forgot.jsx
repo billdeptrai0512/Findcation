@@ -1,5 +1,7 @@
+// eslint-disable-next-line no-unused-vars
+import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ChevronLeft  } from 'lucide-react';
 import axios from 'axios';
 import styles from './login.module.css';
@@ -60,11 +62,14 @@ export default function Forgot() {
                             <ChevronLeft size={20} style={{padding: "4px"}}/>
                         </button>
                         <div className={styles.title}>
-                            Bạn đã quên mật khẩu ?
+                            Bạn quên mật khẩu ?
                         </div>
                     </div>
                     <div className={styles.panel}>
                         <form onSubmit={handleSubmitEmail}>
+
+                            {error && <p className={styles.error}>{error}</p>}
+
                             <div className={styles.inputGroup}>
                                 <input
                                     id="email"
@@ -76,11 +81,12 @@ export default function Forgot() {
                                     className={styles.input}
                                 />
                             </div>
-
-                            {error && <p className={styles.error}>{error}</p>}
                             
                             <div className={styles.actionLoginRow}>
-                                <button type="submit" className={styles.button}>Gửi mã xác nhận</button>
+                                <motion.button type="submit" className={styles.button}
+                                    whileTap={{scale: 0.95}}>
+                                        Gửi mã xác nhận
+                                </motion.button>
                             </div>
 
                         </form>
@@ -107,6 +113,9 @@ export default function Forgot() {
                     </div>
                     <div className={styles.panel}>
                         <form onSubmit={handleSubmitCode}>
+
+                            {error && <p className={styles.error}>{error}</p>}
+
                             <div className={styles.inputGroup}>
                                 <input
                                     id="code"
@@ -118,11 +127,12 @@ export default function Forgot() {
                                     className={styles.input}
                                 />
                             </div>
-
-                            {error && <p className={styles.error}>{error}</p>}
                             
                             <div className={styles.actionLoginRow}>
-                                <button type="submit" className={styles.button}>Tiếp tục</button>
+                                <motion.button type="submit" className={styles.button}
+                                    whileTap={{scale: 0.95}}>
+                                        Tiếp tục
+                                </motion.button>
                             </div>
 
                         </form>

@@ -1,9 +1,9 @@
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive"
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// eslint-disable-next-line no-unused-vars
-import { motion } from "framer-motion";
 import axios from "axios";
 import styles from "../map.module.css"
 import Preview from "./preview";
@@ -42,12 +42,9 @@ export default function PreviewStaycation() {
 
     return (
         <div onClick={exitOverLay} className={styles.preview_overlay}>
-            <motion.div
-                key={id} // important! so exit triggers when ID changes
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={{ duration: 0.5 }}
+            <motion.div key={id} // important! so exit triggers when ID changes
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                exit={{ opacity: 0, x: -50 }} transition={{ duration: 0.5 }}
             >
                 <Preview staycation={staycation} />
             </motion.div>

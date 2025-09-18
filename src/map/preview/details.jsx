@@ -20,15 +20,14 @@ export default function Details({ staycation }) {
             <div style={{display: "flex", flexDirection: "column", borderTop: '1px solid rgba(0,0,0,0.04)', padding: '16px 0 0'}}>
                 <h2 style={{fontSize: "1.1075rem", marginTop: "0", marginBottom:"16px"}}>Tiện nghi</h2>
                 {staycation.features.map((feature, index) => (
-                    <div
-                        key={index}
+                    <div key={index}
                         style={{
-                        fontSize: "0.975rem",
-                        padding: "12px 0",
-                        borderBottom: "1px solid rgba(0,0,0,0.04)",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
+                            fontSize: "0.975rem",
+                            padding: "12px 0",
+                            borderBottom: "1px solid rgba(0,0,0,0.04)",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
                         }}
                     >
                         <span>{feature}</span>
@@ -36,8 +35,6 @@ export default function Details({ staycation }) {
                     </div>
                     ))}
             </div>
-
-            {console.log(staycation.location)}
 
             <div style={{display: "flex", fjustifyContent:"space-between", alignItems: "center", gap: "4px", padding: '16px 0', flex: "1", width: "100%" }}>
                 <h2 style={{fontSize: "1.1075rem", marginTop: "0"}}>Địa chỉ </h2>
@@ -47,6 +44,8 @@ export default function Details({ staycation }) {
                     <span >{staycation.location.details.city}</span>
                 </div>
             </div>
+
+            {/* {price here} */}
 
             <Contacts staycation={staycation} />
         

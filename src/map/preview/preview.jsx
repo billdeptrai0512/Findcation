@@ -2,7 +2,6 @@
 import { useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
 import styles from "../map.module.css";
-import Contacts from "./contacts";
 import Images from "./images";
 import Details from "./details";
 

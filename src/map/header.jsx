@@ -1,8 +1,6 @@
 import styles from "./map.module.css"
 
-
 export default function Header() {
-
     return ( 
 
         <div className={styles.header} >
@@ -12,8 +10,6 @@ export default function Header() {
             </div>
         </div>
     )
-
-    
 }
 
 
