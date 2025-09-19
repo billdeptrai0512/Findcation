@@ -15,7 +15,7 @@ export default function Prices() {
 
         setStepValidity((prev) => ({
           ...prev,
-          [currentStep]: listing.prices.min !== null && listing.prices.max !== null
+          [currentStep]: listing.prices.min !== '' && listing.prices.max !== ''
         }));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -27,10 +27,10 @@ export default function Prices() {
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
         >
-            <h1 style={{ marginBottom: "4px", fontSize: "1.68rem" }}>Cuối cùng, nhập khoảng giá cho thuê</h1>
+            <h1 style={{ marginBottom: "4px", fontSize: "1.68rem" }}>Nhập bảng giá cho thuê</h1>
 
             <div className={styles.intrustion} style={{ paddingBottom: "8px", color: "#6A6A6A" }}>
-                Từ combo thuê thấp nhất đến giá thuê cả ngày
+                Từ combo thấp nhất đến giá thuê cả ngày
             </div>
 
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -38,7 +38,7 @@ export default function Prices() {
                 <RangePrice />
 
             </div>
-            
+
         </motion.div>
     );
 }

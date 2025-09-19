@@ -15,6 +15,9 @@ export default function Contacts() {
     const { listing } = useListing();
     const { setStepValidity, currentStep } = useOutletContext();
 
+    console.log(currentStep)
+    console.log(user)
+
     useEffect(() => {
 
         setStepValidity((prev) => ({

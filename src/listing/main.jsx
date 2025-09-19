@@ -1,18 +1,17 @@
-// eslint-disable-next-line no-unused-vars
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { useState } from "react"
 import { Outlet, useNavigate } from "react-router-dom";
 import styles from "./listing.module.css"
 import Header from "./header"
-import Footer from "./footer"
+import Footer from "./footer/main"
 import Suggestion from "./suggestion";
 
 
-export default function Listing() { // PageContent
+export default function Listing() { 
 
     const navigate = useNavigate();
 
-    const steps = ["title", "type-of-house", "images", "features", "location", "price", "contacts"];
+    const steps = ["title", "type-of-house", "images", "features", "price", "location" ];
 
     const totalSteps = steps.length - 1;
 
@@ -20,13 +19,13 @@ export default function Listing() { // PageContent
     const [page, setPage] = useState(0);
     const [openSuggestions, setOpenSuggestions] = useState(false);
 
-    const [stepValidity, setStepValidity] = useState(
+    const [stepValidity, setStepValidity] = useState(() =>
         steps.reduce((acc, step) => {
-            acc[step] = step === "final" ? true : false; // mặc định là chưa hợp lệ
+            acc[step] = false;
             return acc;
         }, {})
     );
-  
+
     const percentage = Math.round((page / totalSteps) * 100);
 
     const getStart = () => {
@@ -57,7 +56,6 @@ export default function Listing() { // PageContent
         }
     };
     
-  
     return (
             
         <div className={styles.listingContainer}>
@@ -65,12 +63,15 @@ export default function Listing() { // PageContent
             <Header page={page} setOpenSuggestions={setOpenSuggestions} />
 
             <AnimatePresence mode="wait">
-                <Outlet key={page} context={{ setStepValidity, currentStep: steps[page], goNext }} />
+                <Outlet context={{ setStepValidity, currentStep: steps[page], goNext }} />
             </AnimatePresence>
 
             {openSuggestions && <Suggestion currentStep={steps[page]} setOpenSuggestions={setOpenSuggestions} />}
             
-            <Footer start={start} getStart={getStart} goNext={goNext} goBack={goBack} percentage={percentage} page={page} steps={steps} stepValidity={stepValidity} />
+            <Footer start={start} 
+                    getStart={getStart} goNext={goNext} goBack={goBack} 
+                    percentage={percentage} page={page} steps={steps} 
+                    stepValidity={stepValidity} />
 
         </div>   
 

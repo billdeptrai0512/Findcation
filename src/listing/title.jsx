@@ -27,7 +27,8 @@ export default function Title() {
                 <span className={styles.intrustion} style={{paddingBottom: "24px", color: "#6A6A6A", fontSize: "0.925rem"}}>
                     Tên ngắn gọn sẽ dễ nhớ nhất. Đừng lo lắng, bạn luôn có thể thay đổi sau.
                 </span>
-                <textarea className={styles.textarea} rows={5} onChange={uploadName} value={listing.name} onKeyDown={(e) => {e.key === "Enter" && goNext()}}></textarea>
+                <textarea className={styles.textarea} rows={5} onChange={uploadName} value={listing.name} 
+                            onKeyDown={(e) => {e.key === "Enter" && goNext()}}></textarea>
                 <div className={styles.words_limit} >
                     {listing.name.length} / 32
                 </div>

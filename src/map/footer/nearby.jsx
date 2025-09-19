@@ -1,9 +1,9 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react"
 import { useState, useEffect } from "react";
-import { useUserLocation } from "./userLocationContext";
-import { useStaycation } from "./staycationContext";
-import styles from "./map.module.css";
+import { useUserLocation } from "../userLocationContext";
+import { useStaycation } from "../staycationContext";
+import styles from "../map.module.css";
 
 export default function NearByButton() {
   const { saveLocation } = useUserLocation();

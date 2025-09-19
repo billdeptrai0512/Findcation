@@ -59,11 +59,16 @@ const router = createBrowserRouter([
       { path: "features", element: <Features /> },
       { path: "location", element: <LocationListing /> },
       { path: "price", element: <Prices /> },
-      { path: "contacts", element: <Contacts /> },
+      // { path: "contacts", element: <Contacts /> },
     ]
   },
   {
     path: "/admin",
+    element: <AdminDashBoard />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/host",
     element: <AdminDashBoard />,
     errorElement: <ErrorPage />,
   },

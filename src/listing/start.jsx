@@ -19,13 +19,13 @@ export default function StartPage() {
                 <section className={styles.start_content_section} style={{borderBottom: "1px solid #ccc"}}>
                     <div className={styles.number}>2</div>
                     <div className={styles.intrustion} >
-                        <h2>Thêm 3 - 5 ảnh và đánh dấu những tiện nghi sở hữu.</h2>
+                        <h2>Thêm 5 - 7 ảnh và đánh dấu những tiện nghi sở hữu.</h2>
                     </div>
                 </section>
                 <section className={styles.start_content_section} style={{borderBottom: "1px solid #ccc"}}>
                     <div className={styles.number}>3</div>
                     <div className={styles.intrustion} >
-                        <h2>Cài đặt định vị, giá thuê và thông tin liên lạc.</h2>
+                        <h2>Cài đặt định vị và giá cho thuê.</h2>
                     </div>
                 </section>
                 <section className={styles.start_content_section}>
