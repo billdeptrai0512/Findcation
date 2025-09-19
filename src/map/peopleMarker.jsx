@@ -22,7 +22,7 @@ function PeopleMarker({ position, iconUrl }) {
     });
 
     const marker = L.marker(position, { icon }).addTo(map);
-    marker.bindPopup("Bạn đang ở đây!");
+    marker.bindPopup("Bạn đang ở đây!").openPopup();
     markerRef.current = marker;
 
     return () => {

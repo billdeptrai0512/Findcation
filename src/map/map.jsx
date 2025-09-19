@@ -55,38 +55,39 @@ export default function Map() {
     if (!staycations?.length) return;
     if (newStaycation) return; // 🚫 don't run GPS if newStaycation is active
 
-    const mapFocus = (marker, zoomLevel, fly = true) => {
-      const map = marker._map;
-      if (!map) return;
-      marker.openPopup();
-      if (fly) {
-        map.flyTo(marker.getLatLng(), zoomLevel ?? map.getZoom(), {
+    // Effect 2: GPS → nearest staycation
+    if (location) {
+      const userLatLng = L.latLng(location.lat, location.lng);
+      const map = markerRefs.current[staycations[0].id]?._map; // grab map from any marker
+
+      // ✅ Step 1: immediately fly to user location
+      if (map) {
+        map.flyTo(userLatLng, 15, {
           animate: true,
           duration: 0.75,
         });
       }
-    };
 
-    // Effect 2: GPS → nearest staycation
-    if (location) {
-      const userLatLng = L.latLng(location.lat, location.lng);
+      // ✅ Step 2: after 2s, popup nearest staycation
+      const timeout = setTimeout(() => {
+        let nearestStay = null;
+        let nearestDist = Infinity;
 
-      let nearestStay = null;
-      let nearestDist = Infinity;
+        staycations.forEach((stay) => {
+          const stayLatLng = L.latLng(stay.location.gps.lat, stay.location.gps.lng);
+          const dist = userLatLng.distanceTo(stayLatLng);
+          if (dist < nearestDist) {
+            nearestDist = dist;
+            nearestStay = stay;
+          }
+        });
 
-      staycations.forEach((stay) => {
-        const stayLatLng = L.latLng(stay.location.gps.lat, stay.location.gps.lng);
-        const dist = userLatLng.distanceTo(stayLatLng);
-        if (dist < nearestDist) {
-          nearestDist = dist;
-          nearestStay = stay;
+        if (nearestStay && markerRefs.current[nearestStay.id]) {
+          markerRefs.current[nearestStay.id].openPopup();
         }
-      });
+      }, 2000);
 
-      if (nearestStay && markerRefs.current[nearestStay.id]) {
-        mapFocus(markerRefs.current[nearestStay.id], 15, true);
-      }
-      return;
+      return () => clearTimeout(timeout);
     }
 
     // Effect 3: fallback → last staycation
