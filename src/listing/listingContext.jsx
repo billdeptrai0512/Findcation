@@ -10,6 +10,7 @@ const ListingProvider = ({ children }) => {
 
         name : "",
         type : "",
+        numberOfRoom: 1,
         location: {
             public: false,
             address: "",
@@ -51,12 +52,17 @@ const ListingProvider = ({ children }) => {
         setListing((prev) => ({
             ...prev,
             type: type,
+            numberOfRoom: type === "house" ? null : (prev.numberOfRoom ?? 1)
         }));
     }
 
-    // const changeNumberOfRoom = (e) => {
+    const uploadNumberOfRoom = (number) => {
 
-    // }
+        setListing((prev) => ({
+            ...prev,
+            numberOfRoom: number,
+        }));
+    }
 
     const uploadImages = async (files) => {
         if (!files || files.length === 0) return;
@@ -97,8 +103,8 @@ const ListingProvider = ({ children }) => {
     const removeImage = (index) => {
 
         setListing((prev) => ({
-        ...prev,
-        images: prev.images.filter((_, i) => i !== index),
+            ...prev,
+            images: prev.images.filter((_, i) => i !== index),
         }));
 
     };
@@ -257,6 +263,7 @@ const ListingProvider = ({ children }) => {
         setListing({
             name : "",
             type : "",
+            numberOfRoom: null,
             location: {
                 public: false,
                 address: "",
@@ -289,6 +296,7 @@ const ListingProvider = ({ children }) => {
             listing,
             uploadName,
             uploadType,
+            uploadNumberOfRoom,
             uploadImages,
             removeImage,
             arrangeImage,

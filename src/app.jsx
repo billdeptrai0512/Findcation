@@ -22,10 +22,20 @@ import LocationListing from "./listing/location/main";
 import StartPage from "./listing/start";
 import Listing from "./listing/main";
 import LandingPage from "./map/main";
-import Contacts from "./listing/contacts/main";
 import Prices from "./listing/prices/main";
 import PreviewStaycation from "./map/preview/main";
 import AdminDashBoard from "./admin/main";
+import HostDashBoard from "./host/main";
+import Staycations from "./host/staycations";
+import Staycation from "./host/staycation";
+import EditorTitle from "./host/editor/title";
+import EditorHouseType from "./host/editor/house_type";
+import EditorPrices from "./host/editor/prices";
+import EditorFeatures from "./host/editor/features";
+import EditorLocation from "./host/editor/location";
+import EditorRooms from "./host/editor/rooms";
+import EditorCoverImages from "./host/editor/images/cover";
+import EditorRoomImages from "./host/editor/images/room";
 
 const router = createBrowserRouter([
   {
@@ -68,9 +78,21 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/host",
-    element: <AdminDashBoard />,
+    path: "/host/:hostId",
+    element: <HostDashBoard />,
     errorElement: <ErrorPage />,
+    children: [
+      { index: true, element: <Staycations /> },
+      { path: "editor/:staycationId", element: <Staycation />},
+      { path: "editor/:staycationId/title", element: <EditorTitle /> },
+      { path: "editor/:staycationId/type", element: <EditorHouseType /> },
+      { path: "editor/:staycationId/prices", element: <EditorPrices /> },
+      { path: "editor/:staycationId/features", element: <EditorFeatures /> },
+      { path: "editor/:staycationId/location", element: <EditorLocation /> },
+      { path: "editor/:staycationId/rooms", element: <EditorRooms /> },
+      { path: "editor/:staycationId/rooms/cover-images", element: <EditorCoverImages /> },
+      { path: "editor/:staycationId/rooms/:roomId", element: <EditorRoomImages /> }
+    ]
   },
   
 ]);
@@ -82,9 +104,9 @@ export default function App() {
           <UserLocationProvider>
             <StaycationProvider>
               <ListingProvider>
-                  <RouterProvider router={router} />
-                  <Analytics />
-              </ListingProvider>   
+                <RouterProvider router={router} />
+                <Analytics />
+              </ListingProvider>  
             </StaycationProvider>
           </UserLocationProvider>
         </AuthProvider>

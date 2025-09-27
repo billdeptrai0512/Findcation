@@ -1,18 +1,15 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion"
-import { House, DoorOpen } from "lucide-react"
 import { useOutletContext } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useListing } from "./listingContext"
+import { CircleMinus, CirclePlus, House, DoorOpen } from "lucide-react"
 import styles from "./listing.module.css"
-import { CircleMinus, CirclePlus } from "lucide-react"
 
 export default function TypeOfHouse() {
 
-    const {listing, uploadType} = useListing()
+    const {listing, uploadType, uploadNumberOfRoom} = useListing()
     const { setStepValidity, currentStep } = useOutletContext();
-    const [numberOfRoom, setNumberOfRoom] = useState(1)
-
     useEffect(() => {
         setStepValidity((prev) => ({
           ...prev,
@@ -23,11 +20,11 @@ export default function TypeOfHouse() {
 
     const decreaseNumberOfRoom = () => {
 
-        if (numberOfRoom === 1) return
+        if (listing.numberOfRoom === 1) return;
 
-        setNumberOfRoom(number => number - 1)
+        uploadNumberOfRoom(listing.numberOfRoom - 1);
 
-    }
+    };
 
     return (
         <motion.div className={styles.pageContent}
@@ -55,16 +52,17 @@ export default function TypeOfHouse() {
                     <DoorOpen size={32} className={styles.house_type_icon} />
                 </div>
 
+                {/* depend how many room staycation have , we call api to create as much Rooms based on that staycationId */}
                 {listing.type === "room" && (
                     <div style={{display:"flex", justifyContent: "space-between", margin: "12px", padding: "12px",  borderRadius: "8px", alignItems: "center",
                         boxShadow : "rgb(34, 34, 34) 0px 0px 0px 2px"
                     }}>
                         <h2 style={{margin: "4px 0", fontSize: "1.125rem", color: "#000000"}}>Số lượng:</h2>
                         <div style={{display:"flex", justifyContent: "space-between", gap:"16px", alignItems: "center"}}>
-                            <CircleMinus onClick={() => decreaseNumberOfRoom()} color= {numberOfRoom === 1 ? "#B0B0B0" : "#6A6A6A"}
+                            <CircleMinus onClick={() => decreaseNumberOfRoom()} color= {listing.numberOfRoom === 1 ? "#B0B0B0" : "#6A6A6A"}
                                 size={35} strokeWidth={1} style={{ cursor: "pointer" }}/>
-                            <p style={{color: "#000000"}}>{numberOfRoom}</p>
-                            <CirclePlus onClick={() => setNumberOfRoom((number) => number + 1)}
+                            <p style={{color: "#000000"}}>{listing.numberOfRoom}</p>
+                            <CirclePlus onClick={() => uploadNumberOfRoom(listing.numberOfRoom + 1)}
                                 size={35} color="#6A6A6A" strokeWidth={1} style={{ cursor: "pointer" }}/>
                         </div>
                     </div>

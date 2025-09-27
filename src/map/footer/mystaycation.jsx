@@ -10,10 +10,12 @@ export default function MyStaycationButton() {
   const { user } = useAuth()
   const navigate = useNavigate();
 
+  const linkTo = user ? `/host/${user.id}` : "/auth/login"
+
   return (
 
     <motion.button className={styles.cta_button} 
-        onClick={() => navigate("/auth/login")}
+        onClick={() => navigate(linkTo)}
         whileHover={{scale: 1.05}} whileTap={{scale: 0.95}} 
     >
         <h2 style={{margin: 0}}>Staycation của tôi</h2>
