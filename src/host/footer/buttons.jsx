@@ -1,10 +1,11 @@
 
 
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useMediaQuery } from "react-responsive"
 import { useHost } from "../hostContext";
 import { useRef } from "react";
 import BackButton from "./back";
-import NextButton from "./next";
+import SuggestButton from "./suggest";
 import CompleteButton from "./complete";
 import styles from "./footer.module.css"
 
@@ -12,6 +13,8 @@ export default function Buttons() {
 
     const navigate = useNavigate()
     const location = useLocation();
+    const isMobile = useMediaQuery({ query: '(max-width: 750px)'})
+
     const { host, updateStaycation } = useHost();
     const { staycationId } = useParams();
 
@@ -20,18 +23,14 @@ export default function Buttons() {
     );
 
     const originalStaycationRef = useRef(staycation);
-    
     const path = location.pathname.split("/").filter(Boolean);
 
     const goBacktoMain = () => navigate('/')
-
     const goBackToHost = () => navigate(`/host/${host.id}`) 
-
     const goBackToStaycation = () => {
         updateStaycation(staycation.id, originalStaycationRef.current);
         navigate(`/host/${host.id}/editor/${staycationId}`, {state: { staycation }})
     }
-
     const goBackToStaycationGallery = () => {
         updateStaycation(staycation.id, originalStaycationRef.current);
         navigate(`/host/${host.id}/editor/${staycationId}/rooms`, {state: { staycation }})
@@ -39,10 +38,11 @@ export default function Buttons() {
 
     if (path.length === 2) {
         return (
-            <div className={styles.footerButtons}>
-                <BackButton goBack={goBacktoMain} />
+            <div className={styles.footerButtons} style={{justifyContent: isMobile ? "space-between" : "end"}} >
 
-                <NextButton  /> 
+                {isMobile && <BackButton goBack={goBacktoMain} />}
+
+                <SuggestButton  /> 
             </div>
         )
     }
@@ -50,11 +50,11 @@ export default function Buttons() {
     if (path.length === 4) {
 
         return (
-            <div className={styles.footerButtons} >
+            <div className={styles.footerButtons} style={{justifyContent: isMobile ? "space-between" : "end"}}>
 
-                <BackButton goBack={goBackToHost} />
+                {isMobile && <BackButton goBack={goBackToHost} />}
 
-                <NextButton /> 
+                <SuggestButton /> 
 
             </div>
         )
@@ -65,21 +65,21 @@ export default function Buttons() {
         if (path[path.length - 1] === "rooms") {
 
             return (
-                <div className={styles.footerButtons} >
+                <div className={styles.footerButtons} style={{justifyContent: isMobile ? "space-between" : "end"}}>
 
-                    <BackButton goBack={goBackToHost} />
+                    {isMobile && <BackButton goBack={goBackToHost} />}
 
-                    <NextButton /> 
+                    <SuggestButton /> 
 
                 </div>
             )
         }
 
         return (
-            <div className={styles.footerButtons} >
+            <div className={styles.footerButtons} style={{justifyContent: isMobile ? "space-between" : "end"}}>
 
-                <BackButton goBack={goBackToStaycation} />
-
+                {isMobile && <BackButton goBack={goBackToStaycation} />}
+                
                 <CompleteButton />
 
             </div>
@@ -89,10 +89,10 @@ export default function Buttons() {
     if (path.length === 6) {
 
         return (
-            <div className={styles.footerButtons} >
+            <div className={styles.footerButtons} style={{justifyContent: isMobile ? "space-between" : "end"}}>
 
-                <BackButton goBack={goBackToStaycationGallery} />
-
+                {isMobile && <BackButton goBack={goBackToStaycationGallery} />}
+                
                 <CompleteButton />
 
             </div>

@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import styles from "./footer.module.css"
 
-export default function NextButton({ goNext }) {
+export default function SuggestButton({ goNext }) {
 
   return (
     <motion.button onClick={goNext} 

@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import styles from "./footer.module.css"
 
-export default function BackButton({ goBack }) {
+export default function BackButton({goBack}) {
 
   return (
     <motion.button onClick={goBack} 

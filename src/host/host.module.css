@@ -30,7 +30,6 @@
     flex-direction: column;
     justify-content: center;
     max-width: 680px;
-    margin: 0px auto;
     padding: 12px;
     flex: 1;
     gap: 16px;
@@ -44,6 +43,27 @@
     justify-content: space-between;
     align-items: center;
     padding: 1em;
+}
+
+.contacts {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.contact {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border: 1px solid #DDDDDD;
+    background-color: white;
+    border-radius: 8px;
+    padding: 12px 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
 }
 
 
@@ -288,10 +308,15 @@
     .pageContent {
         margin-bottom: 1rem;
         min-width: 400px;
+        margin: 0px auto;
     }
 
     .header {
         padding: 1em 4em;
+    }
+
+    .contacts {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .title {

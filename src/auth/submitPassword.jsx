@@ -24,9 +24,13 @@ export default function SubmitPassword({email, setEmail, setFoundEmail,}) {
         
         try {
 
-            await login(email, password);
+            const user = await login(email, password);
 
-            navigate('/list-staycation')
+            if (user.staycations.length > 0) {
+                navigate(`/host/${user.id}`)
+            } else {
+                navigate('/list-staycation');
+            }
 
         } catch (err) {
 

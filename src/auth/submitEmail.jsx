@@ -62,9 +62,14 @@ export default function SubmitEmail() {
                 credential: credentialResponse.credential,
             }, { withCredentials: true });
 
-            setUser(response.data.user)
+            const user = response.data.user
+            setUser(user)
 
-            navigate('/list-staycation');
+            if (user.staycations.length > 0) {
+                navigate(`/host/${user.id}`)
+            } else {
+                navigate('/list-staycation');
+            }
 
         } catch (err) {
             console.error('Google login failed', err);

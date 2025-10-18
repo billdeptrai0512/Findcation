@@ -5,8 +5,8 @@ import styles from "./login.module.css"
 
 export default function Auth() {
 
-  const location = useLocation();
   const navigate = useNavigate();
+  const location = useLocation();
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
   const exitOverLay = () => {

@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents, ZoomControl } from "react-leaflet";
+import { useRef } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import Home from "../../assets/home.png"
@@ -7,7 +7,6 @@ import styles from '../host.module.css';
 
 export default function ConfirmMap({location, handleChangeGPS}) {
 
-  const [text, setText] = useState("");
   const markerRef = useRef();
 
   return (
@@ -22,7 +21,7 @@ export default function ConfirmMap({location, handleChangeGPS}) {
 
           {location.address !== "" && 
             <Marker position={location.gps} icon={customIcon} ref={markerRef} eventHandlers={{add: (e) => e.target.openPopup()}}>
-              <Popup closeButton={false} closeOnClick={false} autoClose={false}> {text} </Popup>
+              <Popup closeButton={false} closeOnClick={false} autoClose={false}> Staycation ở đây </Popup>
             </Marker>
           }
           

@@ -10,26 +10,25 @@ export function useHost() {
 
 export function HostProvider({ hostId, children }) {
     
-    const [loading, setLoading] = useState(true)
+    const [, setLoading] = useState(true)
     const [host, setHost] = useState(null)
+        
+    const fetchHost = async () => {
+        try {
+            const response = await axios.get( `${import.meta.env.VITE_BACKEND_URL}/auth/${hostId}`,
+                { headers: { "ngrok-skip-browser-warning": "true" } }
+            );
+            setHost(response.data);
+        } catch (err) {
+            console.error("Error fetching host:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-
-        const fetchHost = async () => {
-            try {
-                const response = await axios.get( `${import.meta.env.VITE_BACKEND_URL}/auth/${hostId}`,
-                    { headers: { "ngrok-skip-browser-warning": "true" } }
-                );
-                setHost(response.data);
-            } catch (err) {
-                console.error("Error fetching host:", err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
         if (hostId) fetchHost();
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [hostId]);
 
     const updateStaycation = (staycationId, changes) => {
@@ -49,9 +48,14 @@ export function HostProvider({ hostId, children }) {
         });
     };
 
+    const refreshHost = () => {
+        if (hostId) fetchHost();
+    };
+
+
     return (
         <HostContext.Provider
-            value={{ host, updateStaycation }}>
+            value={{ host, updateStaycation, refreshHost }}>
                 {children}
         </HostContext.Provider>
     );
