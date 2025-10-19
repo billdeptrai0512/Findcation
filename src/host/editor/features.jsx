@@ -1,12 +1,14 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { useParams } from "react-router-dom";
+import { useEditorDraft } from "../editorDraftContext";
 import { defaultOptions, premiumOptions, safetyOptions } from "../../assets/featureIcons";
 import { useHost } from "../hostContext";
 import styles from "../host.module.css";
 
 export default function EditorFeatures() {
-  const { host, updateStaycation } = useHost();
+  const { draft, setDraft } = useEditorDraft();
+  const { host } = useHost();
   const { staycationId } = useParams();
 
   const staycation = host?.staycations.find(
@@ -15,13 +17,16 @@ export default function EditorFeatures() {
 
   if (!staycation) return null;
 
-  const toggleFeature = (featureName) => {
-    const hasFeature = staycation.features.includes(featureName);
-    const updatedFeatures = hasFeature
-      ? staycation.features.filter((f) => f !== featureName)
-      : [...staycation.features, featureName];
-
-    updateStaycation(staycation.id, { features: updatedFeatures });
+  const toggleFeature = (feature) => {
+    setDraft(prev => {
+      const has = prev.features.includes(feature);
+      return {
+        ...prev,
+        features: has
+          ? prev.features.filter(f => f !== feature)
+          : [...prev.features, feature]
+      };
+    });
   };
 
   return (
@@ -37,17 +42,17 @@ export default function EditorFeatures() {
         <Section
           title="Thay đổi tiện nghi"
           options={defaultOptions}
-          staycation={staycation}
+          staycation={draft}
           onToggle={toggleFeature}
         />
         <Section
           options={premiumOptions}
-          staycation={staycation}
+          staycation={draft}
           onToggle={toggleFeature}
         />
         <Section
           options={safetyOptions}
-          staycation={staycation}
+          staycation={draft}
           onToggle={toggleFeature}
         />
       </div>

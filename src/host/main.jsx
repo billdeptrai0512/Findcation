@@ -1,6 +1,7 @@
 import { useParams, Outlet } from "react-router-dom";
 import { useState } from "react";
 import { HostProvider, useHost } from "./hostContext";
+import { EditorDraftProvider } from "./editorDraftContext";
 import { useMediaQuery } from "react-responsive";
 import Header from "./header/main";
 import Footer from "./footer/main";
@@ -29,7 +30,9 @@ export default function HostDashBoard() {
 
   return (
     <HostProvider hostId={hostId}>
-      <HostLayout />
+      <EditorDraftProvider>
+        <HostLayout />
+      </EditorDraftProvider>
     </HostProvider>
   );
 }

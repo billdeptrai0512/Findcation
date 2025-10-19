@@ -1,41 +1,37 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import { useParams } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-import { useHost } from "../hostContext";
+import { useEditorDraft } from "../editorDraftContext";
 import styles from "../host.module.css";
 import ConfirmMap from "./map";
 
 export default function EditorLocation() {
-  const { host, updateStaycation } = useHost();
-  const { staycationId } = useParams();
-
-  const staycation = host?.staycations.find(
-    (s) => s.id === parseInt(staycationId, 10)
-  );
+  const { draft, setDraft } = useEditorDraft();
 
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
   const handleChangeDetails = (e) => {
     const { name, value } = e.target;
-    updateStaycation(staycation.id, {
+    setDraft(prev => ({
+      ...prev,
       location: {
-        ...staycation.location,
+        ...prev.location,
         details: {
-          ...staycation.location.details,
+          ...prev.location.details,
           [name]: value,
         },
       },
-    });
+    }));
   };
 
   const handleChangeGPS = (center) => {
-    updateStaycation(staycation.id, {
+    setDraft(prev => ({
+      ...prev,
       location: {
-        ...staycation.location,
+        ...prev.location,
         gps: center,
       },
-    });
+    }));
   };
 
   return (
@@ -57,35 +53,35 @@ export default function EditorLocation() {
             type="text"
             name="street"
             placeholder="Địa chỉ"
-            value={staycation.location.details.street}
+            value={draft.location.details.street}
             onChange={handleChangeDetails}
           />
           <input
             type="text"
             name="ward"
             placeholder="Phường"
-            value={staycation.location.details.ward}
+            value={draft.location.details.ward}
             onChange={handleChangeDetails}
           />
           <input
             type="text"
             name="city"
             placeholder="Thành phố"
-            value={staycation.location.details.city}
+            value={draft.location.details.city}
             onChange={handleChangeDetails}
           />
           <input
             type="text"
             name="building"
             placeholder="Tên tòa nhà, căn hộ (nếu có)"
-            value={staycation.location.details.building}
+            value={draft.location.details.building}
             onChange={handleChangeDetails}
           />
         </div>
 
         <div className={styles.details_map}>
           <ConfirmMap
-            location={staycation.location}
+            location={draft.location}
             handleChangeGPS={handleChangeGPS}
           />
         </div>

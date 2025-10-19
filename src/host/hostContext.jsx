@@ -52,7 +52,6 @@ export function HostProvider({ hostId, children }) {
         if (hostId) fetchHost();
     };
 
-
     return (
         <HostContext.Provider
             value={{ host, updateStaycation, refreshHost }}>

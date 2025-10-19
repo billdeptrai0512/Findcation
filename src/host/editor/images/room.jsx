@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 import { Plus } from "lucide-react";
 import { useParams } from "react-router-dom";
-import { useHost } from "../../hostContext";
+import { useEditorDraft } from "../../editorDraftContext";
 import React from "react";
 import Photo from "./photo";
 import styles from "../../host.module.css";
@@ -12,35 +12,39 @@ import heic2any from "heic2any";
 export default function EditorRoomImages() {
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
-  const { staycationId, roomId } = useParams();
-  const { host, updateStaycation } = useHost();
+  const { draft, setDraft } = useEditorDraft();
+  const { roomId } = useParams();
 
-  const staycation = host?.staycations.find(
-    (s) => s.id === parseInt(staycationId, 10)
-  );
 
-  const room = staycation?.rooms.find(
-    (r) => r.id === parseInt(roomId, 10)
-  );
+  const roomIdNum = parseInt(roomId, 10);
+  const room = draft?.rooms.find(r => r.id === roomIdNum);
 
   if (!room) return null;
 
   // update room name
   const handleNameChange = (e) => {
-    const newRooms = staycation.rooms.map((r) =>
-      r.id === room.id ? { ...r, name: e.target.value } : r
-    );
-    updateStaycation(staycation.id, { rooms: newRooms });
+
+    setDraft(prev => ({
+      ...prev,
+      rooms: prev.rooms.map(r =>
+        r.id === room.id ? { ...r, name: e.target.value } : r
+      ),
+    }));
+
   };
 
   // remove image from room
   const removeImage = (index) => {
-    const newRooms = staycation.rooms.map((r) =>
-      r.id === room.id
-        ? { ...r, images: r.images.filter((_, i) => i !== index) }
-        : r
-    );
-    updateStaycation(staycation.id, { rooms: newRooms });
+
+    setDraft(prev => ({
+      ...prev,
+      rooms: prev.rooms.map(r =>
+        r.id === room.id
+          ? { ...r, images: r.images.filter((_, i) => i !== index) }
+          : r
+      ),
+    }));
+
   };
 
   // add image to room
@@ -68,11 +72,13 @@ export default function EditorRoomImages() {
     } else {
       newImages = [await convertFile(files[0])];
     }
-
-    const newRooms = staycation.rooms.map((r) =>
-      r.id === room.id ? { ...r, images: [...r.images, ...newImages] } : r
-    );
-    updateStaycation(staycation.id, { rooms: newRooms });
+    
+    setDraft(prev => ({
+      ...prev,
+      rooms: prev.rooms.map(r =>
+        r.id === room.id ? { ...r, images: [...r.images, ...newImages] } : r
+      ),
+    }));
   };
 
   // move an image to first position
@@ -85,22 +91,24 @@ export default function EditorRoomImages() {
     const [selectedImage] = newImages.splice(index, 1);
     newImages.unshift(selectedImage);
 
-    const newRooms = staycation.rooms.map((r) =>
-      r.id === room.id ? { ...r, images: newImages } : r
-    );
-    updateStaycation(staycation.id, { rooms: newRooms });
+    setDraft(prev => ({
+      ...prev,
+      rooms: prev.rooms.map(r =>
+        r.id === room.id ? { ...r, images: newImages } : r
+      ),
+    }));
   };
 
-  const getEmptySlotIndex = (length) => {
+  // const getEmptySlotIndex = (length) => {
 
-    if (isMobile) return room.images.length
+  //   if (isMobile) return room.images.length
 
-    if (length < 3) return 2;
-    if (length < 5) return 4;
-    if (length < 7) return 6;
+  //   if (length < 3) return 2;
+  //   if (length < 5) return 4;
+  //   if (length < 7) return 6;
 
-    return null;
-  };
+  //   return null;
+  // };
 
   const renderPhoto = (index) => {
     const img = room.images[index];
@@ -168,7 +176,7 @@ export default function EditorRoomImages() {
         transition={{ duration: 1, ease: "easeOut" }}
       >
         <input
-          style={{ marginBottom: "8px", fontSize: "1rem", padding: "6px" }}
+          style={{ marginBottom: "0px", fontSize: "1.68rem", border:"none", fontFamily: `'Inter', sans-serif`, fontWeight: "500" }}
           value={room.name}
           onChange={handleNameChange}
           placeholder="Tên phòng"
@@ -191,7 +199,7 @@ export default function EditorRoomImages() {
       transition={{ duration: 1, ease: "easeOut" }}
     >
       <input
-        style={{ marginBottom: "8px", fontSize: "1rem", padding: "6px" }}
+        style={{ marginBottom: "0px", fontSize: "1.68rem", border:"none", fontFamily: `'Inter', sans-serif`, fontWeight: "500"}}
         value={room.name}
         onChange={handleNameChange}
         placeholder="Tên phòng"

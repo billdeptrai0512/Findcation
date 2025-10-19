@@ -17,6 +17,8 @@ export default function EditorRooms() {
 
         <div className={styles.pageContent} style={{justifyContent: "unset"}}>
 
+            <h1 style={{ margin: "0 auto", fontSize: "1.68em", width: "100%", maxWidth:"400px"}}>Thay đổi hình ảnh</h1>
+
             <div onClick={() => navigate("cover-images")}
                 
                 style={{display:"flex", justifyContent:"center", boxSizing: "border-box", boxShadow: "0 3px 10px rgba(0,0,0,0.6)", 

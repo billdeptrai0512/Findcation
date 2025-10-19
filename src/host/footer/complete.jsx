@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useEditorDraft } from "../editorDraftContext";
 import { useHost } from "../hostContext";
 import { useState } from "react";
 import axios from "axios";
@@ -9,18 +10,12 @@ import styles from "./footer.module.css"
 export default function CompleteButton() {
 
   const navigate = useNavigate();
-
-  const { host, updateStaycation } = useHost();
-
+  const { draft, hasChanged } = useEditorDraft();
+  const { host, refreshHost } = useHost();
   const { staycationId, roomId } = useParams();
 
-  const staycation = host?.staycations.find(
-    (s) => s.id === parseInt(staycationId, 10)
-  );
-
-  const room = staycation?.rooms.find(
-    (r) => r.id === parseInt(roomId, 10)
-  );
+  const roomIdNum = parseInt(roomId, 10);
+  const room = draft?.rooms.find(r => r.id === roomIdNum);
 
   const [loading, setLoading] = useState(false);
 
@@ -31,20 +26,20 @@ export default function CompleteButton() {
     try {
       const response = await axios.patch(
         `${import.meta.env.VITE_BACKEND_URL}/listing/staycation/${staycationId}/editor`
-          , staycation ,
+          , draft ,
           { headers: { "ngrok-skip-browser-warning": "true" } }
       );
 
       console.log("Saved:", response.data);
 
-      updateStaycation(staycation.id, response.data.staycation);
+      refreshHost()
 
       navigate(`/host/${host.id}/editor/${staycationId}`);
 
     } catch (error) {
       console.error("Error saving title:", error);
     } finally {
-      setLoading(true)
+      setLoading(false)
     }
   };
 
@@ -53,11 +48,11 @@ export default function CompleteButton() {
       const formData = new FormData();
 
       // keep only already-uploaded URLs
-      const existing = staycation.images.filter((img) => typeof img === "string");
+      const existing = draft.images.filter((img) => typeof img === "string");
       formData.append("existingImages", JSON.stringify(existing));
 
       // append new files
-      staycation.images.forEach((img) => {
+      draft.images.forEach((img) => {
         if (img.file) formData.append("images", img.file);
       });
 
@@ -70,7 +65,7 @@ export default function CompleteButton() {
       console.log("Images updated:", response.data);
 
       // keep context in sync
-      updateStaycation(staycation.id, response.data.staycation);
+      refreshHost()
 
       navigate(`/host/${host.id}/editor/${staycationId}/rooms`);
 
@@ -81,10 +76,9 @@ export default function CompleteButton() {
 
   const handleSaveRoomImages = async () => {
     try {
-
       const formData = new FormData();
 
-      // keep the room name if editable
+      // room name
       formData.append("name", room.name);
 
       // keep only already-uploaded URLs (strings)
@@ -98,26 +92,19 @@ export default function CompleteButton() {
 
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/listing/staycation/${staycationId}/editor/rooms/${room.id}`,
-        formData,
+        formData, // ✅ use formData here!
         { headers: { "Content-Type": "multipart/form-data" } }
       );
 
       console.log("Room images updated:", response.data);
 
-      // update context so host state stays in sync
-      updateStaycation(staycation.id, {
-        rooms: staycation.rooms.map((r) =>
-          r.id === room.id ? response.data.room : r
-        ),
-      });
+      refreshHost()
 
-      // optionally navigate back to rooms list
       navigate(`/host/${host.id}/editor/${staycationId}/rooms`);
     } catch (err) {
       console.error("Upload failed", err);
     }
   };
-
 
   const handleClick = () => {
     if (path.includes("rooms")) {
@@ -136,9 +123,10 @@ export default function CompleteButton() {
   return (
     <motion.button
       onClick={handleClick}
+      disabled={!hasChanged || loading}
       className={styles.upload_button}
-      whileHover={!loading ? { scale: 1.05 } : {}}
-      whileTap={!loading ? { scale: 0.95 } : {}}
+      whileHover={hasChanged && !loading ? { scale: 1.05 } : {}}
+      whileTap={hasChanged && !loading ? { scale: 0.95 } : {}}
     >
       <AnimatePresence mode="wait" initial={false}>
         {loading ? (

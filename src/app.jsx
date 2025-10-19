@@ -28,6 +28,7 @@ import AdminDashBoard from "./admin/main";
 import HostDashBoard from "./host/main";
 import Staycations from "./host/staycations";
 import Staycation from "./host/staycation";
+import EditorPage from "./host/editor/main";
 import EditorTitle from "./host/editor/title";
 import EditorHouseType from "./host/editor/house_type";
 import EditorPrices from "./host/editor/prices";
@@ -83,15 +84,21 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Staycations /> },
-      { path: "editor/:staycationId", element: <Staycation />},
-      { path: "editor/:staycationId/title", element: <EditorTitle /> },
-      { path: "editor/:staycationId/type", element: <EditorHouseType /> },
-      { path: "editor/:staycationId/prices", element: <EditorPrices /> },
-      { path: "editor/:staycationId/features", element: <EditorFeatures /> },
-      { path: "editor/:staycationId/location", element: <EditorLocation /> },
-      { path: "editor/:staycationId/rooms", element: <EditorRooms /> },
-      { path: "editor/:staycationId/rooms/cover-images", element: <EditorCoverImages /> },
-      { path: "editor/:staycationId/rooms/:roomId", element: <EditorRoomImages /> }
+      {
+        path: "editor/:staycationId",
+        element: <EditorPage />, // <-- this is the wrapper
+        children: [
+          { index: true, element: <Staycation /> },
+          { path: "title", element: <EditorTitle /> },
+          { path: "type", element: <EditorHouseType /> },
+          { path: "prices", element: <EditorPrices /> },
+          { path: "features", element: <EditorFeatures /> },
+          { path: "location", element: <EditorLocation /> },
+          { path: "rooms", element: <EditorRooms /> },
+          { path: "rooms/cover-images", element: <EditorCoverImages /> },
+          { path: "rooms/:roomId", element: <EditorRoomImages /> }
+        ]
+      }
     ]
   },
   

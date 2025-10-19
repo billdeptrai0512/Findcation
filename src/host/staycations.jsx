@@ -1,5 +1,5 @@
 import { useNavigate, useOutletContext } from "react-router-dom";
-import { Plus  } from 'lucide-react';
+import { CirclePlus } from 'lucide-react';
 import styles from "./host.module.css"
 import Contacts from "./contacts/main";
 
@@ -12,9 +12,9 @@ export default function Staycations() {
                     {/* Main Content */}
             <div>
 
-                <div style={{ display: "flex", paddingBottom: "8px", alignItems:"center", justifyContent: "space-between" }}>
+                <div style={{ display: "flex", paddingBottom: "8px", alignItems:"end", justifyContent: "space-between" }}>
                     <h1 style={{ margin: "0", fontSize: "1.68em"}}>Staycation của tôi</h1>
-                    <Plus size={20} onClick={() => navigate(`/list-staycation`)} style={{cursor: "pointer"}}/>
+                    <CirclePlus size={28} fill="#E31C5F" color="#FFFFFF" onClick={() => navigate(`/list-staycation`)} style={{ cursor: "pointer"}}/>
                 </div>
 
                 <div style={{ display: "flex", gap: "16px", overflowX: "auto", paddingBottom: "16px"}}>

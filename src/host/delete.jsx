@@ -43,7 +43,7 @@ export default function DeleteButton() {
   return (
     <motion.button
       onClick={handleDelete}
-      style={{padding: "12px 12px"}}
+      style={{padding: "12px 12px", color: "#FFF", background:"#000"}}
       className={styles.upload_button}
       whileHover={!loading ? { scale: 1.05 } : {}}
       whileTap={!loading ? { scale: 0.95 } : {}}

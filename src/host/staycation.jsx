@@ -34,7 +34,7 @@ export default function Staycation() {
 
 
             <h1 style={{ margin: "0", fontSize: "1.68em"}}>Staycation của tôi</h1>
-
+            
             <div onClick={() => navigate(`title`)}
                 style={{boxShadow: "0 3px 10px rgba(0,0,0,0.6)", padding: "8px",  borderRadius: "8px", cursor: "pointer"}}>
 
@@ -44,7 +44,6 @@ export default function Staycation() {
             </div>
 
             <div onClick={() => navigate(`type`)} 
-            
                 style={{boxShadow: "0 3px 10px rgba(0,0,0,0.6)",  padding: "8px", borderRadius: "8px", cursor: "pointer"}}>
 
                 <span style={{fontSize: "1rem", fontWeight: "500"}}>Cho thuê</span>

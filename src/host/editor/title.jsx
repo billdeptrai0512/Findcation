@@ -2,13 +2,14 @@
 import { useParams } from "react-router-dom";
 import { useHost } from "../hostContext";
 import { motion } from "framer-motion";
+import { useEditorDraft } from "../editorDraftContext";
 import styles from "../host.module.css"
 
 export default function EditorTitle() {
-
-    const { host, updateStaycation } = useHost()
+    const { draft, setDraft } = useEditorDraft();
+    const { host } = useHost()
     const { staycationId } = useParams();
-    
+
     const staycation = host?.staycations.find(
         (s) => s.id === parseInt(staycationId, 10)
     );
@@ -19,11 +20,11 @@ export default function EditorTitle() {
             transition={{ duration: 1, ease: "easeOut" }}
         >   
             <h1 style={{marginBottom: "4px", fontSize: "1.68rem"}}>Thay đổi tiêu đề chổ ở</h1>
-            <textarea className={styles.textarea} rows={5} value={staycation?.name}
-                onChange={(e) => {
-                    if (e.target.value.length > 32) return
-                    updateStaycation(staycation.id, { name: e.target.value })
-                }}
+            <textarea className={styles.textarea} rows={5} value={draft?.name || ""}
+                    onChange={(e) => {
+                        const val = e.target.value;
+                        if (val.length < 32) setDraft((prev) => ({ ...prev, name: e.target.value }));
+                    }}
             />
             <div className={styles.words_limit} >
                 {staycation?.name.length} / 32

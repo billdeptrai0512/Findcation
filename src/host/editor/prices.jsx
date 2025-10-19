@@ -2,32 +2,36 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { MoveDown } from "lucide-react";
-import { useParams } from "react-router-dom";
-import { useHost } from "../hostContext";
+import { useEditorDraft } from "../editorDraftContext";
 import styles from "../host.module.css";
 
 export default function EditorPrices() {
-  const { host, updateStaycation } = useHost();
-  const { staycationId } = useParams();
-
-  const staycation = host?.staycations.find(
-    (s) => s.id === parseInt(staycationId, 10)
-  );
-
+  
+  const { draft, setDraft } = useEditorDraft();
   const [editing, setEditing] = useState(null);
 
   const handleMinChange = (e) => {
     const price = e.target.value.replace(/\D/g, "");
-    updateStaycation(staycation.id, {
-      prices: { ...staycation.prices, min: price === "" ? null : price },
-    });
+
+    setDraft(prev => ({
+      ...prev,
+      prices: {
+        ...prev.prices,
+        min: price === "" ? null : price,
+      },
+    }));
+
   };
 
   const handleMaxChange = (e) => {
     const price = e.target.value.replace(/\D/g, "");
-    updateStaycation(staycation.id, {
-      prices: { ...staycation.prices, max: price === "" ? null : price },
-    });
+    setDraft(prev => ({
+      ...prev,
+      prices: {
+        ...prev.prices,
+        max: price === "" ? null : price,
+      },
+    }));
   };
 
   const formatPrice = (price) => {
@@ -52,8 +56,8 @@ export default function EditorPrices() {
           className={styles.price_input}
           value={
             editing === "min"
-              ? staycation?.prices.min ?? ""
-              : formatPrice(staycation?.prices.min)
+              ? draft?.prices.min ?? ""
+              : formatPrice(draft?.prices.min)
           }
           onFocus={() => setEditing("min")}
           onBlur={() => setEditing(null)}
@@ -69,8 +73,8 @@ export default function EditorPrices() {
           className={styles.price_input}
           value={
             editing === "max"
-              ? staycation?.prices.max ?? ""
-              : formatPrice(staycation?.prices.max)
+              ? draft?.prices.max ?? ""
+              : formatPrice(draft?.prices.max)
           }
           onFocus={() => setEditing("max")}
           onBlur={() => setEditing(null)}

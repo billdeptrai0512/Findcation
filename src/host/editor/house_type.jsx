@@ -1,39 +1,35 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import { useParams } from "react-router-dom";
 import { CircleMinus, CirclePlus, House, DoorOpen } from "lucide-react";
-import { useHost } from "../hostContext";
+import { useEditorDraft } from "../editorDraftContext";
 import styles from "../host.module.css";
 
 export default function EditorHouseType() {
-  const { host, updateStaycation } = useHost();
-  const { staycationId } = useParams();
+  const { draft, setDraft } = useEditorDraft();
 
-  const staycation = host?.staycations.find(
-    (s) => s.id === parseInt(staycationId, 10)
-  );
-
-  if (!staycation) return null;
+  if (!draft) return null;
 
   const changeType = (type) => {
-    if (type === "house") {
-      updateStaycation(staycation.id, {
-        type,
-        numberOfRoom: null,
-      });
-    } else {
-      updateStaycation(staycation.id, {
-        type,
-        numberOfRoom: staycation.numberOfRoom || 1,
-      });
-    }
+    setDraft(prev => ({
+      ...prev,
+      type,
+      numberOfRoom: type === "house" ? null : prev.numberOfRoom || 1,
+    }));
   };
 
   const decreaseNumberOfRoom = () => {
-    if (staycation.numberOfRoom === 1) return;
-    updateStaycation(staycation.id, {
-      numberOfRoom: staycation.numberOfRoom - 1,
-    });
+    if (draft.numberOfRoom === 1) return;
+    setDraft(prev => ({
+      ...prev,
+      numberOfRoom: prev.numberOfRoom - 1,
+    }));
+  };
+
+  const increaseNumberOfRoom = () => {
+    setDraft(prev => ({
+      ...prev,
+      numberOfRoom: (prev.numberOfRoom || 0) + 1,
+    }));
   };
 
   return (
@@ -49,10 +45,13 @@ export default function EditorHouseType() {
       </h1>
 
       <div className={styles.house_type_box}>
+        {/* House */}
         <div
           className={styles.house_type_option}
           onClick={() => changeType("house")}
-          style={{  boxShadow:  staycation.type === "house" && "rgb(34, 34, 34) 0px 0px 0px 2px" }}
+          style={{
+            boxShadow: draft.type === "house" && "rgb(34, 34, 34) 0px 0px 0px 2px",
+          }}
         >
           <div>
             <h2>Toàn bộ căn nhà</h2>
@@ -61,10 +60,13 @@ export default function EditorHouseType() {
           <House size={32} className={styles.house_type_icon} />
         </div>
 
+        {/* Room */}
         <div
           className={styles.house_type_option}
           onClick={() => changeType("room")}
-          style={{ boxShadow: staycation.type === "room" && "rgb(34, 34, 34) 0px 0px 0px 2px" }}
+          style={{
+            boxShadow: draft.type === "room" && "rgb(34, 34, 34) 0px 0px 0px 2px",
+          }}
         >
           <div>
             <h2>Phòng riêng</h2>
@@ -76,7 +78,8 @@ export default function EditorHouseType() {
           <DoorOpen size={32} className={styles.house_type_icon} />
         </div>
 
-        {staycation.type === "room" && (
+        {/* Number of rooms selector */}
+        {draft.type === "room" && (
           <div
             style={{
               display: "flex",
@@ -97,19 +100,31 @@ export default function EditorHouseType() {
             >
               Số lượng:
             </h2>
-            <div style={{ display: "flex", justifyContent: "space-between", gap: "16px", alignItems: "center" }} >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                gap: "16px",
+                alignItems: "center",
+              }}
+            >
+              <CircleMinus
+                onClick={decreaseNumberOfRoom}
+                color={draft.numberOfRoom === 1 ? "#B0B0B0" : "#6A6A6A"}
+                size={35}
+                strokeWidth={1}
+                style={{ cursor: "pointer" }}
+              />
 
-                <CircleMinus onClick={decreaseNumberOfRoom} color={staycation.numberOfRoom === 1 ? "#B0B0B0" : "#6A6A6A"}
-                    size={35} strokeWidth={1}   
-                    style={{ cursor: "pointer" }} 
-                />
+              <p style={{ color: "#000000" }}>{draft.numberOfRoom}</p>
 
-                <p style={{ color: "#000000" }}>{staycation.numberOfRoom}</p>
-
-                <CirclePlus onClick={() => updateStaycation(staycation.id, { numberOfRoom: (staycation.numberOfRoom || 0) + 1 })}
-                    size={35} color="#6A6A6A" 
-                    strokeWidth={1} style={{ cursor: "pointer" }} 
-                />
+              <CirclePlus
+                onClick={increaseNumberOfRoom}
+                size={35}
+                color="#6A6A6A"
+                strokeWidth={1}
+                style={{ cursor: "pointer" }}
+              />
             </div>
           </div>
         )}
