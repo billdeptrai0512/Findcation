@@ -16,11 +16,11 @@ export default function Preview({ staycation }) {
 
                 <div className={styles.preview_header}>
 
+                    <h1>{staycation.name}</h1> 
+
                     <button onClick={() => navigate("/")}>
                         <X size={20}/>
                     </button>
-
-                    <h1>{staycation.name}</h1> 
 
                 </div>
 
@@ -30,7 +30,7 @@ export default function Preview({ staycation }) {
 
                     <Details staycation={staycation} />
                     
-                </div>
+                </div >
             </div>
 
         </div>
