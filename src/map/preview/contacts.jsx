@@ -27,7 +27,7 @@ export default function Contacts({staycation}) {
             <div style={{display: "flex",  padding: '8px 0', borderRadius: "8px", gap: "1em"}}>
 
                 <span style={{transform:"translateX(20%)"}}>
-                    {contacts?.facebook  && 
+                    {contacts.facebook !== null  && 
                         <Link to={`${facebookUrl}${contacts.facebook}`} target="_blank" rel="noopener noreferrer">
                             <img src={FacebookIcon} alt="" style={{width:"37px"}} />
                         </Link>
@@ -35,7 +35,7 @@ export default function Contacts({staycation}) {
                 </span>
 
                 <span style={{transform:"translateX(15%)"}}>
-                    {contacts?.instagram && 
+                    {contacts.instagram  !== null && 
                         <Link to={`${instagramUrl}${contacts.instagram}`} target="_blank" rel="noopener noreferrer">
                             <img src={InstagramIcon} alt="" style={{width:"37px"}} />
                         </Link>
@@ -43,7 +43,7 @@ export default function Contacts({staycation}) {
                 </span>
 
                 <span style={{transform:"translateY(-7%)"}}>
-                    {contacts?.zalo && 
+                    {contacts.zalo !== null && 
                         <Link to={`https://zalo.me/${contacts.zalo}`} target="_blank" rel="noopener noreferrer">
                             <img src={Zalo} alt="" style={{width:"46px"}} />
                         </Link>
