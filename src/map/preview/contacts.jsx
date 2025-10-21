@@ -27,24 +27,24 @@ export default function Contacts({staycation}) {
             <div style={{display: "flex",  padding: '8px 0', borderRadius: "8px", gap: "1em"}}>
 
                 <span style={{transform:"translateX(20%)"}}>
-                    {contacts.facebook.url  && 
-                        <Link to={`${facebookUrl}${contacts.facebook.url}`} target="_blank" rel="noopener noreferrer">
+                    {contacts?.facebook  && 
+                        <Link to={`${facebookUrl}${contacts.facebook}`} target="_blank" rel="noopener noreferrer">
                             <img src={FacebookIcon} alt="" style={{width:"37px"}} />
                         </Link>
                     }
                 </span>
 
                 <span style={{transform:"translateX(15%)"}}>
-                    {contacts.instagram.url && 
-                        <Link to={`${instagramUrl}${contacts.instagram.url}`} target="_blank" rel="noopener noreferrer">
+                    {contacts?.instagram && 
+                        <Link to={`${instagramUrl}${contacts.instagram}`} target="_blank" rel="noopener noreferrer">
                             <img src={InstagramIcon} alt="" style={{width:"37px"}} />
                         </Link>
                     }
                 </span>
 
                 <span style={{transform:"translateY(-7%)"}}>
-                    {contacts.zalo.url && 
-                        <Link to={`https://zalo.me/${contacts.zalo.url}`} target="_blank" rel="noopener noreferrer">
+                    {contacts?.zalo && 
+                        <Link to={`https://zalo.me/${contacts.zalo}`} target="_blank" rel="noopener noreferrer">
                             <img src={Zalo} alt="" style={{width:"46px"}} />
                         </Link>
                     }

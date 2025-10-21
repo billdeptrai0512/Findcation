@@ -64,7 +64,6 @@ export default function SubmitEmail() {
 
             const user = response.data.user
             setUser(user)
-
             if (user.staycations.length > 0) {
                 navigate(`/host/${user.id}`)
             } else {
