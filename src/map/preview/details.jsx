@@ -5,7 +5,7 @@ import Features from "./features";
 
 export default function Details({ staycation }) {
 
-    const houseType = staycation.type === "house" ? "Toàn bộ căn nhà" : "3 phòng riêng"
+    const houseType = staycation.type === "house" ? "Toàn bộ căn nhà" : `${staycation.rooms?.length} phòng riêng`
 
     return (
 
@@ -21,7 +21,7 @@ export default function Details({ staycation }) {
                 <h2 style={{fontSize: "1.1075rem", marginTop: "0"}}>Chi phí</h2>
                 <div style={{fontSize: "0.975rem", padding:"12px 0", flex: "1", alignItems: "end", display: "flex", flexDirection: "column", gap: "4px"}}>
                     <span >{Number(staycation.prices.min).toLocaleString("vi-VN")}đ</span>
-                    <span  style={{transform: "translateX(-5%)"}} > <ArrowDown strokeWidth={1.5} size={28} /> </span>
+                    <span  style={{transform: "translateX(-200%)"}} > <ArrowDown strokeWidth={1.5} size={15} /> </span>
                     <span >{Number(staycation.prices.max).toLocaleString("vi-VN")}đ</span>
                 </div>
             </div>

@@ -34,8 +34,8 @@ import EditorHouseType from "./host/editor/house_type";
 import EditorPrices from "./host/editor/prices";
 import EditorFeatures from "./host/editor/features";
 import EditorLocation from "./host/editor/location";
+import EditorImages from "./host/editor/images/main";
 import EditorRooms from "./host/editor/rooms";
-import EditorCoverImages from "./host/editor/images/cover";
 import EditorRoomImages from "./host/editor/images/room";
 
 const router = createBrowserRouter([
@@ -94,9 +94,10 @@ const router = createBrowserRouter([
           { path: "prices", element: <EditorPrices /> },
           { path: "features", element: <EditorFeatures /> },
           { path: "location", element: <EditorLocation /> },
-          { path: "rooms", element: <EditorRooms /> },
-          { path: "rooms/cover-images", element: <EditorCoverImages /> },
-          { path: "rooms/:roomId", element: <EditorRoomImages /> }
+          // { path: "rooms", element: <EditorRooms /> },
+          // { path: "rooms/cover-images", element: <EditorCoverImages /> },
+          // { path: "rooms/:roomId", element: <EditorRoomImages /> },
+          { path: "images", element: <EditorImages /> },
         ]
       }
     ]

@@ -8,7 +8,7 @@ import Photo from "./photo";
 import styles from "../../host.module.css"
 import heic2any from "heic2any";
 
-export default function EditorCoverImages() {
+export default function EditorImages() {
 
     const isMobile = useMediaQuery({ query: '(max-width: 768px)'})
     const { draft, setDraft } = useEditorDraft();
@@ -122,11 +122,11 @@ export default function EditorCoverImages() {
             transition={{ duration: 1, ease: "easeOut" }}
         >   
 
-            <h1 style={{ margin: "0px", fontSize: "1.68em",}}>Ảnh đại diện</h1>
+            <h1 style={{ margin: "0px", fontSize: "1.68em",}}>Thay đổi ảnh</h1>
 
             <div className={styles.mobile_images_area}>
                     
-                {[...Array(Math.min(draft.images.length + 1, 5))].map((_, i) => (
+                {[...Array(draft.images.length + 1)].map((_, i) => (
                   <React.Fragment key={i}>{renderPhoto(i)}</React.Fragment>
                 ))}
 
@@ -144,31 +144,68 @@ export default function EditorCoverImages() {
           transition={{ duration: 1, ease: "easeOut" }}
       >
 
-        <h1 style={{ margin: "0px", fontSize: "1.68em"}}>Ảnh đại diện</h1>
+        <h1 style={{ margin: "0px", fontSize: "1.68em"}}>Thay đổi ảnh</h1>
     
         <div className={styles.images_area}>
           {renderPhoto(0)} {/* cover */}
     
-        {draft.images.length >= 0 && (
+            {draft.images.length >= 0 && (
               <div className={styles.group} >
                 {renderPhoto(1)}
                 {renderPhoto(2)}
               </div>
-          )}
+            )}
 
-          {draft.images.length >= 3 && (
+            {draft.images.length >= 3 && (
               <div className={styles.group} >
                 {renderPhoto(3)}
                 {renderPhoto(4)}
               </div>
-          )}
+            )}
 
-          {/* {staycation.images.length >= 5 && (
-            <div className={styles.group} >
-              {renderPhoto(5)}
-              {renderPhoto(6)}
-            </div>
-          )} */}
+            {draft.images.length >= 5 && (
+                <div className={styles.group} >
+                {renderPhoto(5)}
+                {renderPhoto(6)}
+                </div>
+            )}
+
+            {draft.images.length >= 7 && (
+                <div className={styles.group} >
+                {renderPhoto(7)}
+                {renderPhoto(8)}
+                </div>
+            )}
+
+            {draft.images.length >= 9 && (
+                <div className={styles.group} >
+                {renderPhoto(9)}
+                {renderPhoto(10)}
+                </div>
+            )}
+
+            {draft.images.length >= 11 && (
+                <div className={styles.group} >
+                {renderPhoto(11)}
+                {renderPhoto(12)}
+                </div>
+            )}
+
+            {draft.images.length >= 13 && (
+                <div className={styles.group} >
+                {renderPhoto(13)}
+                {renderPhoto(14)}
+                </div>
+            )}
+
+            {draft.images.length >= 15 && (
+                <div className={styles.group} >
+                {renderPhoto(15)}
+                {renderPhoto(16)}
+                </div>
+            )}
+
+          {/* main reason it stop at 5 because if user upload more than 5 picture one time it will crash */}
 
         </div>
 

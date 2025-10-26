@@ -21,7 +21,6 @@ export default function Staycations() {
             
                     {staycations.map((staycation) => (
                         
-                        
                         <div key={staycation.id}  
                             style={{ cursor: "pointer", maxWidth: "294px", maxHeight: "400px",
                             border: "1px solid #ddd", 

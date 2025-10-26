@@ -12,10 +12,10 @@ export default function CompleteButton() {
   const navigate = useNavigate();
   const { draft, hasChanged } = useEditorDraft();
   const { host, refreshHost } = useHost();
-  const { staycationId, roomId } = useParams();
+  const { staycationId } = useParams();
 
-  const roomIdNum = parseInt(roomId, 10);
-  const room = draft?.rooms.find(r => r.id === roomIdNum);
+  // const roomIdNum = parseInt(roomId, 10);
+  // const room = draft?.rooms.find(r => r.id === roomIdNum);
 
   const [loading, setLoading] = useState(false);
 
@@ -67,57 +67,56 @@ export default function CompleteButton() {
       // keep context in sync
       refreshHost()
 
-      navigate(`/host/${host.id}/editor/${staycationId}/rooms`);
+      navigate(`/host/${host.id}/editor/${staycationId}`);
 
     } catch (err) {
       console.error("Image save failed", err);
     }
   };
 
-  const handleSaveRoomImages = async () => {
-    try {
-      const formData = new FormData();
+  // const handleSaveRoomImages = async () => {
+  //   try {
+  //     const formData = new FormData();
 
-      // room name
-      formData.append("name", room.name);
+  //     // room name
+  //     formData.append("name", room.name);
 
-      // keep only already-uploaded URLs (strings)
-      const existing = room.images.filter((img) => typeof img === "string");
-      formData.append("existingImages", JSON.stringify(existing));
+  //     // keep only already-uploaded URLs (strings)
+  //     const existing = room.images.filter((img) => typeof img === "string");
+  //     formData.append("existingImages", JSON.stringify(existing));
 
-      // append new files
-      room.images.forEach((img) => {
-        if (img.file) formData.append("images", img.file);
-      });
+  //     // append new files
+  //     room.images.forEach((img) => {
+  //       if (img.file) formData.append("images", img.file);
+  //     });
 
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/listing/staycation/${staycationId}/editor/rooms/${room.id}`,
-        formData, // ✅ use formData here!
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
+  //     const response = await axios.post(
+  //       `${import.meta.env.VITE_BACKEND_URL}/listing/staycation/${staycationId}/editor/rooms/${room.id}`,
+  //       formData, // ✅ use formData here!
+  //       { headers: { "Content-Type": "multipart/form-data" } }
+  //     );
 
-      console.log("Room images updated:", response.data);
+  //     console.log("Room images updated:", response.data);
 
-      refreshHost()
+  //     refreshHost()
 
-      navigate(`/host/${host.id}/editor/${staycationId}/rooms`);
-    } catch (err) {
-      console.error("Upload failed", err);
-    }
-  };
+  //     navigate(`/host/${host.id}/editor/${staycationId}/rooms`);
+  //   } catch (err) {
+  //     console.error("Upload failed", err);
+  //   }
+  // };
 
   const handleClick = () => {
-    if (path.includes("rooms")) {
-      const lastSegment = path[path.length - 1];
 
-      if (lastSegment === "cover-images") {
-        handleSaveImages();  
-      } else {
-        handleSaveRoomImages(); 
-      }
+    const lastSegment = path[path.length - 1];
+
+    console.log(lastSegment)
+    if (lastSegment === "images") {
+      handleSaveImages();  
     } else {
       handleSaveDetails();
     }
+
   };
 
   return (

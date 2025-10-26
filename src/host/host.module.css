@@ -86,7 +86,7 @@
 .images_area {
     display: flex;
     flex-direction: column;
-    max-width: 450px;
+    max-width: 600px;
     gap: 10px;
 }
 
@@ -94,15 +94,14 @@
     height: 100%;
     width: 100%;
     border-radius: 8px;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .group {
     display: flex;
-    flex-direction: column;
     gap: 12px;
+    width: 100%;
 }
-
 
 .ellipsis {
     position: absolute;

@@ -52,7 +52,7 @@ export default function Staycation() {
 
             </div>
 
-            <div onClick={() => navigate(`rooms`)}
+            <div onClick={() => navigate(`images`)}
                 style={{boxShadow: "0 3px 10px rgba(0,0,0,0.6)",  padding: "8px", borderRadius: "8px", cursor: "pointer"}}>
         
                 <span style={{fontSize: "1rem", fontWeight: "500", paddingBottom: "4px"}}>Hình ảnh</span> 

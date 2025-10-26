@@ -2,7 +2,7 @@
 import { 
     Wifi, Monitor, Video, Sofa, Snowflake, Microwave, Refrigerator, 
     Gamepad2, WashingMachine, Heater, LampDesk, Waves, Car, Vault, 
-    Cctv, FireExtinguisher, Icon 
+    Cctv, FireExtinguisher, Icon , House, HousePlus
 } from "lucide-react";
 
 import { bathBubble, chairsTableParasol, socketUsa } from "@lucide/lab";
@@ -25,11 +25,13 @@ export const premiumOptions = [
     { name: 'Hồ bơi', icon: <Waves size={32} className={styles.house_type_icon} /> },
     { name: 'Bàn bida', icon: <IconSportBillard size={32} className={styles.house_type_icon} /> },
     { name: 'Bồn tắm', icon: <Icon iconNode={bathBubble} size={32} className={styles.house_type_icon} /> },
+    { name: 'Phòng xông hơi', icon: <HousePlus  size={32} className={styles.house_type_icon} /> },
     { name: 'Máy giặt', icon: <WashingMachine size={32} className={styles.house_type_icon} /> },
     { name: 'Bàn làm việc', icon: <LampDesk size={32} className={styles.house_type_icon} /> },
     { name: 'Chổ đậu xe hơi', icon: <Car size={32} className={styles.house_type_icon} /> },
     { name: 'Lò sưởi trong nhà', icon: <Heater size={32} className={styles.house_type_icon} /> },
     { name: 'Bàn ăn ngoài trời', icon: <Icon iconNode={chairsTableParasol} size={32} className={styles.house_type_icon} /> },
+
 ];
 
 export const safetyOptions = [
