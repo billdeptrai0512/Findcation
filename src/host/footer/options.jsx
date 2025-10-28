@@ -2,14 +2,14 @@
 import { motion } from "framer-motion";
 import styles from "./footer.module.css"
 
-export default function SuggestButton({ goNext }) {
-
+export default function OptionsButton({setOpenOptions}) {
+  
   return (
-    <motion.button onClick={goNext} 
+    <motion.button onClick={() => setOpenOptions(true)} 
         className={styles.next_button} 
         whileHover={{scale: 1.05}}        
         whileTap={{scale: 0.95}}>
-            Góp ý
+            Tùy chọn
     </motion.button>
   );
 }

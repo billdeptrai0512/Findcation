@@ -5,11 +5,11 @@ import { useMediaQuery } from "react-responsive"
 import { useHost } from "../hostContext";
 import { useRef } from "react";
 import BackButton from "./back";
-import SuggestButton from "./suggest";
+import OptionsButton from "./options";
 import CompleteButton from "./complete";
 import styles from "./footer.module.css"
 
-export default function Buttons() {
+export default function Buttons({setOpenOptions}) {
 
     const navigate = useNavigate()
     const location = useLocation();
@@ -42,7 +42,7 @@ export default function Buttons() {
 
                 {isMobile && <BackButton goBack={goBacktoMain} />}
 
-                <SuggestButton  /> 
+                <OptionsButton  setOpenOptions={setOpenOptions}/> 
             </div>
         )
     }
@@ -54,7 +54,7 @@ export default function Buttons() {
 
                 {isMobile && <BackButton goBack={goBackToHost} />}
 
-                <SuggestButton /> 
+                <OptionsButton setOpenOptions={setOpenOptions}/> 
 
             </div>
         )
@@ -69,7 +69,7 @@ export default function Buttons() {
 
                     {isMobile && <BackButton goBack={goBackToHost} />}
 
-                    <SuggestButton /> 
+                    <OptionsButton setOpenOptions={setOpenOptions}/> 
 
                 </div>
             )

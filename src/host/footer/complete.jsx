@@ -52,8 +52,10 @@ export default function CompleteButton() {
       formData.append("existingImages", JSON.stringify(existing));
 
       // append new files
+      if (draft.images.length > 10) return alert('Tối đa 10 hình')
       draft.images.forEach((img) => {
-        if (img.file) formData.append("images", img.file);
+        if (img.file && img.file.size < 5 * 1024 *1024) 
+          formData.append("images", img.file);
       });
 
       const response = await axios.post(

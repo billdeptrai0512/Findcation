@@ -240,9 +240,12 @@ const ListingProvider = ({ children }) => {
           formData.append("email", user.email);
       
           // Append files separately
+          if (images.length > 10) return alert("Tối đa 10 hình");
           images.forEach(img => {
-            if (img.file) formData.append("images", img.file);
-          });
+            if (img.file) 
+                console.log(img.file.size)
+                formData.append("images", img.file);
+            });
       
           const res = await axios.post(
             `${import.meta.env.VITE_BACKEND_URL}/listing/create-new`,

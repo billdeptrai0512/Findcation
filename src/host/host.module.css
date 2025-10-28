@@ -301,6 +301,24 @@
     flex: 0 1 calc(50% - 50px);
 }
 
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 6px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #D70466; /* any color you like */
+  border-radius: 50%;
+  animation: spin 0.5s linear infinite;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 
 @media screen and (min-width: 768px) {
     

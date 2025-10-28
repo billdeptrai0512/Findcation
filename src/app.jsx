@@ -12,6 +12,7 @@ import ErrorPage from "./error-page";
 import SubmitEmail from "./auth/submitEmail";
 import Forgot from "./auth/forgot";
 import ResetPassword from "./auth/resetPassword";
+import ChangePassword from "./host/options/changePasswords";
 import Auth from "./auth/main";
 import MainLayout from "./layout";
 import Title from "./listing/title";
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
           { path: "register", element: <Register /> },
           { path: "forgot-password", element: <Forgot /> },
           { path: "reset-password", element: <ResetPassword /> },
+
         ]
       },
     ], 
@@ -99,7 +101,9 @@ const router = createBrowserRouter([
           // { path: "rooms/:roomId", element: <EditorRoomImages /> },
           { path: "images", element: <EditorImages /> },
         ]
-      }
+      },
+      { path: "change-password", element: <ChangePassword /> },
+
     ]
   },
   

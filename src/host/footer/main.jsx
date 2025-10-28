@@ -2,7 +2,7 @@ import styles from "./footer.module.css"
 import ProgressBar from "./progressBar";
 import Buttons from "./buttons";
 
-export default function Footer({host}) {
+export default function Footer({setOpenOptions}) {
 
   return (
 
@@ -10,7 +10,7 @@ export default function Footer({host}) {
 
       <ProgressBar  />
 
-      <Buttons host={host}/>
+      <Buttons setOpenOptions={setOpenOptions}/>
 
     </div>
   );

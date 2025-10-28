@@ -13,13 +13,15 @@ export default function Instagram({host, handleOpen}) {
         <div className={styles.contact}  onClick={() => handleOpen("instagram", host.contacts.instagram)}>
             <img src={InstagramIcon} alt="" style={{width:"33px"}} />
             <span style={{flex: "1", textAlign: "center"}}>{host.contacts.instagram}</span>
-            <ExternalLink size={20} 
-                style={{zIndex: 2, cursor: "pointer"}}
-                onClick={(e) => {
-                    e.stopPropagation();
-                    window.open(`${instagramUrl}${host.contacts.instagram}`, "_blank")
-                }}
-            />
+            {host.contacts.instagram && 
+                <ExternalLink size={20} 
+                    style={{zIndex: 2, cursor: "pointer"}}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        window.open(`${instagramUrl}${host.contacts.instagram}`, "_blank")
+                    }}
+                />
+            }
         </div>
     )
 }

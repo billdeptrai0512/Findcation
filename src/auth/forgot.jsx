@@ -121,7 +121,7 @@ export default function Forgot() {
                                     id="code"
                                     name="code"
                                     type="number"
-                                    placeholder="6-DIGITS-CODE"
+                                    placeholder="6-digits-code"
                                     value={code}
                                     onChange={(e) => setCode(e.target.value)}
                                     className={styles.input}
