@@ -1,10 +1,14 @@
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
+
+
 import FacebookIcon from "../../assets/facebook.png";
 import InstagramIcon from "../../assets/instagram.png";
 import Zalo from "../../assets/zalo.png";
 
-export default function Contacts({staycation}) {
+export default function Contacts({staycation, takeScreenshot}) {
 
     const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
@@ -26,29 +30,68 @@ export default function Contacts({staycation}) {
 
             <div style={{display: "flex",  padding: '8px 0', borderRadius: "8px", gap: "1em"}}>
 
-                <span style={{transform:"translateX(20%)"}}>
-                    {contacts.facebook !== null  && 
-                        <Link to={`${facebookUrl}${contacts.facebook}`} target="_blank" rel="noopener noreferrer">
-                            <img src={FacebookIcon} alt="" style={{width:"37px"}} />
-                        </Link>
-                    }
-                </span>
+                <motion.span 
+                    initial={{ scale: 1, y: -3 }}
+                    whileHover={{ scale: 1.1, y: -3 }}
+                    whileTap={{ scale: 0.9, y: -3 }}
+                    transition={{ type: "spring", stiffness: 300 }}>
+                        {contacts.facebook !== null  && 
+                            <Link to={`${facebookUrl}${contacts.facebook}`}
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                onClick={async (e) => {
+                                    e.preventDefault();
+                                    await takeScreenshot();
+                                    setTimeout(() => {
+                                        window.open(`${facebookUrl}${contacts.facebook}`, "_blank");
+                                    }, 800);
+                                }}>
+                                <img src={FacebookIcon} alt="" style={{width:"37px"}} />
+                            </Link>
+                        }
+                </motion.span>
 
-                <span style={{transform:"translateX(15%)"}}>
-                    {contacts.instagram  !== null && 
-                        <Link to={`${instagramUrl}${contacts.instagram}`} target="_blank" rel="noopener noreferrer">
-                            <img src={InstagramIcon} alt="" style={{width:"37px"}} />
-                        </Link>
-                    }
-                </span>
+                <motion.span 
+                    initial={{ scale: 1, y: -3 }}
+                    whileHover={{ scale: 1.1, y: -3 }}
+                    whileTap={{ scale: 0.9, y: -3 }}
+                    transition={{ type: "spring", stiffness: 300 }}>
+                        {contacts.instagram  !== null && 
+                            <Link to={`${instagramUrl}${contacts.instagram}`} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                onClick={async (e) => {
+                                    e.preventDefault();
+                                    await takeScreenshot();
+                                    setTimeout(() => {
+                                        window.open(`${instagramUrl}${contacts.instagram}`, "_blank");
+                                    }, 800);
+                                }}>
+                                <img src={InstagramIcon} alt="" style={{width:"37px"}} />
+                            </Link>
+                        }
+                </motion.span>
 
-                <span style={{transform:"translateY(-7%)"}}>
-                    {contacts.zalo !== null && 
-                        <Link to={`https://zalo.me/${contacts.zalo}`} target="_blank" rel="noopener noreferrer">
-                            <img src={Zalo} alt="" style={{width:"46px"}} />
-                        </Link>
-                    }
-                </span>
+                <motion.span 
+                    initial={{ scale: 1, y: -7 }}
+                    whileHover={{ scale: 1.1, y: -7 }}
+                    whileTap={{ scale: 0.9, y: -7 }}
+                    transition={{ type: "spring", stiffness: 300 }}>
+                        {contacts.zalo !== null && 
+                            <Link to={`https://zalo.me/${contacts.zalo}`} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                onClick={async (e) => {
+                                    e.preventDefault();
+                                    await takeScreenshot();
+                                    setTimeout(() => {
+                                        window.open(`https://zalo.me/${contacts.zalo}`, "_blank");
+                                    }, 800);
+                                }}>
+                                    <img src={Zalo} alt="" style={{width:"46px"}} />
+                            </Link>
+                        }
+                </motion.span>
 
                 
             </div>

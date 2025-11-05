@@ -3,7 +3,7 @@ import styles from "../map.module.css";
 import Contacts from "./contacts";
 import Features from "./features";
 
-export default function Details({ staycation }) {
+export default function Details({ staycation, takeScreenshot }) {
 
     const houseType = staycation.type === "house" ? "Toàn bộ căn nhà" : `${staycation.rooms?.length} phòng riêng`
 
@@ -11,8 +11,12 @@ export default function Details({ staycation }) {
 
         <div className={styles.preview_details} style={{ justifyContent: "space-between"}}>
             
-            {/* type of hose */}
-            <div style={{display: "flex", justifyContent: "space-between", borderBottom: '1px solid rgba(0,0,0,0.04)', padding: '24px 0'}}> 
+            <div style={{display: "flex", justifyContent: "space-between", borderBottom: '1px solid rgba(0,0,0,0.04)', padding: '18px 0'}}> 
+                <h2 style={{fontSize: "1.1075rem", overflow: "hidden", marginTop: "0"}}>Tiêu đề</h2>
+                <span>{staycation.name}</span>
+            </div>
+
+            <div style={{display: "flex", justifyContent: "space-between", borderBottom: '1px solid rgba(0,0,0,0.04)', padding: '18px 0'}}> 
                 <h2 style={{fontSize: "1.1075rem", overflow: "hidden", marginTop: "0"}}>Cho thuê</h2>
                 <span>{houseType}</span>
             </div>
@@ -37,7 +41,7 @@ export default function Details({ staycation }) {
                 </div>
             </div>
 
-            <Contacts staycation={staycation} />
+            <Contacts staycation={staycation} takeScreenshot={takeScreenshot}/>
         
         </div>
         
