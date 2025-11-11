@@ -11,8 +11,8 @@ export default function Footer() {
     return (
       <div className={styles.footer}>
         <div className={styles.cta_div}>
-            <NearByButton />
             <MyStaycationButton />
+            <NearByButton />
         </div>
       </div>
     )
@@ -22,12 +22,12 @@ export default function Footer() {
       <>
         <div className={styles.left_footer}>
           <div className={styles.cta_div}>
-              <NearByButton />
+              <MyStaycationButton />
           </div>
         </div>
         <div className={styles.right_footer}>
           <div className={styles.cta_div}>
-              <MyStaycationButton />
+              <NearByButton />
           </div>
         </div>
       </>

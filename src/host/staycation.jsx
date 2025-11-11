@@ -93,14 +93,14 @@ export default function Staycation() {
                 style={{boxShadow: "0 3px 10px rgba(0,0,0,0.6)",  padding: "8px", borderRadius: "8px", cursor: "pointer"}}>
                 <span style={{fontSize: "1rem", fontWeight: "500"}}>Tiện nghi</span>
                 <div style={{display: "flex", gap: "16px", color: "#6A6A6A", fontWeight: "500"}}>
-                    {staycation.features.join(", ")}
+                    {staycation.features.length} 
                 </div>
 
             </div>
 
-            <div style={{display: "flex", justifyContent: "end"}}>
+            {/* <div style={{display: "flex", justifyContent: "end"}}>
                 <DeleteButton />
-            </div>
+            </div> */}
 
         </div>
 

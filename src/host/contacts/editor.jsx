@@ -25,8 +25,6 @@ export default function ContactEditor({data, setOpenContactEditor}) {
                 url,
             });
 
-            alert('Đã cập nhật 🤝')
-
             refreshHost()
 
             setOpenContactEditor(false)
@@ -69,7 +67,7 @@ export default function ContactEditor({data, setOpenContactEditor}) {
                             {error && <p className={styles.error}>{error}</p>}
                             
                             <div className={styles.actionLoginRow}>
-                                <button type="submit" className={styles.button}>Gửi</button>
+                                <button type="submit" className={styles.button}>Lưu</button>
                             </div>
 
                         </form>

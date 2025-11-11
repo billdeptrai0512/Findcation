@@ -7,6 +7,7 @@ import { useRef } from "react";
 import BackButton from "./back";
 import OptionsButton from "./options";
 import CompleteButton from "./complete";
+import DeleteButton from "../delete";
 import styles from "./footer.module.css"
 
 export default function Buttons({setOpenOptions}) {
@@ -54,7 +55,7 @@ export default function Buttons({setOpenOptions}) {
 
                 {isMobile && <BackButton goBack={goBackToHost} />}
 
-                <OptionsButton setOpenOptions={setOpenOptions}/> 
+                <DeleteButton /> 
 
             </div>
         )

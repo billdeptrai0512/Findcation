@@ -11,7 +11,7 @@ export default function Listing() {
 
     const navigate = useNavigate();
 
-    const steps = ["title", "type-of-house", "images", "features", "price", "location" ];
+    const steps = ["title", "type-of-house", "features",  "price", "location", "images"];
 
     const totalSteps = steps.length - 1;
 

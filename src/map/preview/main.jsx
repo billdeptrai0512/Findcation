@@ -29,8 +29,6 @@ export default function PreviewStaycation() {
         fetchStaycation();
     }, [id])
 
-
-
     const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
     const exitOverLay = () => {
