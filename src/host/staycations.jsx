@@ -39,11 +39,12 @@ export default function Staycations() {
                             </div>
                             
                             <div style={{ display: "flex", flexDirection: "column",  gap: "4px", padding: "0 8px 8px 8px", }} >
-                                <h2 style={{ marginTop: "0", fontSize: "1.1rem" }}>
-                                    {staycation.name}
+                                <h2 style={{ marginTop: "0", fontSize: "1rem",}}>
+                                    {staycation.location.details.street}
                                 </h2>
                                 <div style={{ color: "#555" }}>
-                                    {staycation.location?.address || "Địa chỉ không có"}
+                                    {console.log(staycation.location.details.ward)}
+                                    {`${staycation.location.details.ward} - ${staycation.location.details.city}`}
                                 </div>
                             </div>
                             

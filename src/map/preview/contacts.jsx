@@ -1,14 +1,14 @@
 // eslint-disable-next-line no-unused-vars
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-
+import axios from "axios";
 
 import FacebookIcon from "../../assets/facebook.png";
 import InstagramIcon from "../../assets/instagram.png";
 import Zalo from "../../assets/zalo.png";
 
-export default function Contacts({staycation, takeScreenshot}) {
+export default function Contacts({staycation, downloadImage, canvas}) {
 
     const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
@@ -19,6 +19,18 @@ export default function Contacts({staycation, takeScreenshot}) {
     //                         console.log(noContactVerified)
 
     // if (noContactVerified) return null
+
+    const handleClick = (platform, url) => async (e) => {
+        e.preventDefault(); // prevent default navigation
+        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/traffic/${staycation.id}`, {
+            contactType: platform
+        });
+        await downloadImage(canvas); // download the canvas first
+        setTimeout(() => {
+            window.open(url, "_blank");
+        }, 888);
+    };
+
     const { contacts } = staycation.host;
     const facebookUrl = isMobile ? `fb://page/` : `https://www.facebook.com/`
     const instagramUrl = isMobile ? `instagram://user?username=` : `https://www.instagram.com/`
@@ -36,16 +48,11 @@ export default function Contacts({staycation, takeScreenshot}) {
                     whileTap={{ scale: 0.9, y: -3 }}
                     transition={{ type: "spring", stiffness: 300 }}>
                         {contacts.facebook !== null  && 
-                            <Link to={`${facebookUrl}${contacts.facebook}`}
+                            <Link to={`${facebookUrl}${contacts.facebook}`} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                onClick={async (e) => {
-                                    e.preventDefault();
-                                    await takeScreenshot();
-                                    setTimeout(() => {
-                                        window.open(`${facebookUrl}${contacts.facebook}`, "_blank");
-                                    }, 800);
-                                }}>
+                                onClick={handleClick("FACEBOOK", `${facebookUrl}${contacts.facebook}`)}
+                                >
                                 <img src={FacebookIcon} alt="" style={{width:"37px"}} />
                             </Link>
                         }
@@ -58,15 +65,10 @@ export default function Contacts({staycation, takeScreenshot}) {
                     transition={{ type: "spring", stiffness: 300 }}>
                         {contacts.instagram  !== null && 
                             <Link to={`${instagramUrl}${contacts.instagram}`} 
-                                target="_blank" 
+                                target="_blank"  
                                 rel="noopener noreferrer"
-                                onClick={async (e) => {
-                                    e.preventDefault();
-                                    await takeScreenshot();
-                                    setTimeout(() => {
-                                        window.open(`${instagramUrl}${contacts.instagram}`, "_blank");
-                                    }, 800);
-                                }}>
+                                onClick={handleClick("INSTAGRAM", `${instagramUrl}${contacts.instagram}`)}
+                                >
                                 <img src={InstagramIcon} alt="" style={{width:"37px"}} />
                             </Link>
                         }
@@ -79,15 +81,10 @@ export default function Contacts({staycation, takeScreenshot}) {
                     transition={{ type: "spring", stiffness: 300 }}>
                         {contacts.zalo !== null && 
                             <Link to={`https://zalo.me/${contacts.zalo}`} 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                onClick={async (e) => {
-                                    e.preventDefault();
-                                    await takeScreenshot();
-                                    setTimeout(() => {
-                                        window.open(`https://zalo.me/${contacts.zalo}`, "_blank");
-                                    }, 800);
-                                }}>
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    onClick={handleClick("ZALO", `https://zalo.me/${contacts.zalo}`)}
+                                >
                                     <img src={Zalo} alt="" style={{width:"46px"}} />
                             </Link>
                         }

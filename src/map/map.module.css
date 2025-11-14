@@ -278,6 +278,18 @@ p {
   font-family: 'Inter', sans-serif;
 }
 
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 6px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #D70466; /* any color you like */
+  border-radius: 50%;
+  animation: spin 0.5s linear infinite;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+}
+
 
 @media screen and (min-width: 714px) {
 
@@ -348,8 +360,7 @@ p {
   }
 
   .preview_card {
-      max-width: max-content;
-      border-radius: 16px;
+    max-width: max-content;
   }
 
   .preview_image {

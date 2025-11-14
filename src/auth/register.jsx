@@ -39,7 +39,13 @@ export default function RegisterForm() {
         try {
             await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/register`, formData);
 
-            await login(formData.email, formData.password)
+            const user = await login(formData.email, formData.password)
+
+            if (user.staycations.length > 0) {
+                navigate(`/host/${user.id}`)
+            } else {
+                navigate('/list-staycation');
+            }
 
             navigate('/list-staycation')
 

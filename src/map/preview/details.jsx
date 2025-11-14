@@ -3,7 +3,7 @@ import styles from "../map.module.css";
 import Contacts from "./contacts";
 import Features from "./features";
 
-export default function Details({ staycation, takeScreenshot }) {
+export default function Details({ staycation, downloadImage, canvas, loading }) {
 
     const houseType = staycation.type === "house" ? "Toàn bộ căn nhà" : `${staycation.rooms?.length} phòng riêng`
 
@@ -41,7 +41,7 @@ export default function Details({ staycation, takeScreenshot }) {
                 </div>
             </div>
 
-            <Contacts staycation={staycation} takeScreenshot={takeScreenshot}/>
+            <Contacts staycation={staycation} downloadImage={downloadImage} canvas={canvas} loading={loading}/>
         
         </div>
         

@@ -52,18 +52,20 @@ export default function Staycation() {
 
             </div>
 
-            <div onClick={() => navigate(`images`)}
+            
+            <div onClick={() => navigate(`location`)}
+            
                 style={{boxShadow: "0 3px 10px rgba(0,0,0,0.6)",  padding: "8px", borderRadius: "8px", cursor: "pointer"}}>
-        
-                <span style={{fontSize: "1rem", fontWeight: "500", paddingBottom: "4px"}}>Hình ảnh</span> 
-                <div  style={{cursor: "pointer", width: "100%",  borderRadius: "8px", overflow: "hidden"}}>
-                    {staycation.images && <div style={{color: "#6A6A6A", fontWeight: "500"}} >Đang có {totalImage()} hình</div>}
-                </div>     
-                
+                <span style={{fontSize: "1rem", fontWeight: "500"}}>Vị trí</span>
+                <div style={{display: "flex", gap: "16px", color: "#6A6A6A", fontWeight: "500"}}>
+                    {`${staycation.location.details.street}, ${staycation.location.details.ward}, ${staycation.location.details.city}`}
+                    {/* 99 Dạ Nam, Chánh Hưng, Hồ Chí Minh */}
+                </div>
+
             </div>
 
-            <div onClick={() => navigate(`prices`)} 
-                style={{boxShadow: "0 3px 10px rgba(0,0,0,0.6)",  padding: "8px", borderRadius: "8px", cursor: "pointer"}}>
+                <div onClick={() => navigate(`prices`)} 
+                    style={{boxShadow: "0 3px 10px rgba(0,0,0,0.6)",  padding: "8px", borderRadius: "8px", cursor: "pointer"}}>
 
                 <span style={{fontSize: "1rem", fontWeight: "500"}}>Bảng giá</span>
 
@@ -77,15 +79,14 @@ export default function Staycation() {
 
             </div>
 
-            <div onClick={() => navigate(`location`)}
-            
+            <div onClick={() => navigate(`images`)}
                 style={{boxShadow: "0 3px 10px rgba(0,0,0,0.6)",  padding: "8px", borderRadius: "8px", cursor: "pointer"}}>
-                <span style={{fontSize: "1rem", fontWeight: "500"}}>Vị trí</span>
-                <div style={{display: "flex", gap: "16px", color: "#6A6A6A", fontWeight: "500"}}>
-                    {`${staycation.location.details.street}, ${staycation.location.details.ward}, ${staycation.location.details.city}`}
-                    {/* 99 Dạ Nam, Chánh Hưng, Hồ Chí Minh */}
-                </div>
-
+        
+                <span style={{fontSize: "1rem", fontWeight: "500", paddingBottom: "4px"}}>Hình ảnh</span> 
+                <div  style={{cursor: "pointer", width: "100%",  borderRadius: "8px", overflow: "hidden"}}>
+                    {staycation.images && <div style={{color: "#6A6A6A", fontWeight: "500"}} >Đang có {totalImage()}</div>}
+                </div>     
+                
             </div>
 
             <div onClick={() => navigate(`features`)}
@@ -93,14 +94,13 @@ export default function Staycation() {
                 style={{boxShadow: "0 3px 10px rgba(0,0,0,0.6)",  padding: "8px", borderRadius: "8px", cursor: "pointer"}}>
                 <span style={{fontSize: "1rem", fontWeight: "500"}}>Tiện nghi</span>
                 <div style={{display: "flex", gap: "16px", color: "#6A6A6A", fontWeight: "500"}}>
-                    {staycation.features.length} 
+                    Đang có {staycation.features.length} 
                 </div>
 
             </div>
 
-            {/* <div style={{display: "flex", justifyContent: "end"}}>
-                <DeleteButton />
-            </div> */}
+
+
 
         </div>
 

@@ -6,7 +6,7 @@ export default function Header() {
         <div className={styles.header} >
             <div className={styles.title} >
                 <h1>Findcation</h1>
-                <span>Bản đồ kết nối staycation checkin tự động khắp Việt Nam</span>   
+                <span>Bản đồ kết nối staycation self-checkin khắp Việt Nam</span>   
             </div>
         </div>
     )
