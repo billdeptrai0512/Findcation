@@ -1,7 +1,8 @@
 
 import { useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
-import { ChevronLeft  } from "lucide-react";
+import { ChevronLeft, X  } from "lucide-react";
+import Logo from "../../assets/logo.png";
 import styles from "../map.module.css";
 import Images from "./images";
 import Details from "./details";
@@ -36,8 +37,7 @@ export default function Preview({ staycation }) {
         const ref = staycationRef.current;
 
         ref.style.overflow = "visible";
-        ref.style.height = "auto";
-
+        
         const activeImages = [...ref.querySelectorAll("img[class*='active']")];
 
         await Promise.all(
@@ -49,12 +49,15 @@ export default function Preview({ staycation }) {
             })
         );
 
+        await new Promise(r => setTimeout(r, 50));
+
         const canvas = await html2canvas(ref, {
             useCORS: true,
             backgroundColor: "#fff",
             scale: devicePixelRatio,
         });
 
+        ref.style.overflow = "";
 
         return canvas;
     };
@@ -62,7 +65,8 @@ export default function Preview({ staycation }) {
     const downloadImage = (canvas) => {
         const a = document.createElement("a");
         a.href = canvas.toDataURL("image/png");
-        a.download = `${staycation.name}.png`;
+        const fileName = uuidv4(); 
+        a.download = `${fileName}.png`;
         a.click();
     };
 
@@ -74,10 +78,15 @@ export default function Preview({ staycation }) {
 
                 <div className={styles.preview_header}>
 
-                    <h1>Findcation</h1> 
+                    <span style={{display: "flex", alignItems: "center", gap: "8px"}}>
+                        <img src={Logo} alt="logo" style={{width: "54px"}} />
+                        <h1>Findcation</h1> 
+                    </span>
+
+                    {/* <h1>Findcation</h1>  */}
 
                     <button onClick={() => navigate("/")}>
-                        <ChevronLeft size={20}/>
+                        <X size={20}/>
                     </button>
 
                 </div>
@@ -96,6 +105,14 @@ export default function Preview({ staycation }) {
     );
 
 
+}
+
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = (crypto.getRandomValues(new Uint8Array(1))[0] & 15);
+    const v = c === 'x' ? r : (r & 0x3) | 8;
+    return v.toString(16);
+  });
 }
 
 

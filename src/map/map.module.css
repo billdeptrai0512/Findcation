@@ -201,18 +201,18 @@ p {
 .preview_header {
   position: relative;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  padding: 8px 24px;
+  padding: 8px;
   border-bottom: 1px solid #DDDDDD;
 }
 
-.preview_header > h1 {
+.preview_header > span > h1 {
   font-size: 1.075em;
 }
 
 .preview_header > button {
-  position: absolute;
+  /* position: absolute; */
   display: flex;
   border: none;
   background: white;
