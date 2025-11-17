@@ -79,7 +79,7 @@ export default function Preview({ staycation }) {
                 <div className={styles.preview_header}>
 
                     <span style={{display: "flex", alignItems: "center", gap: "8px"}}>
-                        <img src={Logo} alt="logo" style={{width: "54px"}} />
+                        <img src={Logo} alt="logo" style={{width: "64px"}} />
                         <h1>Findcation</h1> 
                     </span>
 

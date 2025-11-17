@@ -201,14 +201,15 @@ p {
 .preview_header {
   position: relative;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   padding: 8px;
-  border-bottom: 1px solid #DDDDDD;
+  margin: 0 auto;
+  max-width: 300px;
 }
 
 .preview_header > span > h1 {
-  font-size: 1.075em;
+  font-size: 1.2em;
 }
 
 .preview_header > button {
@@ -363,11 +364,19 @@ p {
     max-width: max-content;
   }
 
+  .preview_header {
+    max-width: 350px;
+  }
+
   .preview_image {
     max-width: 400px;
     flex-direction: column;
     align-items: unset;
     margin: 12px;
+  }
+
+  .preview_details {
+    max-width: 350px;
   }
 
   .preview_header > h1 {
