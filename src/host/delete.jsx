@@ -66,7 +66,7 @@ export default function DeleteButton() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            Xóa staycation
+            Xóa 🔒
           </motion.span>
         )}
       </AnimatePresence>

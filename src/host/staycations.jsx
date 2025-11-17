@@ -12,7 +12,7 @@ export default function Staycations() {
                     {/* Main Content */}
             <div>
 
-                <div style={{ display: "flex", paddingBottom: "8px", alignItems:"end", justifyContent: "space-between" }}>
+                <div style={{ display: "flex", paddingBottom: "8px", alignItems:"end", gap:"6px" }}>
                     <h1 style={{ margin: "0", fontSize: "1.68em"}}>Staycation của tôi</h1>
                     <CirclePlus size={28} fill="#E31C5F" color="#FFFFFF" onClick={() => navigate(`/list-staycation`)} style={{ cursor: "pointer"}}/>
                 </div>

@@ -47,8 +47,6 @@ export default function RegisterForm() {
                 navigate('/list-staycation');
             }
 
-            navigate('/list-staycation')
-
         } catch (err) {
 
             console.error('Register failed', err);

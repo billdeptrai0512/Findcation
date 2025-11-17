@@ -83,8 +83,6 @@ export default function Preview({ staycation }) {
                         <h1>Findcation</h1> 
                     </span>
 
-                    {/* <h1>Findcation</h1>  */}
-
                     <button onClick={() => navigate("/")}>
                         <X size={20}/>
                     </button>

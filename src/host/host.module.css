@@ -30,7 +30,7 @@
     flex-direction: column;
     justify-content: center;
     max-width: 680px;
-    padding: 12px;
+    /* padding: 12px; */
     flex: 1;
     gap: 16px;
     overflow-y: scroll;

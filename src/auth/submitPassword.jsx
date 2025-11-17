@@ -27,6 +27,9 @@ export default function SubmitPassword({email, setEmail, setFoundEmail,}) {
             const user = await login(email, password);
 
             if (user.staycations.length > 0) {
+                if (user.isAdmin) {
+                    return navigate('/admin')
+                }
                 navigate(`/host/${user.id}`)
             } else {
                 navigate('/list-staycation');
