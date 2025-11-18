@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 export default function Staycations({staycations}) {
 
     // const handleSearchStaycation = async (id) => {
@@ -16,6 +18,9 @@ export default function Staycations({staycations}) {
     //         console.error("Error fetching staycation:", error);
     //     }
     // };
+    const navigate = useNavigate();
+
+    console.log(staycations)
 
     return (
 
@@ -33,9 +38,11 @@ export default function Staycations({staycations}) {
                 </thead>
                 <tbody>
                 {staycations.map((s, i) => (
+                    
                     <tr 
                         key={s.id}
-                        style={{ background: i % 2 === 0 ? "#ffffff" : "#fafafa", cursor: "pointer",}}
+                        style={{ background: i % 2 === 0 ? "#ffffff" : "#fafafa", cursor: "pointer"}}
+                        onClick={() => navigate(`/host/${s.hostId}/editor/${s.id}`)}
                         onMouseEnter={(e) => (e.currentTarget.style.background = "#f0f0f0")}
                         onMouseLeave={(e) => (e.currentTarget.style.background = i % 2 === 0 ? "#ffffff" : "#fafafa")}
                     >

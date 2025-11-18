@@ -64,12 +64,13 @@ export default function SubmitEmail() {
 
             const user = response.data.user
             setUser(user)
-            console.log(user)
+
             if (user.staycations.length > 0) {
                 if (user.isAdmin) {
-                    return navigate('/admin')
+                    navigate('/admin')
+                } else {
+                    navigate(`/host/${user.id}`)
                 }
-                navigate(`/host/${user.id}`)
             } else {
                 navigate('/list-staycation');
             }

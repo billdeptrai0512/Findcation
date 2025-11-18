@@ -10,7 +10,7 @@ export default function MyStaycationButton() {
   const { user } = useAuth()
   const navigate = useNavigate();
 
-  const linkTo = user ? `/host/${user.id}` : "/auth/login"
+  const linkTo = user ? user.isAdmin ? `/admin` : `/host/${user.id}` : "/auth/login"
 
   return (
 

@@ -1,16 +1,12 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "react-responsive"
 import styles from "./admin.module.css"
 import Logo from "../assets/logo.png"
 import axios from "axios";
-import Image from "./images";
-import Contacts from "./contacts";
-import Details from "./details";
-import { useMediaQuery } from "react-responsive"
 import Staycations from "./staycations";
 import Traffics from "./traffics";
-import { useNavigate } from "react-router-dom";
 import Suggestions from "./suggestion";
-import { ChevronRight , ChevronLeft } from "lucide-react";
 import SectionSelector from "./section";
 
 export default function AdminDashBoard() {
@@ -102,7 +98,7 @@ export default function AdminDashBoard() {
             {/* header */}
              <div className={styles.preview_header}>
 
-                <span style={{display: "flex", justifyContent: "center", alignItems: "center", gap: "8px"}}
+                <span style={{display: "flex", justifyContent: "center", alignItems: "center", gap: "8px", cursor: "pointer"}}
                     onClick={() => navigate("/")}>
                     <img src={Logo} alt="logo" style={{width: "64px"}} />
                     <h1>Findcation</h1> 
