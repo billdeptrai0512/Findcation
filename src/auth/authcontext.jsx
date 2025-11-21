@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState } from 'react';
 import axios from 'axios';
 
 const AuthContext = createContext();
@@ -6,14 +6,14 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth`, {withCredentials: true})
-      .then((res) => {
-        console.log(res.data.user)
-        res.data.user
-      })
-      .catch(() => setUser(null))
-  }, []);
+  // useEffect(() => {
+  //   axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth`, {withCredentials: true})
+  //     .then((res) => {
+  //       console.log(res.data.user)
+  //       res.data.user
+  //     })
+  //     .catch(() => setUser(null))
+  // }, []);
 
   const login = async (email, password) => {
   
