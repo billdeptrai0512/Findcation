@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export default function Staycations({staycations}) {
+export default function Staycations({ staycations }) {
 
     // const handleSearchStaycation = async (id) => {
     //     try {
@@ -18,6 +18,7 @@ export default function Staycations({staycations}) {
     //         console.error("Error fetching staycation:", error);
     //     }
     // };
+
     const navigate = useNavigate();
 
     console.log(staycations)
@@ -26,8 +27,10 @@ export default function Staycations({staycations}) {
 
         // Address / create at / verified or not 
         <div style={{ paddingTop: "2em" }}>
-            <table style={{ borderCollapse: "collapse", width: "100%",
-                boxShadow: "0 2px 6px rgba(0,0,0,0.15)",  borderRadius: "8px", overflow: "hidden", }}
+            <table style={{
+                borderCollapse: "collapse", width: "100%",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.15)", borderRadius: "8px", overflow: "hidden",
+            }}
             >
                 <thead style={{ background: "#f5f5f5" }}>
                     <tr>
@@ -37,31 +40,31 @@ export default function Staycations({staycations}) {
                     </tr>
                 </thead>
                 <tbody>
-                {staycations.map((s, i) => (
-                    
-                    <tr 
-                        key={s.id}
-                        style={{ background: i % 2 === 0 ? "#ffffff" : "#fafafa", cursor: "pointer"}}
-                        onClick={() => navigate(`/host/${s.hostId}/editor/${s.id}`)}
-                        onMouseEnter={(e) => (e.currentTarget.style.background = "#f0f0f0")}
-                        onMouseLeave={(e) => (e.currentTarget.style.background = i % 2 === 0 ? "#ffffff" : "#fafafa")}
-                    >
-                        <td style={{ padding: "12px", border: "1px solid #ddd" }}>
-                            {s.name}
-                        </td>
-                        <td style={{ padding: "12px", border: "1px solid #ddd" }}>
-                            {s.location.details.street}, {s.location.details.ward}, {s.location.details.city}
-                        </td>
+                    {staycations.map((s, i) => (
 
-                        <td style={{ padding: "12px", border: "1px solid #ddd", textAlign: "center" }}>
-                            <span style={{ fontWeight: "500" }}>✅ 🚫</span>
-                        </td>
+                        <tr
+                            key={s.id}
+                            style={{ background: i % 2 === 0 ? "#ffffff" : "#fafafa", cursor: "pointer" }}
+                            onClick={() => navigate(`/host/${s.hostId}/editor/${s.id}`)}
+                            onMouseEnter={(e) => (e.currentTarget.style.background = "#f0f0f0")}
+                            onMouseLeave={(e) => (e.currentTarget.style.background = i % 2 === 0 ? "#ffffff" : "#fafafa")}
+                        >
+                            <td style={{ padding: "12px", border: "1px solid #ddd" }}>
+                                {s.name}
+                            </td>
+                            <td style={{ padding: "12px", border: "1px solid #ddd" }}>
+                                {s.location.details.street}, {s.location.details.ward}, {s.location.details.city}
+                            </td>
 
-                    </tr>
+                            <td style={{ padding: "12px", border: "1px solid #ddd", textAlign: "center" }}>
+                                <span style={{ fontWeight: "500" }}>✅ 🚫</span>
+                            </td>
+
+                        </tr>
                     ))}
                 </tbody>
             </table>
         </div>
-        
+
     );
 }

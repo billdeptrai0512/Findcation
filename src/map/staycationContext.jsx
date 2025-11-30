@@ -11,10 +11,12 @@ const StaycationProvider = ({ children }) => {
   const fetchStaycations = async () => {
 
     try {
-      
-        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/listing/all-listing`);
 
-        setStaycations(response.data)
+      console.log(`${import.meta.env.VITE_BACKEND_URL}/listing/all-listing`)
+
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/listing/all-listing`);
+
+      setStaycations(response.data)
         
     } catch (err) {
 

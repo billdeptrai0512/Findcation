@@ -8,7 +8,7 @@ import FacebookIcon from "../../assets/facebook.png";
 import InstagramIcon from "../../assets/instagram.png";
 import Zalo from "../../assets/zalo.png";
 
-export default function Contacts({staycation, downloadImage, canvas}) {
+export default function Contacts({ staycation, downloadImage, canvas }) {
 
     const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
@@ -32,65 +32,66 @@ export default function Contacts({staycation, downloadImage, canvas}) {
     };
 
     const { contacts } = staycation.host;
+    console.log(contacts)
     const facebookUrl = isMobile ? `fb://page/` : `https://www.facebook.com/`
     const instagramUrl = isMobile ? `instagram://user?username=` : `https://www.instagram.com/`
 
     return (
-        <div style={{display: "flex", justifyContent:"space-between", alignItems: "center", padding: '8px 0', gap: "8px"}}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: '8px 0', gap: "8px" }}>
 
-            <h2 style={{fontSize: "1.1075rem", marginTop: "0"}}> Liên lạc </h2>
+            <h2 style={{ fontSize: "1.1075rem", marginTop: "0" }}> Liên lạc </h2>
 
-            <div style={{display: "flex",  padding: '8px 0', borderRadius: "8px", gap: "1em"}}>
+            <div style={{ display: "flex", padding: '8px 0', borderRadius: "8px", gap: "1em" }}>
 
-                <motion.span 
+                <motion.span
                     initial={{ scale: 1, y: -3 }}
                     whileHover={{ scale: 1.1, y: -3 }}
                     whileTap={{ scale: 0.9, y: -3 }}
                     transition={{ type: "spring", stiffness: 300 }}>
-                        {contacts.facebook !== null  && 
-                            <Link to={`${facebookUrl}${contacts.facebook}`} 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                onClick={handleClick("FACEBOOK", `${facebookUrl}${contacts.facebook}`)}
-                                >
-                                <img src={FacebookIcon} alt="" style={{width:"37px"}} />
-                            </Link>
-                        }
+                    {contacts.facebook !== "" &&
+                        <Link to={`${facebookUrl}${contacts.facebook}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={handleClick("FACEBOOK", `${facebookUrl}${contacts.facebook}`)}
+                        >
+                            <img src={FacebookIcon} alt="" style={{ width: "37px" }} />
+                        </Link>
+                    }
                 </motion.span>
 
-                <motion.span 
+                <motion.span
                     initial={{ scale: 1, y: -3 }}
                     whileHover={{ scale: 1.1, y: -3 }}
                     whileTap={{ scale: 0.9, y: -3 }}
                     transition={{ type: "spring", stiffness: 300 }}>
-                        {contacts.instagram  !== null && 
-                            <Link to={`${instagramUrl}${contacts.instagram}`} 
-                                target="_blank"  
-                                rel="noopener noreferrer"
-                                onClick={handleClick("INSTAGRAM", `${instagramUrl}${contacts.instagram}`)}
-                                >
-                                <img src={InstagramIcon} alt="" style={{width:"37px"}} />
-                            </Link>
-                        }
+                    {contacts.instagram !== "" &&
+                        <Link to={`${instagramUrl}${contacts.instagram}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={handleClick("INSTAGRAM", `${instagramUrl}${contacts.instagram}`)}
+                        >
+                            <img src={InstagramIcon} alt="" style={{ width: "37px" }} />
+                        </Link>
+                    }
                 </motion.span>
 
-                <motion.span 
+                <motion.span
                     initial={{ scale: 1, y: -7 }}
                     whileHover={{ scale: 1.1, y: -7 }}
                     whileTap={{ scale: 0.9, y: -7 }}
                     transition={{ type: "spring", stiffness: 300 }}>
-                        {contacts.zalo !== null && 
-                            <Link to={`https://zalo.me/${contacts.zalo}`} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    onClick={handleClick("ZALO", `https://zalo.me/${contacts.zalo}`)}
-                                >
-                                    <img src={Zalo} alt="" style={{width:"46px"}} />
-                            </Link>
-                        }
+                    {contacts.zalo !== "" &&
+                        <Link to={`https://zalo.me/${contacts.zalo}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={handleClick("ZALO", `https://zalo.me/${contacts.zalo}`)}
+                        >
+                            <img src={Zalo} alt="" style={{ width: "46px" }} />
+                        </Link>
+                    }
                 </motion.span>
 
-                
+
             </div>
 
 

@@ -4,7 +4,7 @@ import { useHost } from "../hostContext"
 import axios from "axios"
 import styles from "../../auth/login.module.css"
 
-export default function ContactEditor({data, setOpenContactEditor}) {
+export default function ContactEditor({ data, setOpenContactEditor }) {
 
     const { host, refreshHost } = useHost()
     const [url, setUrl] = useState('')
@@ -13,11 +13,11 @@ export default function ContactEditor({data, setOpenContactEditor}) {
     const handleSubmitContact = async (e) => {
         e.preventDefault();
 
-        // now this function is depend on the data
-        // apply to update the user contacts info
+        //TODO: We should able to remove the url
+        //TODO: The url default should null or empty string
 
         if (url === "") return setError("Góp ý không được bỏ trống.")
-        
+
         try {
 
             await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/auth/contact/${host.id}`, {
@@ -26,13 +26,25 @@ export default function ContactEditor({data, setOpenContactEditor}) {
             });
 
             refreshHost()
-
             setOpenContactEditor(false)
 
         } catch (err) {
             console.error('Send suggestion failed', err);
 
-        } 
+        }
+    };
+
+    const handleRemoveContact = async () => {
+        try {
+            await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/auth/contact/${host.id}`, {
+                type: data.type,
+                url: "",
+            });
+            refreshHost()
+            setOpenContactEditor(false)
+        } catch (err) {
+            console.error('Send suggestion failed', err);
+        }
     };
 
 
@@ -43,7 +55,7 @@ export default function ContactEditor({data, setOpenContactEditor}) {
                 <div className={styles.card}>
                     <div className={styles.header}>
                         <button onClick={() => setOpenContactEditor(null)}>
-                            <X size={20} style={{padding: "4px"}}/>
+                            <X size={20} style={{ padding: "4px" }} />
                         </button>
                         <div className={styles.title}>
                             {data.type}
@@ -65,9 +77,10 @@ export default function ContactEditor({data, setOpenContactEditor}) {
                             </div>
 
                             {error && <p className={styles.error}>{error}</p>}
-                            
-                            <div className={styles.actionLoginRow}>
-                                <button type="submit" className={styles.button}>Lưu</button>
+
+                            <div className={styles.actionLoginRow} style={{ flexDirection: "unset" }}>
+                                <button type="button" onClick={handleRemoveContact} className={styles.options_button}>Xóa</button>
+                                <button type="submit" className={styles.button} style={{ width: "unset", padding: "16px 24px" }}>Lưu</button>
                             </div>
 
                         </form>
