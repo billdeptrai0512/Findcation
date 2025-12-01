@@ -6,8 +6,8 @@ import "leaflet/dist/leaflet.css";
 import styles from "./map.module.css";
 import L from "leaflet";
 import axios from "axios";
-import Home from "../assets/home.png"
-import People from "../assets/people.png"
+import Home from "../assets/home.webp"
+import People from "../assets/people.webp"
 import PeopleMarker from "./peopleMarker";
 import HouseMarker from "./houseMarker";
 
@@ -118,22 +118,22 @@ export default function Map() {
 
           <VietnamBoundaries />
 
-          {staycations &&  staycations.map((stay) => (
-              <HouseMarker key={stay.id} markerRefs={markerRefs}
-                stay={stay} iconUrl={Home} styles={styles}
-                onClick={(marker, map) => {
-                  marker.openPopup();
-                  map.flyTo(marker.getLatLng(), map.getZoom(), {
-                    animate: true,
-                    duration: 0.75,
-                  });
-                }}
-                ref={(ref) => (markerRefs.current[stay.id] = ref)}
-              />
-            ))}
+          {staycations && staycations.map((stay) => (
+            <HouseMarker key={stay.id} markerRefs={markerRefs}
+              stay={stay} iconUrl={Home} styles={styles}
+              onClick={(marker, map) => {
+                marker.openPopup();
+                map.flyTo(marker.getLatLng(), map.getZoom(), {
+                  animate: true,
+                  duration: 0.75,
+                });
+              }}
+              ref={(ref) => (markerRefs.current[stay.id] = ref)}
+            />
+          ))}
 
-          {location && <PeopleMarker position={[GPS.lat, GPS.lng]} iconUrl={People} /> }
-          
+          {location && <PeopleMarker position={[GPS.lat, GPS.lng]} iconUrl={People} />}
+
         </MapContainer>
       </div>
     </div>

@@ -7,11 +7,11 @@ import Footer from "./footer/main"
 import Suggestion from "./suggestion";
 
 
-export default function Listing() { 
+export default function Listing() {
 
     const navigate = useNavigate();
 
-    const steps = ["title", "type-of-house", "features",  "price", "location", "images"];
+    const steps = ["title", "type-of-house", "features", "price", "location", "images"];
 
     const totalSteps = steps.length - 1;
 
@@ -34,30 +34,30 @@ export default function Listing() {
         navigate(`/list-staycation/${steps[0]}`);
 
     }
-  
+
     const goNext = () => {
         if (page < totalSteps) {
-          const newPage = page + 1;
-          setPage(newPage);
-          navigate(`/list-staycation/${steps[newPage]}`);
+            const newPage = page + 1;
+            setPage(newPage);
+            navigate(`/list-staycation/${steps[newPage]}`);
         }
     };
-    
+
     const goBack = () => {
         if (page === 0) {
             setStart(false)
-            navigate(`/list-staycation`);    
+            navigate(`/list-staycation`);
         };
 
         if (page > 0) {
-          const newPage = page - 1;
-          setPage(newPage);
-          navigate(`/list-staycation/${steps[newPage]}`);
+            const newPage = page - 1;
+            setPage(newPage);
+            navigate(`/list-staycation/${steps[newPage]}`);
         }
     };
-    
+
     return (
-            
+
         <div className={styles.listingContainer}>
 
             <Header page={page} setOpenSuggestions={setOpenSuggestions} />
@@ -67,19 +67,19 @@ export default function Listing() {
             </AnimatePresence>
 
             {openSuggestions && <Suggestion currentStep={steps[page]} setOpenSuggestions={setOpenSuggestions} />}
-            
-            <Footer start={start} 
-                    getStart={getStart} goNext={goNext} goBack={goBack} 
-                    percentage={percentage} page={page} steps={steps} 
-                    stepValidity={stepValidity} />
 
-        </div>   
+            <Footer start={start}
+                getStart={getStart} goNext={goNext} goBack={goBack}
+                percentage={percentage} page={page} steps={steps}
+                stepValidity={stepValidity} />
+
+        </div>
 
     )
 }
 
 // air bnb ask for title after asking for image
-// title + type of house / address + location 
+// title + type of house / address + location
 
 //not sure - would get complicate and require to confirm number of room ?
 //what happens if the owner have the full house for rent each room seperately
@@ -94,7 +94,7 @@ export default function Listing() {
 //             <div>
 //                 <div className={styles.intrustion} style={{paddingTop: "24px", fontWeight: "600"}}>
 //                     Bao nhiêu người có thể ở tại đây?
-//                 </div> 
+//                 </div>
 //                 <div style={{display:"flex", justifyContent: "space-between", padding: "24px 0", borderBottom: "1px solid #ccc", alignItems: "center"}}>
 //                     <p style={{fontSize:"16px"}}>Khách</p>
 //                     <div style={{display:"flex", justifyContent: "space-between", gap:"16px", alignItems: "center"}}>
@@ -106,7 +106,7 @@ export default function Listing() {
 //                 <div style={{display:"flex", justifyContent: "space-between", padding: "24px 0", borderBottom: "1px solid #ccc", alignItems: "center"}}>
 //                     <p>Phòng ngủ</p>
 //                     <div style={{display:"flex", justifyContent: "space-between", gap:"16px", alignItems: "center"}}>
-//                         <CircleMinus size={35} color="#EBEBEB" strokeWidth={1} style={{ cursor: "pointer" }}/>    
+//                         <CircleMinus size={35} color="#EBEBEB" strokeWidth={1} style={{ cursor: "pointer" }}/>
 //                         <p>0</p>
 //                         <CirclePlus size={35} color="#B0B0B0" strokeWidth={1} style={{ cursor: "pointer" }}/>
 //                     </div>
@@ -132,7 +132,7 @@ export default function Listing() {
 //             <div>
 //                 <div className={styles.intrustion} style={{padding: "24px 0", fontWeight: "600"}}>
 //                     Có phải mỗi phòng ngủ đều có một ổ khóa?
-//                 </div> 
+//                 </div>
 //                 <div style={{display: "flex", gap: "24px", flexDirection: "column"}}>
 //                     <label style={{display: "flex", alignItems: "start", gap: "8px"}}>
 //                         <input type="checkbox" name="rooms-privacy" value="yes" />
@@ -179,7 +179,7 @@ export default function Listing() {
 //                         <p style={{fontSize: "14px", color: "#6A6A6A"}}>Đó là không gian riêng nhưng cần đi qua khu vực chung, như hành lang, để vào được.</p>
 //                     </div>
 //                     <div style={{display:"flex", justifyContent: "space-between", gap:"16px", alignItems: "center"}}>
-//                         <CircleMinus size={35} color="#EBEBEB" strokeWidth={1} style={{ cursor: "pointer" }}/>    
+//                         <CircleMinus size={35} color="#EBEBEB" strokeWidth={1} style={{ cursor: "pointer" }}/>
 //                         <p>0</p>
 //                         <CirclePlus size={35} color="#B0B0B0" strokeWidth={1} style={{ cursor: "pointer" }}/>
 //                     </div>

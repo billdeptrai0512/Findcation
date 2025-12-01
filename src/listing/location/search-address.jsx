@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 import SearchBar from './search-bar';
 import AddressMap from "./addressMap";
 import styles from "./location.module.css";
-import People from "../../assets/people.png";
+import People from "../../assets/people.webp";
 
-export default function SearchAddress({location}) {
+export default function SearchAddress({ location }) {
 
     return (
         <motion.div className={styles.pageContent}
@@ -16,15 +16,15 @@ export default function SearchAddress({location}) {
         >
 
             <h1 style={{ marginBottom: "4px", fontSize: "1.68rem" }}>Staycation của bạn địa chỉ ở đâu?</h1>
-    
+
             <div className={styles.search_address}>
-    
-                <AddressMap location={location} icon={People}/>
-        
-                <SearchBar /> 
+
+                <AddressMap location={location} icon={People} />
+
+                <SearchBar />
 
             </div>
-    
+
         </motion.div>
     )
 }

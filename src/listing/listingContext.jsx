@@ -1,5 +1,5 @@
 import axios from "axios";
-import heic2any from "heic2any";
+import { convertHEIC } from "../utils/convertHeic";
 import { createContext, useContext, useState } from "react";
 
 const ListingContext = createContext();
@@ -8,14 +8,13 @@ const ListingProvider = ({ children }) => {
 
     const [listing, setListing] = useState({
 
-        name : "",
-        type : "",
+        name: "",
+        type: "",
         numberOfRoom: 1,
         location: {
             public: false,
             address: "",
-            gps: {lat: "", lng: ""},
-            
+            gps: { lat: "", lng: "" },
             details: {
                 apartment: "",
                 building: "",
@@ -25,11 +24,11 @@ const ListingProvider = ({ children }) => {
             },
         },
         contacts: {
-            zalo: {url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString()},
-            facebook: {url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString()},
-            instagram: {url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString()},
+            zalo: { url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString() },
+            facebook: { url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString() },
+            instagram: { url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString() },
         },
-        prices: {min: '', max: ''},
+        prices: { min: '', max: '' },
         features: [],
         images: []
 
@@ -40,12 +39,12 @@ const ListingProvider = ({ children }) => {
         const name = e.target.value
 
         if (name.length <= 32) {
-        setListing((prev) => ({
-            ...prev,
-            name: name,
-        }));
+            setListing((prev) => ({
+                ...prev,
+                name: name,
+            }));
         }
-        
+
     };
 
     const uploadType = (type) => {
@@ -66,37 +65,37 @@ const ListingProvider = ({ children }) => {
 
     const uploadImages = async (files) => {
         if (!files || files.length === 0) return;
-      
+
         const convertFile = async (file) => {
-            console.log(file)
-          const isHeic =
-            file.type === "image/heic" ||
-            file.name.toLowerCase().endsWith(".heic") ||
-            file.name.toLowerCase().endsWith(".heif");
-            console.log(isHeic)
-          if (isHeic) {
-            try {
-              const blob = await heic2any({ blob: file, toType: "image/jpeg" });
-              return { file, url: URL.createObjectURL(blob) };
-            } catch (err) {
-              console.warn("HEIC conversion failed, fallback to raw", err);
+
+            const isHeic =
+                file.type === "image/heic" ||
+                file.name.toLowerCase().endsWith(".heic") ||
+                file.name.toLowerCase().endsWith(".heif");
+
+            if (isHeic) {
+                try {
+                    const blob = await convertHEIC(file);
+                    return { file, url: URL.createObjectURL(blob) };
+                } catch (err) {
+                    console.warn("HEIC conversion failed, fallback to raw", err);
+                }
             }
-          }
-          return { file, url: URL.createObjectURL(file) };
+            return { file, url: URL.createObjectURL(file) };
         };
-      
+
         if (files.length > 1) {
-          const newImages = await Promise.all(Array.from(files).map(convertFile));
-          setListing((prev) => ({
-            ...prev,
-            images: [...prev.images, ...newImages],
-          }));
+            const newImages = await Promise.all(Array.from(files).map(convertFile));
+            setListing((prev) => ({
+                ...prev,
+                images: [...prev.images, ...newImages],
+            }));
         } else {
-          const data = await convertFile(files[0]);
-          setListing((prev) => ({
-            ...prev,
-            images: [...prev.images, data],
-          }));
+            const data = await convertFile(files[0]);
+            setListing((prev) => ({
+                ...prev,
+                images: [...prev.images, data],
+            }));
         }
     };
 
@@ -116,8 +115,8 @@ const ListingProvider = ({ children }) => {
             const [selectedImage] = newImages.splice(index, 1); // Lấy ảnh ra
             newImages.unshift(selectedImage); // Đưa lên đầu
             return {
-            ...prev,
-            images: newImages,
+                ...prev,
+                images: newImages,
             };
         });
 
@@ -127,13 +126,13 @@ const ListingProvider = ({ children }) => {
         setListing((prev) => {
 
             const newFeature = (prev.features ?? []).includes(name)
-            ? (prev.features ?? []).filter((f) => f !== name)
-            : [...(prev.features ?? []), name];
-    
-        return {
-            ...prev,
+                ? (prev.features ?? []).filter((f) => f !== name)
+                : [...(prev.features ?? []), name];
+
+            return {
+                ...prev,
                 features: newFeature,
-        };
+            };
         });
     };
 
@@ -173,26 +172,27 @@ const ListingProvider = ({ children }) => {
 
     const editLocationPublic = () => {
         setListing((prev) => ({
-        ...prev,
-        location: {
-            ...prev.location,
-            public: !prev.location.public // ✅ toggle inside location
-        }
-        }));
-    };
-    
-    const editLocationGPS = (center) => {
-        setListing((prev) => ({
-        ...prev,
+            ...prev,
             location: {
                 ...prev.location,
-                gps: { lat: center.lat, lng: center.lng },            }
+                public: !prev.location.public // ✅ toggle inside location
+            }
+        }));
+    };
+
+    const editLocationGPS = (center) => {
+        setListing((prev) => ({
+            ...prev,
+            location: {
+                ...prev.location,
+                gps: { lat: center.lat, lng: center.lng },
+            }
         }));
     };
 
     const uploadMinPrice = (price) => {
         setListing((prev) => ({
-            ...prev, 
+            ...prev,
             prices: {
                 ...prev.prices,
                 min: price
@@ -202,7 +202,7 @@ const ListingProvider = ({ children }) => {
 
     const uploadMaxPrice = (price) => {
         setListing((prev) => ({
-            ...prev, 
+            ...prev,
             prices: {
                 ...prev.prices,
                 max: price
@@ -220,58 +220,58 @@ const ListingProvider = ({ children }) => {
                 ...prev.contacts,
                 [name]: {
                     ...prev.contacts[name],
-                    url: value,   
+                    url: value,
                 },
             },
         }));
 
-        
+
     };
 
     const uploadListingOnDatabase = async (user) => {
         console.log('upload new staycation to database')
         try {
-          const formData = new FormData();
-      
-          // Append raw listing object (without file objects)
-          const { images, ...listingWithoutFiles } = listing;
-          formData.append("listing", JSON.stringify(listingWithoutFiles));
-          formData.append("hostId", user.id);
-          formData.append("email", user.email);
-      
-          // Append files separately
-          if (images.length > 10) return alert("Tối đa 10 hình");
-          images.forEach(img => {
-            if (img.file) 
-                console.log(img.file.size)
+            const formData = new FormData();
+
+            // Append raw listing object (without file objects)
+            const { images, ...listingWithoutFiles } = listing;
+            formData.append("listing", JSON.stringify(listingWithoutFiles));
+            formData.append("hostId", user.id);
+            formData.append("email", user.email);
+
+            // Append files separately
+            if (images.length > 10) return alert("Tối đa 10 hình");
+            images.forEach(img => {
+                if (img.file)
+                    console.log(img.file.size)
                 formData.append("images", img.file);
             });
-      
-          const res = await axios.post(
-            `${import.meta.env.VITE_BACKEND_URL}/listing/create-new`,
-            formData,
-            { headers: { "Content-Type": "multipart/form-data" } }
-          );
-      
-          console.log("Listing created successfully");
 
-          return res.data;
+            const res = await axios.post(
+                `${import.meta.env.VITE_BACKEND_URL}/listing/create-new`,
+                formData,
+                { headers: { "Content-Type": "multipart/form-data" } }
+            );
+
+            console.log("Listing created successfully");
+
+            return res.data;
         } catch (err) {
-          console.error("Upload failed", err);
+            console.error("Upload failed", err);
         }
     };
 
     const resetListing = () => {
 
         setListing({
-            name : "",
-            type : "",
+            name: "",
+            type: "",
             numberOfRoom: null,
             location: {
                 public: false,
                 address: "",
-                gps: {lat: "", lng: ""},
-                
+                gps: { lat: "", lng: "" },
+
                 details: {
                     apartment: "",
                     building: "",
@@ -281,11 +281,11 @@ const ListingProvider = ({ children }) => {
                 },
             },
             contacts: {
-                zalo: {url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString()},
-                facebook: {url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString()},
-                instagram: {url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString()},
+                zalo: { url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString() },
+                facebook: { url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString() },
+                instagram: { url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString() },
             },
-            prices: {min: '', max: ''},
+            prices: { min: '', max: '' },
             features: [],
             images: []
         })
@@ -295,27 +295,27 @@ const ListingProvider = ({ children }) => {
 
     return (
         <ListingContext.Provider
-        value={{
-            listing,
-            uploadName,
-            uploadType,
-            uploadNumberOfRoom,
-            uploadImages,
-            removeImage,
-            arrangeImage,
-            uploadFeatures,
-            uploadLocation,
-            editLocationDetails,
-            editLocationPublic,
-            editLocationGPS,
-            uploadMinPrice,
-            uploadMaxPrice,
-            uploadContact,
-            uploadListingOnDatabase,
-            resetListing
-        }}
+            value={{
+                listing,
+                uploadName,
+                uploadType,
+                uploadNumberOfRoom,
+                uploadImages,
+                removeImage,
+                arrangeImage,
+                uploadFeatures,
+                uploadLocation,
+                editLocationDetails,
+                editLocationPublic,
+                editLocationGPS,
+                uploadMinPrice,
+                uploadMaxPrice,
+                uploadContact,
+                uploadListingOnDatabase,
+                resetListing
+            }}
         >
-        {children}
+            {children}
         </ListingContext.Provider>
     );
 };

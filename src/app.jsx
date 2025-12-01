@@ -1,3 +1,4 @@
+import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { AuthProvider } from "./auth/authContext";
@@ -21,7 +22,6 @@ import ImageUpload from "./listing/image/main";
 import Features from "./listing/features/features";
 import LocationListing from "./listing/location/main";
 import StartPage from "./listing/start";
-import Listing from "./listing/main";
 import LandingPage from "./map/main";
 import Prices from "./listing/prices/main";
 import PreviewStaycation from "./map/preview/main";
@@ -36,8 +36,9 @@ import EditorPrices from "./host/editor/prices";
 import EditorFeatures from "./host/editor/features";
 import EditorLocation from "./host/editor/location";
 import EditorImages from "./host/editor/images/main";
-import EditorRooms from "./host/editor/rooms";
-import EditorRoomImages from "./host/editor/images/room";
+
+const Listing = React.lazy(() => import("./listing/main"));
+
 
 const router = createBrowserRouter([
   {
@@ -46,23 +47,26 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <LandingPage /> },
-      { path: "staycation/:id", element: <PreviewStaycation /> }, 
+      { path: "staycation/:id", element: <PreviewStaycation /> },
       {
         path: "/auth",
         element: <Auth />,
         children: [
-          { path: "login",element: <SubmitEmail /> },
+          { path: "login", element: <SubmitEmail /> },
           { path: "register", element: <Register /> },
           { path: "forgot-password", element: <Forgot /> },
           { path: "reset-password", element: <ResetPassword /> },
 
         ]
       },
-    ], 
+    ],
   },
   {
     path: "/list-staycation",
-    element: <Listing />,
+    element:
+      <ListingProvider>
+        <Listing />
+      </ListingProvider>,
     errorElement: <ErrorPage />,
     children: [
       { path: "", element: <StartPage /> },
@@ -96,32 +100,30 @@ const router = createBrowserRouter([
           { path: "prices", element: <EditorPrices /> },
           { path: "features", element: <EditorFeatures /> },
           { path: "location", element: <EditorLocation /> },
+          { path: "images", element: <EditorImages /> },
           // { path: "rooms", element: <EditorRooms /> },
           // { path: "rooms/cover-images", element: <EditorCoverImages /> },
           // { path: "rooms/:roomId", element: <EditorRoomImages /> },
-          { path: "images", element: <EditorImages /> },
         ]
       },
       { path: "change-password", element: <ChangePassword /> },
 
     ]
   },
-  
+
 ]);
 
 export default function App() {
-    return (
-      <GoogleOAuthProvider clientId={import.meta.env.VITE_OAUTH_CLIENT_ID}>
-        <AuthProvider>
-          <UserLocationProvider>
-            <StaycationProvider>
-              <ListingProvider>
-                <RouterProvider router={router} />
-                <Analytics />
-              </ListingProvider>  
-            </StaycationProvider>
-          </UserLocationProvider>
-        </AuthProvider>
-      </GoogleOAuthProvider>
+  return (
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_OAUTH_CLIENT_ID}>
+      <AuthProvider>
+        <UserLocationProvider>
+          <StaycationProvider>
+            <RouterProvider router={router} />
+            <Analytics />
+          </StaycationProvider>
+        </UserLocationProvider>
+      </AuthProvider>
+    </GoogleOAuthProvider>
   );
 }

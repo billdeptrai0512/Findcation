@@ -82,7 +82,6 @@ export default function ContactEditor({ data, setOpenContactEditor }) {
                                 <button type="button" onClick={handleRemoveContact} className={styles.options_button}>Xóa</button>
                                 <button type="submit" className={styles.button} style={{ width: "unset", padding: "16px 24px" }}>Lưu</button>
                             </div>
-
                         </form>
                     </div>
                 </div>

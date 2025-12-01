@@ -3,10 +3,10 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { useListing } from '../listingContext';
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import Home from "../../assets/home.png"
+import Home from "../../assets/home.webp"
 import styles from './location.module.css';
 
-export default function AddressMap( ) {
+export default function AddressMap() {
   const { listing } = useListing()
   const [text, setText] = useState("");
   const markerRef = useRef();
@@ -14,16 +14,16 @@ export default function AddressMap( ) {
   useEffect(() => {
 
     if (listing.location.address === "" || listing.location.public === false) return setText(`${listing.name} đang ở đây!`);
-    
+
     return setText(listing.location.address);
-    
+
   }, [listing]);
 
 
   const SetViewOnPosition = ({ position }) => {
-  
+
     const map = useMap();
-    
+
     const zoom = listing.location.address === "" ? 6 : 17
 
     useEffect(() => {
@@ -34,7 +34,7 @@ export default function AddressMap( ) {
 
       return () => clearTimeout(timer);
     }, [position, map, zoom]);
-  
+
     return null;
   };
 
@@ -43,23 +43,23 @@ export default function AddressMap( ) {
 
   return (
     <div className={styles.map_wrap}>
-        <MapContainer center={gps} zoom={20} className={styles.map}
-          dragging={false} zoomControl={false}
-          doubleClickZoom={false} touchZoom={false}
-          keyboard={false} scrollWheelZoom={false}  attributionControl={false}>
-          <TileLayer url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png" />
-          <TileLayer url="https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png" />
+      <MapContainer center={gps} zoom={20} className={styles.map}
+        dragging={false} zoomControl={false}
+        doubleClickZoom={false} touchZoom={false}
+        keyboard={false} scrollWheelZoom={false} attributionControl={false}>
+        <TileLayer url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png" />
+        <TileLayer url="https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png" />
 
-          {listing.location.address !== "" && 
-            <Marker position={gps} icon={customIcon} ref={markerRef} eventHandlers={{add: (e) => e.target.openPopup()}}>
-              <Popup closeButton={false} closeOnClick={false} autoClose={false}> {text} </Popup>
-            </Marker>
-          }
-  
-          <SetViewOnPosition position={gps} />
+        {listing.location.address !== "" &&
+          <Marker position={gps} icon={customIcon} ref={markerRef} eventHandlers={{ add: (e) => e.target.openPopup() }}>
+            <Popup closeButton={false} closeOnClick={false} autoClose={false}> {text} </Popup>
+          </Marker>
+        }
 
-        </MapContainer>
-      
+        <SetViewOnPosition position={gps} />
+
+      </MapContainer>
+
     </div>
   );
 }
@@ -72,8 +72,8 @@ const customIcon = new L.Icon({
 });
 
 const defaultPosition = {
-  lat : 16.076096988000074,
-  lng : 106.58883965100006
+  lat: 16.076096988000074,
+  lng: 106.58883965100006
 }
 
 

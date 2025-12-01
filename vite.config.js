@@ -1,10 +1,13 @@
-import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { visualizer } from "rollup-plugin-visualizer";
+import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(),
+  plugins: [
+    react(),
+    visualizer({ open: true }),
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
@@ -13,18 +16,19 @@ export default defineConfig({
         start_url: '/',
         display: 'standalone',
         theme_color: '#ffffff',
-        icons: [           
-        {
-          src: '/favicon-16x16.png',
-          sizes: '192x192',
-          type: 'image/png'
-        },
-        {
-          src: '/favicon-32x32.png',
-          sizes: '192x192',
-          type: 'image/png'
-        }, 
-      ]},
+        icons: [
+          {
+            src: '/favicon-16x16.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
+            src: '/favicon-32x32.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+        ]
+      },
     })
   ],
 

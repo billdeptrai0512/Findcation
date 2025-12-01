@@ -4,10 +4,11 @@ import { useMediaQuery } from "react-responsive";
 import { Plus } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { useEditorDraft } from "../../editorDraftContext";
+import { convertHEIC } from "../../../utils/convertHeic";
 import React from "react";
 import Photo from "./photo";
 import styles from "../../host.module.css";
-import heic2any from "heic2any";
+
 
 export default function EditorRoomImages() {
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
@@ -49,6 +50,7 @@ export default function EditorRoomImages() {
 
   // add image to room
   const addImage = async (files) => {
+
     const convertFile = async (file) => {
       const isHeic =
         file.type === "image/heic" ||
@@ -57,7 +59,7 @@ export default function EditorRoomImages() {
 
       if (isHeic) {
         try {
-          const blob = await heic2any({ blob: file, toType: "image/jpeg" });
+          const blob = await convertHEIC(file);
           return { file, url: URL.createObjectURL(blob) };
         } catch (err) {
           console.warn("HEIC conversion failed, fallback to raw", err);
@@ -72,7 +74,7 @@ export default function EditorRoomImages() {
     } else {
       newImages = [await convertFile(files[0])];
     }
-    
+
     setDraft(prev => ({
       ...prev,
       rooms: prev.rooms.map(r =>
@@ -154,8 +156,8 @@ export default function EditorRoomImages() {
     return (
       <div className={styles.empty}>
         <div className={`${styles.empty} ${styles.last_photo}`}>
-          <label  style={{ display: "block", width: "100%",  height: "100%", cursor: "pointer" }}  >
-            <input type="file" name="image" accept="image/*" multiple  style={{ display: "none" }}  onChange={(e) => addImage(e.target.files)} />
+          <label style={{ display: "block", width: "100%", height: "100%", cursor: "pointer" }}  >
+            <input type="file" name="image" accept="image/*" multiple style={{ display: "none" }} onChange={(e) => addImage(e.target.files)} />
             <div>
               <Plus size={35} />
               <span>Thêm ảnh</span>
@@ -169,37 +171,37 @@ export default function EditorRoomImages() {
   if (isMobile)
     return (
       <motion.div
-        className={styles.pageContent} style={{justifyContent: "unset"}}
+        className={styles.pageContent} style={{ justifyContent: "unset" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 1, ease: "easeOut" }}
       >
         <input
-          style={{ marginBottom: "0px", fontSize: "1.68rem", border:"none", fontFamily: `'Inter', sans-serif`, fontWeight: "500" }}
+          style={{ marginBottom: "0px", fontSize: "1.68rem", border: "none", fontFamily: `'Inter', sans-serif`, fontWeight: "500" }}
           value={room.name}
           onChange={handleNameChange}
           placeholder="Tên phòng"
         />
 
         <div className={styles.mobile_images_area}>
-            {[...Array(Math.min(room.images.length + 1, 5))].map((_, i) => (
-              <React.Fragment key={i}>{renderPhoto(i)}</React.Fragment>
-            ))}
+          {[...Array(Math.min(room.images.length + 1, 5))].map((_, i) => (
+            <React.Fragment key={i}>{renderPhoto(i)}</React.Fragment>
+          ))}
         </div>
       </motion.div>
     );
 
   return (
     <motion.div
-      className={styles.pageContent} style={{justifyContent: "unset"}}
+      className={styles.pageContent} style={{ justifyContent: "unset" }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 1, ease: "easeOut" }}
     >
       <input
-        style={{ marginBottom: "0px", fontSize: "1.68rem", border:"none", fontFamily: `'Inter', sans-serif`, fontWeight: "500"}}
+        style={{ marginBottom: "0px", fontSize: "1.68rem", border: "none", fontFamily: `'Inter', sans-serif`, fontWeight: "500" }}
         value={room.name}
         onChange={handleNameChange}
         placeholder="Tên phòng"
@@ -208,12 +210,12 @@ export default function EditorRoomImages() {
       <div className={styles.images_area}>
         {renderPhoto(0)} {/* cover */}
 
-          {room.images.length > 0 && (
-              <div className={styles.group} >
-                {renderPhoto(1)}
-                {renderPhoto(2)}
-              </div>
-          )}
+        {room.images.length > 0 && (
+          <div className={styles.group} >
+            {renderPhoto(1)}
+            {renderPhoto(2)}
+          </div>
+        )}
 
         {room.images.length >= 3 && (
           <div className={styles.group}>

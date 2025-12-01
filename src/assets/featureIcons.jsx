@@ -1,12 +1,11 @@
 // src/utils/featureIcons.js
-import { 
-    Wifi, Monitor, Video, Sofa, Snowflake, Microwave, Refrigerator, 
-    Gamepad2, WashingMachine, Heater, LampDesk, Waves, Car, Vault, 
-    Cctv, FireExtinguisher, Icon , House, HousePlus
+import {
+    Wifi, Monitor, Video, Sofa, Snowflake, Microwave, Refrigerator,
+    Gamepad2, WashingMachine, Heater, LampDesk, Waves, Car, Vault,
+    Cctv, FireExtinguisher, Icon, HousePlus
 } from "lucide-react";
 
 import { bathBubble, chairsTableParasol, socketUsa } from "@lucide/lab";
-import { IconSportBillard } from "@tabler/icons-react";
 
 import styles from "../listing/listing.module.css"; // same css classes
 
@@ -23,9 +22,8 @@ export const defaultOptions = [
 export const premiumOptions = [
     { name: 'PS4', icon: <Gamepad2 size={32} className={styles.house_type_icon} /> },
     { name: 'Hồ bơi', icon: <Waves size={32} className={styles.house_type_icon} /> },
-    { name: 'Bàn bida', icon: <IconSportBillard size={32} className={styles.house_type_icon} /> },
     { name: 'Bồn tắm', icon: <Icon iconNode={bathBubble} size={32} className={styles.house_type_icon} /> },
-    { name: 'Phòng xông hơi', icon: <HousePlus  size={32} className={styles.house_type_icon} /> },
+    { name: 'Phòng xông hơi', icon: <HousePlus size={32} className={styles.house_type_icon} /> },
     { name: 'Máy giặt', icon: <WashingMachine size={32} className={styles.house_type_icon} /> },
     { name: 'Bàn làm việc', icon: <LampDesk size={32} className={styles.house_type_icon} /> },
     { name: 'Chổ đậu xe hơi', icon: <Car size={32} className={styles.house_type_icon} /> },
@@ -45,11 +43,10 @@ export const allOptions = [
     ...defaultOptions,
     ...premiumOptions,
     ...safetyOptions,
-  ];
-  
-  // Map for quick lookup by feature name
-  export const featureIconMap = allOptions.reduce((acc, item) => {
+];
+
+// Map for quick lookup by feature name
+export const featureIconMap = allOptions.reduce((acc, item) => {
     acc[item.name] = item.icon;
     return acc;
-  }, {});
-  
+}, {});
