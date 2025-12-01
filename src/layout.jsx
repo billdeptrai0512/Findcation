@@ -1,10 +1,16 @@
 import { Outlet, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useStaycation } from "./map/staycationContext";
 import { AnimatePresence } from 'framer-motion';
-import React from "react";
-const Map = React.lazy(() => import('./map/map.jsx'));
+import Map from './map/map.jsx';
 
 export default function MainLayout() {
   const location = useLocation();
+  const { fetchStaycations } = useStaycation();
+
+  useEffect(() => {
+    fetchStaycations();
+  }, []);
 
   return (
     <>

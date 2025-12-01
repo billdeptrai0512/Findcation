@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
+import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import { useEffect, useState, useRef } from "react";
 import { useUserLocation } from "./userLocationContext";
 import { useStaycation } from "./staycationContext";
@@ -13,17 +13,12 @@ import HouseMarker from "./houseMarker";
 
 export default function Map() {
   const { location } = useUserLocation();
-  const { staycations, fetchStaycations, newStaycation, setNewStaycation } = useStaycation();
+  const { staycations, newStaycation, setNewStaycation } = useStaycation();
   const [GPS, setGPS] = useState({ lat: 16, lng: 109 });
   const [zoom, setZoom] = useState(6);
 
+  const mapRef = useRef(null);
   const markerRefs = useRef({});
-
-  // fetch staycations once
-  useEffect(() => {
-    fetchStaycations();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     if (!staycations?.length) return;
@@ -110,11 +105,12 @@ export default function Map() {
   return (
     <div className={styles.map_box}>
       <div className={styles.mapContainer}>
-        <MapContainer center={GPS} zoom={zoom} className={styles.map}
+        <MapContainer center={GPS} zoom={zoom} whenCreated={(map) => (mapRef.current = map)} className={styles.map}
           preferCanvas={true} scrollWheelZoom={true} zoomControl={false} attributionControl={false} >
 
-          <TileLayer url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png" />
-          <TileLayer url="https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png" />
+          {/* <TileLayer url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png" />
+          <TileLayer url="https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png" /> */}
+          <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
 
           <VietnamBoundaries />
 
@@ -141,32 +137,21 @@ export default function Map() {
 }
 
 function VietnamBoundaries() {
+  const map = useMap();  // <-- always ready after MapContainer mounts
   const [geoData, setGeoData] = useState(null);
 
   useEffect(() => {
-    const fetchGeoJSOn = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/assets/geo/vn_islands.geojson`,
-          { headers: { "ngrok-skip-browser-warning": "true" } }
-        ).then((res) => res.data);
-
-        setGeoData(response.features);
-      } catch (err) {
-        console.error("Fetch staycations failed", err);
-      }
-    };
-
-    fetchGeoJSOn();
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/assets/geo/vn_islands.geojson`, {
+      headers: { "ngrok-skip-browser-warning": "true" }
+    }).then(res => setGeoData(res.data.features));
   }, []);
 
-  if (!geoData) return null;
+  useEffect(() => {
+    if (!geoData) return;
 
-  return (
-    <GeoJSON
-      data={geoData}
-      style={{ color: "black", weight: 0.5, fillOpacity: 0.01, cursor: "unset" }}
-      onEachFeature={(feature, layer) => {
+    const layer = L.geoJSON(geoData, {
+      style: { color: "black", weight: 0.5, fillOpacity: 0.01 },
+      onEachFeature: (feature, layer) => {
         if (feature.properties.ten_tinh === "Khánh Hòa") {
           layer.bindTooltip("quần đảo Trường Sa", {
             permanent: true,
@@ -181,7 +166,11 @@ function VietnamBoundaries() {
             className: "vn-label",
           });
         }
-      }}
-    />
-  );
+      }
+    }).addTo(map);
+
+    return () => map.removeLayer(layer);
+  }, [geoData, map]);
+
+  return null;
 }
