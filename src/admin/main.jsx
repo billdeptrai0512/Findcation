@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive"
 import styles from "./admin.module.css"
-import Logo from "../assets/logo.png"
+import Logo from "../assets/logo.webp"
 import axios from "axios";
 import Staycations from "./staycations";
 import Traffics from "./traffics";
@@ -72,7 +72,7 @@ export default function AdminDashBoard() {
         fetchStaycations();
         fetchSuggestions();
         fetchVerifiedStaycations()
-        
+
     }, []);
 
 
@@ -94,14 +94,14 @@ export default function AdminDashBoard() {
     };
 
     return (
-        <div style={{margin: "0 auto", maxWidth: "680px"}}>
+        <div style={{ margin: "0 auto", maxWidth: "680px" }}>
             {/* header */}
-             <div className={styles.preview_header}>
+            <div className={styles.preview_header}>
 
-                <span style={{display: "flex", justifyContent: "center", alignItems: "center", gap: "8px", cursor: "pointer"}}
+                <span style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "8px", cursor: "pointer" }}
                     onClick={() => navigate("/")}>
-                    <img src={Logo} alt="logo" style={{width: "64px"}} />
-                    <h1>Findcation</h1> 
+                    <img src={Logo} alt="logo" style={{ width: "64px" }} />
+                    <h1>Findcation</h1>
                 </span>
 
                 {/* <button onClick={() => navigate("/")}>
@@ -142,27 +142,27 @@ export default function AdminDashBoard() {
                     suggestion: suggestions.length,
                 }} />
 
-                { 
+                {
                     selected === 'staycation' && (
                         <Staycations staycations={staycations} />
                     )
                 }
 
-                { 
+                {
                     selected === 'traffic' && (
                         <Traffics traffics={traffics} />
                     )
                 }
 
-                { 
+                {
                     selected === 'suggestion' && (
                         <Suggestions suggestions={suggestions} />
                     )
                 }
 
-                
+
             </div>
-  
+
         </div>
     );
 }

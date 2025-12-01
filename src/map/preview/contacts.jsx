@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import axios from "axios";
 
-import FacebookIcon from "../../assets/facebook.png";
-import InstagramIcon from "../../assets/instagram.png";
-import Zalo from "../../assets/zalo.png";
+import FacebookIcon from "../../assets/facebook.webp";
+import InstagramIcon from "../../assets/instagram.webp";
+import Zalo from "../../assets/zalo.webp";
 
 export default function Contacts({ staycation, downloadImage, canvas }) {
 

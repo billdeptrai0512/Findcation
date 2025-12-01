@@ -1,8 +1,8 @@
 
 import { useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
-import { ChevronLeft, X  } from "lucide-react";
-import Logo from "../../assets/logo.png";
+import { ChevronLeft, X } from "lucide-react";
+import Logo from "../../assets/logo.webp";
 import styles from "../map.module.css";
 import Images from "./images";
 import Details from "./details";
@@ -25,7 +25,7 @@ export default function Preview({ staycation }) {
             captureImage().then(setCanvas);
             setLoading(false);
         }, 0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [staycation.id]);
 
     // 👇 Function to take a screenshot
@@ -37,7 +37,7 @@ export default function Preview({ staycation }) {
         const ref = staycationRef.current;
 
         ref.style.overflow = "visible";
-        
+
         const activeImages = [...ref.querySelectorAll("img[class*='active']")];
 
         await Promise.all(
@@ -65,7 +65,7 @@ export default function Preview({ staycation }) {
     const downloadImage = (canvas) => {
         const a = document.createElement("a");
         a.href = canvas.toDataURL("image/png");
-        const fileName = uuidv4(); 
+        const fileName = uuidv4();
         a.download = `${fileName}.png`;
         a.click();
     };
@@ -78,13 +78,13 @@ export default function Preview({ staycation }) {
 
                 <div className={styles.preview_header}>
 
-                    <span style={{display: "flex", alignItems: "center", gap: "8px"}}>
-                        <img src={Logo} alt="logo" style={{width: "64px"}} />
-                        <h1>Findcation</h1> 
+                    <span style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <img src={Logo} alt="logo" style={{ width: "64px" }} />
+                        <h1>Findcation</h1>
                     </span>
 
                     <button onClick={() => navigate("/")}>
-                        <X size={20}/>
+                        <X size={20} />
                     </button>
 
                 </div>
@@ -93,24 +93,24 @@ export default function Preview({ staycation }) {
 
                     <Images listing={staycation} />
 
-                    <Details staycation={staycation} downloadImage={downloadImage} canvas={canvas} loading={loading}/>
-                    
+                    <Details staycation={staycation} downloadImage={downloadImage} canvas={canvas} loading={loading} />
+
                 </div >
             </div>
 
         </div>
-        
+
     );
 
 
 }
 
 function uuidv4() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-    const r = (crypto.getRandomValues(new Uint8Array(1))[0] & 15);
-    const v = c === 'x' ? r : (r & 0x3) | 8;
-    return v.toString(16);
-  });
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+        const r = (crypto.getRandomValues(new Uint8Array(1))[0] & 15);
+        const v = c === 'x' ? r : (r & 0x3) | 8;
+        return v.toString(16);
+    });
 }
 
 
