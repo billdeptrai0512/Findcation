@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
-import styles from "../map.module.css"
+import styles from "./preview.module.css"
 import Preview from "./preview";
 
 
@@ -14,7 +14,7 @@ export default function PreviewStaycation() {
 
     const navigate = useNavigate()
     const { id } = useParams();
-    const [ staycation , setStaycations ] = useState();
+    const [staycation, setStaycations] = useState();
 
     useEffect(() => {
         const fetchStaycation = async () => {
@@ -41,7 +41,7 @@ export default function PreviewStaycation() {
 
     return (
         <div onClick={exitOverLay} className={styles.preview_overlay}>
-            <motion.div key={id} 
+            <motion.div key={id}
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                 exit={{ opacity: 0, x: -50 }} transition={{ duration: 0.5 }}
             >

@@ -1,4 +1,4 @@
-export default function Suggestions({suggestions}) {
+export default function Suggestions({ suggestions }) {
 
     console.log("Suggestions:", suggestions);
 
@@ -6,8 +6,10 @@ export default function Suggestions({suggestions}) {
 
         // Address / create at / verified or not 
         <div style={{ paddingTop: "2em", overflowX: "auto", }}>
-            <table style={{ borderCollapse: "collapse", width: "100%",
-                boxShadow: "0 2px 6px rgba(0,0,0,0.15)",  borderRadius: "8px", overflow: "hidden", }}
+            <table style={{
+                borderCollapse: "collapse", width: "100%",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.15)", borderRadius: "8px", overflow: "hidden",
+            }}
             >
                 <thead style={{ background: "#f5f5f5" }}>
                     <tr>
@@ -31,7 +33,7 @@ export default function Suggestions({suggestions}) {
                             </td>
 
                             <td style={{ padding: "12px", border: "1px solid #ddd", textAlign: "center" }}>
-                                {suggestion.user.email}
+                                {suggestion.user && suggestion.user.email}
                             </td>
 
                             <td style={{ padding: "12px", border: "1px solid #ddd", textAlign: "center" }}>
@@ -42,7 +44,7 @@ export default function Suggestions({suggestions}) {
                 </tbody>
             </table>
         </div>
-        
+
     );
 }
 

@@ -1,18 +1,23 @@
 
 import { useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
-import { ChevronLeft, X } from "lucide-react";
+import { motion } from "framer-motion";
 import Logo from "../../assets/logo.webp";
-import styles from "../map.module.css";
+import styles from "./preview.module.css"
 import Images from "./images";
 import Details from "./details";
+import Suggestion from "./suggestion";
 import html2canvas from "html2canvas";
+import Contacts from "./contacts";
 
 export default function Preview({ staycation }) {
+
+    const [openSuggestions, setOpenSuggestions] = useState(false)
 
     const navigate = useNavigate()
     const [canvas, setCanvas] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [showContacts, setShowContacts] = useState(false)
     const staycationRef = useRef(null);
 
     const [screenshotTaken, setScreenshotTaken] = useState(false);
@@ -70,7 +75,6 @@ export default function Preview({ staycation }) {
         a.click();
     };
 
-
     return (
         <div className={styles.preview_container}>
 
@@ -83,19 +87,47 @@ export default function Preview({ staycation }) {
                         <h1>Findcation</h1>
                     </span>
 
-                    <button onClick={() => navigate("/")}>
-                        <X size={20} />
-                    </button>
+                    <motion.button className={styles.options_button}
+                        onClick={() => setOpenSuggestions(true)}
+                        whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                    >
+                        <p style={{ fontSize: "0.875rem", marginTop: "0" }}>góp ý</p>
+                    </motion.button>
 
                 </div>
 
+                {openSuggestions && <Suggestion setOpenSuggestions={setOpenSuggestions} />}
+
                 <div >
 
-                    <Images listing={staycation} />
+                    <Images staycation={staycation} />
 
                     <Details staycation={staycation} downloadImage={downloadImage} canvas={canvas} loading={loading} />
 
-                </div >
+                </div>
+
+                <div className={styles.preview_footer}>
+
+                    <motion.button className={styles.preview_back_button}
+                        onClick={() => navigate("/")}
+                        whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                    >
+                        <h2 style={{ fontSize: "0.975rem", marginTop: "0", marginBottom: "0" }}>Quay lại</h2>
+                    </motion.button>
+
+                    {!showContacts && <motion.button className={styles.preview_contact_button}
+                        onClick={() => setShowContacts(true)}
+                        whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                    >
+                        <h2 style={{ fontSize: "0.975rem", marginTop: "0", marginBottom: "0" }}>Liên hệ</h2>
+                    </motion.button>}
+
+
+                    {showContacts && <Contacts staycation={staycation} downloadImage={downloadImage} canvas={canvas} />}
+
+                </div>
+
+
             </div>
 
         </div>

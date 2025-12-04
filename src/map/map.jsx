@@ -6,8 +6,8 @@ import "leaflet/dist/leaflet.css";
 import styles from "./map.module.css";
 import L from "leaflet";
 import axios from "axios";
-import Home from "../assets/home.webp"
-import People from "../assets/people.webp"
+import Home from "../assets/home_41x50.webp"
+import People from "../assets/people_41x50.webp"
 import PeopleMarker from "./peopleMarker";
 import HouseMarker from "./houseMarker";
 
