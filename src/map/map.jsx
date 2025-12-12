@@ -78,8 +78,21 @@ export default function Map() {
         });
 
         if (nearestStay && markerRefs.current[nearestStay.id]) {
+          const stayLatLng = L.latLng(
+            nearestStay.location.gps.lat,
+            nearestStay.location.gps.lng
+          );
+
+          // Open popup
           markerRefs.current[nearestStay.id].openPopup();
+
+          // Fly to marker position
+          map.flyTo(stayLatLng, 17, {
+            animate: true,
+            duration: 1,
+          });
         }
+
       }, 2000);
 
       return () => clearTimeout(timeout);

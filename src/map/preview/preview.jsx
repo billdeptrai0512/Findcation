@@ -1,7 +1,7 @@
 
 import { useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Logo from "../../assets/logo.webp";
 import styles from "./preview.module.css"
 import Images from "./images";
@@ -115,6 +115,8 @@ export default function Preview({ staycation }) {
                         <h2 style={{ fontSize: "0.975rem", marginTop: "0", marginBottom: "0" }}>Quay lại</h2>
                     </motion.button>
 
+                    {/* render button contact on top of the img - meaning both render at the start.  */}
+
                     {!showContacts && <motion.button className={styles.preview_contact_button}
                         onClick={() => setShowContacts(true)}
                         whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
@@ -123,7 +125,23 @@ export default function Preview({ staycation }) {
                     </motion.button>}
 
 
-                    {showContacts && <Contacts staycation={staycation} downloadImage={downloadImage} canvas={canvas} />}
+                    <AnimatePresence mode="wait">
+                        {showContacts && (
+                            <motion.div
+                                key="contacts"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: 20 }}
+                                transition={{ duration: 0.25 }}
+                            >
+                                <Contacts
+                                    staycation={staycation}
+                                    downloadImage={downloadImage}
+                                    canvas={canvas}
+                                />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
 
                 </div>
 

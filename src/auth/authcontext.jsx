@@ -1,48 +1,57 @@
-import { createContext, useContext, useState } from 'react';
-import axios from 'axios';
+import { createContext, useContext, useState, useEffect } from "react";
+import axios from "axios";
 
 const AuthContext = createContext();
 
-const AuthProvider = ({ children }) => {
+export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth`, {withCredentials: true})
-  //     .then((res) => {
-  //       console.log(res.data.user)
-  //       res.data.user
-  //     })
-  //     .catch(() => setUser(null))
-  // }, []);
+  // Restore user session on initial load
+  useEffect(() => {
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/me`, { withCredentials: true })
+      .then(res => {
+        setUser(res.data.user);
+      })
+      .catch(() => {
+        setUser(null);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
 
+  // Login
   const login = async (email, password) => {
-  
     try {
-      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/login`, { email, password },
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/auth/login`,
+        { email, password },
         { withCredentials: true }
       );
+
       setUser(res.data.user);
       return res.data.user;
+
     } catch (err) {
-      console.error(err)
+      console.error(err);
       throw err;
     }
-    
   };
 
+  // Logout
   const logout = async () => {
-    await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/logout`);
+    await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/logout`, {}, { withCredentials: true });
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, setUser, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-const useAuth = () => useContext(AuthContext);
-
-// eslint-disable-next-line react-refresh/only-export-components
-export { AuthProvider, useAuth };
+export function useAuth() {
+  return useContext(AuthContext);
+}

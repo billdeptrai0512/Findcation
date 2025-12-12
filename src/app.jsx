@@ -37,6 +37,9 @@ import EditorFeatures from "./host/editor/features";
 import EditorLocation from "./host/editor/location";
 import EditorImages from "./host/editor/images/main";
 
+import AdminRoute from "./admin/adminRoute";
+import HostRoute from "./host/hostRoute";
+
 const Listing = React.lazy(() => import("./listing/main"));
 
 
@@ -79,14 +82,22 @@ const router = createBrowserRouter([
       // { path: "contacts", element: <Contacts /> },
     ]
   },
-  {
+  { // auth here too, prevent user that's not admin to access admin page
     path: "/admin",
-    element: <AdminDashBoard />,
+    element: (
+      <AdminRoute>
+        <AdminDashBoard />
+      </AdminRoute>
+    ),
     errorElement: <ErrorPage />,
   },
-  {
+  { //need Auth to check - this :hostId can't check other hostId
     path: "/host/:hostId",
-    element: <HostDashBoard />,
+    element: (
+      <HostRoute>
+        <HostDashBoard />
+      </HostRoute>
+    ),
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Staycations /> },

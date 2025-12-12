@@ -24,6 +24,8 @@ export default function EditorImages() {
 
     const addImage = async (files) => {
 
+        console.log(files)
+
         const convertFile = async (file) => {
             const isHeic =
                 file.type === "image/heic" ||
@@ -41,6 +43,8 @@ export default function EditorImages() {
             return { file, url: URL.createObjectURL(file) };
         };
 
+
+        //Prevent if there is file bigger than 5MB
         let newImages = [];
         if (files.length > 1) {
             newImages = await Promise.all(Array.from(files).map(convertFile));
