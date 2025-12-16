@@ -20,6 +20,14 @@ export default function EditorRoomImages() {
   const roomIdNum = parseInt(roomId, 10);
   const room = draft?.rooms.find(r => r.id === roomIdNum);
 
+  // DEBUG: Log room data
+  console.log("=== EditorRoomImages DEBUG ===");
+  console.log("roomId:", roomId, "roomIdNum:", roomIdNum);
+  console.log("room:", room);
+  console.log("room.images:", room?.images);
+  console.log("room.images.length:", room?.images?.length);
+  console.log("room.images content:", JSON.stringify(room?.images, null, 2));
+
   if (!room) return null;
 
   // update room name
@@ -116,11 +124,15 @@ export default function EditorRoomImages() {
     const img = room.images[index];
     const emptySlotIndex = room.images.length; // simpler than getEmptySlotIndex
 
+    console.log(`renderPhoto(${index}):`, { img, emptySlotIndex, imagesLength: room.images.length });
+
     // Cover photo (slot 0)
     if (index === 0) {
       if (room.images[0] === undefined) {
+        console.log(`  -> Rendering empty slot for cover`);
         return renderEmptyLastImage(addImage);
       }
+      console.log(`  -> Rendering cover photo`);
       return (
         <Photo
           image={img}
@@ -133,12 +145,20 @@ export default function EditorRoomImages() {
       );
     }
 
-    // Empty slot
+    // Empty slot - this is where the "add" button should appear
     if (index === emptySlotIndex && img === undefined) {
+      console.log(`  -> Rendering empty last slot (add button)`);
       return renderEmptyLastImage(addImage);
     }
 
+    // If img is undefined but it's not the empty slot index, return null
+    if (img === undefined) {
+      console.log(`  -> img is undefined, returning null`);
+      return null;
+    }
+
     // Normal photo
+    console.log(`  -> Rendering normal photo`);
     return (
       <Photo
         image={img}
@@ -192,6 +212,8 @@ export default function EditorRoomImages() {
       </motion.div>
     );
 
+  console.log(room.images.length)
+
   return (
     <motion.div
       className={styles.pageContent} style={{ justifyContent: "unset" }}
@@ -208,8 +230,10 @@ export default function EditorRoomImages() {
       />
 
       <div className={styles.images_area}>
+        {console.log("Desktop render - room.images.length:", room.images.length, room.images)}
         {renderPhoto(0)} {/* cover */}
 
+        {/* Show group 1-2 when there's at least 1 image (to show add button at position 1 or 2) */}
         {room.images.length > 0 && (
           <div className={styles.group} >
             {renderPhoto(1)}
@@ -217,7 +241,8 @@ export default function EditorRoomImages() {
           </div>
         )}
 
-        {room.images.length >= 3 && (
+        {/* Show group 3-4 when there are more than 2 images (to show image 3, 4, or add button) */}
+        {room.images.length > 2 && (
           <div className={styles.group}>
             {renderPhoto(3)}
             {renderPhoto(4)}

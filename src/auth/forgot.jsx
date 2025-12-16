@@ -2,7 +2,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft  } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import axios from 'axios';
 import styles from './login.module.css';
 
@@ -21,7 +21,7 @@ export default function Forgot() {
 
         try {
 
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login/forgot-password`, {email});
+            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login/forgot-password`, { email });
 
             if (response.data?.message === "Reset code sent to email") {
 
@@ -29,7 +29,7 @@ export default function Forgot() {
 
                 return setOnWaiting(true)
             }
-            
+
         } catch (err) {
             console.error('Login failed', err);
             setError('Không có email này trong hệ thống');
@@ -42,24 +42,24 @@ export default function Forgot() {
         if (code === '') return setError('Bạn chưa nhập mã xác nhận.');
 
         try {
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login/verify-pin`, {email, code});
+            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login/verify-pin`, { email, code });
 
             const { token } = response.data;
-            if (token) return navigate(`/auth/reset-password`, {state: { token, email }});
-            
+            if (token) return navigate(`/auth/reset-password`, { state: { token, email } });
+
         } catch (err) {
             console.error('Login failed', err);
             setError('Sai mã xác nhận');
         }
     }
 
-    const renderFormInputEmail = () =>{
+    const renderFormInputEmail = () => {
         return (
             <div className={styles.container}>
                 <div className={styles.card} onClick={(e) => e.stopPropagation()}>
                     <div className={styles.header}>
                         <button onClick={() => navigate('/auth/login')}>
-                            <ChevronLeft size={20} style={{padding: "4px"}}/>
+                            <ChevronLeft size={20} style={{ padding: "4px" }} />
                         </button>
                         <div className={styles.title}>
                             Bạn quên mật khẩu ?
@@ -81,11 +81,11 @@ export default function Forgot() {
                                     className={styles.input}
                                 />
                             </div>
-                            
+
                             <div className={styles.actionLoginRow}>
                                 <motion.button type="submit" className={styles.button}
-                                    whileTap={{scale: 0.95}}>
-                                        Gửi mã xác nhận
+                                    whileTap={{ scale: 0.95 }}>
+                                    Gửi mã xác nhận
                                 </motion.button>
                             </div>
 
@@ -96,7 +96,7 @@ export default function Forgot() {
         )
     }
 
-    const renderFormInputCode = () =>{
+    const renderFormInputCode = () => {
         return (
             <div className={styles.container}>
                 <div className={styles.card} onClick={(e) => e.stopPropagation()}>
@@ -105,7 +105,7 @@ export default function Forgot() {
                             setOnWaiting(false)
                             setError('')
                         }}>
-                            <ChevronLeft size={20} style={{padding: "4px"}}/>
+                            <ChevronLeft size={20} style={{ padding: "4px" }} />
                         </button>
                         <div className={styles.title}>
                             Nhập mã xác nhận
@@ -121,17 +121,17 @@ export default function Forgot() {
                                     id="code"
                                     name="code"
                                     type="number"
-                                    placeholder="6-digits-code"
+                                    placeholder="mã xác nhận"
                                     value={code}
                                     onChange={(e) => setCode(e.target.value)}
                                     className={styles.input}
                                 />
                             </div>
-                            
+
                             <div className={styles.actionLoginRow}>
                                 <motion.button type="submit" className={styles.button}
-                                    whileTap={{scale: 0.95}}>
-                                        Tiếp tục
+                                    whileTap={{ scale: 0.95 }}>
+                                    Tiếp tục
                                 </motion.button>
                             </div>
 

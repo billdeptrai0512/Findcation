@@ -64,7 +64,13 @@ const ListingProvider = ({ children }) => {
     }
 
     const uploadImages = async (files) => {
-        if (!files || files.length === 0) return;
+        console.log("=== uploadImages CALLED ===");
+        console.log("Files received:", files?.length, Array.from(files || []).map(f => ({ name: f.name, size: f.size, lastModified: f.lastModified })));
+
+        if (!files || files.length === 0) {
+            console.log("No files, returning early");
+            return;
+        }
 
         const convertFile = async (file) => {
 
@@ -84,19 +90,47 @@ const ListingProvider = ({ children }) => {
             return { file, url: URL.createObjectURL(file) };
         };
 
-        if (files.length > 1) {
-            const newImages = await Promise.all(Array.from(files).map(convertFile));
-            setListing((prev) => ({
+        // Helper to check if file already exists in images array
+        const isDuplicate = (file, existingImages) => {
+            const found = existingImages.some((img) =>
+                img.file &&
+                img.file.name === file.name &&
+                img.file.size === file.size &&
+                img.file.lastModified === file.lastModified
+            );
+            console.log(`Checking duplicate for ${file.name}: ${found}`);
+            return found;
+        };
+
+        const filesToProcess = Array.from(files);
+        console.log("Files to process:", filesToProcess.length);
+
+        const newImages = await Promise.all(filesToProcess.map(convertFile));
+        console.log("Converted images:", newImages.length);
+
+        setListing((prev) => {
+            console.log("Current images in state:", prev.images.length, prev.images.map(img => img.file?.name));
+
+            // Filter out any images that already exist in the current state
+            const uniqueNewImages = newImages.filter(
+                (newImg) => !isDuplicate(newImg.file, prev.images)
+            );
+
+            console.log("Unique new images to add:", uniqueNewImages.length);
+
+            if (uniqueNewImages.length === 0) {
+                console.log("All duplicates, returning prev state");
+                return prev;
+            }
+
+            const finalImages = [...prev.images, ...uniqueNewImages];
+            console.log("Final images count:", finalImages.length);
+
+            return {
                 ...prev,
-                images: [...prev.images, ...newImages],
-            }));
-        } else {
-            const data = await convertFile(files[0]);
-            setListing((prev) => ({
-                ...prev,
-                images: [...prev.images, data],
-            }));
-        }
+                images: finalImages,
+            };
+        });
     };
 
     const removeImage = (index) => {

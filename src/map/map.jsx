@@ -87,7 +87,7 @@ export default function Map() {
           markerRefs.current[nearestStay.id].openPopup();
 
           // Fly to marker position
-          map.flyTo(stayLatLng, 17, {
+          map.flyTo(stayLatLng, 15, {
             animate: true,
             duration: 1,
           });

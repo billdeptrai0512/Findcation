@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import {motion} from "framer-motion"
+import { motion } from "framer-motion"
 import { useState } from 'react';
 import { useNavigate, } from 'react-router-dom';
 import { useAuth } from './authContext';
@@ -22,14 +22,11 @@ export default function SubmitEmail() {
         e.preventDefault();
 
         if (email === "") return setError("* Thông tin này là bắt buộc")
-        
+
         try {
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login/email`, {email});
+            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login/email`, { email });
 
             const { hasPassword, hasRegister } = response.data;
-
-            console.log("hasPassword" + hasPassword)
-            console.log("hasRegister" + hasRegister)
 
             // if we not found email -> we return hasRegister = false -> we pop up Register Form with the email
             if (hasRegister === false) return setFoundEmail(false)
@@ -53,7 +50,7 @@ export default function SubmitEmail() {
         } catch (err) {
             console.error('Login failed', err);
 
-        } 
+        }
     };
 
     const handleGoogleLogin = async (credentialResponse) => {
@@ -80,64 +77,64 @@ export default function SubmitEmail() {
         }
     };
 
-    if (foundEmail === false || hasPassword === false) return navigate("/auth/register", {state: {email: email}}) 
+    if (foundEmail === false || hasPassword === false) return navigate("/auth/register", { state: { email: email } })
 
-    if (foundEmail === true && hasPassword === true) return <SubmitPassword email={email} setFoundEmail={setFoundEmail}/>
-    
+    if (foundEmail === true && hasPassword === true) return <SubmitPassword email={email} setFoundEmail={setFoundEmail} />
+
 
     return (
-        <motion.div className={styles.container} initial={{ opacity: 0 }}animate={{ opacity: 1 }}>
-                <div className={styles.card} onClick={(e) => e.stopPropagation()}>
-                    <div className={styles.header}>
-                        <button onClick={() => navigate('/')}>
-                            <X size={20} style={{padding: "4px"}}/>
-                        </button>
-                        <div className={styles.title}>
-                            Đăng nhập
-                        </div>
-                    </div>
-                    <div className={styles.panel}>
-                        <h1>Chào mừng bạn tham gia Findcation</h1>
-                        <form onSubmit={handleSubmitEmail}>
-
-                            {error && <p className={styles.error}>{error}</p>}
-
-                            <div className={styles.inputGroup}>
-                                <input
-                                    id="email"
-                                    name="username"
-                                    type="email"
-                                    placeholder="Email"
-                                    autoComplete="username"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className={styles.input}
-                                />
-                            </div>
-                            
-                            <div className={styles.actionLoginRow}>
-                                <motion.button type="submit" className={styles.button}        
-                                    whileTap={{scale: 0.95}} >
-                                        Tiếp tục
-                                </motion.button>
-                            </div>
-                            
-                        </form>
-
-                        <div className={styles.actionRegisterRow}>
-                            <div className={styles.line}></div>
-                            <p>hoặc</p>
-                            <div className={styles.line}></div>
-                        </div>
-
-                        <div className={styles.googleWrapper}>
-                            <GoogleLogin
-                                onSuccess={handleGoogleLogin}
-                                onError={() => console.log('Google Login Failed')}
-                            />
-                        </div>
+        <motion.div className={styles.container} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <div className={styles.card} onClick={(e) => e.stopPropagation()}>
+                <div className={styles.header}>
+                    <button onClick={() => navigate('/')}>
+                        <X size={20} style={{ padding: "4px" }} />
+                    </button>
+                    <div className={styles.title}>
+                        Đăng nhập
                     </div>
                 </div>
+                <div className={styles.panel}>
+                    <h1>Chào mừng bạn tham gia Findcation</h1>
+                    <form onSubmit={handleSubmitEmail}>
+
+                        {error && <p className={styles.error}>{error}</p>}
+
+                        <div className={styles.inputGroup}>
+                            <input
+                                id="email"
+                                name="username"
+                                type="email"
+                                placeholder="Email"
+                                autoComplete="username"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className={styles.input}
+                            />
+                        </div>
+
+                        <div className={styles.actionLoginRow}>
+                            <motion.button type="submit" className={styles.button}
+                                whileTap={{ scale: 0.95 }} >
+                                Tiếp tục
+                            </motion.button>
+                        </div>
+
+                    </form>
+
+                    <div className={styles.actionRegisterRow}>
+                        <div className={styles.line}></div>
+                        <p>hoặc</p>
+                        <div className={styles.line}></div>
+                    </div>
+
+                    <div className={styles.googleWrapper}>
+                        <GoogleLogin
+                            onSuccess={handleGoogleLogin}
+                            onError={() => console.log('Google Login Failed')}
+                        />
+                    </div>
+                </div>
+            </div>
         </motion.div>
     );
 }

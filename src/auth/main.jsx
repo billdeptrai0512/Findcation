@@ -18,11 +18,9 @@ export default function Auth() {
   return (
     <AnimatePresence mode="wait">
       <div onClick={exitOverLay} className={styles.preview_overlay} >
-          <Outlet key={location.pathname} />
+        <Outlet key={location.pathname} />
       </div>
     </AnimatePresence>
   );
-
-  
 
 }
