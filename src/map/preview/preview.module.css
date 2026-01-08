@@ -96,10 +96,9 @@
   display: flex;
   justify-content: space-between;
   gap: 2rem;
-  padding: 10px;
+  padding: 12px;
   margin: 0 auto;
-  max-width: 310px;
-  min-width: 300px;
+  max-width: 300px;
 }
 
 .preview_back_button {
@@ -127,8 +126,8 @@
 
 .options_button {
   border: 1px solid #DDDDDD;
-  background-color: white;
-  padding: 16px;
+  box-shadow: #DDDDDD 0px 0px 0px 1px;
+  padding: 12px;
   cursor: pointer;
   font-size: 0.875rem;
   font-weight: 500;

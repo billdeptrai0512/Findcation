@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { MoveRight } from "lucide-react";
 import styles from "./map.module.css";
+import axios from "axios";
 
 export default function Staycation({ staycation }) {
 
@@ -11,10 +12,21 @@ export default function Staycation({ staycation }) {
         return parseInt(price, 10).toLocaleString("vi-VN") + "đ";
     };
 
-    console.log(staycation)
+    //save traffic
+    const countAsTraffic = async () => {
+
+        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/traffic/${staycation.id}`, {
+            trafficType: "VIEW",
+            platform: "NULL",
+            sessionId: localStorage.getItem("traffic_session")
+        });
+
+        navigate(`/staycation/${staycation.id}`)
+
+    };
 
     return (
-        <div className={styles.listing} style={{ cursor: "pointer" }} onClick={() => { navigate(`/staycation/${staycation.id}`) }}>
+        <div className={styles.listing} style={{ cursor: "pointer" }} onClick={countAsTraffic}>
             <div style={{ position: "relative" }}>
                 <img src={`${import.meta.env.VITE_IMAGEKIT_URL}${staycation.images[0]}`} alt="cover_photo"
                     style={{

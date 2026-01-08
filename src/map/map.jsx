@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, useMap, ZoomControl } from "react-leaflet";
 import { useEffect, useState, useRef } from "react";
 import { useUserLocation } from "./userLocationContext";
 import { useStaycation } from "./staycationContext";
@@ -79,8 +79,8 @@ export default function Map() {
 
         if (nearestStay && markerRefs.current[nearestStay.id]) {
           const stayLatLng = L.latLng(
-            nearestStay.location.gps.lat,
-            nearestStay.location.gps.lng
+            (nearestStay.location.gps.lat + 0.0042), // 0.0042 to make the marker stay middle low in mobile screen
+            (nearestStay.location.gps.lng)
           );
 
           // Open popup
@@ -89,11 +89,11 @@ export default function Map() {
           // Fly to marker position
           map.flyTo(stayLatLng, 15, {
             animate: true,
-            duration: 1,
+            duration: 0.75,
           });
         }
 
-      }, 2000);
+      }, 860);
 
       return () => clearTimeout(timeout);
     }
@@ -118,25 +118,20 @@ export default function Map() {
   return (
     <div className={styles.map_box}>
       <div className={styles.mapContainer}>
-        <MapContainer center={GPS} zoom={zoom} whenCreated={(map) => (mapRef.current = map)} className={styles.map}
-          preferCanvas={true} scrollWheelZoom={true} zoomControl={false} attributionControl={false} >
+        <MapContainer center={GPS} zoom={zoom} zoomControl={false} whenCreated={(map) => (mapRef.current = map)} className={styles.map}
+          preferCanvas={true} scrollWheelZoom={true} attributionControl={false} >
 
           {/* <TileLayer url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png" />
           <TileLayer url="https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png" /> */}
           <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
 
+          {/* <ZoomControl position="bottomright" style={{ zIndex: 1000 }} /> */}
+
           <VietnamBoundaries />
 
           {staycations && staycations.map((stay) => (
-            <HouseMarker key={stay.id} markerRefs={markerRefs}
-              stay={stay} iconUrl={Home} styles={styles}
-              onClick={(marker, map) => {
-                marker.openPopup();
-                map.flyTo(marker.getLatLng(), map.getZoom(), {
-                  animate: true,
-                  duration: 0.75,
-                });
-              }}
+            <HouseMarker key={stay.id} stay={stay} styles={styles}
+              iconUrl={Home} markerRefs={markerRefs}
               ref={(ref) => (markerRefs.current[stay.id] = ref)}
             />
           ))}

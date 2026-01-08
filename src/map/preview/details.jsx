@@ -1,4 +1,4 @@
-import { ArrowDown } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import styles from "./preview.module.css"
 import Features from "./features";
 
@@ -8,37 +8,37 @@ export default function Details({ staycation, downloadImage, canvas, loading }) 
 
     return (
 
-        <div className={styles.preview_details} style={{ justifyContent: "space-between" }}>
+        <div className={styles.preview_details} style={{ justifyContent: "space-between", gap: "8px", padding: "0 8px" }}>
 
-            <div style={{ display: "flex", justifyContent: "space-between", borderBottom: '1px solid rgba(0,0,0,0.04)', padding: '18px 0' }}>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", padding: '8px', boxShadow: '0 5px 10px rgba(0,0,0,0.1)', borderRadius: '4px' }}>
                 <h2 style={{ fontSize: "1.1075rem", overflow: "hidden", marginTop: "0" }}>Tiêu đề</h2>
-                <span>{staycation.name}</span>
+                <span style={{ fontSize: "0.975rem", overflow: "hidden" }}>{staycation.name}</span>
             </div>
 
-            <div style={{ display: "flex", justifyContent: "space-between", borderBottom: '1px solid rgba(0,0,0,0.04)', padding: '18px 0' }}>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", padding: '8px', boxShadow: '0 5px 10px rgba(0,0,0,0.1)', borderRadius: '4px' }}>
                 <h2 style={{ fontSize: "1.1075rem", overflow: "hidden", marginTop: "0" }}>Cho thuê</h2>
-                <span>{houseType}</span>
+                <span style={{ fontSize: "0.975rem", overflow: "hidden" }}>{houseType}</span>
             </div>
 
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: '1px solid rgba(0,0,0,0.04)', padding: '8px 0', flex: "1", width: "100%" }}>
-                <h2 style={{ fontSize: "1.1075rem", marginTop: "0" }}>Chi phí</h2>
-                <div style={{ fontSize: "0.975rem", padding: "12px 0", flex: "1", alignItems: "end", display: "flex", flexDirection: "column", gap: "4px" }}>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", padding: '8px', boxShadow: '0 5px 10px rgba(0,0,0,0.1)', borderRadius: '4px' }}>
+                <h2 style={{ fontSize: "1.1075rem", overflow: "hidden", marginTop: "0" }}>Chi phí</h2>
+                <div style={{ fontSize: "0.975rem", flex: "1", display: "flex", gap: "4px", alignItems: "center" }}>
                     <span >{Number(staycation.prices.min).toLocaleString("vi-VN")}đ</span>
-                    <span style={{ transform: "translateX(-200%)" }} > <ArrowDown strokeWidth={1.5} size={15} /> </span>
+                    <ArrowRight strokeWidth={1.5} size={15} />
                     <span >{Number(staycation.prices.max).toLocaleString("vi-VN")}đ</span>
                 </div>
             </div>
 
-            <Features staycation={staycation} />
-
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: '8px 0', flex: "1", width: "100%" }}>
-                <h2 style={{ fontSize: "1.1075rem", marginTop: "0" }}>Địa chỉ </h2>
-                <div style={{ fontSize: "0.975rem", padding: "12px 0", flex: "1", textAlign: "end", display: "flex", flexDirection: "column", gap: "4px" }}>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", padding: '8px', boxShadow: '0 5px 10px rgba(0,0,0,0.1)', borderRadius: '4px', }}>
+                <h2 style={{ fontSize: "1.1075rem", overflow: "hidden", marginTop: "0" }}>Địa chỉ </h2>
+                <div style={{ fontSize: "0.975rem", padding: "4px 0", display: "flex", flexDirection: "column", gap: "4px" }}>
                     <span >{staycation.location.details.street}</span>
-                    <span >{staycation.location.details.ward}</span>
-                    <span >{staycation.location.details.city}</span>
+                    <span >{staycation.location.details.ward} - {staycation.location.details.city}</span>
+                    <span ></span>
                 </div>
             </div>
+
+            <Features staycation={staycation} />
 
             {/* <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "2em", flex: "1", width: "100%" }}>
 

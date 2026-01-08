@@ -40,6 +40,7 @@ import EditorImages from "./host/editor/images/main";
 import AdminRoute from "./admin/adminRoute";
 import HostRoute from "./host/hostRoute";
 
+
 const Listing = React.lazy(() => import("./listing/main"));
 
 
@@ -125,6 +126,10 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
+
+  const sessionId = crypto.randomUUID();
+  localStorage.setItem("traffic_session", sessionId);
+
   return (
     <GoogleOAuthProvider clientId={import.meta.env.VITE_OAUTH_CLIENT_ID}>
       <AuthProvider>

@@ -38,7 +38,7 @@ export default function Suggestion({ setOpenSuggestions }) {
                         <X size={20} style={{ padding: "4px" }} />
                     </button>
                     <div className={styles.title}>
-                        Góp ý
+                        Báo lỗi
                     </div>
                 </div>
                 <div className={styles.panel}>
@@ -47,7 +47,7 @@ export default function Suggestion({ setOpenSuggestions }) {
                             <textarea
                                 id="message"
                                 name="message"
-                                placeholder="Bạn nghĩ điều gì chưa tốt và nên được cải thiện ?"
+                                placeholder="Chuyện gì đã xảy ra ?"
                                 rows={4}
                                 value={message}
                                 style={{ resize: "none" }}

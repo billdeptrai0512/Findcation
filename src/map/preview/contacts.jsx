@@ -8,19 +8,20 @@ import FacebookIcon from "../../assets/facebook.webp";
 import InstagramIcon from "../../assets/instagram.webp";
 import Zalo from "../../assets/zalo.webp";
 
-export default function Contacts({ staycation, downloadImage, canvas }) {
+export default function Contacts({ staycation }) {
 
     const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
     const handleClick = (platform, url) => async (e) => {
         e.preventDefault(); // prevent default navigation
+
         await axios.post(`${import.meta.env.VITE_BACKEND_URL}/traffic/${staycation.id}`, {
-            contactType: platform
+            trafficType: "CONTACT_SUCCESS",
+            platform: platform,
+            sessionId: localStorage.getItem("traffic_session")
         });
-        await downloadImage(canvas); // download the canvas first
-        setTimeout(() => {
-            window.open(url, "_blank");
-        }, 888);
+
+        window.open(url, "_blank");
     };
 
     const { contacts } = staycation.host;
@@ -29,17 +30,17 @@ export default function Contacts({ staycation, downloadImage, canvas }) {
 
     return (
         <motion.div transition={{ type: "spring", stiffness: 300 }}
-            style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px" }}>
+            style={{ display: "flex", alignItems: "center", gap: "8px", padding: '8px', boxShadow: '0 5px 10px rgba(0,0,0,0.2)', border: "2px solid rgba(0,0,0,0.1)", borderRadius: '16px' }}>
 
             {/* <h2 style={{ fontSize: "1.1075rem", marginTop: "0" }}> Liên lạc </h2> */}
 
-            <div style={{ display: "flex", borderRadius: "8px", gap: "1em" }}>
+            <div style={{ display: "flex", borderRadius: "8px", gap: "1em", padding: "0 12px", justifyContent: "space-between" }}>
 
                 <motion.span
                     initial={{ scale: 1, y: 3 }}
                     whileHover={{ scale: 1.1, y: 3 }}
                     whileTap={{ scale: 0.9, y: 3 }}
-                    transition={{ type: "spring", stiffness: 300 }}>
+                    transition={{ type: "easeOut", stiffness: 300 }}>
                     {contacts.facebook !== "" &&
                         <Link to={`${facebookUrl}${contacts.facebook}`}
                             target="_blank"
@@ -55,7 +56,7 @@ export default function Contacts({ staycation, downloadImage, canvas }) {
                     initial={{ scale: 1, y: 3 }}
                     whileHover={{ scale: 1.1, y: 3 }}
                     whileTap={{ scale: 0.9, y: 3 }}
-                    transition={{ type: "spring", stiffness: 300 }}>
+                    transition={{ type: "easeOut", stiffness: 100 }}>
                     {contacts.instagram !== "" &&
                         <Link to={`${instagramUrl}${contacts.instagram}`}
                             target="_blank"
@@ -68,10 +69,10 @@ export default function Contacts({ staycation, downloadImage, canvas }) {
                 </motion.span>
 
                 <motion.span
-                    initial={{ scale: 1, y: -1, x: -2 }}
-                    whileHover={{ scale: 1.1, y: -1, x: -2 }}
-                    whileTap={{ scale: 0.9, y: -1, x: -2 }}
-                    transition={{ type: "spring", stiffness: 300 }}>
+                    initial={{ scale: 1, y: -1, x: -1 }}
+                    whileHover={{ scale: 1.1, y: -1, x: -1 }}
+                    whileTap={{ scale: 0.9, y: -1, x: -1 }}
+                    transition={{ type: "easeOut", stiffness: 100 }}>
                     {contacts.zalo !== "" &&
                         <Link to={`https://zalo.me/${contacts.zalo}`}
                             target="_blank"

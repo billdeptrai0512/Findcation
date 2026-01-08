@@ -31,7 +31,9 @@ export default function SubmitEmail() {
             // if we not found email -> we return hasRegister = false -> we pop up Register Form with the email
             if (hasRegister === false) return setFoundEmail(false)
 
-
+            // there will only 2 kind of login -> gooogleLogin + googleCodeLogin
+            // which mean, if they enter email -> we send code via google to login
+            // if they use googleLogin -> then just log them in
             if (hasRegister === true && hasPassword === false) {
                 setHasPassword(false)
                 setFoundEmail(true)
@@ -80,7 +82,6 @@ export default function SubmitEmail() {
     if (foundEmail === false || hasPassword === false) return navigate("/auth/register", { state: { email: email } })
 
     if (foundEmail === true && hasPassword === true) return <SubmitPassword email={email} setFoundEmail={setFoundEmail} />
-
 
     return (
         <motion.div className={styles.container} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>

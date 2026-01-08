@@ -62,7 +62,7 @@
 
 .cta_div {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   /* width: 100%; */
   gap: 1em;
@@ -79,7 +79,7 @@
   cursor: pointer;
   font-weight: 500;
   font-family: 'Inter', sans-serif;
-  flex: 1;
+  /* flex: 1; */
 }
 
 .nearby_button {

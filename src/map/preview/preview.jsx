@@ -9,6 +9,9 @@ import Details from "./details";
 import Suggestion from "./suggestion";
 import html2canvas from "html2canvas";
 import Contacts from "./contacts";
+import { ArrowLeft } from "lucide-react";
+
+import axios from "axios";
 
 export default function Preview({ staycation }) {
 
@@ -32,6 +35,18 @@ export default function Preview({ staycation }) {
         }, 0);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [staycation.id]);
+
+    const countAsTraffic = async () => {
+
+        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/traffic/${staycation.id}`, {
+            trafficType: "CONTACT_CLICK",
+            platform: "NULL",
+            sessionId: localStorage.getItem("traffic_session")
+        });
+
+        return setShowContacts(true)
+
+    };
 
     // 👇 Function to take a screenshot
 
@@ -82,17 +97,25 @@ export default function Preview({ staycation }) {
 
                 <div className={styles.preview_header}>
 
-                    <span style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                        <img src={Logo} alt="logo" style={{ width: "64px" }} />
-                        <h1>Findcation</h1>
-                    </span>
-
                     <motion.button className={styles.options_button}
+                        onClick={() => navigate("/")}
+                        whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                    >
+                        <p style={{ fontSize: "1rem", marginTop: "0" }}><ArrowLeft size={18} />    </p>
+                    </motion.button>
+
+                    <h1>Findcation</h1>
+
+
+                    <img src={Logo} alt="logo" style={{ width: "64px" }} />
+
+
+                    {/* <motion.button className={styles.options_button}
                         onClick={() => setOpenSuggestions(true)}
                         whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
                     >
-                        <p style={{ fontSize: "0.875rem", marginTop: "0" }}>góp ý</p>
-                    </motion.button>
+                        <p style={{ fontSize: "0.875rem", marginTop: "0" }}>!</p>
+                    </motion.button> */}
 
                 </div>
 
@@ -108,20 +131,20 @@ export default function Preview({ staycation }) {
 
                 <div className={styles.preview_footer}>
 
-                    <motion.button className={styles.preview_back_button}
-                        onClick={() => navigate("/")}
+                    <motion.button className={styles.options_button}
+                        onClick={() => setOpenSuggestions(true)}
                         whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
                     >
-                        <h2 style={{ fontSize: "0.975rem", marginTop: "0", marginBottom: "0" }}>Quay lại</h2>
+                        <h2 style={{ fontSize: "0.975rem", marginTop: "0", marginBottom: "0" }}>Báo lỗi</h2>
                     </motion.button>
 
                     {/* render button contact on top of the img - meaning both render at the start.  */}
 
                     {!showContacts && <motion.button className={styles.preview_contact_button}
-                        onClick={() => setShowContacts(true)}
+                        onClick={countAsTraffic}
                         whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
                     >
-                        <h2 style={{ fontSize: "0.975rem", marginTop: "0", marginBottom: "0" }}>Liên hệ</h2>
+                        <h2 style={{ fontSize: "0.975rem", marginTop: "0", marginBottom: "0" }}>Nhắn cho chủ nhà</h2>
                     </motion.button>}
 
 
@@ -129,15 +152,13 @@ export default function Preview({ staycation }) {
                         {showContacts && (
                             <motion.div
                                 key="contacts"
-                                initial={{ opacity: 0, y: 20 }}
+                                initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: 20 }}
+                                exit={{ opacity: 0, y: 10 }}
                                 transition={{ duration: 0.25 }}
                             >
                                 <Contacts
                                     staycation={staycation}
-                                    downloadImage={downloadImage}
-                                    canvas={canvas}
                                 />
                             </motion.div>
                         )}
