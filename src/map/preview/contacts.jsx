@@ -2,7 +2,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-import axios from "axios";
+import { ShieldCheck } from "lucide-react";
+import { apiClient } from "../../config/api";
+import styles from "./contacts.module.css";
 
 import FacebookIcon from "../../assets/facebook.webp";
 import InstagramIcon from "../../assets/instagram.webp";
@@ -15,7 +17,7 @@ export default function Contacts({ staycation }) {
     const handleClick = (platform, url) => async (e) => {
         e.preventDefault(); // prevent default navigation
 
-        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/traffic/${staycation.id}`, {
+        await apiClient.post(`/traffic/${staycation.id}`, {
             trafficType: "CONTACT_SUCCESS",
             platform: platform,
             sessionId: localStorage.getItem("traffic_session")
@@ -29,64 +31,95 @@ export default function Contacts({ staycation }) {
     const instagramUrl = isMobile ? `instagram://user?username=` : `https://www.instagram.com/`
 
     return (
-        <motion.div transition={{ type: "spring", stiffness: 300 }}
-            style={{ display: "flex", alignItems: "center", gap: "8px", padding: '8px', boxShadow: '0 5px 10px rgba(0,0,0,0.2)', border: "2px solid rgba(0,0,0,0.1)", borderRadius: '16px' }}>
+        <motion.div
+            className={styles.contacts_container}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+        >
+            {/* Header with security badge */}
+            <div className={styles.contacts_header}>
+                <div className={styles.security_badge}>
+                    <ShieldCheck size={18} strokeWidth={2.5} />
+                    <span>Thông tin liên hệ</span>
+                </div>
+                <p className={styles.contacts_subtitle}>
+                    Liên hệ trực tiếp với chủ nhà qua các kênh sau
+                </p>
+            </div>
 
-            {/* <h2 style={{ fontSize: "1.1075rem", marginTop: "0" }}> Liên lạc </h2> */}
+            {/* Contact icons */}
+            <div className={styles.contacts_icons}>
 
-            <div style={{ display: "flex", borderRadius: "8px", gap: "1em", padding: "0 12px", justifyContent: "space-between" }}>
-
-                <motion.span
-                    initial={{ scale: 1, y: 3 }}
-                    whileHover={{ scale: 1.1, y: 3 }}
-                    whileTap={{ scale: 0.9, y: 3 }}
-                    transition={{ type: "easeOut", stiffness: 300 }}>
-                    {contacts.facebook !== "" &&
-                        <Link to={`${facebookUrl}${contacts.facebook}`}
+                {contacts.facebook !== "" && (
+                    <motion.div
+                        className={styles.contact_item}
+                        whileHover={{ y: -4 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        <Link
+                            to={`${facebookUrl}${contacts.facebook}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={handleClick("FACEBOOK", `${facebookUrl}${contacts.facebook}`)}
+                            className={styles.contact_link}
                         >
-                            <img src={FacebookIcon} alt="" style={{ width: "34px" }} />
+                            <div className={styles.icon_wrapper}>
+                                <img src={FacebookIcon} alt="Facebook" />
+                            </div>
+                            <span className={styles.contact_label}>Facebook</span>
                         </Link>
-                    }
-                </motion.span>
+                    </motion.div>
+                )}
 
-                <motion.span
-                    initial={{ scale: 1, y: 3 }}
-                    whileHover={{ scale: 1.1, y: 3 }}
-                    whileTap={{ scale: 0.9, y: 3 }}
-                    transition={{ type: "easeOut", stiffness: 100 }}>
-                    {contacts.instagram !== "" &&
-                        <Link to={`${instagramUrl}${contacts.instagram}`}
+                {contacts.instagram !== "" && (
+                    <motion.div
+                        className={styles.contact_item}
+                        whileHover={{ y: -4 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        <Link
+                            to={`${instagramUrl}${contacts.instagram}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={handleClick("INSTAGRAM", `${instagramUrl}${contacts.instagram}`)}
+                            className={styles.contact_link}
                         >
-                            <img src={InstagramIcon} alt="" style={{ width: "34px" }} />
+                            <div className={styles.icon_wrapper}>
+                                <img src={InstagramIcon} alt="Instagram" />
+                            </div>
+                            <span className={styles.contact_label}>Instagram</span>
                         </Link>
-                    }
-                </motion.span>
+                    </motion.div>
+                )}
 
-                <motion.span
-                    initial={{ scale: 1, y: -1, x: -1 }}
-                    whileHover={{ scale: 1.1, y: -1, x: -1 }}
-                    whileTap={{ scale: 0.9, y: -1, x: -1 }}
-                    transition={{ type: "easeOut", stiffness: 100 }}>
-                    {contacts.zalo !== "" &&
-                        <Link to={`https://zalo.me/${contacts.zalo}`}
+                {contacts.zalo !== "" && (
+                    <motion.div
+                        className={styles.contact_item}
+                        whileHover={{ y: -4 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        <Link
+                            to={`https://zalo.me/${contacts.zalo}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={handleClick("ZALO", `https://zalo.me/${contacts.zalo}`)}
+                            className={styles.contact_link}
                         >
-                            <img src={Zalo} alt="" style={{ width: "42px" }} />
+                            <div className={styles.icon_wrapper}>
+                                <img src={Zalo} alt="Zalo" />
+                            </div>
+                            <span className={styles.contact_label}>Zalo</span>
                         </Link>
-                    }
-                </motion.span>
-
+                    </motion.div>
+                )}
 
             </div>
 
+            {/* Trust footer */}
+            <div className={styles.contacts_footer}>
+                <p>💡 Mẹo: Hỏi về giá, vị trí và tiện nghi trước khi đặt phòng</p>
+            </div>
 
         </motion.div>
     )

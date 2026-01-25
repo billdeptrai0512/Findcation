@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
+import { apiClient } from "../config/api";
+import { handleApiError } from "../utils/errorHandler";
 
 const HostContext = createContext(null);
 
@@ -9,18 +10,18 @@ export function useHost() {
 }
 
 export function HostProvider({ hostId, children }) {
-    
-    const [, setLoading] = useState(true)
-    const [host, setHost] = useState(null)
-        
+
+    const [loading, setLoading] = useState(true);
+    const [host, setHost] = useState(null);
+
     const fetchHost = async () => {
+        setLoading(true);
+
         try {
-            const response = await axios.get( `${import.meta.env.VITE_BACKEND_URL}/auth/${hostId}`,
-                { headers: { "ngrok-skip-browser-warning": "true" } }
-            );
+            const response = await apiClient.get(`/auth/${hostId}`);
             setHost(response.data);
         } catch (err) {
-            console.error("Error fetching host:", err);
+            handleApiError(err, 'Fetch Host');
         } finally {
             setLoading(false);
         }
@@ -28,7 +29,7 @@ export function HostProvider({ hostId, children }) {
 
     useEffect(() => {
         if (hostId) fetchHost();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [hostId]);
 
     const updateStaycation = (staycationId, changes) => {
@@ -54,8 +55,8 @@ export function HostProvider({ hostId, children }) {
 
     return (
         <HostContext.Provider
-            value={{ host, updateStaycation, refreshHost }}>
-                {children}
+            value={{ host, loading, updateStaycation, refreshHost }}>
+            {children}
         </HostContext.Provider>
     );
 

@@ -1,6 +1,9 @@
-import axios from "axios";
-import { convertHEIC } from "../utils/convertHeic";
 import { createContext, useContext, useState } from "react";
+import { apiClient } from "../config/api";
+import { logger } from "../utils/logger";
+import { handleApiError } from "../utils/errorHandler";
+import { processImages, filterDuplicates } from "../utils/imageProcessor";
+import { LIMITS, MESSAGES, generateVerificationCode } from "../utils/constants";
 
 const ListingContext = createContext();
 
@@ -24,9 +27,9 @@ const ListingProvider = ({ children }) => {
             },
         },
         contacts: {
-            zalo: { url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString() },
-            facebook: { url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString() },
-            instagram: { url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString() },
+            zalo: { url: null, verified: false, code: generateVerificationCode() },
+            facebook: { url: null, verified: false, code: generateVerificationCode() },
+            instagram: { url: null, verified: false, code: generateVerificationCode() },
         },
         prices: { min: '', max: '' },
         features: [],
@@ -38,7 +41,7 @@ const ListingProvider = ({ children }) => {
 
         const name = e.target.value
 
-        if (name.length <= 32) {
+        if (name.length <= LIMITS.MAX_TITLE_LENGTH) {
             setListing((prev) => ({
                 ...prev,
                 name: name,
@@ -64,73 +67,30 @@ const ListingProvider = ({ children }) => {
     }
 
     const uploadImages = async (files) => {
-        console.log("=== uploadImages CALLED ===");
-        console.log("Files received:", files?.length, Array.from(files || []).map(f => ({ name: f.name, size: f.size, lastModified: f.lastModified })));
-
         if (!files || files.length === 0) {
-            console.log("No files, returning early");
+            logger.log('No files provided for upload');
             return;
         }
 
-        const convertFile = async (file) => {
+        try {
+            const newImages = await processImages(files);
 
-            const isHeic =
-                file.type === "image/heic" ||
-                file.name.toLowerCase().endsWith(".heic") ||
-                file.name.toLowerCase().endsWith(".heif");
+            setListing((prev) => {
+                const uniqueImages = filterDuplicates(newImages, prev.images);
 
-            if (isHeic) {
-                try {
-                    const blob = await convertHEIC(file);
-                    return { file, url: URL.createObjectURL(blob) };
-                } catch (err) {
-                    console.warn("HEIC conversion failed, fallback to raw", err);
+                if (uniqueImages.length === 0) {
+                    logger.log('All images are duplicates, skipping upload');
+                    return prev;
                 }
-            }
-            return { file, url: URL.createObjectURL(file) };
-        };
 
-        // Helper to check if file already exists in images array
-        const isDuplicate = (file, existingImages) => {
-            const found = existingImages.some((img) =>
-                img.file &&
-                img.file.name === file.name &&
-                img.file.size === file.size &&
-                img.file.lastModified === file.lastModified
-            );
-            console.log(`Checking duplicate for ${file.name}: ${found}`);
-            return found;
-        };
-
-        const filesToProcess = Array.from(files);
-        console.log("Files to process:", filesToProcess.length);
-
-        const newImages = await Promise.all(filesToProcess.map(convertFile));
-        console.log("Converted images:", newImages.length);
-
-        setListing((prev) => {
-            console.log("Current images in state:", prev.images.length, prev.images.map(img => img.file?.name));
-
-            // Filter out any images that already exist in the current state
-            const uniqueNewImages = newImages.filter(
-                (newImg) => !isDuplicate(newImg.file, prev.images)
-            );
-
-            console.log("Unique new images to add:", uniqueNewImages.length);
-
-            if (uniqueNewImages.length === 0) {
-                console.log("All duplicates, returning prev state");
-                return prev;
-            }
-
-            const finalImages = [...prev.images, ...uniqueNewImages];
-            console.log("Final images count:", finalImages.length);
-
-            return {
-                ...prev,
-                images: finalImages,
-            };
-        });
+                return {
+                    ...prev,
+                    images: [...prev.images, ...uniqueImages]
+                };
+            });
+        } catch (error) {
+            logger.error('Error uploading images:', error);
+        }
     };
 
     const removeImage = (index) => {
@@ -263,35 +223,40 @@ const ListingProvider = ({ children }) => {
     };
 
     const uploadListingOnDatabase = async (user) => {
-        console.log('upload new staycation to database')
-        try {
-            const formData = new FormData();
+        logger.log('Uploading new staycation to database');
 
-            // Append raw listing object (without file objects)
+        try {
             const { images, ...listingWithoutFiles } = listing;
+
+            // Validate image count
+            if (images.length > LIMITS.MAX_IMAGES) {
+                alert(MESSAGES.MAX_IMAGES_EXCEEDED);
+                return;
+            }
+
+            const formData = new FormData();
             formData.append("listing", JSON.stringify(listingWithoutFiles));
             formData.append("hostId", user.id);
             formData.append("email", user.email);
 
-            // Append files separately
-            if (images.length > 10) return alert("Tối đa 10 hình");
+            // Append image files
             images.forEach(img => {
-                if (img.file)
-                    console.log(img.file.size)
-                formData.append("images", img.file);
+                if (img.file) {
+                    formData.append("images", img.file);
+                }
             });
 
-            const res = await axios.post(
-                `${import.meta.env.VITE_BACKEND_URL}/listing/create-new`,
+            const res = await apiClient.post(
+                '/listing/create-new',
                 formData,
                 { headers: { "Content-Type": "multipart/form-data" } }
             );
 
-            console.log("Listing created successfully");
-
+            logger.log('Listing created successfully');
             return res.data;
         } catch (err) {
-            console.error("Upload failed", err);
+            handleApiError(err, 'Upload Listing');
+            throw err;
         }
     };
 
@@ -315,9 +280,9 @@ const ListingProvider = ({ children }) => {
                 },
             },
             contacts: {
-                zalo: { url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString() },
-                facebook: { url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString() },
-                instagram: { url: null, verified: false, code: Math.floor(100000 + Math.random() * 900000).toString() },
+                zalo: { url: null, verified: false, code: generateVerificationCode() },
+                facebook: { url: null, verified: false, code: generateVerificationCode() },
+                instagram: { url: null, verified: false, code: generateVerificationCode() },
             },
             prices: { min: '', max: '' },
             features: [],

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { AuthProvider } from "./auth/authContext";
@@ -7,6 +7,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Analytics } from '@vercel/analytics/react';
 import { ListingProvider } from "./listing/listingContext";
 import { StaycationProvider } from "./map/staycationContext";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 import Register from "./auth/register";
 import ErrorPage from "./error-page";
@@ -127,16 +128,23 @@ const router = createBrowserRouter([
 
 export default function App() {
 
-  const sessionId = crypto.randomUUID();
-  localStorage.setItem("traffic_session", sessionId);
+  // Initialize session ID once on mount
+  useEffect(() => {
+    if (!localStorage.getItem("traffic_session")) {
+      const sessionId = crypto.randomUUID();
+      localStorage.setItem("traffic_session", sessionId);
+    }
+  }, []);
 
   return (
     <GoogleOAuthProvider clientId={import.meta.env.VITE_OAUTH_CLIENT_ID}>
       <AuthProvider>
         <UserLocationProvider>
           <StaycationProvider>
-            <RouterProvider router={router} />
-            <Analytics />
+            <ErrorBoundary>
+              <RouterProvider router={router} />
+              <Analytics />
+            </ErrorBoundary>
           </StaycationProvider>
         </UserLocationProvider>
       </AuthProvider>

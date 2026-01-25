@@ -2,6 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import PropTypes from 'prop-types';
 import Logo from "../../assets/logo.webp";
 import styles from "./preview.module.css"
 import Images from "./images";
@@ -10,12 +11,13 @@ import Suggestion from "./suggestion";
 import html2canvas from "html2canvas";
 import Contacts from "./contacts";
 import { ArrowLeft } from "lucide-react";
-
-import axios from "axios";
+import { apiClient } from "../../config/api";
+import InlineWarning from "./inlineWarning";
 
 export default function Preview({ staycation }) {
 
     const [openSuggestions, setOpenSuggestions] = useState(false)
+    const [showWarning, setShowWarning] = useState(false)
 
     const navigate = useNavigate()
     const [canvas, setCanvas] = useState(null)
@@ -38,7 +40,7 @@ export default function Preview({ staycation }) {
 
     const countAsTraffic = async () => {
 
-        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/traffic/${staycation.id}`, {
+        await apiClient.post(`/traffic/${staycation.id}`, {
             trafficType: "CONTACT_CLICK",
             platform: "NULL",
             sessionId: localStorage.getItem("traffic_session")
@@ -46,6 +48,23 @@ export default function Preview({ staycation }) {
 
         return setShowContacts(true)
 
+    };
+
+    const handleContactClick = () => {
+        if (!staycation.verify) {
+            setShowWarning(true);
+        } else {
+            countAsTraffic();
+        }
+    };
+
+    const handleWarningCancel = () => {
+        setShowWarning(false);
+    };
+
+    const handleWarningContinue = () => {
+        setShowWarning(false);
+        countAsTraffic();
     };
 
     // 👇 Function to take a screenshot
@@ -104,18 +123,8 @@ export default function Preview({ staycation }) {
                         <p style={{ fontSize: "1rem", marginTop: "0" }}><ArrowLeft size={18} />    </p>
                     </motion.button>
 
-                    <h1>Findcation</h1>
+                    <img src={Logo} alt="logo" style={{ width: "68px" }} />
 
-
-                    <img src={Logo} alt="logo" style={{ width: "64px" }} />
-
-
-                    {/* <motion.button className={styles.options_button}
-                        onClick={() => setOpenSuggestions(true)}
-                        whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                    >
-                        <p style={{ fontSize: "0.875rem", marginTop: "0" }}>!</p>
-                    </motion.button> */}
 
                 </div>
 
@@ -131,23 +140,42 @@ export default function Preview({ staycation }) {
 
                 <div className={styles.preview_footer}>
 
-                    <motion.button className={styles.options_button}
+                    {!showContacts && !showWarning && <motion.button className={styles.options_button}
                         onClick={() => setOpenSuggestions(true)}
                         whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
                     >
                         <h2 style={{ fontSize: "0.975rem", marginTop: "0", marginBottom: "0" }}>Báo lỗi</h2>
                     </motion.button>
+                    }
+
 
                     {/* render button contact on top of the img - meaning both render at the start.  */}
 
-                    {!showContacts && <motion.button className={styles.preview_contact_button}
-                        onClick={countAsTraffic}
+                    {!showContacts && !showWarning && <motion.button className={styles.preview_contact_button}
+                        onClick={handleContactClick}
                         whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
                     >
                         <h2 style={{ fontSize: "0.975rem", marginTop: "0", marginBottom: "0" }}>Nhắn cho chủ nhà</h2>
                     </motion.button>}
 
+                    {/* if staycation.verify isn't true
+                        we show a panel of warning which have context and 2 button that if user want to cancel or continue
+                        if user want to continue, we show the contact button
+                        if user want to cancel, we back up to the map
+                    */}
 
+
+                    {/* Inline Warning Panel */}
+                    <AnimatePresence>
+                        {showWarning && (
+                            <InlineWarning
+                                onCancel={handleWarningCancel}
+                                onContinue={handleWarningContinue}
+                            />
+                        )}
+                    </AnimatePresence>
+
+                    {/* Contacts */}
                     <AnimatePresence mode="wait">
                         {showContacts && (
                             <motion.div
@@ -175,6 +203,32 @@ export default function Preview({ staycation }) {
 
 
 }
+
+Preview.propTypes = {
+    staycation: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string,
+        type: PropTypes.string,
+        images: PropTypes.arrayOf(PropTypes.string),
+        location: PropTypes.shape({
+            address: PropTypes.string,
+            gps: PropTypes.shape({
+                lat: PropTypes.number,
+                lng: PropTypes.number
+            })
+        }),
+        prices: PropTypes.shape({
+            min: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+            max: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+        }),
+        features: PropTypes.arrayOf(PropTypes.string),
+        contacts: PropTypes.shape({
+            zalo: PropTypes.object,
+            facebook: PropTypes.object,
+            instagram: PropTypes.object
+        })
+    }).isRequired
+};
 
 function uuidv4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {

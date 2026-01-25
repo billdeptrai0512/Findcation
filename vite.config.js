@@ -7,7 +7,10 @@ import { VitePWA } from 'vite-plugin-pwa'
 export default defineConfig({
   plugins: [
     react(),
-    visualizer({ open: true }),
+    visualizer({
+      open: process.env.ANALYZE === 'true',
+      filename: 'stats.html'
+    }),
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
@@ -19,12 +22,12 @@ export default defineConfig({
         icons: [
           {
             src: '/favicon-16x16.png',
-            sizes: '192x192',
+            sizes: '16x16',
             type: 'image/png'
           },
           {
             src: '/favicon-32x32.png',
-            sizes: '192x192',
+            sizes: '32x32',
             type: 'image/png'
           },
         ]
@@ -37,7 +40,24 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            return id.split('node_modules/')[1].split('/')[0];
+            // Group React libraries
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'react-vendor';
+            }
+            // Group animation libraries
+            if (id.includes('framer-motion') || id.includes('motion')) {
+              return 'animation-vendor';
+            }
+            // Group HTTP libraries
+            if (id.includes('axios')) {
+              return 'http-vendor';
+            }
+            // Group map libraries
+            if (id.includes('leaflet') || id.includes('maplibre') || id.includes('@maptiler')) {
+              return 'map-vendor';
+            }
+            // Everything else
+            return 'vendor';
           }
         },
       },
@@ -53,7 +73,6 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/auth/, '')
       }
     },
-    allowedHosts: [`fees-proc-arkansas-keno.trycloudflare.com`],
   },
 
 })

@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
+import { apiClient } from "../config/api";
+import { handleApiError } from "../utils/errorHandler";
 
 const AuthContext = createContext();
 
@@ -9,7 +10,7 @@ export function AuthProvider({ children }) {
 
   // Restore user session on initial load
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/me`, { withCredentials: true })
+    apiClient.get('/auth/me')
       .then(res => {
         setUser(res.data.user);
       })
@@ -24,25 +25,28 @@ export function AuthProvider({ children }) {
   // Login
   const login = async (email, password) => {
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/auth/login`,
-        { email, password },
-        { withCredentials: true }
+      const res = await apiClient.post(
+        '/auth/login',
+        { email, password }
       );
 
       setUser(res.data.user);
       return res.data.user;
 
     } catch (err) {
-      console.error(err);
+      handleApiError(err, 'Login');
       throw err;
     }
   };
 
   // Logout
   const logout = async () => {
-    await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/logout`, {}, { withCredentials: true });
-    setUser(null);
+    try {
+      await apiClient.post('/auth/logout', {});
+      setUser(null);
+    } catch (err) {
+      handleApiError(err, 'Logout');
+    }
   };
 
   return (

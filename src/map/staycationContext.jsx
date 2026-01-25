@@ -1,28 +1,27 @@
 import { createContext, useContext, useState } from "react";
-import axios from "axios";
+import { apiClient } from "../config/api";
+import { handleApiError } from "../utils/errorHandler";
 
 const StaycationContext = createContext();
 
 const StaycationProvider = ({ children }) => {
 
   const [staycations, setStaycations] = useState([]);
-  const [newStaycation, setNewStaycation] = useState(null)
+  const [newStaycation, setNewStaycation] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const fetchStaycations = async () => {
 
+    setLoading(true);
+
     try {
-
-      console.log(`${import.meta.env.VITE_BACKEND_URL}/listing/all-listing`)
-
-      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/listing/all-listing`);
-
-      setStaycations(response.data)
-        
+      const response = await apiClient.get('/listing/all-listing');
+      setStaycations(response.data);
     } catch (err) {
-
-      console.error('Fetch staycations failed', err);
-
-    } 
+      handleApiError(err, 'Fetch Staycations');
+    } finally {
+      setLoading(false);
+    }
 
   };
 
@@ -33,6 +32,7 @@ const StaycationProvider = ({ children }) => {
         newStaycation,
         setNewStaycation,
         fetchStaycations,
+        loading
       }}
     >
       {children}
