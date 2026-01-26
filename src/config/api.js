@@ -20,6 +20,7 @@ export const apiClient = axios.create({
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
+        'Accept': 'Access-Control-Allow-Origin'
     }
 });
 
