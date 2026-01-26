@@ -282,3 +282,65 @@ p {
   }
 
 }
+
+/* Enhanced Marker Popup Styles */
+.listing {
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  border-radius: 12px;
+}
+
+.listing:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.listing_details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px 12px 12px;
+}
+
+/* Image overlay on hover */
+.image_overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 95%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: white;
+  border-radius: 8px;
+  animation: fadeIn 0.2s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Click indicator */
+.click_indicator {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: #E61E4D;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.listing:hover .click_indicator {
+  opacity: 1;
+}

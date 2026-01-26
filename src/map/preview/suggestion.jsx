@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { X } from "lucide-react"
-import axios from "axios"
+import { apiClient } from "../../config/api"
 import styles from "../../auth/login.module.css"
 
 export default function Suggestion({ setOpenSuggestions }) {
@@ -15,7 +15,7 @@ export default function Suggestion({ setOpenSuggestions }) {
 
         try {
 
-            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/suggestion`, {
+            await apiClient.post(`/suggestion`, {
                 message,
                 stage: "preview"
             });
@@ -31,7 +31,16 @@ export default function Suggestion({ setOpenSuggestions }) {
     };
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} style={{
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 200,
+            width: '100%',
+            maxWidth: '400px',
+            padding: '0 16px'
+        }}>
             <div className={styles.card}>
                 <div className={styles.header}>
                     <button onClick={() => setOpenSuggestions(false)}>

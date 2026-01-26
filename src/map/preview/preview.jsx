@@ -158,25 +158,16 @@ export default function Preview({ staycation }) {
                         <h2 style={{ fontSize: "0.975rem", marginTop: "0", marginBottom: "0" }}>Nhắn cho chủ nhà</h2>
                     </motion.button>}
 
-                    {/* if staycation.verify isn't true
-                        we show a panel of warning which have context and 2 button that if user want to cancel or continue
-                        if user want to continue, we show the contact button
-                        if user want to cancel, we back up to the map
-                    */}
-
-
-                    {/* Inline Warning Panel */}
-                    <AnimatePresence>
+                    {/* Warning Panel & Contacts - Combined for smooth transition */}
+                    <AnimatePresence mode="wait">
                         {showWarning && (
                             <InlineWarning
+                                key="warning"
                                 onCancel={handleWarningCancel}
                                 onContinue={handleWarningContinue}
                             />
                         )}
-                    </AnimatePresence>
 
-                    {/* Contacts */}
-                    <AnimatePresence mode="wait">
                         {showContacts && (
                             <motion.div
                                 key="contacts"

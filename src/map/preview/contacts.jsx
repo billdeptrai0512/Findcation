@@ -39,13 +39,14 @@ export default function Contacts({ staycation }) {
         >
             {/* Header with security badge */}
             <div className={styles.contacts_header}>
-                <div className={styles.security_badge}>
-                    <ShieldCheck size={18} strokeWidth={2.5} />
-                    <span>Thông tin liên hệ</span>
+                <div className={styles.security_badge} style={{ justifyContent: `${staycation.verify ? "space-between" : "center"}` }}>
+                    {staycation.verify && <ShieldCheck size={22} strokeWidth={2.5} />}
+                    <span style={{ fontSize: "1.1rem" }}>Thông tin liên hệ</span>
+                    {staycation.verify && <ShieldCheck size={22} strokeWidth={2.5} />}
                 </div>
-                <p className={styles.contacts_subtitle}>
+                {/* <p className={styles.contacts_subtitle}>
                     Liên hệ trực tiếp với chủ nhà qua các kênh sau
-                </p>
+                </p> */}
             </div>
 
             {/* Contact icons */}
@@ -117,9 +118,9 @@ export default function Contacts({ staycation }) {
             </div>
 
             {/* Trust footer */}
-            <div className={styles.contacts_footer}>
+            {/* <div className={styles.contacts_footer}>
                 <p>💡 Mẹo: Hỏi về giá, vị trí và tiện nghi trước khi đặt phòng</p>
-            </div>
+            </div> */}
 
         </motion.div>
     )

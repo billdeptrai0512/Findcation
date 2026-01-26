@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { MoveRight } from "lucide-react";
+import { ArrowRight, Eye, ShieldCheck, Maximize } from "lucide-react";
+import { useState } from "react";
 import styles from "./map.module.css";
-import axios from "axios";
+import { apiClient } from "../config/api";
 
 export default function Staycation({ staycation }) {
 
     const navigate = useNavigate();
+    // const [isHovered, setIsHovered] = useState(false);
 
     const formatPrice = (price) => {
         if (!price) return "";
@@ -15,7 +17,7 @@ export default function Staycation({ staycation }) {
     //save traffic
     const countAsTraffic = async () => {
 
-        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/traffic/${staycation.id}`, {
+        await apiClient.post(`/traffic/${staycation.id}`, {
             trafficType: "VIEW",
             platform: "NULL",
             sessionId: localStorage.getItem("traffic_session")
@@ -26,34 +28,24 @@ export default function Staycation({ staycation }) {
     };
 
     return (
-        <div className={styles.listing} style={{ cursor: "pointer" }} onClick={countAsTraffic}>
+        <div
+            className={styles.listing}
+            onClick={countAsTraffic}
+        >
             <div style={{ position: "relative" }}>
                 <img src={`${import.meta.env.VITE_IMAGEKIT_URL}${staycation.images[0]}`} alt="cover_photo"
                     style={{
                         width: "100%", height: "100%", maxHeight: "135px",
                         borderTopLeftRadius: "8px", borderTopRightRadius: "8px",
-                        objectFit: 'cover', objectPosition: "center"
+                        objectFit: 'contain', objectPosition: "center", backgroundColor: "rgba(0, 0, 0, 1)"
                     }} />
-                {staycation.verify && (
-                    <div
-                        style={{
-                            position: "absolute",
-                            top: "8px",
-                            right: "8px",
-                            borderRadius: "999px",
-                            padding: "4px",
-                        }}
-                    >
-                        <VerifiedTick size={26} />
-                    </div>
-                )}
             </div>
-            <div className={styles.listing_details} style={{ display: "flex", flexDirection: "column", gap: "4px", padding: "0 8px 8px 8px" }}>
-                <h2 className={styles.staycation_name} style={{ marginTop: "0" }} >{staycation.name}</h2>
-                <div className={styles.staycation_prices}>
-                    {formatPrice(staycation.prices.min)}
-                    {<MoveRight size={16} />}
-                    {formatPrice(staycation.prices.max)}
+            <div className={styles.listing_details}>
+                <h2 className={styles.staycation_name}>{staycation.name}</h2>
+
+                {/* Click indicator */}
+                <div className={styles.click_indicator}>
+                    <Maximize size={16} strokeWidth={3} />
                 </div>
             </div>
         </div>
