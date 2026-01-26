@@ -27,6 +27,8 @@ export default function Staycation({ staycation }) {
 
     };
 
+    console.log(staycation)
+
     return (
         <div
             className={styles.listing}
@@ -45,6 +47,7 @@ export default function Staycation({ staycation }) {
 
                 {/* Click indicator */}
                 <div className={styles.click_indicator}>
+                    <span className={styles.staycation_prices}>từ {formatPrice(staycation.prices.min)}</span>
                     <Maximize size={16} strokeWidth={3} />
                 </div>
             </div>
