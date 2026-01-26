@@ -149,9 +149,8 @@ function VietnamBoundaries() {
   const [geoData, setGeoData] = useState(null);
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/assets/geo/vn_islands.geojson`, {
-      headers: { "ngrok-skip-browser-warning": "true" }
-    }).then(res => setGeoData(res.data.features));
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/assets/geo/vn_islands.geojson`)
+      .then(res => setGeoData(res.data.features));
   }, []);
 
   useEffect(() => {

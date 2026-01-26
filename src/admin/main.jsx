@@ -23,14 +23,7 @@ export default function AdminDashBoard() {
         const fetchStaycations = async () => {
             try {
 
-                const response = await axios.get(
-                    `${import.meta.env.VITE_BACKEND_URL}/listing/all-listing`,
-                    {
-                        headers: {
-                            "ngrok-skip-browser-warning": "true",
-                        },
-                    }
-                );
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/listing/all-listing`);
                 setStaycations(response.data);
             } catch (error) {
                 console.error("Error fetching staycation:", error);
@@ -39,14 +32,7 @@ export default function AdminDashBoard() {
 
         const fetchVerifiedStaycations = async () => {
             try {
-                const response = await axios.get(
-                    `${import.meta.env.VITE_BACKEND_URL}/traffic/allTraffic`,
-                    {
-                        headers: {
-                            "ngrok-skip-browser-warning": "true",
-                        },
-                    }
-                );
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/traffic/allTraffic`);
                 setTraffics(response.data);
             } catch (error) {
                 console.error("Error fetching staycation:", error);
@@ -55,14 +41,7 @@ export default function AdminDashBoard() {
 
         const fetchSuggestions = async () => {
             try {
-                const response = await axios.get(
-                    `${import.meta.env.VITE_BACKEND_URL}/suggestion`,
-                    {
-                        headers: {
-                            "ngrok-skip-browser-warning": "true",
-                        },
-                    }
-                );
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/suggestion`);
                 setSuggestions(response.data);
             } catch (error) {
                 console.error("Error fetching staycation:", error);
@@ -79,11 +58,7 @@ export default function AdminDashBoard() {
     const handleSearchStaycation = async (id) => {
         try {
             const response = await axios
-                .get(`${import.meta.env.VITE_BACKEND_URL}/listing/staycation/${id}`, {
-                    headers: {
-                        "ngrok-skip-browser-warning": "true",
-                    },
-                })
+                .get(`${import.meta.env.VITE_BACKEND_URL}/listing/staycation/${id}`)
                 .then((res) => res.data);
 
             console.log(response);

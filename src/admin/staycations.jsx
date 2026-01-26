@@ -5,11 +5,7 @@ export default function Staycations({ staycations }) {
     // const handleSearchStaycation = async (id) => {
     //     try {
     //         const response = await axios
-    //             .get(`${import.meta.env.VITE_BACKEND_URL}/listing/staycation/${id}`, {
-    //                 headers: {
-    //                     "ngrok-skip-browser-warning": "true",
-    //                 },
-    //             })
+    //             .get(`${import.meta.env.VITE_BACKEND_URL}/listing/staycation/${id}`)
     //             .then((res) => res.data);
 
     //         console.log(response);

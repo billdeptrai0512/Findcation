@@ -25,9 +25,8 @@ export default function CompleteButton() {
   const handleSaveDetails = async () => {
     try {
       const response = await axios.patch(
-        `${import.meta.env.VITE_BACKEND_URL}/listing/staycation/${staycationId}/editor`
-          , draft ,
-          { headers: { "ngrok-skip-browser-warning": "true" } }
+        `${import.meta.env.VITE_BACKEND_URL}/listing/staycation/${staycationId}/editor`,
+        draft
       );
 
       console.log("Saved:", response.data);
@@ -54,7 +53,7 @@ export default function CompleteButton() {
       // append new files
       if (draft.images.length > 10) return alert('Tối đa 10 hình')
       draft.images.forEach((img) => {
-        if (img.file && img.file.size < 5 * 1024 *1024) 
+        if (img.file && img.file.size < 5 * 1024 * 1024)
           formData.append("images", img.file);
       });
 
@@ -114,7 +113,7 @@ export default function CompleteButton() {
 
     console.log(lastSegment)
     if (lastSegment === "images") {
-      handleSaveImages();  
+      handleSaveImages();
     } else {
       handleSaveDetails();
     }
