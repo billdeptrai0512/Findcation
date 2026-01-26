@@ -4,6 +4,7 @@ import { AlertTriangle } from "lucide-react";
 import styles from "./preview.module.css";
 
 export default function InlineWarning({ onCancel, onContinue }) {
+
     return (
         <motion.div
             className={styles.inline_warning_container}

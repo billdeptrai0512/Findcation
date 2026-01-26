@@ -38,8 +38,9 @@ export default function Preview({ staycation }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [staycation.id]);
 
-    const countAsTraffic = async () => {
+    const countAsTrafficContactClick = async () => {
 
+        // if staycation isn't verify then it also trigger contact_warning_shown
         await apiClient.post(`/traffic/${staycation.id}`, {
             trafficType: "CONTACT_CLICK",
             platform: "NULL",
@@ -50,21 +51,62 @@ export default function Preview({ staycation }) {
 
     };
 
+    const countAsTrafficWarningShown = async () => {
+
+        await apiClient.post(`/traffic/${staycation.id}`, {
+            trafficType: "CONTACT_CLICK",
+            platform: "NULL",
+            sessionId: localStorage.getItem("traffic_session")
+        });
+
+        await apiClient.post(`/traffic/${staycation.id}`, {
+            trafficType: "CONTACT_WARNING_SHOWN",
+            platform: "NULL",
+            sessionId: localStorage.getItem("traffic_session")
+        });
+
+        return setShowWarning(true)
+
+    };
+
+    const countAsTrafficContactCancel = async () => {
+
+        await apiClient.post(`/traffic/${staycation.id}`, {
+            trafficType: "CONTACT_WARNING_CANCEL",
+            platform: "NULL",
+            sessionId: localStorage.getItem("traffic_session")
+        });
+
+    };
+
+    const countAsTrafficContactContinue = async () => {
+
+        await apiClient.post(`/traffic/${staycation.id}`, {
+            trafficType: "CONTACT_CONTINUE",
+            platform: "NULL",
+            sessionId: localStorage.getItem("traffic_session")
+        });
+
+        return setShowContacts(true)
+
+    };
+
     const handleContactClick = () => {
         if (!staycation.verify) {
-            setShowWarning(true);
+            countAsTrafficWarningShown()
         } else {
-            countAsTraffic();
+            countAsTrafficContactClick();
         }
     };
 
     const handleWarningCancel = () => {
         setShowWarning(false);
+        countAsTrafficContactCancel()
     };
 
     const handleWarningContinue = () => {
         setShowWarning(false);
-        countAsTraffic();
+        countAsTrafficContactContinue();
     };
 
     // 👇 Function to take a screenshot
