@@ -17,13 +17,22 @@ export default function Traffics({ traffics }) {
             groups[sessionId].push(traffic);
         });
 
-        // Sort events within each session by date
+        // Sort events within each session by date (Newest first)
         Object.keys(groups).forEach(sessionId => {
-            groups[sessionId].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+            groups[sessionId].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         });
 
         return groups;
     }, [traffics]);
+
+    // Sort session IDs by the timestamp of their latest event (Newest first)
+    const sessionIds = useMemo(() => {
+        return Object.keys(sessionGroups).sort((a, b) => {
+            const latestEventA = sessionGroups[a][0]; // Already sorted newest first
+            const latestEventB = sessionGroups[b][0];
+            return new Date(latestEventB.createdAt) - new Date(latestEventA.createdAt);
+        });
+    }, [sessionGroups]);
 
     // Calculate metrics
     const metrics = useMemo(() => {
@@ -81,7 +90,6 @@ export default function Traffics({ traffics }) {
         });
     };
 
-    const sessionIds = Object.keys(sessionGroups).reverse(); // Newest first
 
     return (
         <div className={styles.container}>
@@ -177,7 +185,7 @@ export default function Traffics({ traffics }) {
                                 <div className={styles.session_events}>
                                     {events.map((event, index) => {
                                         const { icon: Icon, color } = getEventIcon(event.trafficType);
-                                        const timeDiff = getTimeDiff(event, events[index - 1]);
+                                        const timeDiff = getTimeDiff(event, events[index + 1]);
 
                                         return (
                                             <div key={event.id} className={styles.event_item}>

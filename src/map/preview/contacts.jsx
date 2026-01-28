@@ -1,7 +1,5 @@
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
 import { ShieldCheck } from "lucide-react";
 import { apiClient } from "../../config/api";
 import styles from "./contacts.module.css";
@@ -12,23 +10,23 @@ import Zalo from "../../assets/zalo.webp";
 
 export default function Contacts({ staycation }) {
 
-    const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+    const countAsTrafficContactClick = (platform) => {
 
-    const handleClick = (platform, url) => async (e) => {
-        e.preventDefault(); // prevent default navigation
-
-        await apiClient.post(`/traffic/${staycation.id}`, {
+        const payload = {
             trafficType: "CONTACT_SUCCESS",
             platform: platform,
             sessionId: localStorage.getItem("traffic_session")
-        });
+        }
 
-        window.open(url, "_blank");
+        if (navigator.sendBeacon) {
+            const blob = new Blob([JSON.stringify(payload)], { type: "application/json" });
+            navigator.sendBeacon(`/traffic/${staycation.id}`, blob);
+        } else {
+            apiClient.post(`/traffic/${staycation.id}`, payload);
+        }
     };
 
     const { contacts } = staycation.host;
-    const facebookUrl = isMobile ? `fb://page/` : `https://www.facebook.com/`
-    const instagramUrl = isMobile ? `instagram://user?username=` : `https://www.instagram.com/`
 
     return (
         <motion.div
@@ -58,18 +56,18 @@ export default function Contacts({ staycation }) {
                         whileHover={{ y: -4 }}
                         whileTap={{ scale: 0.95 }}
                     >
-                        <Link
-                            to={`${facebookUrl}${contacts.facebook}`}
+                        <a
+                            href={`https://www.facebook.com/${contacts.facebook}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            onClick={handleClick("FACEBOOK", `${facebookUrl}${contacts.facebook}`)}
+                            onClick={() => countAsTrafficContactClick("FACEBOOK")}
                             className={styles.contact_link}
                         >
                             <div className={styles.icon_wrapper}>
                                 <img src={FacebookIcon} alt="Facebook" />
                             </div>
                             <span className={styles.contact_label}>Facebook</span>
-                        </Link>
+                        </a>
                     </motion.div>
                 )}
 
@@ -79,18 +77,18 @@ export default function Contacts({ staycation }) {
                         whileHover={{ y: -4 }}
                         whileTap={{ scale: 0.95 }}
                     >
-                        <Link
-                            to={`${instagramUrl}${contacts.instagram}`}
+                        <a
+                            href={`https://www.instagram.com/${contacts.instagram}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            onClick={handleClick("INSTAGRAM", `${instagramUrl}${contacts.instagram}`)}
+                            onClick={() => countAsTrafficContactClick("INSTAGRAM")}
                             className={styles.contact_link}
                         >
                             <div className={styles.icon_wrapper}>
                                 <img src={InstagramIcon} alt="Instagram" />
                             </div>
                             <span className={styles.contact_label}>Instagram</span>
-                        </Link>
+                        </a>
                     </motion.div>
                 )}
 
@@ -100,18 +98,18 @@ export default function Contacts({ staycation }) {
                         whileHover={{ y: -4 }}
                         whileTap={{ scale: 0.95 }}
                     >
-                        <Link
-                            to={`https://zalo.me/${contacts.zalo}`}
+                        <a
+                            href={`https://zalo.me/${contacts.zalo}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            onClick={handleClick("ZALO", `https://zalo.me/${contacts.zalo}`)}
+                            onClick={() => countAsTrafficContactClick("ZALO")}
                             className={styles.contact_link}
                         >
                             <div className={styles.icon_wrapper}>
                                 <img src={Zalo} alt="Zalo" />
                             </div>
                             <span className={styles.contact_label}>Zalo</span>
-                        </Link>
+                        </a>
                     </motion.div>
                 )}
 
