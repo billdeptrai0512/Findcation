@@ -38,9 +38,12 @@ export default function Contacts({ staycation }) {
             {/* Header with security badge */}
             <div className={styles.contacts_header}>
                 <div className={styles.security_badge} style={{ justifyContent: `${staycation.verify ? "space-between" : "center"}` }}>
-                    {staycation.verify && <ShieldCheck size={22} strokeWidth={2.5} />}
-                    <span style={{ fontSize: "1.1rem" }}>Thông tin liên hệ</span>
-                    {staycation.verify && <ShieldCheck size={22} strokeWidth={2.5} />}
+                    {!staycation.verify && <ShieldCheck size={26} strokeWidth={2.5} />}
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                        <span style={{ fontSize: "1.1rem" }}>Thông tin liên hệ</span>
+                        <p style={{ fontSize: "0.9rem", color: "#666" }}>Đã xác minh</p>
+                    </div>
+                    {!staycation.verify && <ShieldCheck size={26} strokeWidth={2.5} />}
                 </div>
                 {/* <p className={styles.contacts_subtitle}>
                     Liên hệ trực tiếp với chủ nhà qua các kênh sau

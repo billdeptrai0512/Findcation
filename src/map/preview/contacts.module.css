@@ -20,7 +20,7 @@
 .security_badge {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 16px;
     color: #1976d2;
     font-weight: 600;
     font-size: 0.95rem;

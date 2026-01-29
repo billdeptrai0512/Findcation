@@ -15,8 +15,8 @@ export default function InlineWarning({ onCancel, onContinue }) {
         >
             {/* Header */}
             <div className={styles.inline_warning_header}>
-                <AlertTriangle size={20} strokeWidth={2.5} />
-                <h3>Lưu ý</h3>
+                <AlertTriangle size={22} strokeWidth={2.5} />
+                <span style={{ fontSize: "1.1rem", fontWeight: "bold" }}>Lưu ý</span>
             </div>
 
             {/* Body */}
