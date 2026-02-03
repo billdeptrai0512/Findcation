@@ -7,6 +7,7 @@ import App from './app.jsx'
 const updateSW = registerSW({
   onNeedRefresh() {
     // called when new content is available
+    // we maybe loading screen on this
     if (confirm("New version available. Reload?")) {
       updateSW(true) // activates new service worker + reloads
     }

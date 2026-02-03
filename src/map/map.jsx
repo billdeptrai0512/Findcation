@@ -12,18 +12,91 @@ import PeopleMarker from "./peopleMarker";
 import HouseMarker from "./houseMarker";
 
 export default function Map() {
+
   const { location } = useUserLocation();
   const { staycations, newStaycation, setNewStaycation } = useStaycation();
-  const [GPS, setGPS] = useState({ lat: 16, lng: 109 });
+
+  // Default GPS: mobile uses different center than desktop for better initial view
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const [GPS, setGPS] = useState(
+    isMobile
+      ? { lat: 17.1, lng: 105.7 }  // Mobile: shifted north for better view
+      : { lat: 16.0, lng: 108.0 }  // Desktop: center of Vietnam
+  );
+
+  const [ipLocationLoaded, setIpLocationLoaded] = useState(false);
   const [zoom, setZoom] = useState(6);
 
   const mapRef = useRef(null);
   const markerRefs = useRef({});
 
+  // Effect: Fetch IP-based location on mount, then popup nearest staycation
+  // Priority: userLocation > IPLocation > defaultLocation
+  useEffect(() => {
+    // Skip IP location if user already granted geolocation permission
+    if (location) return;
+    if (!staycations?.length) return;
+
+    const timeoutId = setTimeout(() => {
+      const fetchIPLocation = async () => {
+        try {
+          const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/geojson/location`, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (res.data?.location) {
+            console.log("IP Location fetched:", res.data);
+            const ipLat = res.data.location[0];
+            const ipLng = res.data.location[1];
+
+            setGPS({ lat: ipLat, lng: ipLng });
+            setIpLocationLoaded(true);
+            setZoom(13);
+
+            // After map flies to IP location, find and popup nearest staycation
+            setTimeout(() => {
+              const ipLatLng = L.latLng(ipLat, ipLng);
+              const map = markerRefs.current[staycations[0]?.id]?._map;
+
+              if (!map) return;
+
+              let nearestStay = null;
+              let nearestDist = Infinity;
+
+              staycations.forEach((stay) => {
+                const stayLatLng = L.latLng(stay.location.gps.lat, stay.location.gps.lng);
+                const dist = ipLatLng.distanceTo(stayLatLng);
+                if (dist < nearestDist) {
+                  nearestDist = dist;
+                  nearestStay = stay;
+                }
+              }); // we could priority verify staycation in this case
+
+              if (nearestStay && markerRefs.current[nearestStay.id]) {
+                markerRefs.current[nearestStay.id].openPopup();
+              }
+            }, 888); // Wait for initial fly to complete
+          }
+
+        } catch (err) {
+          console.error("IP location failed:", err);
+        }
+      };
+
+      fetchIPLocation();
+    }, 888); // Initial delay
+
+    return () => clearTimeout(timeoutId);
+  }, [location, staycations]); // Re-run if location changes (to cancel if user grants permission)
+
+  // Effect: Handle newStaycation focus
   useEffect(() => {
     if (!staycations?.length) return;
 
     const mapFocus = (marker, zoomLevel, fly = true) => {
+
       const map = marker._map;
       if (!map) return;
       marker.openPopup();
@@ -93,7 +166,7 @@ export default function Map() {
           });
         }
 
-      }, 860);
+      }, 888);
 
       return () => clearTimeout(timeout);
     }
@@ -125,9 +198,15 @@ export default function Map() {
           <TileLayer url="https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png" /> */}
           <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
 
-          {/* <ZoomControl position="bottomright" style={{ zIndex: 1000 }} /> */}
-
           <VietnamBoundaries />
+
+          {/* Update map center when IP location is fetched */}
+          <MapCenterUpdater
+            gps={GPS}
+            zoom={zoom}
+            shouldFly={ipLocationLoaded}
+            onFlown={() => setIpLocationLoaded(false)}
+          />
 
           {staycations && staycations.map((stay) => (
             <HouseMarker key={stay.id} stay={stay} styles={styles}
@@ -142,6 +221,23 @@ export default function Map() {
       </div>
     </div>
   );
+}
+
+// Component to update map center dynamically (MapContainer's center prop only works on mount)
+function MapCenterUpdater({ gps, zoom, shouldFly, onFlown }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (shouldFly && gps) {
+      map.flyTo([gps.lat, gps.lng], zoom, {
+        animate: true,
+        duration: 0.75,
+      });
+      onFlown?.(); // Reset the flag after flying
+    }
+  }, [shouldFly, gps, zoom, map, onFlown]);
+
+  return null;
 }
 
 function VietnamBoundaries() {

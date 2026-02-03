@@ -125,6 +125,13 @@ export default function Preview({ staycation }) {
 
                 <div className={styles.preview_footer}>
 
+                    {!showContacts && !showWarning && <motion.button className={styles.preview_contact_button}
+                        onClick={handleContactClick}
+                        whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                    >
+                        <h2 style={{ fontSize: "0.975rem", marginTop: "0", marginBottom: "0" }}>Nhắn cho chủ nhà</h2>
+                    </motion.button>}
+
                     {!showContacts && !showWarning && <motion.button className={styles.options_button}
                         onClick={() => setOpenSuggestions(true)}
                         whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
@@ -132,16 +139,6 @@ export default function Preview({ staycation }) {
                         <h2 style={{ fontSize: "0.975rem", marginTop: "0", marginBottom: "0" }}>Báo lỗi</h2>
                     </motion.button>
                     }
-
-
-                    {/* render button contact on top of the img - meaning both render at the start.  */}
-
-                    {!showContacts && !showWarning && <motion.button className={styles.preview_contact_button}
-                        onClick={handleContactClick}
-                        whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                    >
-                        <h2 style={{ fontSize: "0.975rem", marginTop: "0", marginBottom: "0" }}>Nhắn cho chủ nhà</h2>
-                    </motion.button>}
 
                     {/* Warning Panel & Contacts - Combined for smooth transition */}
                     <AnimatePresence mode="wait">
