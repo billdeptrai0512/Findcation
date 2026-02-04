@@ -40,7 +40,16 @@ export default function Map() {
     const timeoutId = setTimeout(() => {
       const fetchIPLocation = async () => {
         try {
-          const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/geojson/location`, {
+          // Support testIp URL parameter for development testing
+          // Example: http://localhost:5173/?testIp=183.80.181.33 (Hanoi)
+          const urlParams = new URLSearchParams(window.location.search);
+          const testIp = urlParams.get('testIp');
+
+          const url = testIp
+            ? `${import.meta.env.VITE_BACKEND_URL}/geojson/location?ip=${testIp}`
+            : `${import.meta.env.VITE_BACKEND_URL}/geojson/location`;
+
+          const res = await axios.get(url, {
             headers: {
               "Content-Type": "application/json",
             },
