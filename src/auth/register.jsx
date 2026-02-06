@@ -5,10 +5,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from './authContext';
 import { ChevronLeft, Eye, EyeClosed } from 'lucide-react'
 import styles from './login.module.css';
-import axios from 'axios';
+import { apiClient } from '../config/api';
 
 export default function RegisterForm() {
-    
+
     const location = useLocation()
     const state = location.state
 
@@ -35,9 +35,9 @@ export default function RegisterForm() {
         if (formData.password === '') return setError('Bạn chưa nhập mật khẩu.')
         if (formData.confirm_password === '') return setError('Bạn chưa nhập lại mật khẩu.')
         if (formData.password !== formData.confirm_password) return setError('Mật khẩu không giống nhau')
-            
+
         try {
-            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/register`, formData);
+            await apiClient.post(`/auth/register`, formData);
 
             const user = await login(formData.email, formData.password)
 
@@ -50,7 +50,7 @@ export default function RegisterForm() {
         } catch (err) {
 
             console.error('Register failed', err);
-            
+
         }
     };
 
@@ -67,7 +67,7 @@ export default function RegisterForm() {
             <div className={styles.card} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.header}>
                     <button onClick={() => navigate('/auth/login')}>
-                        <ChevronLeft size={20} style={{padding: "4px"}}/>
+                        <ChevronLeft size={20} style={{ padding: "4px" }} />
                     </button>
                     <div className={styles.title}>
                         Hoàn tất đăng ký
@@ -112,7 +112,7 @@ export default function RegisterForm() {
 
                         <div className={styles.inputGroup}>
                             <label>Mật khẩu</label>
-                            <div style={{position: "relative", display: "flex", alignItems: "center"}}>
+                            <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
                                 <input
                                     id="password"
                                     name="password"
@@ -125,14 +125,14 @@ export default function RegisterForm() {
                                 />
                                 <button type="button" className={styles.toggleButton}
                                     onClick={() => setShowPassword(!showPassword)}>
-                                        {showPassword ? <Eye /> : <EyeClosed />}
+                                    {showPassword ? <Eye /> : <EyeClosed />}
                                 </button>
                             </div>
                         </div>
 
                         <div className={styles.inputGroup}>
                             <label>Nhập lại mật khẩu</label>
-                            <div style={{position: "relative", display: "flex", alignItems: "center"}}>
+                            <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
                                 <input
                                     id="confirm-password"
                                     name="confirm_password"
@@ -145,17 +145,17 @@ export default function RegisterForm() {
                                 />
                                 <button type="button" className={styles.toggleButton}
                                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-                                        {showConfirmPassword ? <Eye /> : <EyeClosed />}
+                                    {showConfirmPassword ? <Eye /> : <EyeClosed />}
                                 </button>
                             </div>
                         </div>
 
                         {error && <p className={styles.error}>{error}</p>}
-        
+
                         <div className={styles.actionLoginRow}>
                             <motion.button type="submit" className={styles.button}
-                                whileTap={{scale: 0.95}}>
-                                    Đăng ký
+                                whileTap={{ scale: 0.95 }}>
+                                Đăng ký
                             </motion.button>
                         </div>
                     </form>

@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { X, ChevronLeft } from 'lucide-react';
 import { useHost } from '../hostContext';
 import styles from '../../auth/login.module.css';
-import axios from 'axios';
+import { apiClient } from '../../config/api';
 
-export default function ChangePassword({setChangeEmail}) {
+export default function ChangePassword({ setChangeEmail }) {
 
 
     const { refreshHost } = useHost()
@@ -26,9 +26,8 @@ export default function ChangePassword({setChangeEmail}) {
         setLoading(true)
 
         try {
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login/new-email`, 
-                { newEmail: email },
-                { withCredentials: true }
+            const response = await apiClient.post(`/login/new-email`,
+                { newEmail: email }
             );
 
             if (response.data?.message === "Reset code sent to email") {
@@ -56,16 +55,15 @@ export default function ChangePassword({setChangeEmail}) {
 
         try {
 
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login/change-email`, 
-                {newEmail: email, code},
-                { withCredentials: true }
+            const response = await apiClient.post(`/login/change-email`,
+                { newEmail: email, code }
             );
 
             console.log(response.data.message)
 
             setChangeEmail(false)
             refreshHost()
-            
+
         } catch (err) {
             if (err.response && err.response.data && err.response.data.message) {
                 setError(err.response.data.message);
@@ -81,7 +79,7 @@ export default function ChangePassword({setChangeEmail}) {
                 <div className={styles.card} onClick={(e) => e.stopPropagation()}>
                     <div className={styles.header}>
                         <button onClick={() => setOnWaiting(false)}>
-                            <ChevronLeft size={20} style={{padding: "4px"}}/>
+                            <ChevronLeft size={20} style={{ padding: "4px" }} />
                         </button>
                         <div className={styles.title}>
                             Thay đổi email
@@ -113,14 +111,14 @@ export default function ChangePassword({setChangeEmail}) {
                             </div>
 
                             {error && <p className={styles.error}>{error}</p>}
-                            
+
                             <div className={styles.actionLoginRow}>
                                 <motion.button type="submit" className={styles.button}
-                                    whileTap={{scale: 0.95}}>
-                                        Xác nhận
+                                    whileTap={{ scale: 0.95 }}>
+                                    Xác nhận
                                 </motion.button>
                             </div>
-                            
+
                         </form>
                     </div>
                 </div>
@@ -134,7 +132,7 @@ export default function ChangePassword({setChangeEmail}) {
                 <div className={styles.card} onClick={(e) => e.stopPropagation()}>
                     <div className={styles.header}>
                         <button onClick={() => setChangeEmail(false)}>
-                            <ChevronLeft size={20} style={{padding: "4px"}}/>
+                            <ChevronLeft size={20} style={{ padding: "4px" }} />
                         </button>
                         <div className={styles.title}>
                             Thay đổi email
@@ -153,20 +151,20 @@ export default function ChangePassword({setChangeEmail}) {
                                     onChange={(e) => setEmail(e.target.value)}
                                     className={styles.input}
                                 />
-                    
+
                             </div>
 
                             {error && <p className={styles.error}>{error}</p>}
-                            
+
                             <div className={styles.actionLoginRow}>
-                                
+
                                 <motion.button type="submit" className={styles.button}
-                                    whileTap={{scale: 0.95}}>
-                                        Gửi mã xác nhận
+                                    whileTap={{ scale: 0.95 }}>
+                                    Gửi mã xác nhận
                                 </motion.button>
 
                             </div>
-                            
+
                         </form>
                     </div>
                 </div>

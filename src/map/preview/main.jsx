@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import axios from "axios";
+import { apiClient } from "../../config/api";
 import styles from "./preview.module.css"
 import Preview from "./preview";
 
@@ -19,7 +19,7 @@ export default function PreviewStaycation() {
     useEffect(() => {
         const fetchStaycation = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/listing/staycation/${id}`);
+                const response = await apiClient.get(`/listing/staycation/${id}`);
                 setStaycations(response.data);
             } catch (error) {
                 console.error("Error fetching staycation:", error);

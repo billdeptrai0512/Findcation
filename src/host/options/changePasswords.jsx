@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { X, ChevronLeft } from 'lucide-react';
 import styles from '../../auth/login.module.css';
-import axios from 'axios';
+import { apiClient } from '../../config/api';
 
-export default function ChangePassword({setChangePassword}) {
+export default function ChangePassword({ setChangePassword }) {
 
     const [password, setPassWord] = useState('')
     const [newPassword, setNewPassword] = useState('')
@@ -14,7 +14,7 @@ export default function ChangePassword({setChangePassword}) {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
     const [showNewConfirm, setNewConfirm] = useState(false)
-    
+
     const handleChangePassword = async (e) => {
         e.preventDefault();
 
@@ -23,9 +23,8 @@ export default function ChangePassword({setChangePassword}) {
         }
 
         try {
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login/change-password`, 
-                { password,  newPassword },
-                { withCredentials: true }
+            const response = await apiClient.post(`/login/change-password`,
+                { password, newPassword }
             );
 
             console.log(response.data);
@@ -45,7 +44,7 @@ export default function ChangePassword({setChangePassword}) {
                 <div className={styles.card} onClick={(e) => e.stopPropagation()}>
                     <div className={styles.header}>
                         <button onClick={() => setChangePassword(false)}>
-                            <ChevronLeft size={20} style={{padding: "4px"}}/>
+                            <ChevronLeft size={20} style={{ padding: "4px" }} />
                         </button>
                         <div className={styles.title}>
                             Thay đổi mật khẩu
@@ -55,7 +54,7 @@ export default function ChangePassword({setChangePassword}) {
                         <form onSubmit={handleChangePassword}>
                             <div className={styles.inputGroup}>
 
-                                <div style={{position: "relative", display: "flex", alignItems: "center"}}>
+                                <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
                                     <input
                                         id="old-password"
                                         name="old-password"
@@ -68,13 +67,13 @@ export default function ChangePassword({setChangePassword}) {
                                     />
                                     <button type="button" className={styles.toggleButton}
                                         onClick={() => setShowPassword(!showPassword)}>
-                                            {showPassword ? "Ẩn" : "Hiển thị"}
+                                        {showPassword ? "Ẩn" : "Hiển thị"}
                                     </button>
                                 </div>
 
                                 {/*  */}
 
-                                <div style={{position: "relative", display: "flex", alignItems: "center"}}>
+                                <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
                                     <input
                                         id="new-password"
                                         name="new-password"
@@ -87,11 +86,11 @@ export default function ChangePassword({setChangePassword}) {
                                     />
                                     <button type="button" className={styles.toggleButton}
                                         onClick={() => setShowConfirm(!showConfirm)}>
-                                            {showConfirm ? "Ẩn" : "Hiển thị"}
+                                        {showConfirm ? "Ẩn" : "Hiển thị"}
                                     </button>
                                 </div>
 
-                                <div style={{position: "relative", display: "flex", alignItems: "center"}}>
+                                <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
                                     <input
                                         id="confirm-new-password"
                                         name="confirm-new-password"
@@ -104,20 +103,20 @@ export default function ChangePassword({setChangePassword}) {
                                     />
                                     <button type="button" className={styles.toggleButton}
                                         onClick={() => setNewConfirm(!showNewConfirm)}>
-                                            {showNewConfirm ? "Ẩn" : "Hiển thị"}
+                                        {showNewConfirm ? "Ẩn" : "Hiển thị"}
                                     </button>
                                 </div>
                             </div>
 
                             {error && <p className={styles.error}>{error}</p>}
-                            
+
                             <div className={styles.actionLoginRow}>
                                 <motion.button type="submit" className={styles.button}
-                                    whileTap={{scale: 0.95}}>
-                                        Cập nhật
+                                    whileTap={{ scale: 0.95 }}>
+                                    Cập nhật
                                 </motion.button>
                             </div>
-                            
+
                         </form>
                     </div>
                 </div>

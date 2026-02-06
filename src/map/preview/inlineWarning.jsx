@@ -16,7 +16,11 @@ export default function InlineWarning({ onCancel, onContinue }) {
             {/* Header */}
             <div className={styles.inline_warning_header}>
                 <AlertTriangle size={22} strokeWidth={2.5} />
-                <span style={{ fontSize: "1.1rem", fontWeight: "bold" }}>Lưu ý</span>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                    <span style={{ fontSize: "1.1rem", fontWeight: "bold" }}>Lưu ý</span>
+                    {/* <p style={{ fontSize: "0.9rem", color: "#666" }}>Đã xác minh</p> */}
+                </div>
+                <AlertTriangle size={22} strokeWidth={2.5} />
             </div>
 
             {/* Body */}

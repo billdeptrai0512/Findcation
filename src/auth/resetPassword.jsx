@@ -4,13 +4,13 @@ import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { X } from 'lucide-react';
 import styles from './login.module.css';
-import axios from 'axios';
+import { apiClient } from '../config/api';
 
 export default function ResetPassword() {
 
     const location = useLocation()
     // eslint-disable-next-line no-unused-vars
-    const {token, email} = location.state || {}
+    const { token, email } = location.state || {}
 
     const [password, setPassWord] = useState('')
     const [confirmPassword, setConfirmPassWord] = useState('')
@@ -19,7 +19,7 @@ export default function ResetPassword() {
     const [showConfirm, setShowConfirm] = useState(false);
 
     const navigate = useNavigate();
-    
+
     const handleChangePassword = async (e) => {
         e.preventDefault();
 
@@ -28,7 +28,7 @@ export default function ResetPassword() {
         }
 
         try {
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login/reset-password`, {
+            const response = await apiClient.post(`/login/reset-password`, {
                 token,
                 password
             });
@@ -47,7 +47,7 @@ export default function ResetPassword() {
             <div className={styles.card} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.header}>
                     <button onClick={() => navigate('/login')}>
-                        <X size={20} style={{padding: "4px"}}/>
+                        <X size={20} style={{ padding: "4px" }} />
                     </button>
                     <div className={styles.title}>
                         Cập nhật mật khẩu
@@ -57,7 +57,7 @@ export default function ResetPassword() {
                     <form onSubmit={handleChangePassword}>
                         <div className={styles.inputGroup}>
 
-                            <div style={{position: "relative", display: "flex", alignItems: "center"}}>
+                            <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
                                 <input
                                     id="password"
                                     name="password"
@@ -70,13 +70,13 @@ export default function ResetPassword() {
                                 />
                                 <button type="button" className={styles.toggleButton}
                                     onClick={() => setShowPassword(!showPassword)}>
-                                        {showPassword ? "Ẩn" : "Hiển thị"}
+                                    {showPassword ? "Ẩn" : "Hiển thị"}
                                 </button>
                             </div>
 
                             {/*  */}
 
-                            <div style={{position: "relative", display: "flex", alignItems: "center"}}>
+                            <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
                                 <input
                                     id="confirm-password"
                                     name="confirm-password"
@@ -89,20 +89,20 @@ export default function ResetPassword() {
                                 />
                                 <button type="button" className={styles.toggleButton}
                                     onClick={() => setShowConfirm(!showConfirm)}>
-                                        {showConfirm ? "Ẩn" : "Hiển thị"}
+                                    {showConfirm ? "Ẩn" : "Hiển thị"}
                                 </button>
                             </div>
                         </div>
 
                         {error && <p className={styles.error}>{error}</p>}
-                        
+
                         <div className={styles.actionLoginRow}>
                             <motion.button type="submit" className={styles.button}
-                                whileTap={{scale: 0.95}}>
-                                    Cập nhật
+                                whileTap={{ scale: 0.95 }}>
+                                Cập nhật
                             </motion.button>
                         </div>
-                        
+
                     </form>
                 </div>
             </div>

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive"
 import styles from "./admin.module.css"
 import Logo from "../assets/logo.webp"
-import axios from "axios";
+import { apiClient } from "../config/api";
 import Staycations from "./staycations";
 import Traffics from "./traffics";
 import Suggestions from "./suggestion";
@@ -23,7 +23,7 @@ export default function AdminDashBoard() {
         const fetchStaycations = async () => {
             try {
 
-                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/listing/all-listing`);
+                const response = await apiClient.get(`/listing/all-listing`);
                 setStaycations(response.data);
             } catch (error) {
                 console.error("Error fetching staycation:", error);
@@ -32,7 +32,7 @@ export default function AdminDashBoard() {
 
         const fetchVerifiedStaycations = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/traffic/allTraffic`);
+                const response = await apiClient.get(`/traffic/allTraffic`);
                 setTraffics(response.data);
             } catch (error) {
                 console.error("Error fetching staycation:", error);
@@ -41,7 +41,7 @@ export default function AdminDashBoard() {
 
         const fetchSuggestions = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/suggestion`);
+                const response = await apiClient.get(`/suggestion`);
                 setSuggestions(response.data);
             } catch (error) {
                 console.error("Error fetching staycation:", error);
@@ -57,8 +57,8 @@ export default function AdminDashBoard() {
 
     const handleSearchStaycation = async (id) => {
         try {
-            const response = await axios
-                .get(`${import.meta.env.VITE_BACKEND_URL}/listing/staycation/${id}`)
+            const response = await apiClient
+                .get(`/listing/staycation/${id}`)
                 .then((res) => res.data);
 
             console.log(response);

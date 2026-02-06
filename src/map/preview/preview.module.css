@@ -272,11 +272,10 @@
 .inline_warning_header {
   background: linear-gradient(to right, #E61E4D 0%, #E31C5F 50%, #D70466 100%);
   color: white;
-  padding: 12px 16px;
+  padding: 16px 20px 12px 20px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 8px;
 }
 
 .inline_warning_header h3 {

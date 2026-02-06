@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { X } from "lucide-react"
 import { useHost } from "../hostContext"
-import axios from "axios"
+import { apiClient } from "../../config/api"
 import styles from "../../auth/login.module.css"
 
 export default function ContactEditor({ data, setOpenContactEditor }) {
@@ -20,7 +20,7 @@ export default function ContactEditor({ data, setOpenContactEditor }) {
 
         try {
 
-            await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/auth/contact/${host.id}`, {
+            await apiClient.patch(`/auth/contact/${host.id}`, {
                 type: data.type,
                 url,
             });
@@ -29,14 +29,14 @@ export default function ContactEditor({ data, setOpenContactEditor }) {
             setOpenContactEditor(false)
 
         } catch (err) {
-            console.error('Send suggestion failed', err);
+            console.error('Add contacts failed', err);
 
         }
     };
 
     const handleRemoveContact = async () => {
         try {
-            await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/auth/contact/${host.id}`, {
+            await apiClient.patch(`/auth/contact/${host.id}`, {
                 type: data.type,
                 url: "",
             });

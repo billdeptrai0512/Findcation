@@ -6,7 +6,7 @@ import { useAuth } from './authContext';
 import { GoogleLogin } from '@react-oauth/google';
 import { X, } from 'lucide-react';
 import SubmitPassword from './submitPassword';
-import axios from 'axios';
+import { apiClient } from '../config/api';
 import styles from './login.module.css';
 
 export default function SubmitEmail() {
@@ -24,7 +24,7 @@ export default function SubmitEmail() {
         if (email === "") return setError("* Thông tin này là bắt buộc")
 
         try {
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login/email`, { email });
+            const response = await apiClient.post(`/login/email`, { email });
 
             const { hasPassword, hasRegister } = response.data;
 
@@ -57,9 +57,9 @@ export default function SubmitEmail() {
 
     const handleGoogleLogin = async (credentialResponse) => {
         try {
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/google`, {
+            const response = await apiClient.post(`/auth/google`, {
                 credential: credentialResponse.credential,
-            }, { withCredentials: true });
+            });
 
             const user = response.data.user
             setUser(user)

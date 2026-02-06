@@ -5,7 +5,7 @@ import { useStaycation } from "./staycationContext";
 import "leaflet/dist/leaflet.css";
 import styles from "./map.module.css";
 import L from "leaflet";
-import axios from "axios";
+import { apiClient } from "../config/api";
 import Home from "../assets/home_41x50.webp"
 import People from "../assets/people_41x50.webp"
 import PeopleMarker from "./peopleMarker";
@@ -46,14 +46,10 @@ export default function Map() {
           const testIp = urlParams.get('testIp');
 
           const url = testIp
-            ? `${import.meta.env.VITE_BACKEND_URL}/geojson/location?ip=${testIp}`
-            : `${import.meta.env.VITE_BACKEND_URL}/geojson/location`;
+            ? `/geojson/location?ip=${testIp}`
+            : `/geojson/location`;
 
-          const res = await axios.get(url, {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
+          const res = await apiClient.get(url);
 
           if (res.data?.location) {
             console.log("IP Location fetched:", res.data);
@@ -254,7 +250,7 @@ function VietnamBoundaries() {
   const [geoData, setGeoData] = useState(null);
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/assets/geo/vn_islands.geojson`)
+    apiClient.get(`/assets/geo/vn_islands.geojson`)
       .then(res => setGeoData(res.data.features));
   }, []);
 

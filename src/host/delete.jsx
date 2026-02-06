@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
 import { useHost } from "./hostContext";
 import { useState } from "react";
-import axios from "axios";
+import { apiClient } from "../config/api";
 import styles from "./footer/footer.module.css"
 
 export default function DeleteButton() {
@@ -21,21 +21,21 @@ export default function DeleteButton() {
 
   const handleDelete = async () => {
     try {
-        const response = await axios.delete(
-            `${import.meta.env.VITE_BACKEND_URL}/listing/staycation/${staycationId}`, staycation );
+      const response = await apiClient.delete(
+        `/listing/staycation/${staycationId}`, staycation);
 
-        console.log("Deleted:", response.data);
+      console.log("Deleted:", response.data);
 
-        refreshHost();
+      refreshHost();
 
-        alert("Xóa thành công!");
+      alert("Xóa thành công!");
 
-        navigate(`/host/${host.id}`);
+      navigate(`/host/${host.id}`);
 
     } catch (error) {
-        console.error("Error saving title:", error);
+      console.error("Error saving title:", error);
     } finally {
-        setLoading(true)
+      setLoading(true)
     }
   };
 
@@ -43,7 +43,7 @@ export default function DeleteButton() {
   return (
     <motion.button
       onClick={handleDelete}
-      style={{padding: "12px 12px", color: "#FFF", background:"#000"}}
+      style={{ padding: "12px 12px", color: "#FFF", background: "#000" }}
       className={styles.upload_button}
       whileHover={!loading ? { scale: 1.05 } : {}}
       whileTap={!loading ? { scale: 0.95 } : {}}

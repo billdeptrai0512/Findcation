@@ -4,7 +4,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useEditorDraft } from "../editorDraftContext";
 import { useHost } from "../hostContext";
 import { useState } from "react";
-import axios from "axios";
+import { apiClient } from "../../config/api";
 import styles from "./footer.module.css"
 
 export default function CompleteButton() {
@@ -24,8 +24,8 @@ export default function CompleteButton() {
 
   const handleSaveDetails = async () => {
     try {
-      const response = await axios.patch(
-        `${import.meta.env.VITE_BACKEND_URL}/listing/staycation/${staycationId}/editor`,
+      const response = await apiClient.patch(
+        `/listing/staycation/${staycationId}/editor`,
         draft
       );
 
@@ -57,8 +57,8 @@ export default function CompleteButton() {
           formData.append("images", img.file);
       });
 
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/listing/staycation/${staycationId}/editor/cover-images`,
+      const response = await apiClient.post(
+        `/listing/staycation/${staycationId}/editor/cover-images`,
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );

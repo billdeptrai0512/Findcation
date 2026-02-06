@@ -2,17 +2,17 @@ import { useAuth } from "../../auth/authContext";
 import { GoogleLogin } from '@react-oauth/google';
 import GoogleIcon from "../../assets/google.png";
 import styles from "./contacts.module.css";
-import axios from "axios";
+import { apiClient } from "../../config/api";
 
-export default function Google() {    
+export default function Google() {
 
     const { setUser, user } = useAuth()
 
     const handleGoogleLogin = async (credentialResponse) => {
         try {
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/google`, {
+            const response = await apiClient.post(`/auth/google`, {
                 credential: credentialResponse.credential,
-            }, { withCredentials: true });
+            });
 
             setUser(response.data.user)
 
@@ -25,9 +25,9 @@ export default function Google() {
 
         <div className={styles.contactRow} style={ui.row}>
 
-            <div style={{display: "flex", alignItems: "center"}}>
+            <div style={{ display: "flex", alignItems: "center" }}>
                 <img src={GoogleIcon} alt="Google" style={{ width: "35px" }} />
-                <div style={{display: "flex", justifyContent: "center", width: "100%"}}>
+                <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
                     <span> {user.name} </span>
                 </div>
             </div>

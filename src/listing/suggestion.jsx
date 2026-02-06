@@ -1,10 +1,10 @@
 import { useState } from "react"
 import { X } from "lucide-react"
 import { useAuth } from "../auth/authContext"
-import axios from "axios"
+import { apiClient } from "../config/api"
 import styles from "../auth/login.module.css"
 
-export default function Suggestion({currentStep, setOpenSuggestions}) {
+export default function Suggestion({ currentStep, setOpenSuggestions }) {
 
     const { user } = useAuth()
     const [message, setMessage] = useState('')
@@ -14,10 +14,10 @@ export default function Suggestion({currentStep, setOpenSuggestions}) {
         e.preventDefault();
 
         if (message === "") return setError("Góp ý không được bỏ trống.")
-        
+
         try {
 
-            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/suggestion`, {
+            await apiClient.post(`/suggestion`, {
                 message,
                 user,
                 stage: currentStep
@@ -30,7 +30,7 @@ export default function Suggestion({currentStep, setOpenSuggestions}) {
         } catch (err) {
             console.error('Send suggestion failed', err);
 
-        } 
+        }
     };
 
     return (
@@ -38,7 +38,7 @@ export default function Suggestion({currentStep, setOpenSuggestions}) {
             <div className={styles.card}>
                 <div className={styles.header}>
                     <button onClick={() => setOpenSuggestions(false)}>
-                        <X size={20} style={{padding: "4px"}}/>
+                        <X size={20} style={{ padding: "4px" }} />
                     </button>
                     <div className={styles.title}>
                         Góp ý
@@ -60,7 +60,7 @@ export default function Suggestion({currentStep, setOpenSuggestions}) {
                         </div>
 
                         {error && <p className={styles.error}>{error}</p>}
-                        
+
                         <div className={styles.actionLoginRow}>
                             <button type="submit" className={styles.button}>Gửi</button>
                         </div>
