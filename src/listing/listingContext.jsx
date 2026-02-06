@@ -37,6 +37,8 @@ const ListingProvider = ({ children }) => {
 
     })
 
+    const [isCompressing, setIsCompressing] = useState(false);
+
     const uploadName = (e) => {
 
         const name = e.target.value
@@ -72,6 +74,8 @@ const ListingProvider = ({ children }) => {
             return;
         }
 
+        setIsCompressing(true);
+
         try {
             const newImages = await processImages(files);
 
@@ -90,6 +94,8 @@ const ListingProvider = ({ children }) => {
             });
         } catch (error) {
             logger.error('Error uploading images:', error);
+        } finally {
+            setIsCompressing(false);
         }
     };
 
@@ -296,6 +302,7 @@ const ListingProvider = ({ children }) => {
         <ListingContext.Provider
             value={{
                 listing,
+                isCompressing,
                 uploadName,
                 uploadType,
                 uploadNumberOfRoom,

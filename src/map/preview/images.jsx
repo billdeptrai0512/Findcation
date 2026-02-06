@@ -73,7 +73,7 @@ export default function Images({ staycation }) {
   }
 
   return (
-    <div style={{ margin: "0 auto", maxWidth: "350px", padding: "16px", maxHeight: "250px", minWidth: "200px" }}>
+    <div style={{ margin: "0 auto", maxWidth: "400px", padding: "16px", maxHeight: "250px", minWidth: "200px" }}>
       {/* Image Slider */}
       <Swiper
         onSwiper={(swiper) => (swiperRef.current = swiper)}

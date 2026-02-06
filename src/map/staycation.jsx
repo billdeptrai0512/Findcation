@@ -27,8 +27,6 @@ export default function Staycation({ staycation }) {
 
     };
 
-    console.log(staycation)
-
     return (
         <div
             className={styles.listing}

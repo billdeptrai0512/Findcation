@@ -1,64 +1,59 @@
 import { useNavigate, useOutletContext } from "react-router-dom";
-import { CirclePlus } from 'lucide-react';
+import { CirclePlus, ChevronRight } from 'lucide-react';
 import styles from "./host.module.css"
 import Contacts from "./contacts/main";
 
 export default function Staycations() {
     const { staycations } = useOutletContext()
     const navigate = useNavigate();
+
     return (
-
         <div className={styles.pageContent}>
-                    {/* Main Content */}
-            <div>
 
-                <div style={{ display: "flex", paddingBottom: "8px", alignItems:"end", gap:"6px" }}>
-                    <h1 style={{ margin: "0", fontSize: "1.68em"}}>Staycation của tôi</h1>
-                    <CirclePlus size={28} fill="#E31C5F" color="#FFFFFF" onClick={() => navigate(`/list-staycation`)} style={{ cursor: "pointer"}}/>
-                </div>
+            {/* Header */}
+            <div className={styles.staycations_header}>
+                <h1 className={styles.staycations_title}>Staycation của tôi</h1>
+                <CirclePlus
+                    size={28}
+                    fill="#E31C5F"
+                    color="#FFFFFF"
+                    onClick={() => navigate(`/list-staycation`)}
+                    style={{ cursor: "pointer" }}
+                />
+            </div>
 
-                <div style={{ display: "flex", gap: "16px", overflowX: "auto", paddingBottom: "16px"}}>
-            
-                    {staycations.map((staycation) => (
-                        
-                        <div key={staycation.id}  
-                            style={{ cursor: "pointer", maxWidth: "294px", maxHeight: "400px",
-                            border: "1px solid #ddd", 
-                            borderRadius: "8px",  overflow: "hidden", flex: "0 0 auto" }}
-                            onClick={() => navigate(`editor/${staycation.id}`, { state: {staycation} })} 
-                        >
-                            <div>
-                                <img
-                                    src={`${import.meta.env.VITE_BACKEND_URL}${staycation.images?.[0]}`}
-                                    alt="cover_photo"
-                                    style={{ width: "100%", height: "191px",
-                                        borderTopLeftRadius: "8px", borderTopRightRadius: "8px",
-                                        objectFit: "cover", objectPosition: "center",
-                                    }}
-                                />
-                            </div>
-                            
-                            <div style={{ display: "flex", flexDirection: "column",  gap: "4px", padding: "0 8px 8px 8px", }} >
-                                <h2 style={{ marginTop: "0", fontSize: "1rem",}}>
-                                    {staycation.location.details.street}
-                                </h2>
-                                <div style={{ color: "#555" }}>
-                                    {console.log(staycation.location.details.ward)}
-                                    {`${staycation.location.details.ward} - ${staycation.location.details.city}`}
-                                </div>
-                            </div>
-                            
+            {/* Staycation Cards */}
+            <div className={styles.staycations_grid}>
+                {staycations.map((staycation) => (
+                    <div
+                        key={staycation.id}
+                        className={styles.staycation_card}
+                        onClick={() => navigate(`editor/${staycation.id}`, { state: { staycation } })}
+                    >
+                        {console.log(staycation.images?.[0])}
+                        <div className={styles.staycation_cover}>
+                            <img
+                                src={`${import.meta.env.VITE_IMAGEKIT_URL}${staycation.images?.[0]}`}
+                                alt="cover_photo"
+                                className={styles.staycation_cover_img}
+                            />
                         </div>
-                    ))}
 
-                </div>
+                        <div className={styles.staycation_card_details}>
+                            <h2 className={styles.staycation_card_name}>
+                                {staycation.name || staycation.location.details.street}
+                            </h2>
+                            <div className={styles.staycation_card_info}>
+                                <span>{staycation.location.details.ward}, {staycation.location.details.city}</span>
+                                <ChevronRight size={18} />
+                            </div>
+                        </div>
+                    </div>
+                ))}
             </div>
 
             <Contacts />
 
         </div>
-
-
     );
 }
-

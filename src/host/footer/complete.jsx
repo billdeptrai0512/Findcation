@@ -46,16 +46,39 @@ export default function CompleteButton() {
     try {
       const formData = new FormData();
 
+      console.log("All draft images:", draft.images);
+
       // keep only already-uploaded URLs
       const existing = draft.images.filter((img) => typeof img === "string");
       formData.append("existingImages", JSON.stringify(existing));
+      console.log("Existing images (strings):", existing);
 
       // append new files
       if (draft.images.length > 10) return alert('Tối đa 10 hình')
-      draft.images.forEach((img) => {
-        if (img.file && img.file.size < 5 * 1024 * 1024)
-          formData.append("images", img.file);
+
+      let newFilesCount = 0;
+      let rejectedFiles = [];
+
+      draft.images.forEach((img, index) => {
+        if (typeof img === "string") return; // existing image
+
+        if (img.file) {
+          const fileSizeMB = (img.file.size / 1024 / 1024).toFixed(2);
+
+          if (img.file.size < 5 * 1024 * 1024) {
+            formData.append("images", img.file);
+            newFilesCount++;
+          } else {
+            rejectedFiles.push(`${img.file.name} (${fileSizeMB}MB)`);
+          }
+        }
       });
+
+      if (rejectedFiles.length > 0) {
+        alert(`Các file sau quá 5MB và không được tải lên:\n${rejectedFiles.join('\n')}`);
+      }
+
+      console.log("New files appended:", newFilesCount);
 
       const response = await apiClient.post(
         `/listing/staycation/${staycationId}/editor/cover-images`,

@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useHost } from "./hostContext";
+import { ChevronRight } from "lucide-react";
 import styles from "./host.module.css"
 import DeleteButton from "./delete";
 
@@ -19,91 +20,100 @@ export default function Staycation() {
         const defaultImages = Array.isArray(staycation.images) ? staycation.images.length : 0;
 
         const roomImages = Array.isArray(staycation.rooms)
-                ? staycation.rooms.reduce((total, room) => {
-                        const count = Array.isArray(room.images) ? room.images.length : 0;
-                        return total + count;
-                    }, 0)
-                : 0;
+            ? staycation.rooms.reduce((total, room) => {
+                const count = Array.isArray(room.images) ? room.images.length : 0;
+                return total + count;
+            }, 0)
+            : 0;
 
         return defaultImages + roomImages;
     }
-    
+
+    if (!staycation) return null;
+
     return (
-        
-        <div className={styles.pageContent} > 
+        <div className={styles.pageContent}>
 
-
-            <h1 style={{ margin: "0", fontSize: "1.68em"}}>Staycation của tôi</h1>
-            
-            <div onClick={() => navigate(`title`)}
-                style={{boxShadow: "0 3px 10px rgba(0,0,0,0.6)", padding: "8px",  borderRadius: "8px", cursor: "pointer"}}>
-
-                <span style={{fontSize: "1rem", fontWeight: "500"}}>Tiêu đề</span> 
-                <div style={{color: "#6A6A6A", fontWeight: "500"}} >{staycation.name}</div>
-                    
-            </div>
-
-            <div onClick={() => navigate(`type`)} 
-                style={{boxShadow: "0 3px 10px rgba(0,0,0,0.6)",  padding: "8px", borderRadius: "8px", cursor: "pointer"}}>
-
-                <span style={{fontSize: "1rem", fontWeight: "500"}}>Cho thuê</span>
-
-                <div style={{color: "#6A6A6A", fontWeight: "500"}}>{staycation.type === "room" ? `${staycation.numberOfRoom} phòng riêng` : `Toàn bộ căn nhà` } </div>
-
-            </div>
-
-            
-            <div onClick={() => navigate(`location`)}
-            
-                style={{boxShadow: "0 3px 10px rgba(0,0,0,0.6)",  padding: "8px", borderRadius: "8px", cursor: "pointer"}}>
-                <span style={{fontSize: "1rem", fontWeight: "500"}}>Vị trí</span>
-                <div style={{display: "flex", gap: "16px", color: "#6A6A6A", fontWeight: "500"}}>
-                    {`${staycation.location.details.street}, ${staycation.location.details.ward}, ${staycation.location.details.city}`}
-                    {/* 99 Dạ Nam, Chánh Hưng, Hồ Chí Minh */}
+            {/* Cover Image Card */}
+            <div className={styles.staycation_card} onClick={() => navigate(`images`)}>
+                <div className={styles.staycation_cover}>
+                    {staycation.images?.[0] && (
+                        <img
+                            src={`${import.meta.env.VITE_IMAGEKIT_URL}${staycation.images[0]}`}
+                            alt="cover"
+                            className={styles.staycation_cover_img}
+                        />
+                    )}
                 </div>
-
-            </div>
-
-                <div onClick={() => navigate(`prices`)} 
-                    style={{boxShadow: "0 3px 10px rgba(0,0,0,0.6)",  padding: "8px", borderRadius: "8px", cursor: "pointer"}}>
-
-                <span style={{fontSize: "1rem", fontWeight: "500"}}>Bảng giá</span>
-
-                <div style={{display: "flex", gap: "16px", color: "#6A6A6A", fontWeight: "500"}}>
-
-                    <span>{formatPrice(staycation.prices.min)}</span>
-                    <span> ~ </span>
-                    <span>{formatPrice(staycation.prices.max)}</span>
-                    
+                <div className={styles.staycation_card_details}>
+                    <h2 className={styles.staycation_card_name}>{staycation.name}</h2>
+                    <div className={styles.staycation_card_info}>
+                        <span>{totalImage()} hình ảnh</span>
+                        <ChevronRight size={18} />
+                    </div>
                 </div>
-
             </div>
 
-            <div onClick={() => navigate(`images`)}
-                style={{boxShadow: "0 3px 10px rgba(0,0,0,0.6)",  padding: "8px", borderRadius: "8px", cursor: "pointer"}}>
-        
-                <span style={{fontSize: "1rem", fontWeight: "500", paddingBottom: "4px"}}>Hình ảnh</span> 
-                <div  style={{cursor: "pointer", width: "100%",  borderRadius: "8px", overflow: "hidden"}}>
-                    {staycation.images && <div style={{color: "#6A6A6A", fontWeight: "500"}} >Đang có {totalImage()}</div>}
-                </div>     
-                
-            </div>
-
-            <div onClick={() => navigate(`features`)}
-            
-                style={{boxShadow: "0 3px 10px rgba(0,0,0,0.6)",  padding: "8px", borderRadius: "8px", cursor: "pointer"}}>
-                <span style={{fontSize: "1rem", fontWeight: "500"}}>Tiện nghi</span>
-                <div style={{display: "flex", gap: "16px", color: "#6A6A6A", fontWeight: "500"}}>
-                    Đang có {staycation.features.length} 
+            {/* Info Cards */}
+            <div className={styles.staycation_card} onClick={() => navigate(`title`)}>
+                <div className={styles.staycation_card_row}>
+                    <div>
+                        <span className={styles.staycation_card_label}>Tiêu đề</span>
+                        <div className={styles.staycation_card_value}>{staycation.name}</div>
+                    </div>
+                    <ChevronRight size={20} color="#6A6A6A" />
                 </div>
-
             </div>
 
+            <div className={styles.staycation_card} onClick={() => navigate(`type`)}>
+                <div className={styles.staycation_card_row}>
+                    <div>
+                        <span className={styles.staycation_card_label}>Cho thuê</span>
+                        <div className={styles.staycation_card_value}>
+                            {staycation.type === "room" ? `${staycation.numberOfRoom} phòng riêng` : `Toàn bộ căn nhà`}
+                        </div>
+                    </div>
+                    <ChevronRight size={20} color="#6A6A6A" />
+                </div>
+            </div>
 
+            <div className={styles.staycation_card} onClick={() => navigate(`location`)}>
+                <div className={styles.staycation_card_row}>
+                    <div>
+                        <span className={styles.staycation_card_label}>Vị trí</span>
+                        <div className={styles.staycation_card_value}>
+                            {`${staycation.location.details.street}, ${staycation.location.details.ward}, ${staycation.location.details.city}`}
+                        </div>
+                    </div>
+                    <ChevronRight size={20} color="#6A6A6A" />
+                </div>
+            </div>
 
+            <div className={styles.staycation_card} onClick={() => navigate(`prices`)}>
+                <div className={styles.staycation_card_row}>
+                    <div>
+                        <span className={styles.staycation_card_label}>Bảng giá</span>
+                        <div className={styles.staycation_card_value}>
+                            {formatPrice(staycation.prices.min)} ~ {formatPrice(staycation.prices.max)}
+                        </div>
+                    </div>
+                    <ChevronRight size={20} color="#6A6A6A" />
+                </div>
+            </div>
+
+            <div className={styles.staycation_card} onClick={() => navigate(`features`)}>
+                <div className={styles.staycation_card_row}>
+                    <div>
+                        <span className={styles.staycation_card_label}>Tiện nghi</span>
+                        <div className={styles.staycation_card_value}>
+                            Đang có {staycation.features.length}
+                        </div>
+                    </div>
+                    <ChevronRight size={20} color="#6A6A6A" />
+                </div>
+            </div>
 
         </div>
-
     );
 }
 

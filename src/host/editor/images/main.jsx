@@ -1,10 +1,10 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
-import { Plus } from "lucide-react"
+import { Plus, Loader2 } from "lucide-react"
 import { useEditorDraft } from "../../editorDraftContext";
-import { convertHEIC } from "../../../utils/convertHeic";
-import React from "react";
+import { processImage } from "../../../utils/imageProcessor";
+import React, { useState } from "react";
 import Photo from "./photo";
 import styles from "../../host.module.css"
 
@@ -12,50 +12,46 @@ export default function EditorImages() {
 
     const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
     const { draft, setDraft } = useEditorDraft();
+    const [isCompressing, setIsCompressing] = useState(false);
 
     const removeImage = (index) => {
 
         setDraft(prev => ({
             ...prev,
-            images: draft.images.filter((_, i) => i !== index),
+            images: (prev.images || []).filter((_, i) => i !== index),
         }));
 
     };
 
     const addImage = async (files) => {
 
-        console.log(files)
-
-        const convertFile = async (file) => {
-            const isHeic =
-                file.type === "image/heic" ||
-                file.name.toLowerCase().endsWith(".heic") ||
-                file.name.toLowerCase().endsWith(".heif");
-
-            if (isHeic) {
-                try {
-                    const blob = await convertHEIC(file);
-                    return { file, url: URL.createObjectURL(blob) };
-                } catch (err) {
-                    console.warn("HEIC conversion failed, fallback to raw", err);
-                }
-            }
-            return { file, url: URL.createObjectURL(file) };
-        };
-
-
-        //Prevent if there is file bigger than 5MB
-        let newImages = [];
-        if (files.length > 1) {
-            newImages = await Promise.all(Array.from(files).map(convertFile));
-        } else {
-            newImages = [await convertFile(files[0])];
+        if (!files || files.length === 0) {
+            console.warn("No files provided to addImage");
+            return;
         }
 
-        setDraft(prev => ({
-            ...prev,
-            images: [...draft.images, ...newImages],
-        }));
+        setIsCompressing(true);
+
+        try {
+            console.log(`Processing ${files.length} image(s)...`);
+
+            // Process all files (HEIC conversion + compression)
+            const newImages = await Promise.all(
+                Array.from(files).map(processImage)
+            );
+
+            console.log("Processed images:", newImages.map(img => ({
+                name: img.file.name,
+                size: (img.file.size / 1024 / 1024).toFixed(2) + 'MB'
+            })));
+
+            setDraft(prev => ({
+                ...prev,
+                images: [...(prev.images || []), ...newImages],
+            }));
+        } finally {
+            setIsCompressing(false);
+        }
 
     };
 
@@ -120,12 +116,22 @@ export default function EditorImages() {
 
     if (isMobile) return (
 
-        <motion.div className={styles.pageContent} style={{ justifyContent: "unset" }}
+        <motion.div className={styles.pageContent} style={{ justifyContent: "unset", position: "relative" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
         >
+
+            {/* Loading Overlay */}
+            {isCompressing && (
+                <div className={styles.compression_overlay}>
+                    <div className={styles.compression_modal}>
+                        <Loader2 size={32} className={styles.compression_spinner} />
+                        <span>Đang nén ảnh...</span>
+                    </div>
+                </div>
+            )}
 
             <h1 style={{ margin: "0px", fontSize: "1.68em", }}>Thay đổi ảnh</h1>
 
@@ -142,12 +148,22 @@ export default function EditorImages() {
     )
 
     return (
-        <motion.div className={styles.pageContent} style={{ justifyContent: "unset" }}
+        <motion.div className={styles.pageContent} style={{ justifyContent: "unset", position: "relative" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
         >
+
+            {/* Loading Overlay */}
+            {isCompressing && (
+                <div className={styles.compression_overlay}>
+                    <div className={styles.compression_modal}>
+                        <Loader2 size={32} className={styles.compression_spinner} />
+                        <span>Đang nén ảnh...</span>
+                    </div>
+                </div>
+            )}
 
             <h1 style={{ margin: "0px", fontSize: "1.68em" }}>Thay đổi ảnh</h1>
 

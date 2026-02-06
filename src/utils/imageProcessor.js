@@ -1,9 +1,20 @@
+import imageCompression from 'browser-image-compression';
 import { convertHEIC } from './convertHeic';
 import { logger } from './logger';
 
 /**
  * Image processing utilities
  */
+
+/**
+ * Compression options for images
+ */
+const COMPRESSION_OPTIONS = {
+    maxSizeMB: 2,           // Max file size in MB
+    maxWidthOrHeight: 2000, // Max dimension
+    useWebWorker: true,     // Use web worker for better performance
+    fileType: 'image/webp', // Output as WebP for smaller size
+};
 
 /**
  * Check if file is HEIC/HEIF format
@@ -17,21 +28,49 @@ const isHeicFile = (file) => {
 };
 
 /**
- * Process a single image file (convert HEIC if needed)
+ * Compress an image file
+ * @param {File} file - Image file to compress
+ * @returns {Promise<File>} Compressed file
+ */
+const compressImage = async (file) => {
+    try {
+        const originalSizeMB = (file.size / 1024 / 1024).toFixed(2);
+        logger.log(`Compressing: ${file.name} (${originalSizeMB}MB)`);
+
+        const compressedFile = await imageCompression(file, COMPRESSION_OPTIONS);
+
+        const compressedSizeMB = (compressedFile.size / 1024 / 1024).toFixed(2);
+        logger.log(`Compressed: ${file.name} ${originalSizeMB}MB → ${compressedSizeMB}MB`);
+
+        return compressedFile;
+    } catch (error) {
+        logger.warn('Compression failed, using original file:', error);
+        return file;
+    }
+};
+
+/**
+ * Process a single image file (convert HEIC if needed, then compress)
  * @param {File} file - Image file to process
  * @returns {Promise<{file: File, url: string}>}
  */
 export const processImage = async (file) => {
+    let processedFile = file;
+
+    // Convert HEIC first if needed
     if (isHeicFile(file)) {
         try {
             const blob = await convertHEIC(file);
-            return { file, url: URL.createObjectURL(blob) };
+            processedFile = new File([blob], file.name.replace(/\.heic$/i, '.jpg'), { type: 'image/jpeg' });
         } catch (err) {
             logger.warn('HEIC conversion failed, using original file', err);
         }
     }
 
-    return { file, url: URL.createObjectURL(file) };
+    // Compress the image
+    const compressedFile = await compressImage(processedFile);
+
+    return { file: compressedFile, url: URL.createObjectURL(compressedFile) };
 };
 
 /**

@@ -61,8 +61,7 @@ export default function Details({ staycation, downloadImage, canvas, loading }) 
                     <h2 className={styles.detail_card_title}>Địa chỉ</h2>
                 </div>
                 <div className={styles.detail_card_content}>
-                    <span>{staycation.location.details.street}</span>
-                    <span>{staycation.location.details.ward} - {staycation.location.details.city}</span>
+                    <span>{staycation.location.details.street} - {staycation.location.details.ward} - {staycation.location.details.city}</span>
                 </div>
             </div>
 

@@ -1,5 +1,5 @@
 import { useMediaQuery } from "react-responsive";
-import { Plus } from "lucide-react"
+import { Plus, Loader2 } from "lucide-react"
 import { useListing } from "../listingContext";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
@@ -9,106 +9,118 @@ import styles from "./image.module.css"
 
 export default function Area() {
 
-    const { listing, uploadImages } = useListing()
+  const { listing, uploadImages, isCompressing } = useListing()
 
-    const isMobile = useMediaQuery({ query: '(max-width: 768px)'})
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
 
-    const getEmptySlotIndex = (length) => {
-      if (length < 3) return 2
-      if (length < 5) return 4
-      if (length < 7) return 6
-      return null
-    }
+  const getEmptySlotIndex = (length) => {
+    if (length < 3) return 2
+    if (length < 5) return 4
+    if (length < 7) return 6
+    return null
+  }
 
-    const renderPhoto = (index) => {
+  const renderPhoto = (index) => {
 
-        const img = listing.images[index]
-        const emptySlotIndex = getEmptySlotIndex(listing.images.length)
+    const img = listing.images[index]
+    const emptySlotIndex = getEmptySlotIndex(listing.images.length)
 
-        // Cover photo
-        if (index === 0) return <Photo image={img} cover={true} index={index} /> 
-        
-        // Empty slots
-        if (index === emptySlotIndex && img === undefined) return renderEmptyLastImage(uploadImages) // empty with lasst
+    // Cover photo
+    if (index === 0) return <Photo image={img} cover={true} index={index} />
 
-        return <Photo image={img} cover={false} index={index} />
-    }
-    
-    const renderEmptyLastImage = (uploadImages) => {
+    // Empty slots
+    if (index === emptySlotIndex && img === undefined) return renderEmptyLastImage(uploadImages) // empty with lasst
 
-        return (
-            <div className={styles.empty}>
-                <div className={`${styles.empty} ${styles.last_photo}`}>
-                <label style={{ display: "block", width: "100%", height: "100%", cursor: "pointer" }}>
-                    <input type="file" name="image" accept="image/*" multiple style={{ display: "none" }} onChange={(e) => uploadImages(e.target.files)}/>
-                    <div>
-                        <Plus size={35} />
-                        <span>Thêm ảnh</span>
-                    </div>
-                </label>
-                </div>
-            </div>
-        )
-    }
+    return <Photo image={img} cover={false} index={index} />
+  }
 
-    if (isMobile) return (
-        <motion.div className={styles.pageContent}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-        >
-            <h1 style={{marginBottom: "4px", fontSize: "1.68rem"}}>Bạn có thể đăng tối đa 5 bức ảnh. </h1>
-            <div className={styles.intrustion} style={{paddingBottom: "8px", color: "#6A6A6A"}}>
-                Chọn ảnh đẹp nhất làm ảnh bìa. Về sau, bạn có thể đăng thêm hoặc thay đổi ảnh.
-            </div>
-            <div className={styles.mobile_images_area}>
-                    
-                {[...Array(6)].map((_, i) => (
-                  <React.Fragment key={i}>{renderPhoto(i)}</React.Fragment>
-                ))}
+  const renderEmptyLastImage = (uploadImages) => {
 
-            </div>
-        </motion.div>
-    )
-    
     return (
-      <motion.div className={styles.pageContent}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-      >
-        <h1 style={{marginBottom: "4px"}}>Bạn có thể đăng tối đa 5 bức ảnh.</h1>
-        <div className={styles.intrustion} style={{paddingBottom: "8px", color: "#6A6A6A"}}>
-          Chọn ảnh đẹp nhất làm ảnh bìa. Về sau, bạn có thể đăng thêm hoặc thay đổi ảnh.
-        </div>
-    
-        <div className={styles.images_area}>
-          {renderPhoto(0)} {/* cover */}
-    
-
-          <div className={styles.group} >
-            {renderPhoto(1)}
-            {renderPhoto(2)}
-          </div>
-
-          {listing.images.length >= 3 && (
-              <div className={styles.group} >
-                {renderPhoto(3)}
-                {renderPhoto(4)}
-              </div>
-          )}
-
-          {listing.images.length >= 5 && (
-            <div className={styles.group} >
-              {renderPhoto(5)}
-              {renderPhoto(6)}
+      <div className={styles.empty}>
+        <div className={`${styles.empty} ${styles.last_photo}`}>
+          <label style={{ display: "block", width: "100%", height: "100%", cursor: "pointer" }}>
+            <input type="file" name="image" accept="image/*" multiple style={{ display: "none" }} onChange={(e) => uploadImages(e.target.files)} />
+            <div>
+              <Plus size={35} />
+              <span>Thêm ảnh</span>
             </div>
-          )}
-
+          </label>
         </div>
-      </motion.div>
-    );
-}
+      </div>
+    )
+  }
 
+  const renderLoadingOverlay = () => (
+    <div className={styles.compression_overlay}>
+      <div className={styles.compression_modal}>
+        <Loader2 size={32} className={styles.compression_spinner} />
+        <span>Đang nén ảnh...</span>
+      </div>
+    </div>
+  )
+
+  if (isMobile) return (
+    <motion.div className={styles.pageContent} style={{ position: "relative" }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1, ease: "easeOut" }}
+    >
+      {isCompressing && renderLoadingOverlay()}
+
+      <h1 style={{ marginBottom: "4px", fontSize: "1.68rem" }}>Bạn có thể đăng tối đa 5 bức ảnh. </h1>
+      <div className={styles.intrustion} style={{ paddingBottom: "8px", color: "#6A6A6A" }}>
+        Chọn ảnh đẹp nhất làm ảnh bìa. Về sau, bạn có thể đăng thêm hoặc thay đổi ảnh.
+      </div>
+      <div className={styles.mobile_images_area}>
+
+        {[...Array(6)].map((_, i) => (
+          <React.Fragment key={i}>{renderPhoto(i)}</React.Fragment>
+        ))}
+
+      </div>
+    </motion.div>
+  )
+
+  return (
+    <motion.div className={styles.pageContent} style={{ position: "relative" }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1, ease: "easeOut" }}
+    >
+      {isCompressing && renderLoadingOverlay()}
+
+      <h1 style={{ marginBottom: "4px" }}>Bạn có thể đăng tối đa 5 bức ảnh.</h1>
+      <div className={styles.intrustion} style={{ paddingBottom: "8px", color: "#6A6A6A" }}>
+        Chọn ảnh đẹp nhất làm ảnh bìa. Về sau, bạn có thể đăng thêm hoặc thay đổi ảnh.
+      </div>
+
+      <div className={styles.images_area}>
+        {renderPhoto(0)} {/* cover */}
+
+
+        <div className={styles.group} >
+          {renderPhoto(1)}
+          {renderPhoto(2)}
+        </div>
+
+        {listing.images.length >= 3 && (
+          <div className={styles.group} >
+            {renderPhoto(3)}
+            {renderPhoto(4)}
+          </div>
+        )}
+
+        {listing.images.length >= 5 && (
+          <div className={styles.group} >
+            {renderPhoto(5)}
+            {renderPhoto(6)}
+          </div>
+        )}
+
+      </div>
+    </motion.div>
+  );
+}
