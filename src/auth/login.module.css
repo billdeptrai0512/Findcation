@@ -1,5 +1,5 @@
 .container {
-  position: absolute;
+  /* position: absolute; */
   bottom: 0;
   min-width: 100vw;
   min-height: 100dvh;
@@ -10,8 +10,10 @@
   position: fixed;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.3); /* semi-transparent dark overlay */
-  backdrop-filter: blur(2px); /* blurry effect behind overlay */
+  background-color: rgba(0, 0, 0, 0.3);
+  /* semi-transparent dark overlay */
+  backdrop-filter: blur(2px);
+  /* blurry effect behind overlay */
   z-index: 1000;
 }
 
@@ -28,7 +30,7 @@
   border-bottom: 1px solid #DDDDDD;
 }
 
-.header > button {
+.header>button {
   display: flex;
   border: none;
   border-radius: 25px;
@@ -37,15 +39,29 @@
   transition: background-color 0.2s ease;
 }
 
-.header > button:hover {
+.header>button:hover {
   background-color: #F7F7F7;
 }
 
 .panel {
-  padding: 1em 2em;
+  padding: 1em 2em 2em;
+  overflow-y: auto;
+  max-height: calc(100dvh - 56px);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-.panel > h1 {
+.panel::-webkit-scrollbar {
+  display: none;
+}
+
+@media screen and (max-width: 349px) {
+  .panel {
+    padding: 0.75em 1em 2em;
+  }
+}
+
+.panel>h1 {
   font-size: 1.275rem;
 }
 
@@ -84,7 +100,8 @@
 
 .input {
   padding: 0.75rem 1rem;
-  border: 1px solid #d1d5db; /* Tailwind gray-300 */
+  border: 1px solid #d1d5db;
+  /* Tailwind gray-300 */
   border-radius: 0.5rem;
   font-size: 1rem;
   flex: 1;
@@ -92,12 +109,14 @@
 
 .input:focus {
   outline: none;
-  border-color: #3b82f6; /* Tailwind blue-500 */
+  border-color: #3b82f6;
+  /* Tailwind blue-500 */
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
 }
 
 .error {
-  color: #dc2626; /* Tailwind red-600 */
+  color: #dc2626;
+  /* Tailwind red-600 */
   font-size: 0.875rem;
   margin-bottom: 0.5rem;
 }
@@ -112,9 +131,9 @@
   margin-bottom: 1rem;
   gap: 1em;
   font-size: 0.875rem;
-} 
+}
 
-.actionLoginRow > div {
+.actionLoginRow>div {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -165,14 +184,21 @@
 }
 
 .options_button {
-    border: 1px solid #DDDDDD;
-    background-color: white;
-    padding: 16px 24px;
-    cursor: pointer;
-    font-size: 0.975rem;
-    font-weight: 500;
-    border-radius: 8px;
-    font-family: 'Inter', sans-serif;
+  border: 1px solid #DDDDDD;
+  background-color: white;
+  padding: 16px 24px;
+  cursor: pointer;
+  font-size: 0.975rem;
+  font-weight: 500;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  width: 100%;
+  text-align: center;
+  transition: background-color 0.15s ease;
+}
+
+.options_button:hover {
+  background-color: #F7F7F7;
 }
 
 .spinner {
@@ -194,7 +220,7 @@
   justify-content: center;
 }
 
-.googleWrapper > div {
+.googleWrapper>div {
   width: 100%;
 }
 
@@ -205,12 +231,12 @@
   align-items: center;
 }
 
-.profile > img {
+.profile>img {
   width: 25%;
   border-radius: 50px;
 }
 
-.profile > p {
+.profile>p {
   display: flex;
   width: 100%;
   align-items: center;
@@ -219,7 +245,7 @@
 }
 
 @media screen and (min-width: 714px) {
-    
+
   .container {
     position: absolute;
     top: 50%;
@@ -254,7 +280,7 @@
     font-weight: bolder;
   }
 
-  .panel > h1 {
+  .panel>h1 {
     font-size: 1.575rem;
   }
 

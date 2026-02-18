@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { useState } from "react"
-import { X } from "lucide-react"
+import { ChevronLeft } from "lucide-react"
 import { useAuth } from "../../auth/authContext";
 import { useNavigate } from "react-router-dom";
 import styles from "../../auth/login.module.css"
@@ -34,13 +34,13 @@ export default function Options({ setOpenOptions, setOpenContactEditor }) {
                     <div className={styles.header}>
 
                         <button onClick={() => setOpenOptions(null)}>
-                            <X size={20} style={{ padding: "4px" }} />
+                            <ChevronLeft size={20} style={{ padding: "4px" }} />
                         </button>
                         <div className={styles.title}>
                             Thông tin liên hệ
                         </div>
                     </div>
-                    <div className={styles.panel} style={{ display: "flex", justifyContent: "center", flexDirection: "column", gap: "1em" }}>
+                    <div className={styles.panel} style={{ display: "flex", flexDirection: "column", gap: "0.75em" }}>
 
                         <Contacts setOpenContactEditor={setOpenContactEditor} />
 

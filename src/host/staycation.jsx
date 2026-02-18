@@ -34,6 +34,17 @@ export default function Staycation() {
     return (
         <div className={styles.pageContent}>
 
+            <div className={styles.staycation_card} onClick={() => navigate(`title`)}>
+                <div className={styles.staycation_card_row}>
+                    <div>
+                        <span className={styles.staycation_card_label}>Tiêu đề</span>
+                        <div className={styles.staycation_card_value}>
+                            {staycation.name}
+                        </div>
+                    </div>
+                    <ChevronRight size={20} color="#6A6A6A" />
+                </div>
+            </div>
 
             <div className={styles.staycation_card} onClick={() => navigate(`images`)}>
                 <div className={styles.staycation_cover}>
@@ -52,20 +63,6 @@ export default function Staycation() {
                     </div>
                 </div>
             </div>
-
-            <div className={styles.staycation_card} onClick={() => navigate(`title`)}>
-                <div className={styles.staycation_card_row}>
-                    <div>
-                        <span className={styles.staycation_card_label}>Tiêu đề</span>
-                        <div className={styles.staycation_card_value}>
-                            {staycation.name}
-                        </div>
-                    </div>
-                    <ChevronRight size={20} color="#6A6A6A" />
-                </div>
-            </div>
-
-
 
 
 
