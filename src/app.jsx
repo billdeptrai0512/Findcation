@@ -40,6 +40,7 @@ import EditorImages from "./host/editor/images/main";
 
 import AdminRoute from "./admin/adminRoute";
 import HostRoute from "./host/hostRoute";
+import VerifyStaycation from "./host/verify/main";
 
 
 const Listing = React.lazy(() => import("./listing/main"));
@@ -67,14 +68,14 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/list-staycation",
+    path: "/host/:hostId/create-staycation",
     element:
       <ListingProvider>
         <Listing />
       </ListingProvider>,
     errorElement: <ErrorPage />,
     children: [
-      { path: "", element: <StartPage /> },
+      { index: "start", element: <StartPage /> },
       { path: "title", element: <Title /> },
       { path: "type-of-house", element: <TypeOfHouse /> },
       { path: "images", element: <ImageUpload /> },
@@ -114,6 +115,7 @@ const router = createBrowserRouter([
           { path: "features", element: <EditorFeatures /> },
           { path: "location", element: <EditorLocation /> },
           { path: "images", element: <EditorImages /> },
+          { path: "verify", element: <VerifyStaycation /> },
           // { path: "rooms", element: <EditorRooms /> },
           // { path: "rooms/cover-images", element: <EditorCoverImages /> },
           // { path: "rooms/:roomId", element: <EditorRoomImages /> },

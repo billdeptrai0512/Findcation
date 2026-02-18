@@ -3,11 +3,11 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from './authContext';
-import { ChevronLeft, Eye, EyeClosed  } from 'lucide-react';
+import { ChevronLeft, Eye, EyeClosed } from 'lucide-react';
 import styles from './login.module.css';
 
 
-export default function SubmitPassword({email, setEmail, setFoundEmail,}) {
+export default function SubmitPassword({ email, setEmail, setFoundEmail, }) {
 
     const { login } = useAuth()
 
@@ -21,30 +21,27 @@ export default function SubmitPassword({email, setEmail, setFoundEmail,}) {
         e.preventDefault();
 
         if (password === "") return setError("Thông tin này là bắt buộc.")
-        
+
         try {
 
             const user = await login(email, password);
 
-            if (user.staycations.length > 0) {
-                if (user.isAdmin) {
-                    return navigate('/admin')
-                }
-                navigate(`/host/${user.id}`)
+            if (user.isAdmin) {
+                return navigate('/admin')
             } else {
-                navigate('/list-staycation');
+                navigate(`/host/${user.id}`)
             }
 
         } catch (err) {
 
             if (err.response?.status === 401) {
                 setError(
-                  <>
-                    Sai mật khẩu rồi.{" "}
-                    <Link to="/auth/forgot-password" className={styles.link}>
-                      Bạn đã quên mật khẩu?
-                    </Link>
-                  </>
+                    <>
+                        Sai mật khẩu rồi.{" "}
+                        <Link to="/auth/forgot-password" className={styles.link}>
+                            Bạn đã quên mật khẩu?
+                        </Link>
+                    </>
                 );
             } else if (err.response) {
                 setError("Có lỗi xảy ra, vui lòng thử lại.");
@@ -52,7 +49,7 @@ export default function SubmitPassword({email, setEmail, setFoundEmail,}) {
                 setError("Không thể kết nối đến server.");
             }
 
-        } 
+        }
     };
 
     // here we need to check if the user have the password or not ?
@@ -63,7 +60,7 @@ export default function SubmitPassword({email, setEmail, setFoundEmail,}) {
             <div className={styles.card} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.header}>
                     <button onClick={() => setFoundEmail(null)}>
-                        <ChevronLeft size={20} style={{padding: "4px"}}/>
+                        <ChevronLeft size={20} style={{ padding: "4px" }} />
                     </button>
                     <div className={styles.title} >
                         {"Đăng nhập"}
@@ -87,7 +84,7 @@ export default function SubmitPassword({email, setEmail, setFoundEmail,}) {
 
                         <div className={styles.inputGroup}>
                             <label>Mật khẩu</label>
-                            <div style={{position: "relative", display: "flex", alignItems: "center"}}>
+                            <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
                                 <input
                                     id="password"
                                     name="password"
@@ -100,21 +97,21 @@ export default function SubmitPassword({email, setEmail, setFoundEmail,}) {
                                 />
                                 <button type="button" className={styles.toggleButton}
                                     onClick={() => setShowPassword(!showPassword)}>
-                                        {showPassword ? <Eye /> : <EyeClosed />}
+                                    {showPassword ? <Eye /> : <EyeClosed />}
                                 </button>
                             </div>
 
                             {error && <p className={styles.error}>{error}</p>}
 
                         </div>
-                              
+
                         <div className={styles.actionLoginRow}>
                             <motion.button type="submit" className={styles.button}
-                                whileTap={{scale: 0.95}}>
-                                    Đăng nhập
+                                whileTap={{ scale: 0.95 }}>
+                                Đăng nhập
                             </motion.button>
                         </div>
-                        
+
                     </form>
 
                 </div>

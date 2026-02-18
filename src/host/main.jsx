@@ -38,7 +38,7 @@ function HostLayout() {
     <div className={styles.hostContainer}>
       {!isMobile && <Header host={host} />}
       <Outlet context={{ staycations: host.staycations, setOpenContactEditor }} />
-      {openOptions && <Options openOptions={openOptions} setOpenOptions={setOpenOptions} />}
+      {openOptions && <Options openOptions={openOptions} setOpenOptions={setOpenOptions} setOpenContactEditor={setOpenContactEditor} />}
       {openContactEditor && <ContactEditor data={openContactEditor} setOpenContactEditor={setOpenContactEditor} />}
       <Footer host={host} setOpenOptions={setOpenOptions} />
     </div>

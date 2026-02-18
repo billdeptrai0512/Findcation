@@ -28,12 +28,10 @@ export default function ResetPassword() {
         }
 
         try {
-            const response = await apiClient.post(`/login/reset-password`, {
+            await apiClient.post(`/login/reset-password`, {
                 token,
                 password
             });
-
-            console.log(response.data);
 
             navigate('/auth/login')
 

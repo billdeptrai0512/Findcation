@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useHost } from "./hostContext";
 import { ChevronRight } from "lucide-react";
 import styles from "./host.module.css"
-import DeleteButton from "./delete";
+import DeleteButton from "./footer/delete";
 
 export default function Staycation() {
 
@@ -34,7 +34,7 @@ export default function Staycation() {
     return (
         <div className={styles.pageContent}>
 
-            {/* Cover Image Card */}
+
             <div className={styles.staycation_card} onClick={() => navigate(`images`)}>
                 <div className={styles.staycation_cover}>
                     {staycation.images?.[0] && (
@@ -46,7 +46,6 @@ export default function Staycation() {
                     )}
                 </div>
                 <div className={styles.staycation_card_details}>
-                    <h2 className={styles.staycation_card_name}>{staycation.name}</h2>
                     <div className={styles.staycation_card_info}>
                         <span>{totalImage()} hình ảnh</span>
                         <ChevronRight size={18} />
@@ -54,16 +53,26 @@ export default function Staycation() {
                 </div>
             </div>
 
-            {/* Info Cards */}
             <div className={styles.staycation_card} onClick={() => navigate(`title`)}>
                 <div className={styles.staycation_card_row}>
                     <div>
                         <span className={styles.staycation_card_label}>Tiêu đề</span>
-                        <div className={styles.staycation_card_value}>{staycation.name}</div>
+                        <div className={styles.staycation_card_value}>
+                            {staycation.name}
+                        </div>
                     </div>
                     <ChevronRight size={20} color="#6A6A6A" />
                 </div>
             </div>
+
+
+
+
+
+            {/* Cover Image Card */}
+
+
+            {/* Info Cards */}
 
             <div className={styles.staycation_card} onClick={() => navigate(`type`)}>
                 <div className={styles.staycation_card_row}>
@@ -71,18 +80,6 @@ export default function Staycation() {
                         <span className={styles.staycation_card_label}>Cho thuê</span>
                         <div className={styles.staycation_card_value}>
                             {staycation.type === "room" ? `${staycation.numberOfRoom} phòng riêng` : `Toàn bộ căn nhà`}
-                        </div>
-                    </div>
-                    <ChevronRight size={20} color="#6A6A6A" />
-                </div>
-            </div>
-
-            <div className={styles.staycation_card} onClick={() => navigate(`location`)}>
-                <div className={styles.staycation_card_row}>
-                    <div>
-                        <span className={styles.staycation_card_label}>Vị trí</span>
-                        <div className={styles.staycation_card_value}>
-                            {`${staycation.location.details.street}, ${staycation.location.details.ward}, ${staycation.location.details.city}`}
                         </div>
                     </div>
                     <ChevronRight size={20} color="#6A6A6A" />
@@ -107,6 +104,18 @@ export default function Staycation() {
                         <span className={styles.staycation_card_label}>Tiện nghi</span>
                         <div className={styles.staycation_card_value}>
                             Đang có {staycation.features.length}
+                        </div>
+                    </div>
+                    <ChevronRight size={20} color="#6A6A6A" />
+                </div>
+            </div>
+
+            <div className={styles.staycation_card} onClick={() => navigate(`location`)}>
+                <div className={styles.staycation_card_row}>
+                    <div>
+                        <span className={styles.staycation_card_label}>Vị trí</span>
+                        <div className={styles.staycation_card_value}>
+                            {`${staycation.location.details.street}, ${staycation.location.details.ward}, ${staycation.location.details.city}`}
                         </div>
                     </div>
                     <ChevronRight size={20} color="#6A6A6A" />

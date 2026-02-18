@@ -145,6 +145,7 @@ export default function Preview({ staycation }) {
                         {showWarning && (
                             <InlineWarning
                                 key="warning"
+                                staycation={staycation}
                                 onCancel={handleWarningCancel}
                                 onContinue={handleWarningContinue}
                             />

@@ -4,6 +4,7 @@ import { useMediaQuery } from "react-responsive";
 import { useEditorDraft } from "../editorDraftContext";
 import styles from "../host.module.css";
 import ConfirmMap from "./map";
+import DeleteButton from "../footer/delete";
 
 export default function EditorLocation() {
   const { draft, setDraft } = useEditorDraft();
@@ -37,13 +38,13 @@ export default function EditorLocation() {
   return (
     <motion.div
       className={styles.pageContent}
-      style={{ padding: "0px 4px",  minWidth: isMobile ? "unset" : "630px",  height: "100%"}}
+      style={{ padding: "0px 4px", minWidth: isMobile ? "unset" : "630px", height: "100%" }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 1, ease: "easeOut" }}
     >
-    <h2 style={{  margin: "0",  marginBottom: "4px", paddingLeft: "unset", fontWeight: "600" }} >
+      <h2 style={{ margin: "0", marginBottom: "4px", paddingLeft: "unset", fontWeight: "600" }} >
         Thay đổi địa chỉ và định vị
       </h2>
 
@@ -84,6 +85,10 @@ export default function EditorLocation() {
             location={draft.location}
             handleChangeGPS={handleChangeGPS}
           />
+        </div>
+
+        <div style={{ marginTop: "24px", display: "flex", justifyContent: "flex-end" }}>
+          <DeleteButton />
         </div>
       </div>
     </motion.div>

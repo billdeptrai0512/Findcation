@@ -25,6 +25,17 @@
     font-family: 'Inter', sans-serif;
 }
 
+.information_button {
+    background: linear-gradient(to right, #588AC8 0%, #588AC8 50%, #4C7CC0 100%);
+    border: 1px solid #DDDDDD;
+    color: white;
+    border-radius: 8px;
+    padding: 1em 1.5em;
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: bold;
+}
+
 .next_button {
     border: 1px solid #DDDDDD;
     background-color: white;
@@ -44,7 +55,7 @@
     padding: 1em 1.5em;
     cursor: pointer;
     font-size: 0.95em;
-    font-weight: bold;  
+    font-weight: bold;
     width: 100%;
 }
 
@@ -53,17 +64,16 @@
     color: white;
     background: linear-gradient(to right, #E61E4D 0%, #E31C5F 50%, #D70466 100%);
     border-radius: 8px;
-    padding: 12px 30px;
-    font-size: 0.975rem;
+    padding: 1em 1.5em;
     cursor: pointer;
-    font-weight: 500;
-    font-family: 'Inter', sans-serif;
+    font-size: 0.95em;
+    font-weight: bold;
 }
 
 .upload_button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  pointer-events: none; 
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 .footerButtons {
@@ -84,4 +94,3 @@
     }
 
 }
-

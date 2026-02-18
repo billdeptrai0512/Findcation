@@ -4,18 +4,18 @@ import styles from "../listing.module.css"
 import ProgressBar from "./progressBar";
 import Buttons from "./buttons";
 
-export default function Footer({start, 
-        getStart, goNext, goBack,
-        percentage, page, steps, stepValidity}) {
+export default function Footer({
+  getStart, goNext, setOpenSuggestions,
+  percentage, page, steps, stepValidity }) {
 
   return (
     <div className={styles.footer}>
 
-        <ProgressBar percentage={percentage} />
+      <ProgressBar percentage={percentage} />
 
-        <Buttons start={start} percentage={percentage} 
-            getStart={getStart} goNext={goNext} goBack={goBack} 
-            page={page} steps={steps} stepValidity={stepValidity}/>
+      <Buttons percentage={percentage}
+        getStart={getStart} goNext={goNext} setOpenSuggestions={setOpenSuggestions}
+        page={page} steps={steps} stepValidity={stepValidity} />
 
     </div>
   );

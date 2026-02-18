@@ -1,25 +1,20 @@
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { CirclePlus, ChevronRight } from 'lucide-react';
 import styles from "./host.module.css"
 import Contacts from "./contacts/main";
+import logo from "../assets/logo.webp";
 
 export default function Staycations() {
     const { staycations } = useOutletContext()
     const navigate = useNavigate();
+    const { hostId } = useParams()
 
     return (
         <div className={styles.pageContent}>
 
             {/* Header */}
-            <div className={styles.staycations_header}>
+            <div className={styles.staycations_title_row}>
                 <h1 className={styles.staycations_title}>Staycation của tôi</h1>
-                <CirclePlus
-                    size={28}
-                    fill="#E31C5F"
-                    color="#FFFFFF"
-                    onClick={() => navigate(`/list-staycation`)}
-                    style={{ cursor: "pointer" }}
-                />
             </div>
 
             {/* Staycation Cards */}
@@ -41,18 +36,28 @@ export default function Staycations() {
 
                         <div className={styles.staycation_card_details}>
                             <h2 className={styles.staycation_card_name}>
-                                {staycation.name || staycation.location.details.street}
+                                {staycation.name}
                             </h2>
                             <div className={styles.staycation_card_info}>
                                 <span>{staycation.location.details.ward}, {staycation.location.details.city}</span>
                                 <ChevronRight size={18} />
                             </div>
                         </div>
+
+
                     </div>
                 ))}
+
+                {/* Add New Staycation Card */}
+                <div
+                    className={styles.add_staycation_card}
+                    onClick={() => navigate(`/host/${hostId}/create-staycation`)}
+                >
+                    <CirclePlus size={36} strokeWidth={1.5} color="#E31C5F" />
+                </div>
             </div>
 
-            <Contacts />
+            {/* <Contacts /> */}
 
         </div>
     );

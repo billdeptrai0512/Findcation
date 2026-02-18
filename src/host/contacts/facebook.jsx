@@ -12,7 +12,7 @@ export default function Facebook({ host, handleOpen }) {
     return (
         <div className={styles.contact} onClick={() => handleOpen("facebook", host.contacts.facebook)}>
             <img src={FacebookIcon} alt="" style={{ width: "33px" }} />
-            <span style={{ flex: "1", textAlign: "center" }}>{host.contacts.facebook}</span>
+            <span style={{ flex: "1", textAlign: "left", paddingLeft: "8px" }}>{host.contacts.facebook}</span>
             {host.contacts.facebook &&
                 <ExternalLink size={20}
                     style={{ zIndex: 2, cursor: "pointer" }}

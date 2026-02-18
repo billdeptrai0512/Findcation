@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { AlertTriangle } from "lucide-react";
 import styles from "./preview.module.css";
 
-export default function InlineWarning({ onCancel, onContinue }) {
+export default function InlineWarning({ staycation, onCancel, onContinue }) {
 
     return (
         <motion.div
@@ -26,9 +26,9 @@ export default function InlineWarning({ onCancel, onContinue }) {
             {/* Body */}
             <div className={styles.inline_warning_body}>
                 <p>
-                    Staycation này chưa được xác minh bởi Findcation.
+                    {staycation.name} này chưa phải là đối tác của Findcation.
                     <br />
-                    Vui lòng thận trọng khi liên hệ với chủ nhà.
+                    Vui lòng thận trọng khi liên hệ.
                 </p>
             </div>
 

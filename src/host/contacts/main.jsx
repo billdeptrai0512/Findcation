@@ -7,9 +7,18 @@ import Facebook from "./facebook";
 import Instagram from "./instagram";
 import Zalo from "./zalo";
 
-export default function Contacts() {
+export default function Contacts({ setOpenContactEditor: setOpenContactEditorProp }) {
     const { host } = useHost()
-    const { setOpenContactEditor } = useOutletContext()
+
+    // Try to get from outlet context, fallback to prop
+    let outletContext = null;
+    try {
+        outletContext = useOutletContext();
+    } catch (e) {
+        // Not in an outlet context, that's okay
+    }
+
+    const setOpenContactEditor = setOpenContactEditorProp || outletContext?.setOpenContactEditor;
 
     const handleOpen = (type, url) => {
         setOpenContactEditor({ type, url })
@@ -17,16 +26,12 @@ export default function Contacts() {
 
     return (
         <div >
-            {/* contacts is not in staycation but in user profile */}
-            <h2 style={{ marginTop: "0", fontSize: "1.48em", marginBottom: "8px" }}>Thông tin liên lạc</h2>
 
             <div className={styles.contacts} >
 
                 <div className={styles.contact} >
-
                     <img src={GoogleIcon} alt="" style={{ width: "33px" }} />
-                    <span style={{ flex: "1", textAlign: "center" }}>{host.email}</span>
-
+                    <span style={{ flex: "1", textAlign: "left", paddingLeft: "8px" }}>{host.email}</span>
                 </div>
 
                 <Facebook host={host} handleOpen={handleOpen} />

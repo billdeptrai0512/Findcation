@@ -66,6 +66,7 @@ export default defineConfig({
 
 
   server: {
+    allowedHosts: ['revision-largest-jill-hood.trycloudflare.com'],
     proxy: {
       '/auth': {
         target: "https://api.findcation.vn",

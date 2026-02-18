@@ -15,8 +15,7 @@ export default function Listing() {
 
     const totalSteps = steps.length - 1;
 
-    const [start, setStart] = useState(false)
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(-1); // -1 = start page, 0 = first step (title)
     const [openSuggestions, setOpenSuggestions] = useState(false);
 
     const [stepValidity, setStepValidity] = useState(() =>
@@ -26,33 +25,29 @@ export default function Listing() {
         }, {})
     );
 
-    const percentage = Math.round((page / totalSteps) * 100);
+    const percentage = page === -1 ? 0 : Math.round((page / totalSteps) * 100);
 
     const getStart = () => {
-
-        setStart(true)
-        navigate(`/list-staycation/${steps[0]}`);
-
+        setPage(0);
+        navigate(steps[0]);
     }
 
     const goNext = () => {
         if (page < totalSteps) {
             const newPage = page + 1;
             setPage(newPage);
-            navigate(`/list-staycation/${steps[newPage]}`);
+            navigate(steps[newPage]);
         }
     };
 
     const goBack = () => {
         if (page === 0) {
-            setStart(false)
-            navigate(`/list-staycation`);
-        };
-
-        if (page > 0) {
+            setPage(-1);
+            navigate(".");
+        } else if (page > 0) {
             const newPage = page - 1;
             setPage(newPage);
-            navigate(`/list-staycation/${steps[newPage]}`);
+            navigate(steps[newPage]);
         }
     };
 
@@ -60,7 +55,7 @@ export default function Listing() {
 
         <div className={styles.listingContainer}>
 
-            <Header page={page} setOpenSuggestions={setOpenSuggestions} />
+            <Header page={page} goBack={goBack} />
 
             <AnimatePresence mode="wait">
                 <Outlet context={{ setStepValidity, currentStep: steps[page], goNext }} />
@@ -68,8 +63,8 @@ export default function Listing() {
 
             {openSuggestions && <Suggestion currentStep={steps[page]} setOpenSuggestions={setOpenSuggestions} />}
 
-            <Footer start={start}
-                getStart={getStart} goNext={goNext} goBack={goBack}
+            <Footer
+                getStart={getStart} goNext={goNext} setOpenSuggestions={setOpenSuggestions}
                 percentage={percentage} page={page} steps={steps}
                 stepValidity={stepValidity} />
 

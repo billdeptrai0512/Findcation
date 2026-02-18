@@ -8,7 +8,7 @@ Disallow: /admin
 Disallow: /auth
 
 # Block staycation listing creation wizard
-Disallow: /list-staycation
+Disallow: /create-staycation
 
 # Sitemap (add later when ready)
 # Sitemap: https://www.findcation.vn/sitemap.xml

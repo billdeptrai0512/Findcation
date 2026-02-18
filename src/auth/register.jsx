@@ -41,10 +41,10 @@ export default function RegisterForm() {
 
             const user = await login(formData.email, formData.password)
 
-            if (user.staycations.length > 0) {
-                navigate(`/host/${user.id}`)
+            if (user.isAdmin) {
+                return navigate('/admin')
             } else {
-                navigate('/list-staycation');
+                navigate(`/host/${user.id}`)
             }
 
         } catch (err) {

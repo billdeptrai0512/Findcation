@@ -1,0 +1,453 @@
+/* ── Page Layout ── */
+.pageContent {
+    display: flex;
+    flex-direction: column;
+    max-width: 680px;
+    padding: 24px 16px 40px;
+    flex: 1;
+    gap: 12px;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.pageContent::-webkit-scrollbar {
+    display: none;
+}
+
+/* ── Page Header ── */
+.page_header {
+    padding: 8px 4px 4px;
+}
+
+.page_title {
+    margin: 0 0 4px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #222;
+}
+
+.page_subtitle {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #6A6A6A;
+    font-weight: 400;
+}
+
+/* ── Section Card ── */
+.section_card {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid #EEEEEE;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+}
+
+.section_card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* ── Card Header (clickable row) ── */
+.card_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    cursor: pointer;
+    gap: 12px;
+    user-select: none;
+}
+
+.card_header_left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+}
+
+.card_icon_box {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: #F7F7F7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #222;
+    flex-shrink: 0;
+}
+
+.card_title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #222;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.card_subtitle {
+    margin: 0;
+    font-size: 0.82rem;
+    color: #6A6A6A;
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+.card_header_right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.card_chevron {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Inline badge row under the card title */
+.card_badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+/* ── Status Badges ── */
+.status_badge_unverified {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #B45309;
+    background: #FEF3C7;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.status_badge_verified {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #166534;
+    background: #DCFCE7;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.status_badge_free {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #1D4ED8;
+    background: #DBEAFE;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+/* ── Card Body (expandable) ── */
+.card_body {
+    overflow: hidden;
+    padding: 0 16px 20px;
+}
+
+/* Scrollable inner wrapper — lets framer-motion animate height freely */
+.card_body_scroll {
+    max-height: 50vh;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.card_body_scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.divider {
+    height: 1px;
+    background: #EEEEEE;
+    margin-bottom: 16px;
+}
+
+.card_description {
+    margin: 0 0 16px;
+    font-size: 0.88rem;
+    color: #6A6A6A;
+    line-height: 1.55;
+}
+
+/* ── Benefit List (address card) ── */
+.benefit_list {
+    list-style: none;
+    margin: 0 0 16px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.benefit_item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.88rem;
+    color: #444;
+    line-height: 1.5;
+}
+
+.benefit_dot {
+    flex-shrink: 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #E31C5F;
+    margin-top: 6px;
+}
+
+/* ── Sub-sections inside expanded card ── */
+.sub_section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 4px 0;
+}
+
+.sub_divider {
+    height: 1px;
+    background: #F0F0F0;
+    margin: 8px 0;
+}
+
+/* ── Sub-section label row ── */
+.sub_label_row {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+.sub_label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #6A6A6A;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    flex: 1;
+}
+
+.sub_label_stat {
+    font-size: 0.78rem;
+    color: #6A6A6A;
+    font-weight: 500;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+/* Address value line */
+.address_value {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #222;
+    line-height: 1.4;
+}
+
+/* ── Payment Box (address sub-section) ── */
+.payment_box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    background: #FAFAFA;
+    border: 1px solid #EEEEEE;
+    border-radius: 14px;
+    padding: 16px;
+}
+
+.payment_price_row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.payment_price {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #222;
+}
+
+.payment_price_note {
+    font-size: 0.82rem;
+    color: #6A6A6A;
+    font-weight: 400;
+}
+
+/* ── Payment Section (business card, kept for compat) ── */
+.payment_section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    background: #FAFAFA;
+    border: 1px solid #EEEEEE;
+    border-radius: 14px;
+    padding: 16px;
+}
+
+.price_row {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+}
+
+.price_amount {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #222;
+}
+
+.price_period {
+    font-size: 0.85rem;
+    color: #6A6A6A;
+    font-weight: 400;
+}
+
+.qr_wrap {
+    padding: 10px;
+    border: 1px dashed #DDDDDD;
+    border-radius: 14px;
+    background: #FAFAFA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qr_img {
+    width: 160px;
+    height: 160px;
+    display: block;
+    border-radius: 6px;
+}
+
+.payment_note {
+    margin: 0;
+    font-size: 0.82rem;
+    color: #6A6A6A;
+    text-align: center;
+}
+
+/* ── Contacts Preview ── */
+.contacts_preview {
+    margin-bottom: 16px;
+}
+
+/* ── Email Action Box ── */
+.email_action_box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: #F7F7F7;
+    border-radius: 12px;
+    padding: 14px;
+}
+
+.email_row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: #F7F7F7;
+    border-radius: 10px;
+}
+
+.email_address {
+    font-size: 0.88rem;
+    color: #444;
+    font-weight: 500;
+}
+
+.send_code_btn {
+    width: 100%;
+    padding: 13px;
+    background: #222;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.send_code_btn:hover {
+    background: #111;
+}
+
+.send_code_btn:active {
+    transform: scale(0.98);
+}
+
+.code_input_row {
+    display: flex;
+    gap: 8px;
+}
+
+.code_input {
+    flex: 1;
+    padding: 13px 14px;
+    border: 1px solid #DDDDDD;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: box-shadow 0.15s ease;
+}
+
+.code_input:focus {
+    box-shadow: inset 0 0 0 2px #222;
+    border-color: transparent;
+}
+
+.confirm_code_btn {
+    padding: 13px 18px;
+    background: #E31C5F;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    white-space: nowrap;
+    transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.confirm_code_btn:hover {
+    background: #c91854;
+}
+
+.confirm_code_btn:active {
+    transform: scale(0.98);
+}
+
+/* ── Desktop ── */
+@media screen and (min-width: 768px) {
+    .pageContent {
+        margin: 0 auto;
+        min-width: 400px;
+    }
+
+    .card_subtitle {
+        max-width: 320px;
+    }
+}

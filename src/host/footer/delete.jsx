@@ -1,10 +1,10 @@
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
-import { useHost } from "./hostContext";
+import { useHost } from "../hostContext";
 import { useState } from "react";
-import { apiClient } from "../config/api";
-import styles from "./footer/footer.module.css"
+import { apiClient } from "../../config/api";
+import styles from "./footer.module.css"
 
 export default function DeleteButton() {
 
@@ -66,7 +66,7 @@ export default function DeleteButton() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            Xóa 🔒
+            Xóa staycation
           </motion.span>
         )}
       </AnimatePresence>

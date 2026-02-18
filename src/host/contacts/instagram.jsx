@@ -12,7 +12,7 @@ export default function Instagram({ host, handleOpen }) {
     return (
         <div className={styles.contact} onClick={() => handleOpen("instagram", host.contacts.instagram)}>
             <img src={InstagramIcon} alt="" style={{ width: "33px" }} />
-            <span style={{ flex: "1", textAlign: "center" }}>{host.contacts.instagram}</span>
+            <span style={{ flex: "1", textAlign: "left", paddingLeft: "8px" }}>{host.contacts.instagram}</span>
             {host.contacts.instagram &&
                 <ExternalLink size={20}
                     style={{ zIndex: 2, cursor: "pointer" }}
