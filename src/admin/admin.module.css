@@ -1,0 +1,395 @@
+/* ── Table ─────────────────────────────────────────────────────────────────── */
+
+.preview_header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    gap: 8px;
+}
+
+.hosts_table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+.hosts_table th {
+    padding: 11px 14px;
+    border: 1px solid #e8e8e8;
+    background: #f5f5f5;
+    font-weight: 600;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.hosts_table td {
+    padding: 11px 14px;
+    border: 1px solid #ebebeb;
+    vertical-align: top;
+}
+
+.host_row {
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.host_row:hover {
+    background: #f0f0f0 !important;
+}
+
+.host_row_expanded {
+    background: #f0f4ff !important;
+}
+
+/* ── Host cell ─────────────────────────────────────────────────────────────── */
+
+.host_cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.host_avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.host_name {
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.host_email {
+    font-size: 11px;
+    color: #aaa;
+}
+
+/* ── Badges ────────────────────────────────────────────────────────────────── */
+
+.badge_verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    background: #f0fdf4;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
+}
+
+.badge_unverified {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    background: #fff7ed;
+    color: #c2410c;
+    border: 1px solid #fed7aa;
+}
+
+/* ── Confirm buttons ───────────────────────────────────────────────────────── */
+
+.confirm_btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background: #fff;
+    color: #555;
+    transition: all 0.15s;
+    white-space: nowrap;
+}
+
+.confirm_btn:hover:not(:disabled) {
+    border-color: #aaa;
+    background: #f5f5f5;
+}
+
+.confirm_btn_done {
+    border-color: #22c55e !important;
+    background: #f0fdf4 !important;
+    color: #16a34a !important;
+    cursor: default !important;
+}
+
+/* ── Expanded panel ────────────────────────────────────────────────────────── */
+
+.expanded_panel {
+    background: #f9fafb;
+    padding: 16px 20px;
+}
+
+.expanded_inner {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.section_label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+/* ── Contact platform row ──────────────────────────────────────────────────── */
+
+.contacts_block {
+    min-width: 240px;
+}
+
+.contact_row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+
+.contact_link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    color: #333;
+    min-width: 160px;
+}
+
+.contact_link img {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+}
+
+.contact_handle {
+    font-size: 12px;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.empty_label {
+    color: #bbb;
+    font-size: 12px;
+}
+
+/* ── Staycation unified card (address + active) ─────────────────────────────── */
+
+.staycations_block {
+    flex: 1;
+    min-width: 260px;
+}
+
+.staycation_card {
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+    background: #fff;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: box-shadow 0.15s;
+
+}
+
+.staycation_card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+
+}
+
+.staycation_card_header {
+    padding: 10px 12px 8px;
+
+}
+
+.staycation_card_divider {
+    height: 1px;
+    background: #f0f0f0;
+    margin: 0 12px;
+
+}
+
+.staycation_card_body {
+    padding: 8px 12px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+
+
+/* Each label | badge | button row inside the card */
+.verify_toggle_row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+}
+
+.verify_toggle_label {
+    font-size: 12px;
+    color: #555;
+    font-weight: 500;
+    min-width: 82px;
+    flex-shrink: 0;
+
+}
+
+
+
+/* Keep the old .staycation_row styles for backward compat (contact summary uses row) */
+.staycation_row {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #e8e8e8;
+    background: #fff;
+    margin-bottom: 8px;
+}
+
+
+.staycation_row_inner {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.staycation_name {
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.staycation_address {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #666;
+    font-size: 12px;
+}
+
+.staycation_actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* ── Contact summary (inline table cell) ──────────────────────────────────── */
+
+.contact_summary {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.contact_summary_link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: #333;
+    font-size: 12px;
+}
+
+.contact_summary_link img {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+}
+
+.contact_summary_handle {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ── Staycation count cell ─────────────────────────────────────────────────── */
+
+.staycation_count {
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* ── Empty / loading states ────────────────────────────────────────────────── */
+
+.empty_state {
+    padding: 2em;
+    color: #bbb;
+    text-align: center;
+}
+
+/* ── Mobile responsive ─────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .hosts_table {
+        font-size: 12px;
+    }
+
+    /* Hide address column on mobile — it's visible in expanded panel */
+    .hosts_table .col_address {
+        display: none;
+    }
+
+    .hosts_table th,
+    .hosts_table td {
+        padding: 8px 10px;
+    }
+
+    .expanded_inner {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .contacts_block,
+    .staycations_block {
+        min-width: unset;
+        width: 100%;
+    }
+
+    .contact_link {
+        min-width: unset;
+    }
+
+    .staycation_row_inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .staycation_actions {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .confirm_btn {
+        font-size: 11px;
+        padding: 4px 8px;
+    }
+}

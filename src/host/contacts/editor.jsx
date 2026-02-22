@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { X } from "lucide-react"
+import { ChevronLeft } from "lucide-react"
 import { useHost } from "../hostContext"
 import { apiClient } from "../../config/api"
 import styles from "../../auth/login.module.css"
@@ -55,7 +55,7 @@ export default function ContactEditor({ data, setOpenContactEditor }) {
                 <div className={styles.card}>
                     <div className={styles.header}>
                         <button onClick={() => setOpenContactEditor(null)}>
-                            <X size={20} style={{ padding: "4px" }} />
+                            <ChevronLeft size={20} style={{ padding: "4px" }} />
                         </button>
                         <div className={styles.title}>
                             {data.type}

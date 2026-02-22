@@ -49,13 +49,28 @@ export function HostProvider({ hostId, children }) {
         });
     };
 
+    const updateContacts = (platform, patch) => {
+        setHost(prev => ({
+            ...prev,
+            contacts: {
+                ...prev.contacts,
+                [platform]: {
+                    ...(typeof prev.contacts[platform] === "string"
+                        ? { url: prev.contacts[platform] }
+                        : prev.contacts[platform]),
+                    ...patch,
+                },
+            },
+        }));
+    };
+
     const refreshHost = () => {
         if (hostId) fetchHost();
     };
 
     return (
         <HostContext.Provider
-            value={{ host, loading, updateStaycation, refreshHost }}>
+            value={{ host, loading, updateStaycation, updateContacts, refreshHost }}>
             {children}
         </HostContext.Provider>
     );

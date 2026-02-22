@@ -25,6 +25,8 @@ export default function Contacts({ setOpenContactEditor: setOpenContactEditorPro
         setOpenContactEditor({ type, url })
     }
 
+    console.log(host.contacts)
+
     return (
         <div >
 
@@ -34,11 +36,6 @@ export default function Contacts({ setOpenContactEditor: setOpenContactEditorPro
                     <img src={GoogleIcon} alt="" style={{ width: "33px" }} />
                     <span style={{ flex: "1", textAlign: "left", paddingLeft: "8px" }}>{host.email}</span>
                 </div>
-
-                {/* <div className={styles.sub_label_row} style={{ justifyContent: "center" }}>
-                    <Mail size={15} color="#6A6A6A" />
-                    <span className={styles.email_address}>{host.email}</span>
-                </div> */}
 
                 <Facebook host={host} handleOpen={handleOpen} />
 

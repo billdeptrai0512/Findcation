@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ShieldCheck } from "lucide-react";
 import { apiClient } from "../../config/api";
 import styles from "./contacts.module.css";
+import { getContactUrl } from "../../utils/contactUtils";
 
 import FacebookIcon from "../../assets/facebook.webp";
 import InstagramIcon from "../../assets/instagram.webp";
@@ -27,6 +28,9 @@ export default function Contacts({ staycation }) {
     };
 
     const { contacts } = staycation.host;
+    const fbUrl = getContactUrl(contacts.facebook);
+    const igUrl = getContactUrl(contacts.instagram);
+    const zaUrl = getContactUrl(contacts.zalo);
 
     return (
         <motion.div
@@ -53,14 +57,14 @@ export default function Contacts({ staycation }) {
             {/* Contact icons */}
             <div className={styles.contacts_icons}>
 
-                {contacts.facebook !== "" && (
+                {fbUrl && (
                     <motion.div
                         className={styles.contact_item}
                         whileHover={{ y: -4 }}
                         whileTap={{ scale: 0.95 }}
                     >
                         <a
-                            href={`https://www.facebook.com/${contacts.facebook}`}
+                            href={`https://www.facebook.com/${fbUrl}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() => countAsTrafficContactClick("FACEBOOK")}
@@ -74,14 +78,14 @@ export default function Contacts({ staycation }) {
                     </motion.div>
                 )}
 
-                {contacts.instagram !== "" && (
+                {igUrl && (
                     <motion.div
                         className={styles.contact_item}
                         whileHover={{ y: -4 }}
                         whileTap={{ scale: 0.95 }}
                     >
                         <a
-                            href={`https://www.instagram.com/${contacts.instagram}`}
+                            href={`https://www.instagram.com/${igUrl}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() => countAsTrafficContactClick("INSTAGRAM")}
@@ -95,14 +99,14 @@ export default function Contacts({ staycation }) {
                     </motion.div>
                 )}
 
-                {contacts.zalo !== "" && (
+                {zaUrl && (
                     <motion.div
                         className={styles.contact_item}
                         whileHover={{ y: -4 }}
                         whileTap={{ scale: 0.95 }}
                     >
                         <a
-                            href={`https://zalo.me/${contacts.zalo}`}
+                            href={`https://zalo.me/${zaUrl}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() => countAsTrafficContactClick("ZALO")}

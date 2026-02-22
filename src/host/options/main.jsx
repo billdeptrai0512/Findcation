@@ -13,7 +13,7 @@ import Contacts from "../contacts/main";
 export default function Options({ setOpenOptions, setOpenContactEditor }) {
 
     const navigate = useNavigate()
-    const { logout } = useAuth()
+    const { logout, user } = useAuth()
 
     const [changePassword, setChangePassword] = useState(false)
     const [changeEmail, setChangeEmail] = useState(false)
@@ -43,6 +43,15 @@ export default function Options({ setOpenOptions, setOpenContactEditor }) {
                     <div className={styles.panel} style={{ display: "flex", flexDirection: "column", gap: "0.75em" }}>
 
                         <Contacts setOpenContactEditor={setOpenContactEditor} />
+
+                        {user.isAdmin && (
+                            <motion.button onClick={() => navigate("/admin")}
+                                className={styles.options_button}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}>
+                                Admin
+                            </motion.button>
+                        )}
 
                         <motion.button onClick={() => setChangeEmail(true)}
                             className={styles.options_button}

@@ -4,14 +4,14 @@ import { useMediaQuery } from "react-responsive"
 import styles from "./admin.module.css"
 import Logo from "../assets/logo.webp"
 import { apiClient } from "../config/api";
-import Staycations from "./staycations";
+import Hosts from "./hosts";
 import Traffics from "./traffics";
 import Suggestions from "./suggestion";
 import SectionSelector from "./section";
 
 export default function AdminDashBoard() {
     const [selected, setSelected] = useState('traffic');
-    const [staycations, setStaycations] = useState([])
+    const [hosts, setHosts] = useState([])
     const [traffics, setTraffics] = useState([])
     const [suggestions, setSuggestions] = useState([])
 
@@ -20,13 +20,13 @@ export default function AdminDashBoard() {
 
     useEffect(() => {
 
-        const fetchStaycations = async () => {
+        const fetchHosts = async () => {
             try {
-
-                const response = await apiClient.get(`/listing/all-listing`);
-                setStaycations(response.data);
+                const response = await apiClient.get(`/auth/allHost`);
+                console.log(response.data)
+                setHosts(response.data);
             } catch (error) {
-                console.error("Error fetching staycation:", error);
+                console.error("Error fetching hosts:", error);
             }
         };
 
@@ -48,7 +48,7 @@ export default function AdminDashBoard() {
             }
         };
 
-        fetchStaycations();
+        fetchHosts();
         fetchSuggestions();
         fetchVerifiedStaycations()
 
@@ -112,14 +112,14 @@ export default function AdminDashBoard() {
                 {/* section  */}
 
                 <SectionSelector isMobile={isMobile} selected={selected} setSelected={setSelected} counts={{
-                    staycation: staycations.length,
+                    host: hosts.length,
                     traffic: traffics.length,
                     suggestion: suggestions.length,
                 }} />
 
                 {
-                    selected === 'staycation' && (
-                        <Staycations staycations={staycations} />
+                    selected === 'host' && (
+                        <Hosts hosts={hosts} />
                     )
                 }
 

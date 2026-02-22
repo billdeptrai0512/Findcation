@@ -1,22 +1,25 @@
 import ZaloIcon from "../../assets/zalo.webp";
-import { ExternalLink } from "lucide-react";
-import styles from "../host.module.css"
+import { PenLine } from "lucide-react";
+import styles from "../host.module.css";
+import { getContactUrl } from "../../utils/contactUtils";
 
 export default function Zalo({ host, handleOpen }) {
+    const url = getContactUrl(host.contacts.zalo);
+
+    if (!url) return null;
 
     return (
-        <div className={styles.contact} onClick={() => handleOpen("zalo", host.contacts.zalo)}>
+        <div className={styles.contact} onClick={() => window.open(`https://zalo.me/${url}`, "_blank")}>
             <img src={ZaloIcon} alt="" style={{ width: "33px" }} />
-            <span style={{ flex: "1", textAlign: "left", paddingLeft: "8px" }}>{host.contacts.zalo}</span>
-            {host.contacts.zalo &&
-                <ExternalLink size={20}
-                    style={{ zIndex: 2, cursor: "pointer" }}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        window.open(`https://zalo.me/${host.contacts.zalo}`, "_blank")
-                    }}
-                />
-            }
+            <span style={{ flex: "1", textAlign: "center" }}>{url}</span>
+
+            <PenLine size={20}
+                style={{ zIndex: 2, cursor: "pointer" }}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    handleOpen("zalo", url);
+                }}
+            />
         </div>
-    )
+    );
 }

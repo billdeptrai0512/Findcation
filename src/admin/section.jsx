@@ -1,7 +1,7 @@
-import { ChevronRight , ChevronLeft } from "lucide-react";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 const sections = [
   { key: "traffic", label: "Traffic" },
-  { key: "staycation", label: "Staycation" },
+  { key: "host", label: "Host" },
   { key: "suggestion", label: "Suggestion" },
 ];
 

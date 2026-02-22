@@ -451,3 +451,270 @@
         max-width: 320px;
     }
 }
+
+/* ── Mobile — code row wraps so chip + dm_link don't overflow ── */
+@media screen and (max-width: 480px) {
+
+    /* Stack icon+handle on line 1, code+expiry+link on line 2 */
+    .contact_item_row {
+        flex-wrap: wrap;
+        row-gap: 8px;
+    }
+
+    .contact_platform_handle {
+        flex: 1;
+        min-width: 0;
+    }
+
+    /* Force code area to take full width on its own row */
+    .inline_code {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .code_chip {
+        font-size: 1rem;
+        letter-spacing: 4px;
+        flex: 1;
+        text-align: center;
+    }
+
+    .dm_link {
+        flex: 1;
+        justify-content: center;
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+
+    .code_expiry_small {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+
+/* ── Per-platform code generation ── */
+.code_intro {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #6A6A6A;
+    line-height: 1.5;
+}
+
+.platform_row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+    background: #FAFAFA;
+    border: 1px solid #EEEEEE;
+    border-radius: 12px;
+}
+
+.platform_identity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.platform_icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+}
+
+.platform_handle {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #222;
+    flex: 1;
+}
+
+.verified_badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #166534;
+    background: #DCFCE7;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.platform_code_area {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.code_display_box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    border: 1.5px dashed #D1D5DB;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.code_value {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 8px;
+    color: #111;
+    font-family: 'Courier New', monospace;
+}
+
+.code_expiry {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.78rem;
+    color: #B45309;
+    font-weight: 500;
+}
+
+.code_instruction {
+    margin: 4px 0 0;
+    font-size: 0.82rem;
+    color: #6A6A6A;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.regen_btn {
+    padding: 7px 16px;
+    background: transparent;
+    color: #555;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.regen_btn:hover {
+    background: #f5f5f5;
+}
+
+/* ── Bulk code generation UI ─────────────────────────────────────────────── */
+.all_verified_banner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #166534;
+}
+
+.contact_list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contact_item_row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: #FAFAFA;
+    border: 1px solid #EEEEEE;
+    border-radius: 10px;
+}
+
+.contact_platform_icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.contact_platform_handle {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #222;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pending_badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #6A6A6A;
+    background: #F3F4F6;
+    padding: 3px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Inline code shown next to the handle after generation */
+.inline_code {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.code_chip {
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    background: #FEF3C7;
+    color: #92400E;
+    padding: 2px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+}
+
+.code_expiry_small {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.7rem;
+    color: #B45309;
+    white-space: nowrap;
+}
+
+.codes_instruction {
+    margin: 0;
+    font-size: 0.82rem;
+    color: #6A6A6A;
+    line-height: 1.55;
+    text-align: center;
+    padding: 0 4px;
+}
+
+/* Direct DM link shown next to code after generation */
+.dm_link {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-decoration: none;
+    background: #222;
+    color: #fff;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.15s;
+}
+
+.dm_link:hover {
+    background: #444;
+}
