@@ -85,6 +85,11 @@ export default function Contacts({ staycation, countAsTrafficWarningShown, count
                         <div className={styles.contact_link}>
                             <div className={styles.icon_wrapper}>
                                 <img src={FacebookIcon} alt="Facebook" />
+                                {isContactVerified(contacts.facebook) && (
+                                    <div className={styles.badge_icon}>
+                                        <ShieldCheck size={14} strokeWidth={3} />
+                                    </div>
+                                )}
                             </div>
                             <span className={styles.contact_label}>Facebook</span>
                         </div>
@@ -101,6 +106,11 @@ export default function Contacts({ staycation, countAsTrafficWarningShown, count
                         <div className={styles.contact_link}>
                             <div className={styles.icon_wrapper}>
                                 <img src={InstagramIcon} alt="Instagram" />
+                                {isContactVerified(contacts.instagram) && (
+                                    <div className={styles.badge_icon}>
+                                        <ShieldCheck size={14} strokeWidth={3} />
+                                    </div>
+                                )}
                             </div>
                             <span className={styles.contact_label}>Instagram</span>
                         </div>
@@ -117,6 +127,11 @@ export default function Contacts({ staycation, countAsTrafficWarningShown, count
                         <div className={styles.contact_link}>
                             <div className={styles.icon_wrapper}>
                                 <img src={Zalo} alt="Zalo" />
+                                {isContactVerified(contacts.zalo) && (
+                                    <div className={styles.badge_icon}>
+                                        <ShieldCheck size={14} strokeWidth={3} />
+                                    </div>
+                                )}
                             </div>
                             <span className={styles.contact_label}>Zalo</span>
                         </div>
