@@ -18,6 +18,7 @@ export default function Preview({ staycation }) {
 
     const [openSuggestions, setOpenSuggestions] = useState(false)
     const [showWarning, setShowWarning] = useState(false)
+    const [pendingContact, setPendingContact] = useState(null)
 
     const navigate = useNavigate()
     const [showContacts, setShowContacts] = useState(false)
@@ -36,62 +37,59 @@ export default function Preview({ staycation }) {
 
     };
 
-    const countAsTrafficWarningShown = async () => {
-
-        await apiClient.post(`/traffic/${staycation.id}`, {
-            trafficType: "CONTACT_CLICK",
-            platform: "NULL",
-            sessionId: localStorage.getItem("traffic_session")
-        });
+    const countAsTrafficWarningShown = async (platform, url) => {
+        setPendingContact({ platform, url });
 
         await apiClient.post(`/traffic/${staycation.id}`, {
             trafficType: "CONTACT_WARNING_SHOWN",
-            platform: "NULL",
+            platform: platform,
             sessionId: localStorage.getItem("traffic_session")
         });
 
-        return setShowWarning(true)
-
+        setShowContacts(false);
+        return setShowWarning(true);
     };
 
     const countAsTrafficContactCancel = async () => {
-
         await apiClient.post(`/traffic/${staycation.id}`, {
             trafficType: "CONTACT_WARNING_CANCEL",
-            platform: "NULL",
+            platform: pendingContact?.platform || "NULL",
             sessionId: localStorage.getItem("traffic_session")
         });
 
+        setPendingContact(null);
+        setShowWarning(false);
+        return setShowContacts(true);
     };
 
-    const countAsTrafficContactContinue = async () => {
-
-        await apiClient.post(`/traffic/${staycation.id}`, {
+    const countAsTrafficContactContinue = (platform) => {
+        const payload = {
             trafficType: "CONTACT_CONTINUE",
-            platform: "NULL",
+            platform: platform || "NULL",
             sessionId: localStorage.getItem("traffic_session")
-        });
+        };
 
-        return setShowContacts(true)
+        const endpoint = `${import.meta.env.VITE_BACKEND_URL}/traffic/${staycation.id}`;
 
-    };
-
-    const handleContactClick = () => {
-        if (!staycation.verify) {
-            countAsTrafficWarningShown()
+        if (navigator.sendBeacon) {
+            const blob = new Blob([JSON.stringify(payload)], { type: "application/json" });
+            navigator.sendBeacon(endpoint, blob);
         } else {
-            countAsTrafficContactClick();
+            apiClient.post(`/traffic/${staycation.id}`, payload);
         }
     };
 
     const handleWarningCancel = () => {
-        setShowWarning(false);
-        countAsTrafficContactCancel()
+        countAsTrafficContactCancel();
     };
 
     const handleWarningContinue = () => {
-        setShowWarning(false);
-        countAsTrafficContactContinue();
+        if (pendingContact) {
+            countAsTrafficContactContinue(pendingContact.platform);
+            window.open(pendingContact.url, "_blank", "noopener,noreferrer");
+            setPendingContact(null);
+            setShowWarning(false);
+        }
     };
 
     return (
@@ -126,10 +124,10 @@ export default function Preview({ staycation }) {
                 <div className={styles.preview_footer}>
 
                     {!showContacts && !showWarning && <motion.button className={styles.preview_contact_button}
-                        onClick={handleContactClick}
+                        onClick={countAsTrafficContactClick}
                         whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
                     >
-                        <h2 style={{ fontSize: "0.975rem", marginTop: "0", marginBottom: "0" }}>Nhắn cho chủ nhà</h2>
+                        <h2 style={{ fontSize: "0.975rem", marginTop: "0", marginBottom: "0" }}>Kiểm tra phòng trống</h2>
                     </motion.button>}
 
                     {!showContacts && !showWarning && <motion.button className={styles.options_button}
@@ -161,6 +159,9 @@ export default function Preview({ staycation }) {
                             >
                                 <Contacts
                                     staycation={staycation}
+                                    countAsTrafficWarningShown={countAsTrafficWarningShown}
+                                    countAsTrafficContactCancel={countAsTrafficContactCancel}
+                                    countAsTrafficContactContinue={countAsTrafficContactContinue}
                                 />
                             </motion.div>
                         )}

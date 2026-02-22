@@ -26,7 +26,7 @@ export default function InlineWarning({ staycation, onCancel, onContinue }) {
             {/* Body */}
             <div className={styles.inline_warning_body}>
                 <p>
-                    {staycation.name} này chưa phải là đối tác của Findcation.
+                    {staycation.name} này chưa xác thực kênh liên lạc này với Findcation.
                     <br />
                     Vui lòng thận trọng khi liên hệ.
                 </p>

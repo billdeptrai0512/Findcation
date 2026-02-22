@@ -6,7 +6,7 @@ import styles from "./preview.module.css";
 
 export default function Features({ staycation }) {
 
-    const [expand, setExpanded] = useState(true);
+    const [expand, setExpanded] = useState(false);
 
     return (
 
