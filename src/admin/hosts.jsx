@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { apiClient } from "../config/api";
-import { ChevronDown, ChevronUp, CheckCircle, Circle, MapPin, User } from "lucide-react";
+import { ChevronDown, ChevronUp, CheckCircle, Circle, MapPin, User, Search, Trash2, X } from "lucide-react";
 import styles from "./admin.module.css";
 import { getContactUrl as getUrl, isContactVerified as isVerified } from "../utils/contactUtils";
 
@@ -306,8 +306,34 @@ export default function Hosts({ hosts: initialHosts }) {
     const [expandedId, setExpandedId] = useState(null);
     // mutable copy so PATCH results survive expand/collapse cycles
     const [hostsData, setHostsData] = useState(initialHosts ?? []);
+    const [searchEmail, setSearchEmail] = useState("");
+    const [filterHasStaycation, setFilterHasStaycation] = useState(false);
 
     const toggle = (id) => setExpandedId(prev => prev === id ? null : id);
+
+    const filteredHosts = useMemo(() => {
+        return hostsData.filter(h => {
+            const matchesEmail = h.email?.toLowerCase().includes(searchEmail.toLowerCase());
+            const matchesStaycation = !filterHasStaycation || (h.staycations && h.staycations.length > 0);
+            return matchesEmail && matchesStaycation;
+        });
+    }, [hostsData, searchEmail, filterHasStaycation]);
+
+    const handleDeleteHost = async (e, hostId, hostEmail) => {
+        e.stopPropagation();
+        const confirmDelete = window.confirm(`Bạn có chắc chắn muốn xoá host ${hostEmail || hostId} và tất cả dữ liệu liên quan? Hành động này không thể hoàn tác.`);
+        if (!confirmDelete) return;
+
+        try {
+            await apiClient.delete(`/admin/host/${hostId}`);
+            setHostsData(prev => prev.filter(h => h.id !== hostId));
+            if (expandedId === hostId) setExpandedId(null);
+            alert("Đã xoá host thành công.");
+        } catch (err) {
+            console.error("Delete host failed:", err);
+            alert("Xoá host thất bại.");
+        }
+    };
 
     // Update a specific staycation field inside a host
     const updateStaycation = (hostId, staycationId, patch) => {
@@ -338,17 +364,46 @@ export default function Hosts({ hosts: initialHosts }) {
 
     return (
         <div style={{ paddingTop: "2em", overflowX: "auto" }}>
+            {/* Filter Bar */}
+            <div className={styles.filter_container}>
+                <div className={styles.search_wrapper}>
+                    <Search size={16} className={styles.search_icon} />
+                    <input
+                        type="text"
+                        placeholder="Tìm email host..."
+                        className={styles.search_input}
+                        value={searchEmail}
+                        onChange={(e) => setSearchEmail(e.target.value)}
+                    />
+                    {searchEmail && (
+                        <button className={styles.clear_btn} onClick={() => setSearchEmail("")}>
+                            <X size={14} />
+                        </button>
+                    )}
+                </div>
+
+                <label className={styles.filter_checkbox_label}>
+                    <input
+                        type="checkbox"
+                        className={styles.filter_checkbox}
+                        checked={filterHasStaycation}
+                        onChange={(e) => setFilterHasStaycation(e.target.checked)}
+                    />
+                    <span>Có staycation</span>
+                </label>
+            </div>
+
             <table className={styles.hosts_table}>
                 <thead>
                     <tr>
                         <th>Host</th>
-                        <th>Staycations</th>
-                        <th>Liên hệ</th>
-                        {/* <th style={{ textAlign: "center", width: "60px" }}>Chi tiết</th> */}
+                        <th className={styles.col_address}>Staycations</th>
+                        <th className={styles.col_contact}>Liên hệ</th>
+                        <th style={{ textAlign: "center", width: "80px" }}>Quản lý</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {hostsData.map((host, i) => {
+                    {filteredHosts.map((host, i) => {
                         const isExpanded = expandedId === host.id;
                         const staycations = host.staycations ?? [];
                         const allVerified = staycations.length > 0 && staycations.every(st => st.verify === true);
@@ -388,7 +443,7 @@ export default function Hosts({ hosts: initialHosts }) {
                                 </td>
 
                                 {/* Contacts summary */}
-                                <td>
+                                <td className={styles.col_contact}>
                                     <ContactSummaryBadges contacts={host.contacts} />
                                 </td>
 
@@ -398,6 +453,19 @@ export default function Hosts({ hosts: initialHosts }) {
                                         ? <ChevronUp size={16} color="#6b7280" />
                                         : <ChevronDown size={16} color="#6b7280" />}
                                 </td> */}
+
+                                {/* Delete */}
+                                <td style={{ verticalAlign: "middle" }}>
+                                    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                        <button
+                                            className={styles.delete_btn}
+                                            onClick={(e) => handleDeleteHost(e, host.id, host.email)}
+                                            title="Xoá host"
+                                        >
+                                            <Trash2 size={16} />
+                                        </button>
+                                    </div>
+                                </td>
                             </tr>,
 
                             isExpanded && <ExpandedHostPanel
