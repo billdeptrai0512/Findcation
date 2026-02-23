@@ -11,21 +11,11 @@ import Zalo from "./zalo";
 export default function Contacts({ setOpenContactEditor: setOpenContactEditorProp }) {
     const { host } = useHost()
 
-    // Try to get from outlet context, fallback to prop
-    let outletContext = null;
-    try {
-        outletContext = useOutletContext();
-    } catch (e) {
-        // Not in an outlet context, that's okay
-    }
-
-    const setOpenContactEditor = setOpenContactEditorProp || outletContext?.setOpenContactEditor;
+    const setOpenContactEditor = setOpenContactEditorProp
 
     const handleOpen = (type, url) => {
         setOpenContactEditor({ type, url })
     }
-
-    console.log(host.contacts)
 
     return (
         <div >

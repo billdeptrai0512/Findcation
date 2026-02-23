@@ -9,10 +9,10 @@ export default function Facebook({ host, handleOpen }) {
     const baseUrl = isMobile ? `fb://page/` : `https://www.facebook.com/`;
     const url = getContactUrl(host.contacts.facebook);
 
-    if (!url) return null;
+    // if (!url) return null;
 
     return (
-        <div className={styles.contact} onClick={() => window.open(`${baseUrl}${url}`, "_blank")}>
+        <div className={styles.contact} onClick={() => url && window.open(`${baseUrl}${url}`, "_blank")}>
             <img src={FacebookIcon} alt="" style={{ width: "33px" }} />
             <span style={{ flex: "1", textAlign: "center" }}>{url}</span>
 

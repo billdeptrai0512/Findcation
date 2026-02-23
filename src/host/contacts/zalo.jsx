@@ -6,10 +6,10 @@ import { getContactUrl } from "../../utils/contactUtils";
 export default function Zalo({ host, handleOpen }) {
     const url = getContactUrl(host.contacts.zalo);
 
-    if (!url) return null;
+    // if (!url) return null;
 
     return (
-        <div className={styles.contact} onClick={() => window.open(`https://zalo.me/${url}`, "_blank")}>
+        <div className={styles.contact} onClick={() => url && window.open(`https://zalo.me/${url}`, "_blank")}>
             <img src={ZaloIcon} alt="" style={{ width: "33px" }} />
             <span style={{ flex: "1", textAlign: "center" }}>{url}</span>
 
