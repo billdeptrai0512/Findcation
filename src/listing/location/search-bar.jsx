@@ -6,34 +6,39 @@ import axios from "axios";
 import styles from './location.module.css'; 
 import AutoComplete from "./autoComplete";
 
+function useAddressPredictions(address) {
+  const [predictions, setPredictions] = useState([]);
+
+  useEffect(() => {
+    const delayDebounce = setTimeout(async () => {
+
+      if (address.length < 5) return
+
+      try {
+
+        const res = await axios.get(`https://rsapi.goong.io/v2/place/autocomplete?input=${address}&api_key=${import.meta.env.VITE_GOONG_API_KEY}&has_deprecated_administrative_unit=true`);
+        const data = res.data;
+        const predictions = data.predictions || [];
+
+        if (res.data.status === "OK" && predictions.length > 0) return setPredictions(predictions);
+
+      } catch (error) {
+        console.error("Get autocomplete from Goong failed:", error);
+      }
+
+    }, 400);
+  
+    return () => clearTimeout(delayDebounce);
+  }, [address]);
+
+  return [predictions, setPredictions];
+}
+
 export default function SearchBar() {
 
   const [address, setAddress] = useState("");
-  const [predictions, setPredictions] = useState([]);
+  const [predictions, setPredictions] = useAddressPredictions(address);
   const isMobile = useMediaQuery({ query: '(max-width: 768px)'})
-
-  useEffect(() => {
-
-      const delayDebounce = setTimeout(async () => {
-  
-        if (address.length < 5) return 
-    
-        try {
-  
-          const res = await axios.get(`https://rsapi.goong.io/v2/place/autocomplete?input=${address}&api_key=${import.meta.env.VITE_GOONG_API_KEY}&has_deprecated_administrative_unit=true`);
-          const data = res.data;
-          const predictions = data.predictions || [];
-  
-          if (res.data.status === "OK" && predictions.length > 0) return setPredictions(predictions);
-  
-        } catch (error) {
-          console.error("Get autocomplete from Goong failed:", error);
-        }
-  
-      }, 400);
-    
-      return () => clearTimeout(delayDebounce);
-  }, [address]);
 
   return (
     <div className={styles.searchBar}>
@@ -48,7 +53,3 @@ export default function SearchBar() {
     </div>
   );
 }
-
-
-
-

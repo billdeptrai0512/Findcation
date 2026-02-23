@@ -6,6 +6,20 @@ import L from "leaflet";
 import Home from "../../assets/home.webp"
 import styles from './location.module.css';
 
+function SetViewOnPosition({ position, zoom }) {
+  const map = useMap();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      map.setView(position, zoom);
+    }, 150);
+
+    return () => clearTimeout(timer);
+  }, [position, map, zoom]);
+
+  return null;
+}
+
 export default function AddressMap() {
   const { listing } = useListing()
   const [text, setText] = useState("");
@@ -19,27 +33,9 @@ export default function AddressMap() {
 
   }, [listing]);
 
-
-  const SetViewOnPosition = ({ position }) => {
-
-    const map = useMap();
-
-    const zoom = listing.location.address === "" ? 6 : 17
-
-    useEffect(() => {
-
-      const timer = setTimeout(() => {
-        map.setView(position, zoom);
-      }, 150);
-
-      return () => clearTimeout(timer);
-    }, [position, map, zoom]);
-
-    return null;
-  };
-
   //if we not have the location.address. what default address we use ? other with user.gps ? what if user gps not have ?
   const gps = listing.location.address === "" ? defaultPosition : listing.location.gps
+  const zoom = listing.location.address === "" ? 6 : 17
 
   return (
     <div className={styles.map_wrap}>
@@ -56,7 +52,7 @@ export default function AddressMap() {
           </Marker>
         }
 
-        <SetViewOnPosition position={gps} />
+        <SetViewOnPosition position={gps} zoom={zoom} />
 
       </MapContainer>
 
@@ -75,9 +71,3 @@ const defaultPosition = {
   lat: 16.076096988000074,
   lng: 106.58883965100006
 }
-
-
-
-
-
-

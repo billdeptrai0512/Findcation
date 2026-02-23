@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./auth/authContext";
 import { UserLocationProvider } from "./map/userLocationContext";
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { MotionConfig, useReducedMotion } from 'framer-motion';
 import { Analytics } from '@vercel/analytics/react';
 import { ListingProvider } from "./listing/listingContext";
 import { StaycationProvider } from "./map/staycationContext";
@@ -130,6 +131,8 @@ const router = createBrowserRouter([
 
 export default function App() {
 
+  const shouldReduceMotion = useReducedMotion();
+
   // Initialize session ID once on mount
   useEffect(() => {
     if (!localStorage.getItem("traffic_session")) {
@@ -139,17 +142,19 @@ export default function App() {
   }, []);
 
   return (
-    <GoogleOAuthProvider clientId={import.meta.env.VITE_OAUTH_CLIENT_ID}>
-      <AuthProvider>
-        <UserLocationProvider>
-          <StaycationProvider>
-            <ErrorBoundary>
-              <RouterProvider router={router} />
-              <Analytics />
-            </ErrorBoundary>
-          </StaycationProvider>
-        </UserLocationProvider>
-      </AuthProvider>
-    </GoogleOAuthProvider>
+    <MotionConfig reducedMotion={shouldReduceMotion ? "always" : "never"}>
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_OAUTH_CLIENT_ID}>
+        <AuthProvider>
+          <UserLocationProvider>
+            <StaycationProvider>
+              <ErrorBoundary>
+                <RouterProvider router={router} />
+                <Analytics />
+              </ErrorBoundary>
+            </StaycationProvider>
+          </UserLocationProvider>
+        </AuthProvider>
+      </GoogleOAuthProvider>
+    </MotionConfig>
   );
 }

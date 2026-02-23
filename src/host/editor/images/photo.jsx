@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Ellipsis, Image } from "lucide-react"
 import styles from "../../host.module.css"
 
@@ -6,12 +6,6 @@ import styles from "../../host.module.css"
 export default function Photo({ image, cover, index, removeImage, addImage, arrangeImage }) {
 
     const [extend, setExtend] = useState(false)
-
-    useEffect(() => {
-
-        setExtend(false)
-
-    }, [image])
 
     if (!image) return (
         <div className={styles.empty}>
@@ -39,9 +33,9 @@ export default function Photo({ image, cover, index, removeImage, addImage, arra
 
                     <div tabIndex={0} className={styles.ellipsis} style={{ display: "flex", flexDirection: "column", alignItems: "start", padding: "16px", borderRadius: "8px", marginTop: "64px", gap: "16px" }}>
 
-                        {cover === false && <span style={{ cursor: "pointer", width: "100%" }} onClick={() => arrangeImage(index)} > Đặt làm ảnh bìa </span>}
+                        {cover === false && <span style={{ cursor: "pointer", width: "100%" }} onClick={() => { arrangeImage(index); setExtend(false); }} > Đặt làm ảnh bìa </span>}
 
-                        <span style={{ cursor: "pointer", width: "100%" }} onClick={() => removeImage(index)} >Xóa</span>
+                        <span style={{ cursor: "pointer", width: "100%" }} onClick={() => { removeImage(index); setExtend(false); }} >Xóa</span>
 
                     </div>
                 }
