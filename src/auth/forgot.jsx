@@ -12,34 +12,43 @@ export default function Forgot() {
     const [code, setCode] = useState('')
     const [onWaiting, setOnWaiting] = useState(false)
     const [error, setError] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
+
 
     const handleSubmitEmail = async (e) => {
         e.preventDefault();
 
         if (email === '') return setError('Bạn chưa nhập email.');
 
+        setIsSubmitting(true);
+        setError('');
+
         try {
 
             const response = await apiClient.post(`/login/forgot-password`, { email });
 
             if (response.data?.message === "Reset code sent to email") {
-
                 setError('')
-
                 return setOnWaiting(true)
             }
 
         } catch (err) {
-            console.error('Login failed', err);
-            setError('Không có email này trong hệ thống');
+            console.error('Forgot password failed', err);
+            setError(err.response?.data?.message || 'Không có email này trong hệ thống');
+        } finally {
+            setIsSubmitting(false);
         }
     };
+
 
     const handleSubmitCode = async (e) => {
         e.preventDefault();
 
         if (code === '') return setError('Bạn chưa nhập mã xác nhận.');
+
+        setIsSubmitting(true);
+        setError('');
 
         try {
             const response = await apiClient.post(`/login/verify-pin`, { email, code });
@@ -48,10 +57,13 @@ export default function Forgot() {
             if (token) return navigate(`/auth/reset-password`, { state: { token, email } });
 
         } catch (err) {
-            console.error('Login failed', err);
-            setError('Sai mã xác nhận');
+            console.error('Verify pin failed', err);
+            setError(err.response?.data?.message || 'Sai mã xác nhận');
+        } finally {
+            setIsSubmitting(false);
         }
     }
+
 
     const renderFormInputEmail = () => {
         return (
@@ -84,9 +96,11 @@ export default function Forgot() {
 
                             <div className={styles.actionLoginRow}>
                                 <motion.button type="submit" className={styles.button}
+                                    disabled={isSubmitting}
                                     whileTap={{ scale: 0.95 }}>
-                                    Gửi mã xác nhận
+                                    {isSubmitting ? 'Đang gửi...' : 'Gửi mã xác nhận'}
                                 </motion.button>
+
                             </div>
 
                         </form>
@@ -130,9 +144,11 @@ export default function Forgot() {
 
                             <div className={styles.actionLoginRow}>
                                 <motion.button type="submit" className={styles.button}
+                                    disabled={isSubmitting}
                                     whileTap={{ scale: 0.95 }}>
-                                    Tiếp tục
+                                    {isSubmitting ? 'Đang xử lý...' : 'Tiếp tục'}
                                 </motion.button>
+
                             </div>
 
                         </form>

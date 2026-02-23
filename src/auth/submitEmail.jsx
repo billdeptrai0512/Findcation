@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { useNavigate, } from 'react-router-dom';
 import { useAuth } from './authContext';
 import { GoogleLogin } from '@react-oauth/google';
-import { X, } from 'lucide-react';
+import { X, Info, ChevronLeft } from 'lucide-react';
+
 import SubmitPassword from './submitPassword';
 import { apiClient } from '../config/api';
 import styles from './login.module.css';
@@ -15,6 +16,7 @@ export default function SubmitEmail() {
     const [foundEmail, setFoundEmail] = useState(null)
     const [hasPassword, setHasPassword] = useState(null)
     const [error, setError] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const navigate = useNavigate();
 
@@ -23,35 +25,29 @@ export default function SubmitEmail() {
 
         if (email === "") return setError("* Thông tin này là bắt buộc")
 
+        setIsSubmitting(true);
+        setError('');
+
         try {
             const response = await apiClient.post(`/login/email`, { email });
 
             const { hasPassword, hasRegister } = response.data;
 
             // if we not found email -> we return hasRegister = false -> we pop up Register Form with the email
-            if (hasRegister === false) return setFoundEmail(false)
-
-            // there will only 2 kind of login -> gooogleLogin + googleCodeLogin
-            // which mean, if they enter email -> we send code via google to login
-            // if they use googleLogin -> then just log them in
-            if (hasRegister === true && hasPassword === false) {
-                setHasPassword(false)
-                setFoundEmail(true)
-                return
+            if (hasRegister === false) {
+                setFoundEmail(false);
+                return;
             }
 
-            // if we found email -> we check if googleLogin = false ? -> we redirect to submit password form
-            if (hasRegister === true && hasPassword === true) {
-                setHasPassword(true)
-                setFoundEmail(true)
-                return
-            }
-
-            // login(token);
+            // if we found email -> we check if they have password
+            setFoundEmail(true);
+            setHasPassword(hasPassword);
 
         } catch (err) {
             console.error('Login failed', err);
-
+            setError('Có lỗi xảy ra, vui lòng thử lại.');
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -75,7 +71,7 @@ export default function SubmitEmail() {
         }
     };
 
-    if (foundEmail === false || hasPassword === false) return navigate("/auth/register", { state: { email: email } })
+    if (foundEmail === false) return navigate("/auth/register", { state: { email: email } })
 
     if (foundEmail === true && hasPassword === true) return <SubmitPassword email={email} setFoundEmail={setFoundEmail} />
 
@@ -83,55 +79,94 @@ export default function SubmitEmail() {
         <motion.div className={styles.container} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <div className={styles.card} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.header}>
-                    <button onClick={() => navigate('/')}>
-                        <X size={20} style={{ padding: "4px" }} />
+                    <button onClick={() => foundEmail === true ? setFoundEmail(null) : navigate('/')}>
+                        {foundEmail === true ? <ChevronLeft size={20} style={{ padding: "4px" }} /> : <X size={20} style={{ padding: "4px" }} />}
                     </button>
                     <div className={styles.title}>
-                        Đăng nhập
+                        {foundEmail === true ? 'Tài khoản đã tồn tại' : 'Đăng nhập'}
                     </div>
                 </div>
                 <div className={styles.panel}>
-                    <h1>Chào mừng bạn tham gia Findcation</h1>
-                    <form onSubmit={handleSubmitEmail}>
+                    {foundEmail === true ? (
+                        <>
+                            <div className={styles.infoPanel}>
+                                {/* <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+                                    <Info size={24} color="#3b82f6" />
+                                    <h2 className={styles.infoTitle}>Chào mừng bạn quay lại!</h2>
+                                </div> */}
+                                <p className={styles.infoText}>
+                                    Email <strong>{email}</strong> đã được đăng ký thông qua Google.
+                                    <br />
+                                    Bạn có thể tiếp tục đăng nhập nhanh bằng Google hoặc thiết lập mật khẩu riêng để đăng nhập bằng email.
+                                </p>
+                            </div>
 
-                        {error && <p className={styles.error}>{error}</p>}
+                            <div className={styles.googleWrapper}>
+                                <GoogleLogin
+                                    onSuccess={handleGoogleLogin}
+                                    onError={() => console.log('Google Login Failed')}
+                                />
+                            </div>
 
-                        <div className={styles.inputGroup}>
-                            <input
-                                id="email"
-                                name="username"
-                                type="email"
-                                placeholder="Email"
-                                autoComplete="username"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className={styles.input}
-                            />
-                        </div>
+                            <div className={styles.actionRegisterRow} style={{ marginBottom: "1rem" }}>
+                                <p>hoặc</p>
+                            </div>
 
-                        <div className={styles.actionLoginRow}>
-                            <motion.button type="submit" className={styles.button}
-                                whileTap={{ scale: 0.95 }} >
-                                Tiếp tục
-                            </motion.button>
-                        </div>
+                            <div className={styles.actionLoginRow}>
+                                <motion.button
+                                    className={styles.secondaryButton}
+                                    onClick={() => navigate("/auth/register", { state: { email: email, isUpgrade: true } })}
+                                    whileTap={{ scale: 0.95 }}
+                                >
+                                    Thiết lập mật khẩu
+                                </motion.button>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <h1>Chào mừng bạn tham gia Findcation</h1>
+                            <form onSubmit={handleSubmitEmail}>
 
-                    </form>
+                                {error && <p className={styles.error}>{error}</p>}
 
-                    <div className={styles.actionRegisterRow}>
-                        <div className={styles.line}></div>
-                        <p>hoặc</p>
-                        <div className={styles.line}></div>
-                    </div>
+                                <div className={styles.inputGroup}>
+                                    <input
+                                        id="email"
+                                        name="username"
+                                        type="email"
+                                        placeholder="Email"
+                                        autoComplete="username"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        className={styles.input}
+                                    />
+                                </div>
 
-                    <div className={styles.googleWrapper}>
-                        <GoogleLogin
-                            onSuccess={handleGoogleLogin}
-                            onError={() => console.log('Google Login Failed')}
-                        />
-                    </div>
+                                <div className={styles.actionLoginRow}>
+                                    <motion.button type="submit" className={styles.button}
+                                        disabled={isSubmitting}
+                                        whileTap={{ scale: 0.95 }} >
+                                        {isSubmitting ? 'Đang xử lý...' : 'Tiếp tục'}
+                                    </motion.button>
+                                </div>
+
+                            </form>
+
+                            <div className={styles.actionRegisterRow}>
+                                <p>hoặc</p>
+                            </div>
+
+                            <div className={styles.googleWrapper}>
+                                <GoogleLogin
+                                    onSuccess={handleGoogleLogin}
+                                    onError={() => console.log('Google Login Failed')}
+                                />
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         </motion.div>
     );
 }
+

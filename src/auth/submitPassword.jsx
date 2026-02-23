@@ -14,6 +14,8 @@ export default function SubmitPassword({ email, setEmail, setFoundEmail, }) {
     const [password, setPassWord] = useState('')
     const [error, setError] = useState('');
     const [showPassword, setShowPassword] = useState(false)
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
 
     const navigate = useNavigate();
 
@@ -22,12 +24,15 @@ export default function SubmitPassword({ email, setEmail, setFoundEmail, }) {
 
         if (password === "") return setError("Thông tin này là bắt buộc.")
 
+        setIsSubmitting(true);
+        setError('');
+
         try {
 
             const user = await login(email, password);
 
             if (user.isAdmin) {
-                return navigate('/admin')
+                navigate('/admin')
             } else {
                 navigate(`/host/${user.id}`)
             }
@@ -44,13 +49,16 @@ export default function SubmitPassword({ email, setEmail, setFoundEmail, }) {
                     </>
                 );
             } else if (err.response) {
-                setError("Có lỗi xảy ra, vui lòng thử lại.");
+                setError(err.response.data.message || "Có lỗi xảy ra, vui lòng thử lại.");
             } else {
                 setError("Không thể kết nối đến server.");
             }
 
+        } finally {
+            setIsSubmitting(false);
         }
     };
+
 
     // here we need to check if the user have the password or not ?
     // if he doesn't have meanning last time he use gmail so we kinda have them to register password if he want
@@ -107,10 +115,12 @@ export default function SubmitPassword({ email, setEmail, setFoundEmail, }) {
 
                         <div className={styles.actionLoginRow}>
                             <motion.button type="submit" className={styles.button}
+                                disabled={isSubmitting}
                                 whileTap={{ scale: 0.95 }}>
-                                Đăng nhập
+                                {isSubmitting ? 'Đang xử lý...' : 'Đăng nhập'}
                             </motion.button>
                         </div>
+
 
                     </form>
 

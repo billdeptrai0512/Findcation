@@ -10,9 +10,11 @@ import { apiClient } from '../config/api';
 export default function RegisterForm() {
 
     const location = useLocation()
-    const state = location.state
+    const state = location.state || {}
+    const isUpgrade = state.isUpgrade || false;
 
-    const { login } = useAuth()
+
+    const { register } = useAuth()
     const [formData, setFormData] = useState({
         // firstName: '',
         // lastName: '',
@@ -24,35 +26,38 @@ export default function RegisterForm() {
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const [error, setError] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // if (formData.firstName === '') return setError('Bạn chưa điền tên của bạn.')
-        // if (formData.lastName === '') return setError('Bạn chưa điền họ của bạn.')
         if (formData.password === '') return setError('Bạn chưa nhập mật khẩu.')
         if (formData.confirm_password === '') return setError('Bạn chưa nhập lại mật khẩu.')
         if (formData.password !== formData.confirm_password) return setError('Mật khẩu không giống nhau')
 
-        try {
-            await apiClient.post(`/auth/register`, formData);
+        setIsSubmitting(true);
+        setError('');
 
-            const user = await login(formData.email, formData.password)
+        try {
+            const user = await register(formData.email, formData.password)
 
             if (user.isAdmin) {
-                return navigate('/admin')
+                navigate('/admin')
             } else {
                 navigate(`/host/${user.id}`)
             }
 
         } catch (err) {
-
             console.error('Register failed', err);
-
+            setError(err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại.');
+        } finally {
+            setIsSubmitting(false);
         }
     };
+
+
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -70,8 +75,9 @@ export default function RegisterForm() {
                         <ChevronLeft size={20} style={{ padding: "4px" }} />
                     </button>
                     <div className={styles.title}>
-                        Hoàn tất đăng ký
+                        {isUpgrade ? 'Thiết lập mật khẩu' : 'Hoàn tất đăng ký'}
                     </div>
+
                 </div>
                 <div className={styles.panel}>
                     <form onSubmit={handleSubmit}>
@@ -154,10 +160,12 @@ export default function RegisterForm() {
 
                         <div className={styles.actionLoginRow}>
                             <motion.button type="submit" className={styles.button}
+                                disabled={isSubmitting}
                                 whileTap={{ scale: 0.95 }}>
-                                Đăng ký
+                                {isSubmitting ? 'Đang xử lý...' : (isUpgrade ? 'Cập nhật mật khẩu' : 'Đăng ký')}
                             </motion.button>
                         </div>
+
                     </form>
 
                 </div>

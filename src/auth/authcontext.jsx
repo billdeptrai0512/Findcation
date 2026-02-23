@@ -49,11 +49,29 @@ export function AuthProvider({ children }) {
     }
   };
 
+  // Register
+  const register = async (email, password) => {
+    try {
+      const res = await apiClient.post(
+        '/auth/register',
+        { email, password }
+      );
+
+      setUser(res.data.user);
+      return res.data.user;
+
+    } catch (err) {
+      handleApiError(err, 'Register');
+      throw err;
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, setUser, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, setUser, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );
+
 }
 
 export function useAuth() {

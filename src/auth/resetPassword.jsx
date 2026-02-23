@@ -17,6 +17,8 @@ export default function ResetPassword() {
     const [error, setError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
 
     const navigate = useNavigate();
 
@@ -26,6 +28,9 @@ export default function ResetPassword() {
         if (password !== confirmPassword) {
             return setError('Cả 2 mật khẩu phải giống nhau')
         }
+
+        setIsSubmitting(true);
+        setError('');
 
         try {
             await apiClient.post(`/login/reset-password`, {
@@ -37,8 +42,12 @@ export default function ResetPassword() {
 
         } catch (err) {
             console.error('reset password failed', err);
+            setError(err.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại.');
+        } finally {
+            setIsSubmitting(false);
         }
     };
+
 
     return (
         <div className={styles.container}>
@@ -96,10 +105,12 @@ export default function ResetPassword() {
 
                         <div className={styles.actionLoginRow}>
                             <motion.button type="submit" className={styles.button}
+                                disabled={isSubmitting}
                                 whileTap={{ scale: 0.95 }}>
-                                Cập nhật
+                                {isSubmitting ? 'Đang cập nhật...' : 'Cập nhật'}
                             </motion.button>
                         </div>
+
 
                     </form>
                 </div>

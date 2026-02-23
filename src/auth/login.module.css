@@ -258,12 +258,15 @@
 
   .card {
     min-width: 475px;
+    max-width: 568px;
+    /* Standard modal width */
     background-color: white;
     border-radius: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: max-content;
+    width: 100%;
     height: unset;
   }
+
 
   .header {
     display: flex;
@@ -283,4 +286,79 @@
     font-size: 1.575rem;
   }
 
+  .infoPanel {
+    padding: 1.5rem;
+    border-radius: 12px;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 2rem;
+  }
+
+  .infoTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.75rem;
+  }
+
+  .infoText {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #475569;
+    margin-bottom: 0;
+  }
+
+  .secondaryButton {
+    background-color: #f1f5f9;
+    color: #334155;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .secondaryButton:hover {
+    background-color: #e2e8f0;
+    border-color: #cbd5e1;
+  }
+}
+
+/* Mobile defaults for new classes */
+@media screen and (max-width: 713px) {
+  .infoPanel {
+    padding: 1.25rem;
+    border-radius: 12px;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 1.5rem;
+  }
+
+  .infoTitle {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+  }
+
+  .infoText {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #475569;
+  }
+
+  .secondaryButton {
+    background-color: #f1f5f9;
+    color: #334155;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 1rem;
+    width: 100%;
+  }
 }
