@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { AuthProvider } from "./auth/authContext";
 import { UserLocationProvider } from "./map/userLocationContext";
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import { MotionConfig, useReducedMotion } from 'framer-motion';
+import { MotionConfig, useReducedMotion, motion } from 'framer-motion';
 import { Analytics } from '@vercel/analytics/react';
 import { ListingProvider } from "./listing/listingContext";
 import { StaycationProvider } from "./map/staycationContext";
 import ErrorBoundary from "./components/ErrorBoundary";
+import { LoadingSpinner } from "./components/LoadingSpinner";
 
 import Register from "./auth/register";
 import ErrorPage from "./error-page";
@@ -24,11 +25,8 @@ import ImageUpload from "./listing/image/main";
 import Features from "./listing/features/features";
 import LocationListing from "./listing/location/main";
 import StartPage from "./listing/start";
-import LandingPage from "./map/main";
 import Prices from "./listing/prices/main";
 import PreviewStaycation from "./map/preview/main";
-import AdminDashBoard from "./admin/main";
-import HostDashBoard from "./host/main";
 import Staycations from "./host/staycations";
 import Staycation from "./host/staycation";
 import EditorPage from "./host/editor/main";
@@ -38,12 +36,15 @@ import EditorPrices from "./host/editor/prices";
 import EditorFeatures from "./host/editor/features";
 import EditorLocation from "./host/editor/location";
 import EditorImages from "./host/editor/images/main";
-
-import AdminRoute from "./admin/adminRoute";
-import HostRoute from "./host/hostRoute";
 import VerifyStaycation from "./host/verify/main";
 
 
+import AdminRoute from "./admin/adminRoute";
+import HostRoute from "./host/hostRoute";
+
+const AdminDashBoard = React.lazy(() => import("./admin/main"));
+const LandingPage = React.lazy(() => import("./map/main"));
+const HostDashBoard = React.lazy(() => import("./host/main"));
 const Listing = React.lazy(() => import("./listing/main"));
 
 
@@ -129,6 +130,20 @@ const router = createBrowserRouter([
 
 ]);
 
+const AppProviders = ({ children }) => (
+  <GoogleOAuthProvider clientId={import.meta.env.VITE_OAUTH_CLIENT_ID}>
+    <AuthProvider>
+      <UserLocationProvider>
+        <StaycationProvider>
+          <ErrorBoundary>
+            {children}
+          </ErrorBoundary>
+        </StaycationProvider>
+      </UserLocationProvider>
+    </AuthProvider>
+  </GoogleOAuthProvider>
+)
+
 export default function App() {
 
   const shouldReduceMotion = useReducedMotion();
@@ -143,18 +158,15 @@ export default function App() {
 
   return (
     <MotionConfig reducedMotion={shouldReduceMotion ? "always" : "never"}>
-      <GoogleOAuthProvider clientId={import.meta.env.VITE_OAUTH_CLIENT_ID}>
-        <AuthProvider>
-          <UserLocationProvider>
-            <StaycationProvider>
-              <ErrorBoundary>
-                <RouterProvider router={router} />
-                <Analytics />
-              </ErrorBoundary>
-            </StaycationProvider>
-          </UserLocationProvider>
-        </AuthProvider>
-      </GoogleOAuthProvider>
+      <AppProviders>
+        <ErrorBoundary>
+          <Suspense fallback={<LoadingSpinner />}>
+            <RouterProvider router={router} />
+          </Suspense>
+          <Analytics />
+        </ErrorBoundary>
+      </AppProviders>
     </MotionConfig>
   );
 }
+

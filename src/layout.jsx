@@ -1,8 +1,11 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { useStaycation } from "./map/staycationContext";
 import { AnimatePresence } from 'framer-motion';
+import { LoadingSpinner } from './components/LoadingSpinner';
+
 import Map from './map/map.jsx';
+
 
 export default function MainLayout() {
   const location = useLocation();
@@ -10,12 +13,14 @@ export default function MainLayout() {
 
   useEffect(() => {
     fetchStaycations();
-  }, []);
+  }, [fetchStaycations]);
 
   return (
     <>
       <AnimatePresence mode="wait">
-        <Outlet key={location.pathname} />
+        <Suspense fallback={<LoadingSpinner />} key={location.pathname}>
+          <Outlet />
+        </Suspense>
       </AnimatePresence>
       <Map />
     </>

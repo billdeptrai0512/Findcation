@@ -8,7 +8,6 @@ Scans your React codebase for security, performance, correctness, and architectu
 
 ```bash
 npx -y react-doctor@latest . --verbose --diff
-```
 
 ## Workflow
 

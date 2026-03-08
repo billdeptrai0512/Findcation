@@ -58,7 +58,7 @@ export default function Map() {
 
             setGPS({ lat: ipLat, lng: ipLng });
             setIpLocationLoaded(true);
-            setZoom(13);
+            setZoom(15);
 
             // After map flies to IP location, find and popup nearest staycation
             setTimeout(() => {

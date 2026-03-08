@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useCallback } from "react";
 import { apiClient } from "../config/api";
 import { handleApiError } from "../utils/errorHandler";
 
@@ -10,7 +10,7 @@ const StaycationProvider = ({ children }) => {
   const [newStaycation, setNewStaycation] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const fetchStaycations = async () => {
+  const fetchStaycations = useCallback(async () => {
 
     setLoading(true);
 
@@ -23,7 +23,7 @@ const StaycationProvider = ({ children }) => {
       setLoading(false);
     }
 
-  };
+  }, []);
 
   return (
     <StaycationContext.Provider
