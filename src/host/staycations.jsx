@@ -35,9 +35,19 @@ export default function Staycations() {
                         </div>
 
                         <div className={styles.staycation_card_details}>
-                            <h2 className={styles.staycation_card_name}>
-                                {staycation.name}
-                            </h2>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 4 }}>
+                                <h2 className={styles.staycation_card_name}>
+                                    {staycation.name}
+                                </h2>
+                                <div>
+                                    {staycation.active ? (
+                                        <span className={styles.status_badge_verified}>ACTIVE</span>
+                                    ) : (
+                                        <span className={styles.status_badge_unverified}>INACTIVE</span>
+                                    )}
+                                </div>
+                            </div>
+
                             <div className={styles.staycation_card_info}>
                                 <span>{staycation.location.details.ward}, {staycation.location.details.city}</span>
                                 <ChevronRight size={18} />

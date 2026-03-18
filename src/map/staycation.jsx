@@ -14,6 +14,13 @@ export default function Staycation({ staycation }) {
         return parseInt(price, 10).toLocaleString("vi-VN") + "đ";
     };
 
+    const getTrustColor = (score) => {
+        if (score < 50) return "#4b5563";
+        if (score < 75) return "#2563eb";
+        if (score < 90) return "#059669";
+        return "#d97706";
+    };
+
     //save traffic
     const countAsTraffic = async () => {
 
@@ -39,6 +46,20 @@ export default function Staycation({ staycation }) {
                         borderTopLeftRadius: "8px", borderTopRightRadius: "8px",
                         objectFit: 'contain', objectPosition: "center", backgroundColor: "rgba(0, 0, 0, 1)"
                     }} />
+                {staycation.trustScore > 0 && (
+                    <span style={{
+                        position: "absolute", top: "6px", right: "6px",
+                        fontSize: "12px", fontWeight: 700,
+                        background: getTrustColor(staycation.trustScore),
+                        color: "white",
+                        borderRadius: "4px",
+                        padding: "2px 6px",
+                        lineHeight: "1.6",
+                        boxShadow: "0 1px 4px rgba(0,0,0,0.25)"
+                    }}>
+                        {staycation.trustScore}
+                    </span>
+                )}
             </div>
             <div className={styles.listing_details}>
                 <h2 className={styles.staycation_name}>{staycation.name}</h2>
@@ -53,20 +74,4 @@ export default function Staycation({ staycation }) {
     );
 }
 
-function VerifiedTick({ size = 30 }) {
-    return (
-        <svg
-            width={size}
-            height={size}
-            viewBox="0 0 64 64"
-            xmlns="http://www.w3.org/2000/svg"
-        >
-            <circle cx="32" cy="32" r="32" fill="#22C55E" />
-            <path
-                fill="white"
-                d="M26.7 42.3L16.4 32l4.2-4.2 6.1 6.1 16.6-16.6 4.2 4.2z"
-            />
-        </svg>
-    );
-}
 

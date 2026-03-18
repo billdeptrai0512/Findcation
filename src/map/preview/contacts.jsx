@@ -48,8 +48,6 @@ export default function Contacts({ staycation, countAsTrafficWarningShown, count
     const igUrl = getContactUrl(contacts.instagram);
     const zaUrl = getContactUrl(contacts.zalo);
 
-    console.log(contacts)
-
     return (
         <motion.div
             className={styles.contacts_container}

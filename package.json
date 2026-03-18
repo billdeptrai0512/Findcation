@@ -21,6 +21,7 @@
     "@vercel/analytics": "^1.5.0",
     "axios": "^1.11.0",
     "browser-image-compression": "^2.0.2",
+    "date-fns": "^4.1.0",
     "framer-motion": "^12.23.12",
     "heic2any": "^0.0.4",
     "html2canvas": "^1.4.1",
@@ -37,7 +38,7 @@
     "react-leaflet": "^5.0.0",
     "react-responsive": "^10.0.1",
     "react-router-dom": "^7.6.3",
-    "swiper": "^11.2.10"
+    "swiper": "^12.1.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
@@ -50,6 +51,6 @@
     "globals": "^16.0.0",
     "rollup-plugin-visualizer": "^6.0.5",
     "vite": "^6.3.5",
-    "vite-plugin-pwa": "^1.0.3"
+    "vite-plugin-pwa": "^0.19.8"
   }
 }

@@ -148,9 +148,11 @@ function StaycationCard({ staycation, onUpdate }) {
 
     // State initialised from props on each mount — parent hostsData is kept
     // fresh via onUpdate callbacks, so props will be correct on re-expand.
-    const [addressVerified, setAddressVerified] = useState(staycation.verify === true);
+    const [addressVerified, setAddressVerified] = useState(staycation.addressVerified === true);
+    const [imagesVerified, setImagesVerified] = useState(staycation.imagesVerified === true);
     const [activeVerified, setActiveVerified] = useState(staycation.active === true);
     const [loadingAddr, setLoadingAddr] = useState(false);
+    const [loadingImg, setLoadingImg] = useState(false);
     const [loadingAct, setLoadingAct] = useState(false);
 
 
@@ -160,9 +162,20 @@ function StaycationCard({ staycation, onUpdate }) {
         try {
             await apiClient.patch(`/admin/staycation/${staycation.id}/verify-address`, { verified: val });
             setAddressVerified(val);
-            onUpdate?.({ verify: val });
+            onUpdate?.({ addressVerified: val });
         } catch { alert("Thao tác thất bại."); }
         finally { setLoadingAddr(false); }
+    };
+
+    const toggleImages = async (e, val) => {
+        e.stopPropagation();
+        setLoadingImg(true);
+        try {
+            await apiClient.patch(`/admin/staycation/${staycation.id}/verify-images`, { verified: val });
+            setImagesVerified(val);
+            onUpdate?.({ imagesVerified: val });
+        } catch { alert("Thao tác thất bại."); }
+        finally { setLoadingImg(false); }
     };
 
     const toggleActive = async (e, val) => {
@@ -199,6 +212,14 @@ function StaycationCard({ staycation, onUpdate }) {
                     onUnverify={e => toggleAddress(e, false)}
                     verifyLabel="Xác thực"
                     loading={loadingAddr}
+                />
+                <VerifyToggle
+                    label="📸 Hình ảnh"
+                    verified={imagesVerified}
+                    onVerify={e => toggleImages(e, true)}
+                    onUnverify={e => toggleImages(e, false)}
+                    verifyLabel="Xác thực"
+                    loading={loadingImg}
                 />
                 <VerifyToggle
                     label="⚡ Hoạt động"
@@ -406,7 +427,9 @@ export default function Hosts({ hosts: initialHosts }) {
                     {filteredHosts.map((host, i) => {
                         const isExpanded = expandedId === host.id;
                         const staycations = host.staycations ?? [];
-                        const allVerified = staycations.length > 0 && staycations.every(st => st.verify === true);
+                        const allVerified = staycations.length > 0 && staycations.every(st =>
+                            st.addressVerified && st.imagesVerified && st.contactsVerified
+                        );
                         const rowBg = isExpanded ? undefined : i % 2 === 0 ? "#fff" : "#fafafa";
 
                         return [

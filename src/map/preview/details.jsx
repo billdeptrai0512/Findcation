@@ -1,23 +1,21 @@
 import { ArrowRight, Home, DollarSign, MapPin, Sparkles, ShieldCheck } from 'lucide-react';
 import styles from "./preview.module.css"
 import Features from "./features";
+import TrustScore from './trustscore';
 
-export default function Details({ staycation, downloadImage, canvas, loading }) {
+
+
+export default function Details({ staycation }) {
 
     const houseType = staycation.type === "house" ? "Toàn bộ căn nhà" : `${staycation.rooms?.length} phòng riêng`
-    const isVerified = staycation.verify === true;
 
     return (
 
         <div className={styles.preview_details} style={{ gap: "16px", padding: "0 12px" }}>
+            {/* Trust Score Card */}
 
-            {/* Verification Badge */}
-            {isVerified && (
-                <div className={styles.verification_badge}>
-                    <ShieldCheck size={16} strokeWidth={2.5} />
-                    <span>Đã xác minh</span>
-                </div>
-            )}
+
+            <TrustScore staycation={staycation} />
 
             {/* Title Card */}
             <div className={styles.detail_card}>
@@ -67,6 +65,8 @@ export default function Details({ staycation, downloadImage, canvas, loading }) 
 
             {/* Features */}
             <Features staycation={staycation} />
+
+
 
         </div>
 

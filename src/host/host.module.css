@@ -365,6 +365,27 @@
 }
 
 /* Staycation Card Styles - synced with map/staycation design */
+/* ── Status Badges ── */
+.status_badge_unverified {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #B45309;
+    background: #FEF3C7;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.status_badge_verified {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #166534;
+    background: #DCFCE7;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
 .staycation_card {
     background: white;
     border-radius: 16px;
