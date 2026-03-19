@@ -38,6 +38,7 @@
     "react-leaflet": "^5.0.0",
     "react-responsive": "^10.0.1",
     "react-router-dom": "^7.6.3",
+    "serialize-javascript": "^7.0.4",
     "swiper": "^12.1.2"
   },
   "devDependencies": {
@@ -51,6 +52,6 @@
     "globals": "^16.0.0",
     "rollup-plugin-visualizer": "^6.0.5",
     "vite": "^6.3.5",
-    "vite-plugin-pwa": "^0.19.8"
+    "vite-plugin-pwa": "^1.2.0"
   }
 }
