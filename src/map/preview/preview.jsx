@@ -127,7 +127,7 @@ export default function Preview({ staycation }) {
                         onClick={countAsTrafficContactClick}
                         whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
                     >
-                        <h2 style={{ fontSize: "0.975rem", marginTop: "0", marginBottom: "0" }}>Kiểm tra phòng trống</h2>
+                        <h2 style={{ fontSize: "0.975rem", marginTop: "0", marginBottom: "0" }}>Thông tin liên hệ</h2>
                     </motion.button>}
 
                     {!showContacts && !showWarning && <motion.button className={styles.options_button}

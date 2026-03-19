@@ -62,13 +62,9 @@ export default function Contacts({ staycation, countAsTrafficWarningShown, count
                     {staycation.verify && <ShieldCheck size={26} strokeWidth={2} />}
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                         <span style={{ fontSize: "1.1rem" }}>Thông tin liên hệ</span>
-                        {/* <p style={{ fontSize: "0.9rem", color: "#666" }}>Đã xác minh</p> */}
                     </div>
                     {staycation.verify && <ShieldCheck size={26} strokeWidth={2} />}
                 </div>
-                {/* <p className={styles.contacts_subtitle}>
-                    Liên hệ trực tiếp với chủ nhà qua các kênh sau
-                </p> */}
             </div>
 
             <div className={styles.contacts_icons}>

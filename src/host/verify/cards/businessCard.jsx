@@ -1,6 +1,6 @@
 import { Zap, ChevronDown, ChevronUp, CircleCheck, RefreshCw } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { apiClient } from "../../../config/api";
 import { useHost } from "../../hostContext";
 import styles from "../verify.module.css";
@@ -9,6 +9,43 @@ export default function BusinessCard({ staycation, openCard, toggle }) {
     const { refreshHost } = useHost();
     const [subscribing, setSubscribing] = useState(false);
     const [showRenew, setShowRenew] = useState(false);
+
+    useEffect(() => {
+        let eventSource;
+        // Chỉ kết nối SSE khi card này đang mở và staycation chưa được thanh toán (hoặc đang xem mã QR)
+        if (openCard === "business") {
+            // Kết nối đến endpoint event stream bạn vừa tạo ở backend
+            eventSource = new EventSource(`${apiClient.defaults.baseURL}/listing/staycation/${staycation.id}/payment-stream`, {
+                withCredentials: true
+            });
+            // Lắng nghe dữ liệu đẩy về từ Server
+            eventSource.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+
+                // Nếu server báo về 'paid_success' do Webhook kích hoạt
+                if (data.status === 'paid_success') {
+                    // Cập nhật lại giao diện Host (gọi API lấy data mới)
+                    if (refreshHost) refreshHost();
+
+                    // Có thể hiển thị alert (nếu muốn)
+                    // alert("Thanh toán thành công qua mã QR!");
+
+                    // Đóng kết nối để tiết kiệm tài nguyên
+                    eventSource.close();
+                }
+            };
+            eventSource.onerror = (err) => {
+                console.error("SSE connection error", err);
+                eventSource.close(); // Đóng nếu lỗi
+            };
+        }
+        // Cleanup function: Đóng kết nối khi component bị unmount hoặc close card
+        return () => {
+            if (eventSource) {
+                eventSource.close();
+            }
+        };
+    }, [openCard, staycation.id, refreshHost]);
 
     const handleSubscribe = async () => {
         setSubscribing(true);

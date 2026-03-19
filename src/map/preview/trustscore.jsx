@@ -47,11 +47,14 @@ export default function TrustScore({ staycation }) {
                     {[
                         { text: "Xác thực thông tin liên hệ", verified: staycation.contactsVerified },
                         { text: "Xác thực địa chỉ", verified: staycation.addressVerified },
-                        { text: "Sử dụng ảnh thật", verified: staycation.imagesVerified },
+                        { text: "Xác thực hình ảnh", verified: staycation.imagesVerified },
                         ...(staycation.active === true ? [{
                             text: `Đã hoạt động được ${differenceInDays(new Date(), new Date(staycation.subscriptionStartedAt))} ngày`,
                             verified: true
-                        }] : [])
+                        }] : [{
+                            text: `Chưa kích hoạt điểm uy tín`,
+                            verified: false
+                        }])
                     ].map((item, index, arr) => (
                         <li key={index} style={{
                             fontSize: "0.975rem",

@@ -12,6 +12,8 @@ const getTrustColor = (score) => {
 
 export default function ScoreCard({ staycation, openCard, toggle }) {
 
+    console.log(staycation)
+
     return (
         <div className={styles.section_card}>
             <div className={styles.card_header} onClick={() => toggle("score")}>
@@ -45,10 +47,11 @@ export default function ScoreCard({ staycation, openCard, toggle }) {
                                     { text: "Xác thực thông tin liên hệ", verified: staycation.contactsVerified },
                                     { text: "Xác thực địa chỉ", verified: staycation.addressVerified },
                                     { text: "Sử dụng ảnh thật", verified: staycation.imagesVerified },
-                                    { text: "Hoạt động được 1 tháng", verified: differenceInMonths(new Date(), new Date(staycation.subscriptionStartedAt)) >= 1 },
-                                    { text: "Hoạt động được 3 tháng", verified: differenceInMonths(new Date(), new Date(staycation.subscriptionStartedAt)) >= 3 },
-                                    { text: "Hoạt động được 6 tháng", verified: differenceInMonths(new Date(), new Date(staycation.subscriptionStartedAt)) >= 6 },
-                                    { text: "Hoạt động được 12 tháng", verified: differenceInMonths(new Date(), new Date(staycation.subscriptionStartedAt)) >= 12 },
+                                    { text: "Đã kích hoạt điểm uy tín", verified: staycation.active && !!staycation.subscriptionStartedAt },
+                                    { text: "Hoạt động được 1 tháng", verified: !!staycation.subscriptionStartedAt && differenceInMonths(new Date(), new Date(staycation.subscriptionStartedAt)) >= 1 },
+                                    { text: "Hoạt động được 3 tháng", verified: !!staycation.subscriptionStartedAt && differenceInMonths(new Date(), new Date(staycation.subscriptionStartedAt)) >= 3 },
+                                    { text: "Hoạt động được 6 tháng", verified: !!staycation.subscriptionStartedAt && differenceInMonths(new Date(), new Date(staycation.subscriptionStartedAt)) >= 6 },
+                                    { text: "Hoạt động được 12 tháng", verified: !!staycation.subscriptionStartedAt && differenceInMonths(new Date(), new Date(staycation.subscriptionStartedAt)) >= 12 },
                                 ].map((item, index, arr) => (
                                     <li key={index} style={{
                                         fontSize: "0.975rem",

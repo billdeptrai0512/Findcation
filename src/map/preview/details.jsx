@@ -12,10 +12,6 @@ export default function Details({ staycation }) {
     return (
 
         <div className={styles.preview_details} style={{ gap: "16px", padding: "0 12px" }}>
-            {/* Trust Score Card */}
-
-
-            <TrustScore staycation={staycation} />
 
             {/* Title Card */}
             <div className={styles.detail_card}>
@@ -62,6 +58,9 @@ export default function Details({ staycation }) {
                     <span>{staycation.location.details.street} - {staycation.location.details.ward} - {staycation.location.details.city}</span>
                 </div>
             </div>
+
+            {/* Trust Score Card */}
+            <TrustScore staycation={staycation} />
 
             {/* Features */}
             <Features staycation={staycation} />
