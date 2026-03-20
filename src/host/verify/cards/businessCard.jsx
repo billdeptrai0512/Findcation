@@ -1,6 +1,6 @@
-import { Zap, ChevronDown, ChevronUp, CircleCheck, RefreshCw } from "lucide-react";
+import { Zap, ChevronDown, ChevronUp, CircleCheck, RefreshCw, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { apiClient } from "../../../config/api";
 import { useHost } from "../../hostContext";
 import styles from "../verify.module.css";
@@ -9,41 +9,78 @@ export default function BusinessCard({ staycation, openCard, toggle }) {
     const { refreshHost } = useHost();
     const [subscribing, setSubscribing] = useState(false);
     const [showRenew, setShowRenew] = useState(false);
+    const [waitingForPayment, setWaitingForPayment] = useState(false);
+    const [paymentSuccess, setPaymentSuccess] = useState(false);
+    const retryRef = useRef(null);
+    const retryDelay = useRef(1000);
 
     useEffect(() => {
         let eventSource;
-        // Chỉ kết nối SSE khi card này đang mở và staycation chưa được thanh toán (hoặc đang xem mã QR)
-        if (openCard === "business") {
-            // Kết nối đến endpoint event stream bạn vừa tạo ở backend
-            eventSource = new EventSource(`${apiClient.defaults.baseURL}/listing/staycation/${staycation.id}/payment-stream`, {
-                withCredentials: true
-            });
-            // Lắng nghe dữ liệu đẩy về từ Server
+        let cancelled = false;
+
+        const connect = () => {
+            if (cancelled) return;
+
+            eventSource = new EventSource(
+                `${apiClient.defaults.baseURL}/listing/staycation/${staycation.id}/payment-stream`,
+                { withCredentials: true }
+            );
+
+            // Connection opened — show the waiting indicator
+            eventSource.onopen = () => {
+                retryDelay.current = 1000; // reset backoff on successful open
+                setWaitingForPayment(true);
+            };
+
             eventSource.onmessage = (event) => {
-                const data = JSON.parse(event.data);
+                try {
+                    const data = JSON.parse(event.data);
 
-                // Nếu server báo về 'paid_success' do Webhook kích hoạt
-                if (data.status === 'paid_success') {
-                    // Cập nhật lại giao diện Host (gọi API lấy data mới)
-                    if (refreshHost) refreshHost();
+                    console.log(event)
+                    console.log(data)
 
-                    // Có thể hiển thị alert (nếu muốn)
-                    // alert("Thanh toán thành công qua mã QR!");
+                    // Heartbeat / keep-alive pings — ignore silently
+                    if (data.type === 'ping' || data.status === 'connected') return;
 
-                    // Đóng kết nối để tiết kiệm tài nguyên
-                    eventSource.close();
+                    if (data.status === 'paid_success') {
+                        setWaitingForPayment(false);
+                        setPaymentSuccess(true);
+                        eventSource.close();
+                        // Brief delay so user sees the success flash, then refresh
+                        setTimeout(() => {
+                            if (refreshHost) refreshHost();
+                        }, 1200);
+                    }
+                } catch (e) {
+                    console.warn("SSE parse error", e);
                 }
             };
+
             eventSource.onerror = (err) => {
-                console.error("SSE connection error", err);
-                eventSource.close(); // Đóng nếu lỗi
-            };
-        }
-        // Cleanup function: Đóng kết nối khi component bị unmount hoặc close card
-        return () => {
-            if (eventSource) {
+                console.warn("SSE connection lost, reconnecting…", err);
                 eventSource.close();
-            }
+                if (!cancelled) {
+                    // Exponential backoff: 1s → 2s → 4s → … capped at 30s
+                    retryRef.current = setTimeout(() => {
+                        retryDelay.current = Math.min(retryDelay.current * 2, 30000);
+                        connect();
+                    }, retryDelay.current);
+                }
+            };
+        };
+
+        if (openCard === "business") {
+            connect();
+        } else {
+            // Card closed — reset states
+            setWaitingForPayment(false);
+            setPaymentSuccess(false);
+        }
+
+        return () => {
+            cancelled = true;
+            clearTimeout(retryRef.current);
+            if (eventSource) eventSource.close();
         };
     }, [openCard, staycation.id, refreshHost]);
 
@@ -142,6 +179,38 @@ export default function BusinessCard({ staycation, openCard, toggle }) {
                                                 </div>
                                             </div>
                                         </div>
+
+                                        {/* ── Payment waiting / success feedback ── */}
+                                        <AnimatePresence mode="wait">
+                                            {paymentSuccess ? (
+                                                <motion.div key="success"
+                                                    initial={{ opacity: 0, scale: 0.92 }}
+                                                    animate={{ opacity: 1, scale: 1 }}
+                                                    exit={{ opacity: 0 }}
+                                                    style={{
+                                                        display: 'flex', alignItems: 'center', gap: 8,
+                                                        background: '#f0fdf4', border: '1px solid #bbf7d0',
+                                                        borderRadius: 10, padding: '10px 14px', width: '100%', boxSizing: 'border-box'
+                                                    }}>
+                                                    <CircleCheck size={16} color="#16a34a" style={{ flexShrink: 0 }} />
+                                                    <span style={{ fontSize: '0.88rem', fontWeight: 600, color: '#15803d' }}>Thanh toán thành công! Đang cập nhật…</span>
+                                                </motion.div>
+                                            ) : waitingForPayment ? (
+                                                <motion.div key="waiting"
+                                                    initial={{ opacity: 0 }}
+                                                    animate={{ opacity: 1 }}
+                                                    exit={{ opacity: 0 }}
+                                                    style={{
+                                                        display: 'flex', alignItems: 'center', gap: 8,
+                                                        background: '#fffbeb', border: '1px solid #fde68a',
+                                                        borderRadius: 10, padding: '10px 14px', width: '100%', boxSizing: 'border-box'
+                                                    }}>
+                                                    <Loader2 size={15} color="#B45309" style={{ flexShrink: 0, animation: 'spin 1s linear infinite' }} />
+                                                    <span style={{ fontSize: '0.88rem', fontWeight: 500, color: '#92400e' }}>Đang chờ xác nhận thanh toán…</span>
+                                                </motion.div>
+                                            ) : null}
+                                        </AnimatePresence>
+
                                         <p className={styles.payment_note}>Quét mã để gia hạn thêm 1 tháng</p>
                                         <button className={styles.send_code_btn} onClick={handleSubscribe} disabled={subscribing} style={{ marginTop: 12 }}>
                                             {subscribing ? "Đang xử lý..." : "Test Gia hạn"}
@@ -178,13 +247,43 @@ export default function BusinessCard({ staycation, openCard, toggle }) {
                                     <div className={styles.premium_qr_wrap}>
                                         <div className={styles.premium_qr_inner}>
                                             <div className={styles.qr_scan_container}>
-                                                <img src={`https://qr.sepay.vn/img?acc=player2player&bank=MB&amount=${512000}&des=HOST${staycation.id}&template=compact`}
+                                                <img src={`https://qr.sepay.vn/img?acc=0902822192&bank=MB&amount=${512000}&des=HOST${staycation.id}&template=compact`}
                                                     alt="QR thanh toán" className={styles.premium_qr_img} />
                                                 <div className={styles.qr_scan_line}></div>
                                             </div>
                                         </div>
                                     </div>
-                                    <p className={styles.payment_note}>Quét mã QR bằng ứng dụng ngân hàng hoặc Momo</p>
+
+                                    {/* ── Payment waiting / success feedback ── */}
+                                    <AnimatePresence mode="wait">
+                                        {paymentSuccess ? (
+                                            <motion.div key="success"
+                                                initial={{ opacity: 0, scale: 0.92 }}
+                                                animate={{ opacity: 1, scale: 1 }}
+                                                exit={{ opacity: 0 }}
+                                                style={{
+                                                    display: 'flex', alignItems: 'center', gap: 8,
+                                                    background: '#f0fdf4', border: '1px solid #bbf7d0',
+                                                    borderRadius: 10, padding: '10px 14px', width: '100%', boxSizing: 'border-box'
+                                                }}>
+                                                <CircleCheck size={16} color="#16a34a" style={{ flexShrink: 0 }} />
+                                                <span style={{ fontSize: '0.88rem', fontWeight: 600, color: '#15803d' }}>Thanh toán thành công! Đang cập nhật…</span>
+                                            </motion.div>
+                                        ) : waitingForPayment ? (
+                                            <motion.div key="waiting"
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                exit={{ opacity: 0 }}
+                                                style={{
+                                                    display: 'flex', alignItems: 'center', gap: 8,
+                                                    background: '#fffbeb', border: '1px solid #fde68a',
+                                                    borderRadius: 10, padding: '10px 14px', width: '100%', boxSizing: 'border-box'
+                                                }}>
+                                                <Loader2 size={15} color="#B45309" style={{ flexShrink: 0, animation: 'spin 1s linear infinite' }} />
+                                                <span style={{ fontSize: '0.88rem', fontWeight: 500, color: '#92400e' }}>Đang chờ xác nhận thanh toán…</span>
+                                            </motion.div>
+                                        ) : null}
+                                    </AnimatePresence>
 
                                     <button
                                         className={styles.send_code_btn}
