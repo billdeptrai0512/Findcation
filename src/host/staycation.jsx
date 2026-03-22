@@ -119,6 +119,15 @@ export default function Staycation() {
                 </div>
             </div>
 
+            <div className={styles.staycation_card} onClick={() => navigate(`contacts`)}>
+                <div className={styles.staycation_card_row}>
+                    <div>
+                        <span className={styles.staycation_card_label}>Thông tin liên hệ</span>
+                    </div>
+                    <ChevronRight size={20} color="#6A6A6A" />
+                </div>
+            </div>
+
         </div>
     );
 }

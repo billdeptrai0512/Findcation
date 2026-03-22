@@ -9,7 +9,7 @@ export default function OptionsButton({ setOpenOptions }) {
       className={styles.information_button}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}>
-      Thông tin liên hệ
+      Tùy chọn
     </motion.button>
   );
 }

@@ -36,6 +36,7 @@ import EditorPrices from "./host/editor/prices";
 import EditorFeatures from "./host/editor/features";
 import EditorLocation from "./host/editor/location";
 import EditorImages from "./host/editor/images/main";
+import EditorContacts from "./host/contacts/main";
 import VerifyStaycation from "./host/verify/main";
 
 
@@ -84,7 +85,6 @@ const router = createBrowserRouter([
       { path: "features", element: <Features /> },
       { path: "location", element: <LocationListing /> },
       { path: "price", element: <Prices /> },
-      // { path: "contacts", element: <Contacts /> },
     ]
   },
   { // auth here too, prevent user that's not admin to access admin page
@@ -118,6 +118,7 @@ const router = createBrowserRouter([
           { path: "location", element: <EditorLocation /> },
           { path: "images", element: <EditorImages /> },
           { path: "verify", element: <VerifyStaycation /> },
+          { path: "contacts", element: <EditorContacts /> },
           // { path: "rooms", element: <EditorRooms /> },
           // { path: "rooms/cover-images", element: <EditorCoverImages /> },
           // { path: "rooms/:roomId", element: <EditorRoomImages /> },

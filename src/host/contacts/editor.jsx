@@ -16,7 +16,7 @@ export default function ContactEditor({ data, setOpenContactEditor }) {
         //TODO: We should able to remove the url
         //TODO: The url default should null or empty string
 
-        if (url === "") return setError("Góp ý không được bỏ trống.")
+        if (url === "") return setError("Liên kết không được bỏ trống.");
 
         try {
 
@@ -67,7 +67,7 @@ export default function ContactEditor({ data, setOpenContactEditor }) {
                                 <textarea
                                     id="message"
                                     name="message"
-                                    placeholder={data.url}
+                                    placeholder={data.url || "Nhập liên kết tại đây..."}
                                     rows={4}
                                     value={url}
                                     style={{ resize: "none" }}

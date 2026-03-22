@@ -4,13 +4,14 @@ import { useState } from "react"
 import { ChevronLeft } from "lucide-react"
 import { useAuth } from "../../auth/authContext";
 import { useNavigate } from "react-router-dom";
-import styles from "../../auth/login.module.css"
+import GoogleIcon from "../../assets/google.webp";
+import hostStyles from "../host.module.css";
+import styles from "../../auth/login.module.css";
 
 import ChangePassword from "./changePasswords";
 import ChangeEmail from "./changeEmail";
-import Contacts from "../contacts/main";
 
-export default function Options({ setOpenOptions, setOpenContactEditor }) {
+export default function Options({ setOpenOptions }) {
 
     const navigate = useNavigate()
     const { logout, user } = useAuth()
@@ -37,12 +38,16 @@ export default function Options({ setOpenOptions, setOpenContactEditor }) {
                             <ChevronLeft size={20} style={{ padding: "4px" }} />
                         </button>
                         <div className={styles.title}>
-                            Thông tin liên hệ
+                            Tùy chọn
                         </div>
                     </div>
                     <div className={styles.panel} style={{ display: "flex", flexDirection: "column", gap: "0.75em" }}>
 
-                        <Contacts setOpenContactEditor={setOpenContactEditor} />
+                        <div className={hostStyles.contact} style={{ cursor: "default" }}>
+                            <img src={GoogleIcon} alt="Google" style={{ width: "33px" }} />
+                            <span style={{ flex: "1", textAlign: "center", color: "#6A6A6A" }}>{user.email}</span>
+                            <div style={{ width: "20px" }} /> {/* Spacer to balance the layout against the edit icons below */}
+                        </div>
 
                         {user.isAdmin && (
                             <motion.button onClick={() => navigate("/admin")}

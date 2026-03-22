@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useParams, Outlet } from "react-router-dom";
+import { useParams, Outlet, useOutletContext } from "react-router-dom";
 import { useHost } from "../hostContext";
 import { useEditorDraft } from "../editorDraftContext";
 import cloneDeep from "lodash/cloneDeep";
@@ -7,7 +7,7 @@ import cloneDeep from "lodash/cloneDeep";
 export default function EditorPage() {
   const { staycationId } = useParams();
   const { host } = useHost();
-  const { setOriginal, setDraft  } = useEditorDraft();
+  const { setOriginal, setDraft } = useEditorDraft();
 
   const staycation = host?.staycations.find(
     (s) => s.id === parseInt(staycationId, 10)
@@ -20,10 +20,12 @@ export default function EditorPage() {
       setOriginal(copy);
       setDraft(copy);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [staycation]);
 
+  const context = useOutletContext();
+
   return (
-    <Outlet />
+    <Outlet context={context} />
   );
 }

@@ -11,10 +11,12 @@ export default function Zalo({ host, handleOpen }) {
     return (
         <div className={styles.contact} onClick={() => url && window.open(`https://zalo.me/${url}`, "_blank")}>
             <img src={ZaloIcon} alt="" style={{ width: "33px" }} />
-            <span style={{ flex: "1", textAlign: "center" }}>{url}</span>
+            <span style={{ flex: "1", textAlign: "center", color: url ? "inherit" : "#6A6A6A" }}>
+                {url || "Chưa thiết lập"}
+            </span>
 
             <PenLine size={20}
-                style={{ zIndex: 2, cursor: "pointer" }}
+                style={{ zIndex: 2, cursor: "pointer", color: "#6A6A6A" }}
                 onClick={(e) => {
                     e.stopPropagation();
                     handleOpen("zalo", url);
