@@ -117,7 +117,7 @@ export default function BusinessCard({ staycation, openCard, toggle }) {
                 <div className={styles.card_header_left}>
                     <div className={styles.card_icon_box}><Zap size={18} /></div>
                     <div>
-                        <span className={styles.card_title}>Phí duy trì hiển thị</span>
+                        <span className={styles.card_title}>Kích hoạt điểm uy tín</span>
                         <div className={styles.card_badges}>
                             {staycation.active ? (
                                 <span className={styles.status_badge_verified}>Đã thanh toán</span>
@@ -212,9 +212,11 @@ export default function BusinessCard({ staycation, openCard, toggle }) {
                                         </AnimatePresence>
 
                                         <p className={styles.payment_note}>Quét mã để gia hạn thêm 1 tháng</p>
-                                        <button className={styles.send_code_btn} onClick={handleSubscribe} disabled={subscribing} style={{ marginTop: 12 }}>
-                                            {subscribing ? "Đang xử lý..." : "Test Gia hạn"}
-                                        </button>
+                                        {import.meta.env.DEV && (
+                                            <button className={styles.send_code_btn} onClick={handleSubscribe} disabled={subscribing} style={{ marginTop: 12 }}>
+                                                {subscribing ? "Đang xử lý..." : "Test Gia hạn"}
+                                            </button>
+                                        )}
                                     </div>
                                 ) : (
                                     <button
@@ -229,9 +231,6 @@ export default function BusinessCard({ staycation, openCard, toggle }) {
                         ) : (
                             /* ── INACTIVE STATE ── */
                             <>
-                                <p className={styles.card_description}>
-                                    Xác thực trạng thái hoạt động giúp chỗ ở của bạn được ưu tiên hiển thị trên bản đồ.
-                                </p>
 
                                 {staycation.subscriptionValidUntil && (
                                     <p style={{ marginBottom: 12, fontSize: '0.9rem', color: '#B45309', fontWeight: 600, background: '#FEF3C7', padding: '8px 12px', borderRadius: '8px' }}>
@@ -254,45 +253,16 @@ export default function BusinessCard({ staycation, openCard, toggle }) {
                                         </div>
                                     </div>
 
-                                    {/* ── Payment waiting / success feedback ── */}
-                                    <AnimatePresence mode="wait">
-                                        {paymentSuccess ? (
-                                            <motion.div key="success"
-                                                initial={{ opacity: 0, scale: 0.92 }}
-                                                animate={{ opacity: 1, scale: 1 }}
-                                                exit={{ opacity: 0 }}
-                                                style={{
-                                                    display: 'flex', alignItems: 'center', gap: 8,
-                                                    background: '#f0fdf4', border: '1px solid #bbf7d0',
-                                                    borderRadius: 10, padding: '10px 14px', width: '100%', boxSizing: 'border-box'
-                                                }}>
-                                                <CircleCheck size={16} color="#16a34a" style={{ flexShrink: 0 }} />
-                                                <span style={{ fontSize: '0.88rem', fontWeight: 600, color: '#15803d' }}>Thanh toán thành công! Đang cập nhật…</span>
-                                            </motion.div>
-                                        ) : waitingForPayment ? (
-                                            <motion.div key="waiting"
-                                                initial={{ opacity: 0 }}
-                                                animate={{ opacity: 1 }}
-                                                exit={{ opacity: 0 }}
-                                                style={{
-                                                    display: 'flex', alignItems: 'center', gap: 8,
-                                                    background: '#fffbeb', border: '1px solid #fde68a',
-                                                    borderRadius: 10, padding: '10px 14px', width: '100%', boxSizing: 'border-box'
-                                                }}>
-                                                <Loader2 size={15} color="#B45309" style={{ flexShrink: 0, animation: 'spin 1s linear infinite' }} />
-                                                <span style={{ fontSize: '0.88rem', fontWeight: 500, color: '#92400e' }}>Đang chờ xác nhận thanh toán…</span>
-                                            </motion.div>
-                                        ) : null}
-                                    </AnimatePresence>
-
-                                    <button
-                                        className={styles.send_code_btn}
-                                        onClick={handleSubscribe}
-                                        disabled={subscribing}
-                                        style={{ marginTop: 12 }}
-                                    >
-                                        {subscribing ? "Đang xử lý..." : "Test Mua Gói"}
-                                    </button>
+                                    {import.meta.env.DEV && (
+                                        <button
+                                            className={styles.send_code_btn}
+                                            onClick={handleSubscribe}
+                                            disabled={subscribing}
+                                            style={{ marginTop: 12 }}
+                                        >
+                                            {subscribing ? "Đang xử lý..." : "Test Mua Gói"}
+                                        </button>
+                                    )}
                                 </div>
                             </>
                         )}

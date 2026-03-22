@@ -25,7 +25,7 @@ export default function VerifyStaycation() {
         <div className={styles.pageContent}>
             <div className={styles.page_header}>
                 <h1 className={styles.page_title}>Xác thực</h1>
-                <p className={styles.page_subtitle}>Chứng minh bạn là chủ staycation để tăng điểm uy tín</p>
+                <p className={styles.page_subtitle}>Điểm uy tín cao giúp staycation được khách tin tưởng và liên hệ nhiều hơn.</p>
             </div>
 
             <ScoreCard staycation={staycation} openCard={openCard} toggle={toggle} />
