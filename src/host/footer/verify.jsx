@@ -5,7 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export default function VerifyButton() {
 
-
     // this button will navigate to /host/:hostId/editor/:staycationId/verify
     const navigate = useNavigate();
     const { hostId, staycationId } = useParams();

@@ -123,6 +123,9 @@ export default function Staycation() {
                 <div className={styles.staycation_card_row}>
                     <div>
                         <span className={styles.staycation_card_label}>Thông tin liên hệ</span>
+                        <div className={styles.staycation_card_value}>
+                            {`${staycation.contactsVerified ? "Đã xác thực" : "Chưa xác thực"}`}
+                        </div>
                     </div>
                     <ChevronRight size={20} color="#6A6A6A" />
                 </div>

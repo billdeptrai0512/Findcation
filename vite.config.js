@@ -66,7 +66,7 @@ export default defineConfig({
 
 
   server: {
-    allowedHosts: ['manhattan-arabic-turner-responding.trycloudflare.com'],
+    allowedHosts: ['van-apply-roots-affordable.trycloudflare.com'],
     proxy: {
       '/auth': {
         target: "https://api.findcation.vn",

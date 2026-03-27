@@ -14,6 +14,12 @@ export default function BusinessCard({ staycation, openCard, toggle }) {
     const retryRef = useRef(null);
     const retryDelay = useRef(1000);
 
+    // Buisness Logic variables
+    const isFirstTimeUnlock = !staycation.active && !staycation.subscriptionStartedAt && !staycation.subscriptionValidUntil;
+    const paymentAmount = isFirstTimeUnlock ? 51200 : 512000;
+    const paymentLabelAmount = isFirstTimeUnlock ? "51.200đ" : "512.000đ";
+    const paymentLabelPeriod = isFirstTimeUnlock ? "/ mở khóa" : " / tháng";
+
     useEffect(() => {
         let eventSource;
         let cancelled = false;
@@ -26,27 +32,20 @@ export default function BusinessCard({ staycation, openCard, toggle }) {
                 { withCredentials: true }
             );
 
-            // Connection opened — show the waiting indicator
             eventSource.onopen = () => {
-                retryDelay.current = 1000; // reset backoff on successful open
+                retryDelay.current = 1000;
                 setWaitingForPayment(true);
             };
 
             eventSource.onmessage = (event) => {
                 try {
                     const data = JSON.parse(event.data);
-
-                    console.log(event)
-                    console.log(data)
-
-                    // Heartbeat / keep-alive pings — ignore silently
                     if (data.type === 'ping' || data.status === 'connected') return;
 
                     if (data.status === 'paid_success') {
                         setWaitingForPayment(false);
                         setPaymentSuccess(true);
                         eventSource.close();
-                        // Brief delay so user sees the success flash, then refresh
                         setTimeout(() => {
                             if (refreshHost) refreshHost();
                         }, 1200);
@@ -60,7 +59,6 @@ export default function BusinessCard({ staycation, openCard, toggle }) {
                 console.warn("SSE connection lost, reconnecting…", err);
                 eventSource.close();
                 if (!cancelled) {
-                    // Exponential backoff: 1s → 2s → 4s → … capped at 30s
                     retryRef.current = setTimeout(() => {
                         retryDelay.current = Math.min(retryDelay.current * 2, 30000);
                         connect();
@@ -69,10 +67,8 @@ export default function BusinessCard({ staycation, openCard, toggle }) {
             };
         };
 
-        if (openCard === "business") {
-            connect();
-        } else {
-            // Card closed — reset states
+        if (openCard === "business") connect();
+        else {
             setWaitingForPayment(false);
             setPaymentSuccess(false);
         }
@@ -87,8 +83,10 @@ export default function BusinessCard({ staycation, openCard, toggle }) {
     const handleSubscribe = async () => {
         setSubscribing(true);
         try {
-            await apiClient.post(`listing/staycation/${staycation.id}/subscribe`, {});
-            alert("Thanh toán thành công! Gói cước đã được gia hạn.");
+            await apiClient.post(`listing/staycation/subscribe`, {
+                code: `HOST${staycation.id}`,
+            });
+            alert("Thanh toán thành công! Giao dịch đã được ghi nhận.");
             if (refreshHost) refreshHost();
         } catch (err) {
             console.error("Lỗi khi mua gói:", err);
@@ -98,7 +96,6 @@ export default function BusinessCard({ staycation, openCard, toggle }) {
         }
     };
 
-    // Tính % thời gian còn lại trong kỳ 30 ngày
     const getDaysRemaining = () => {
         if (!staycation.subscriptionValidUntil) return 0;
         const now = Date.now();
@@ -110,6 +107,74 @@ export default function BusinessCard({ staycation, openCard, toggle }) {
     const daysRemaining = getDaysRemaining();
     const progressPct = Math.min(100, Math.round((daysRemaining / 30) * 100));
     const isNearExpiry = daysRemaining <= 7 && daysRemaining > 0;
+    const shouldShowPayment = !staycation.active || isNearExpiry || showRenew;
+
+    const renderPaymentSection = () => (
+        <div className={styles.payment_section} style={{ marginTop: staycation.active ? 16 : 0 }}>
+            <div className={styles.price_row}>
+                <span className={styles.price_amount}>{paymentLabelAmount}</span>
+                <span className={styles.price_period}>{paymentLabelPeriod}</span>
+            </div>
+            <div className={styles.premium_qr_wrap}>
+                <div className={styles.premium_qr_inner}>
+                    <div className={styles.qr_scan_container}>
+                        <img src={`https://qr.sepay.vn/img?acc=0902822192&bank=MB&amount=${paymentAmount}&des=HOST${staycation.id}&template=compact`}
+                            alt="QR thanh toán" className={styles.premium_qr_img} />
+                        <div className={styles.qr_scan_line}></div>
+                    </div>
+                </div>
+            </div>
+
+            {import.meta.env.DEV && (
+                <button className={styles.send_code_btn} onClick={handleSubscribe} disabled={subscribing} style={{ marginTop: 12 }}>
+                    {subscribing ? "Đang xử lý..." : "Test Thanh toán"}
+                </button>
+            )}
+        </div>
+    );
+
+    const renderActiveContent = () => (
+        <div className={styles.active_subscription_box}>
+            <div className={styles.progress_wrap}>
+                <div className={styles.progress_label_row}>
+                    <span className={styles.progress_label}>Thời gian còn lại</span>
+                    <span className={styles.progress_val} style={{ color: isNearExpiry ? "#DC2626" : "#16a34a" }}>
+                        {daysRemaining} ngày
+                    </span>
+                </div>
+                <div className={styles.progress_track}>
+                    <motion.div
+                        className={styles.progress_fill}
+                        style={{ background: isNearExpiry ? "#DC2626" : "#16a34a" }}
+                        initial={{ width: 0 }}
+                        animate={{ width: `${progressPct}%` }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                    />
+                </div>
+                <p className={styles.progress_expiry}>Hết hạn ngày {new Date(staycation.subscriptionValidUntil).toLocaleDateString('vi-VN')}</p>
+            </div>
+
+            {shouldShowPayment ? (
+                renderPaymentSection()
+            ) : (
+                <button onClick={() => setShowRenew(true)} className={styles.renew_early_btn}>
+                    <RefreshCw size={14} style={{ marginRight: 6, display: "inline" }} />
+                    Gia hạn sớm
+                </button>
+            )}
+        </div>
+    );
+
+    const renderInactiveContent = () => (
+        <>
+            {staycation.subscriptionValidUntil && (
+                <p style={{ marginBottom: 12, fontSize: '0.9rem', color: '#B45309', fontWeight: 600, background: '#FEF3C7', padding: '8px 12px', borderRadius: '8px' }}>
+                    Đã hết hạn vào: {new Date(staycation.subscriptionValidUntil).toLocaleDateString('vi-VN')}
+                </p>
+            )}
+            {renderPaymentSection()}
+        </>
+    );
 
     return (
         <div className={styles.section_card}>
@@ -117,7 +182,7 @@ export default function BusinessCard({ staycation, openCard, toggle }) {
                 <div className={styles.card_header_left}>
                     <div className={styles.card_icon_box}><Zap size={18} /></div>
                     <div>
-                        <span className={styles.card_title}>Kích hoạt điểm uy tín</span>
+                        <span className={styles.card_title}>Điểm uy tín</span>
                         <div className={styles.card_badges}>
                             {staycation.active ? (
                                 <span className={styles.status_badge_verified}>Đã thanh toán</span>
@@ -139,133 +204,8 @@ export default function BusinessCard({ staycation, openCard, toggle }) {
                         exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }}>
                         <div className={styles.divider} />
 
-                        {staycation.active ? (
-                            /* ── ACTIVE STATE ── */
-                            <div className={styles.active_subscription_box}>
+                        {staycation.active ? renderActiveContent() : renderInactiveContent()}
 
-                                {/* Progress bar */}
-                                <div className={styles.progress_wrap}>
-                                    <div className={styles.progress_label_row}>
-                                        <span className={styles.progress_label}>Thời gian còn lại</span>
-                                        <span className={styles.progress_val} style={{ color: isNearExpiry ? "#DC2626" : "#16a34a" }}>
-                                            {daysRemaining} ngày
-                                        </span>
-                                    </div>
-                                    <div className={styles.progress_track}>
-                                        <motion.div
-                                            className={styles.progress_fill}
-                                            style={{ background: isNearExpiry ? "#DC2626" : "#16a34a" }}
-                                            initial={{ width: 0 }}
-                                            animate={{ width: `${progressPct}%` }}
-                                            transition={{ duration: 0.8, ease: "easeOut" }}
-                                        />
-                                    </div>
-                                    <p className={styles.progress_expiry}>Hết hạn ngày {new Date(staycation.subscriptionValidUntil).toLocaleDateString('vi-VN')}</p>
-                                </div>
-
-                                {/* Nút gia hạn sớm – chỉ show khi gần hết hạn hoặc bấm */}
-                                {(isNearExpiry || showRenew) ? (
-                                    <div className={styles.payment_section} style={{ marginTop: 16 }}>
-                                        <div className={styles.price_row}>
-                                            <span className={styles.price_amount}>512.000đ</span>
-                                            <span className={styles.price_period}> / tháng</span>
-                                        </div>
-                                        <div className={styles.premium_qr_wrap}>
-                                            <div className={styles.premium_qr_inner}>
-                                                <div className={styles.qr_scan_container}>
-                                                    <img src={`https://qr.sepay.vn/img?acc=player2player&bank=MB&amount=${512000}&des=HOST${staycation.id}&template=compact`}
-                                                        alt="QR gia hạn" className={styles.premium_qr_img} />
-                                                    <div className={styles.qr_scan_line}></div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* ── Payment waiting / success feedback ── */}
-                                        <AnimatePresence mode="wait">
-                                            {paymentSuccess ? (
-                                                <motion.div key="success"
-                                                    initial={{ opacity: 0, scale: 0.92 }}
-                                                    animate={{ opacity: 1, scale: 1 }}
-                                                    exit={{ opacity: 0 }}
-                                                    style={{
-                                                        display: 'flex', alignItems: 'center', gap: 8,
-                                                        background: '#f0fdf4', border: '1px solid #bbf7d0',
-                                                        borderRadius: 10, padding: '10px 14px', width: '100%', boxSizing: 'border-box'
-                                                    }}>
-                                                    <CircleCheck size={16} color="#16a34a" style={{ flexShrink: 0 }} />
-                                                    <span style={{ fontSize: '0.88rem', fontWeight: 600, color: '#15803d' }}>Thanh toán thành công! Đang cập nhật…</span>
-                                                </motion.div>
-                                            ) : waitingForPayment ? (
-                                                <motion.div key="waiting"
-                                                    initial={{ opacity: 0 }}
-                                                    animate={{ opacity: 1 }}
-                                                    exit={{ opacity: 0 }}
-                                                    style={{
-                                                        display: 'flex', alignItems: 'center', gap: 8,
-                                                        background: '#fffbeb', border: '1px solid #fde68a',
-                                                        borderRadius: 10, padding: '10px 14px', width: '100%', boxSizing: 'border-box'
-                                                    }}>
-                                                    <Loader2 size={15} color="#B45309" style={{ flexShrink: 0, animation: 'spin 1s linear infinite' }} />
-                                                    <span style={{ fontSize: '0.88rem', fontWeight: 500, color: '#92400e' }}>Đang chờ xác nhận thanh toán…</span>
-                                                </motion.div>
-                                            ) : null}
-                                        </AnimatePresence>
-
-                                        <p className={styles.payment_note}>Quét mã để gia hạn thêm 1 tháng</p>
-                                        {import.meta.env.DEV && (
-                                            <button className={styles.send_code_btn} onClick={handleSubscribe} disabled={subscribing} style={{ marginTop: 12 }}>
-                                                {subscribing ? "Đang xử lý..." : "Test Gia hạn"}
-                                            </button>
-                                        )}
-                                    </div>
-                                ) : (
-                                    <button
-                                        onClick={() => setShowRenew(true)}
-                                        className={styles.renew_early_btn}
-                                    >
-                                        <RefreshCw size={14} style={{ marginRight: 6, display: "inline" }} />
-                                        Gia hạn sớm
-                                    </button>
-                                )}
-                            </div>
-                        ) : (
-                            /* ── INACTIVE STATE ── */
-                            <>
-
-                                {staycation.subscriptionValidUntil && (
-                                    <p style={{ marginBottom: 12, fontSize: '0.9rem', color: '#B45309', fontWeight: 600, background: '#FEF3C7', padding: '8px 12px', borderRadius: '8px' }}>
-                                        Đã hết hạn vào: {new Date(staycation.subscriptionValidUntil).toLocaleDateString('vi-VN')}
-                                    </p>
-                                )}
-
-                                <div className={styles.payment_section}>
-                                    <div className={styles.price_row}>
-                                        <span className={styles.price_amount}>512.000đ</span>
-                                        <span className={styles.price_period}> / tháng</span>
-                                    </div>
-                                    <div className={styles.premium_qr_wrap}>
-                                        <div className={styles.premium_qr_inner}>
-                                            <div className={styles.qr_scan_container}>
-                                                <img src={`https://qr.sepay.vn/img?acc=0902822192&bank=MB&amount=${512000}&des=HOST${staycation.id}&template=compact`}
-                                                    alt="QR thanh toán" className={styles.premium_qr_img} />
-                                                <div className={styles.qr_scan_line}></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {import.meta.env.DEV && (
-                                        <button
-                                            className={styles.send_code_btn}
-                                            onClick={handleSubscribe}
-                                            disabled={subscribing}
-                                            style={{ marginTop: 12 }}
-                                        >
-                                            {subscribing ? "Đang xử lý..." : "Test Mua Gói"}
-                                        </button>
-                                    )}
-                                </div>
-                            </>
-                        )}
                     </motion.div>
                 )}
             </AnimatePresence>
